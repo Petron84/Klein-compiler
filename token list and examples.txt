@@ -1,0 +1,23 @@
+Tokens types:
+	- Reserved words: integer, boolean, true, false, if, then, else, not, and, or, function, print
+Positive examples: function print integer
+Negative examples: inTeGer, func tion, tru
+
+	- Identifiers: [a-z|A-Z][a-z|A-Z|0-9| _ ]* and it is not a reserved word, with a length limit of 256 characters
+Positive examples: sOme, add7, main, HYPE, Helo_wor1d
+Negative examples: 0str, _at, integer, hello world, <some_legal_ID_name_but_more_than_256_characters>
+
+	- Integer Literals ::= [1-9][0-9]*   With a limit of range (0, 2^31 - 1), inclusive
+			     | 0
+Positive examples: 10110100, 1919, 919195, 183566812, 0, 2
+Negative examples: 01, 3.14, 2.71, 2200000000, -1
+
+	- Symbols: ( ) , : + - * / < = (assuming "_" is only in Identifiers)
+Positive Examples: (+) (3 tokens) += (2 tokens) -= (2 tokens)
+Negative Examples: ; [] {} . \ | ? ! > (Assume ">" is not included in grammar)
+
+	- Comments: (* *) ; no token return
+Positive Example: (* Comment whatever this is, really *)
+Negative examples: *( Ayo this is a typo? )*
+
+	- Skippable characters: " ", \t, \n, \r    ; no token return, skip 

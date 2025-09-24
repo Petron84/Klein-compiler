@@ -1,0 +1,10 @@
+(* Klein Recursive Factorial Algorithm *)
+
+function main ( n : integer ) : integer
+	factorial ( n )
+
+function factorial ( n : integer ) : integer
+	if n = 0 or n = 1 then
+		1 (* Terminate Recursion, Output Result *)
+	else
+		n * factorial ( n - 1 ) (* Recursive Call *)

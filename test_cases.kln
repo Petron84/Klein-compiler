@@ -1,0 +1,26 @@
+(* TEST CASE 1: COMMENTS INSIDE OF TOKEN PARANTHESES *)
+print((*COMMENT*)x + y (*COMMENT*))
+
+(* TEST CASE 2: BROKEN COMMENT-MISSING A COMMA *)
+print((*BROKEN COMMENT*x+y)
+
+(* TEST CASE 3: ONE LINE PSEUDOCODE, READING SKIPS *)
+(*SKIP THIS COMMENT*)if ( ( A + B ) / 2 ) < C then\n\tprint ( true )\nelse\n\tprint ( false )
+
+
+(* TEST CASE 4: LEADING UNDERRSCORE *)
+print ( _bad )
+
+(* TEST CASE 5: NUMBER STARTING IDENTIFIER *)
+print ( 123bad )
+
+(* TEST CASE 6: DIGIT BEFORE UNDERSCORE *)
+print ( 1_good )
+
+(* TEST CASE 7: NUMBER BEFORE KEYWORDS *)
+2if 5true 6then
+	3print ( 4true )
+
+(* TEST CASE 8: NUMBER BEFORE KEYWORDS WITH SPACE *)
+if C = 42 then
+	print ( 42 true )
