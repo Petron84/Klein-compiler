@@ -1,0 +1,2 @@
+For Each Pair (X,Y) (*RANDOM COMMENT*) in Range 1:100,
+DO D=((A+B)/2),	(*ANOTHER RANDOM COMMENT*)THEN CHECK IF D < C
