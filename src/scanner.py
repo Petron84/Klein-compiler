@@ -1,3 +1,15 @@
+import traceback
+
+class KleinError(Exception):    
+
+    def __init__(self,message,linenumber):
+        self.message = message
+        self.ln = linenumber
+        super().__init__(self.message)
+        
+    def __str__(self):
+        return f"line number {self.ln}: {self.message}"
+        
 class Scanner:
     def __init__(self, text: str):
         self.keywords = ["integer", "boolean", "if", "then", "else", "and", "or", "not",
@@ -34,7 +46,7 @@ class Scanner:
             else:
                 # length limit of 256
                 if len(accumulate) > 256:
-                    raise TypeError(f"Exceeded length limit of 256: \"{accumulate}\"")
+                    raise KleinError(f"Identifier exceeded length limit of 256: {accumulate}",traceback.extract_stack()[-1][1])
                 return ("IDENTIFIER", accumulate)
 
         # Integer literal
@@ -51,16 +63,16 @@ class Scanner:
                     while self.pos < len(self.text) and self.text[self.pos].isdigit():
                         accumulate += self.text[self.pos]
                         self.pos += 1
-                    raise TypeError(f"Illegal float: {accumulate}")
+                    raise KleinError(f"Illegal float: {accumulate}",traceback.extract_stack()[-1][1])
                 
             # Reject leading zero integers
             if accumulate[0] == '0' and len(accumulate) > 1:
-                raise TypeError(f"Illegal leading zero int: {accumulate}")
+                raise KleinError(f"Illegal leading zero int: {accumulate}",traceback.extract_stack()[-1][1])
             
             else:
                 # Reject numbers greater than 2^31 - 1
                 if int(accumulate) >= 2**31:
-                    raise TypeError(f"Integer greater than 2^31 - 1: {accumulate}")
+                    raise KleinError(f"Integer greater than 2^31 - 1: {accumulate}",traceback.extract_stack()[-1][1])
                 
                 # Passed all cases, return
                 return ("INTEGER_LITERAL", accumulate)
@@ -92,7 +104,7 @@ class Scanner:
         # Unknown character
         else:
             self.pos += 1
-            raise TypeError(f"Unknown Symbol: {ch}")
+            raise KleinError(f"Unknown token: {ch}",traceback.extract_stack()[-1][1])
 
     def peek(self):
         # Return next token without consuming it.
@@ -108,3 +120,4 @@ class Scanner:
             return tok
         else:
             return self._get_next_token()
+
