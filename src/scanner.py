@@ -1,5 +1,3 @@
-import traceback
-
 class KleinError(Exception):    
 
     def __init__(self,message,linenumber):
@@ -17,6 +15,7 @@ class Scanner:
         self.operators = ["+","-","*","/","<","="]
         self.punctuation = ["(",")",",",":"]
         self.skips = ["\n", "\t", "\r", " "]
+        self.linenumber = 1
         self.integer_literals = "0 1 2 3 4 5 6 7 8 9".split()
         self.text = text
         self.pos = 0
@@ -24,6 +23,8 @@ class Scanner:
 
     def _skip_whitespace(self):
         while self.pos < len(self.text) and self.text[self.pos] in self.skips:
+            if self.text[self.pos] == "\n":
+                self.linenumber += 1
             self.pos += 1
 
     def _get_next_token(self):
@@ -46,7 +47,7 @@ class Scanner:
             else:
                 # length limit of 256
                 if len(accumulate) > 256:
-                    raise KleinError(f"Identifier exceeded length limit of 256: {accumulate}",traceback.extract_stack()[-1][1])
+                    raise KleinError(f"Identifier exceeded length limit of 256: {accumulate}",self.linenumber)
                 return ("IDENTIFIER", accumulate)
 
         # Integer literal
@@ -55,6 +56,10 @@ class Scanner:
                 accumulate += self.text[self.pos]
                 self.pos += 1
 
+            # Reject character following integer
+            if self.text[self.pos].isalpha():
+                raise KleinError(f"Illegal text following int: {self.text[self.pos]}",self.linenumber)
+            
             # accounting in illegal floats (3.14, 20.)
             if self.pos < len(self.text):
                 if self.text[self.pos] == ".":
@@ -63,16 +68,16 @@ class Scanner:
                     while self.pos < len(self.text) and self.text[self.pos].isdigit():
                         accumulate += self.text[self.pos]
                         self.pos += 1
-                    raise KleinError(f"Illegal float: {accumulate}",traceback.extract_stack()[-1][1])
+                    raise KleinError(f"Illegal float: {accumulate}",self.linenumber)
                 
             # Reject leading zero integers
             if accumulate[0] == '0' and len(accumulate) > 1:
-                raise KleinError(f"Illegal leading zero int: {accumulate}",traceback.extract_stack()[-1][1])
-            
+                raise KleinError(f"Illegal leading zero int: {accumulate}",self.linenumber)
+
             else:
                 # Reject numbers greater than 2^31 - 1
                 if int(accumulate) >= 2**31:
-                    raise KleinError(f"Integer greater than 2^31 - 1: {accumulate}",traceback.extract_stack()[-1][1])
+                    raise KleinError(f"Integer greater than 2^31 - 1: {accumulate}",self.linenumber)
                 
                 # Passed all cases, return
                 return ("INTEGER_LITERAL", accumulate)
@@ -101,10 +106,11 @@ class Scanner:
         elif ch in self.operators:
             self.pos += 1
             return ("OPERATOR",ch)
+        
         # Unknown character
         else:
             self.pos += 1
-            raise KleinError(f"Unknown token: {ch}",traceback.extract_stack()[-1][1])
+            raise KleinError(f"Unknown token: {ch}",self.linenumber)
 
     def peek(self):
         # Return next token without consuming it.
