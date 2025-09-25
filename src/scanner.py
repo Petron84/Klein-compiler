@@ -1,8 +1,9 @@
 class Scanner:
     def __init__(self, text: str):
         self.keywords = ["integer", "boolean", "if", "then", "else", "and", "or", "not",
-            "true", "false", "function", "print"]
-        self.symbols = symbols = ["+", "-", "*", "/", "=", "<", "(", ")", ":", ",", "(*", "*)"]
+            "true", "false", "function"]
+        self.operators = ["+","-","*","/","<","="]
+        self.punctuation = ["(",")",",",":"]
         self.skips = ["\n", "\t", "\r", " "]
         self.integer_literals = "0 1 2 3 4 5 6 7 8 9".split()
         self.text = text
@@ -33,7 +34,7 @@ class Scanner:
             else:
                 # length limit of 256
                 if len(accumulate) > 256:
-                    return ("REJECT", accumulate)
+                    raise TypeError(f"Exceeded length limit of 256: \"{accumulate}\"")
                 return ("IDENTIFIER", accumulate)
 
         # Integer literal
@@ -50,22 +51,22 @@ class Scanner:
                     while self.pos < len(self.text) and self.text[self.pos].isdigit():
                         accumulate += self.text[self.pos]
                         self.pos += 1
-                    return ("REJECT", accumulate)
+                    raise TypeError(f"Illegal float: {accumulate}")
                 
             # Reject leading zero integers
             if accumulate[0] == '0' and len(accumulate) > 1:
-                return ("REJECT", accumulate)
+                raise TypeError(f"Illegal leading zero int: {accumulate}")
             
             else:
                 # Reject numbers greater than 2^31 - 1
                 if int(accumulate) >= 2**31:
-                    return ("REJECT", accumulate)
+                    raise TypeError(f"Integer greater than 2^31 - 1: {accumulate}")
                 
                 # Passed all cases, return
                 return ("INTEGER_LITERAL", accumulate)
 
-        # Symbol    
-        elif ch in self.symbols:
+        # Punctuation    
+        elif ch in self.punctuation:
             # Case of '(' or '(*'
             if ch == "(":
 
@@ -78,17 +79,20 @@ class Scanner:
                 # '(' case
                 else:
                     self.pos += 1
-                    return ("SYMBOL", ch)
+                    return ("PUNCTUATION", ch)
             
             # All other cases
             else:
                 self.pos += 1
-                return ("SYMBOL", ch)
+                return ("PUNCTUATION", ch)
 
+        elif ch in self.operators:
+            self.pos += 1
+            return ("OPERATOR",ch)
         # Unknown character
         else:
             self.pos += 1
-            return ("REJECT", ch)
+            raise TypeError(f"Unknown Symbol: {ch}")
 
     def peek(self):
         # Return next token without consuming it.
@@ -104,4 +108,3 @@ class Scanner:
             return tok
         else:
             return self._get_next_token()
-
