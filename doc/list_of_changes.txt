@@ -1,0 +1,9 @@
+1. Left-factor the grammar for FORMAL-PARAMETERS by creating FORMAL-PARAMETERS'
+2. Left-factor the grammar for <EXPRESSION> by creating <EXPRESSION'>.
+3. Fix the base-case of EXPRESSION to remove left recursion
+4. Left-factor the grammar for SIMPLE EXPRESSION by creating SIMPLE EXPRESSION'
+5. Fix the base-case of SIMPLE EXPRESSION to remove left recursion
+6. Left-factor the grammar for TERM by creating TERM'
+7. Fix the base-case of TERM to remove left recursion
+8. Left factor the grammar for FACTOR by creating FACTOR'
+9. Left factor the grammar for FORMAL-ARGUMENTS by creating FORMAL-ARGUMENTS'
