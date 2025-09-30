@@ -14,7 +14,3 @@ class parse:
 
 
 test_content = [('KEYWORD', 'function'), ('IDENTIFIER', 'main'), ('PUNCTUATION', '('), ('IDENTIFIER', >
-
-
-
-
