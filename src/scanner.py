@@ -32,7 +32,7 @@ class Scanner:
         self._skip_whitespace()
 
         if self.pos >= len(self.text):
-            return ("EOF", "")
+            return ("EOF", "$")
 
         ch = self.text[self.pos]
         accumulate = ""
