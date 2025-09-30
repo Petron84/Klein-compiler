@@ -3,8 +3,7 @@
     <DEFINITION-LIST> ::= ε
                         | <DEFINITION> <DEFINITION-LIST>
 
-         <DEFINITION> ::= "function" <IDENTIFIER> "(" <PARAMETER-LIST> ")" ":" <TYPE>
-                             <BODY>
+         <DEFINITION> ::= "function" <IDENTIFIER> "(" <PARAMETER-LIST> ")" ":" <TYPE> <BODY>
 
      <PARAMETER-LIST> ::= ε
                         | <FORMAL-PARAMETERS>
