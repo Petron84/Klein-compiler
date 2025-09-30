@@ -11,6 +11,3 @@ class parse:
                 self.stack.append("$")
                 self.stack.append("PROGRAM")
                 A = self.stack[-1]
-
-
-test_content = [('KEYWORD', 'function'), ('IDENTIFIER', 'main'), ('PUNCTUATION', '('), ('IDENTIFIER', >
