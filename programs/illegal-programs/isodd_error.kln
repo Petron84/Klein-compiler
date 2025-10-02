@@ -1,0 +1,6 @@
+function isodd(x: integer): boolean
+	if x = )x / 2) * 2 then false else true
+
+function main(): integer
+	print(isodd(7))
+	0

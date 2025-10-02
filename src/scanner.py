@@ -1,4 +1,4 @@
-class KleinError(Exception):    
+class KleinError(Exception):
 
     def __init__(self,message,linenumber):
         self.message = message
@@ -10,13 +10,13 @@ class KleinError(Exception):
         
 class Scanner:
     def __init__(self, text: str):
-        self.keywords = ["integer", "boolean", "if", "then", "else", "and", "or", "not",
-            "true", "false", "function"]
+        self.keywords = ["integer", "boolean", "if", "then", "else", "and", "or", "not", "function"]
         self.operators = ["+","-","*","/","<","="]
         self.punctuation = ["(",")",",",":"]
         self.skips = ["\n", "\t", "\r", " "]
         self.linenumber = 1
         self.integer_literals = "0 1 2 3 4 5 6 7 8 9".split()
+        self.boolean_literals = ["true","false"]
         self.text = text
         self.pos = 0
         self.current_token = None
@@ -37,13 +37,15 @@ class Scanner:
         ch = self.text[self.pos]
         accumulate = ""
 
-        # Identifier or keyword
+        # Identifier, keyword, or boolean literal
         if ch.isalpha():
             while self.pos < len(self.text) and (self.text[self.pos].isalnum() or self.text[self.pos] == "_"):
                 accumulate += self.text[self.pos]
                 self.pos += 1
             if accumulate in self.keywords:
                 return ("KEYWORD", accumulate)
+            elif accumulate in self.boolean_literals:
+                return ("BOOL-LIT",accumulate)
             else:
                 # length limit of 256
                 if len(accumulate) > 256:
@@ -80,7 +82,7 @@ class Scanner:
                     raise KleinError(f"Integer greater than 2^31 - 1: {accumulate}",self.linenumber)
                 
                 # Passed all cases, return
-                return ("INTEGER_LITERAL", accumulate)
+                return ("INT-LIT", accumulate)
 
         # Punctuation    
         elif ch in self.punctuation:
@@ -97,7 +99,7 @@ class Scanner:
                 else:
                     self.pos += 1
                     return ("PUNCTUATION", ch)
-            
+
             # All other cases
             else:
                 self.pos += 1

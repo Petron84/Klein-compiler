@@ -1,0 +1,6 @@
+function notequal(x: integer, y: integer): boolean
+	if x not = y then true else false
+
+function main(): integer
+	print(notequal(10,12))
+	0

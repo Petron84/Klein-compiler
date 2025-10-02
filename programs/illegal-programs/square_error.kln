@@ -1,0 +1,6 @@
+function square(X: integer): integer
+	x ** 2
+
+function main(): integer
+	print(square(7))
+	0

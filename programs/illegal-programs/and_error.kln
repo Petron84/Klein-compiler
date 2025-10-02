@@ -1,0 +1,6 @@
+function bothtrue(a: boolean, b: boolean): boolean
+	a and b c
+
+function main(): integer
+	print(bothtrue(true, true))
+	0
