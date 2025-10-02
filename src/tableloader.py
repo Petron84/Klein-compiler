@@ -16,5 +16,6 @@ class parsetable:
 
     def load(self):
         df = pd.read_excel(self.tablepath,sheet_name="Table",index_col=0).fillna(0)
+        df.index = df.index.str.strip()
         return df
 
