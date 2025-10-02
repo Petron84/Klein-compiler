@@ -1,4 +1,5 @@
 Team Name: Kleithon
+
 Team Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Kuora, Dylan Bock
 
 Project Description:
@@ -30,12 +31,11 @@ Description of how to build compiler:
      - Create a scanner that reads through a Klein program and return a token, 
      - Function peek() views the next token without consuming it, and function next() coext token. 
      - The scanner will identify specific tokens allowed in the Klein grammar specification, including keywords, identifiers, integer literals, operators, symbols, and comments, and ignores/rejects certain illegal characters.
-     - Skip whitespace and other skippable characters (\n, \t, spaces, etc.).
+     - Skip whitespace and other skippable characters (\n, \t, \r, spaces, (\*comments*)).
      - Raise errors for illegal characters, invalid floats, leading zeros in integers, identifiers exceeding 256 characters, negative integers, or integers exceeding the maximum range (2^31 - 1).
 
 - Create token_lister.py 
      - This will help the scanner go through a Klein program and return a stream of tokens. - Token stream will be used as input for the parser.
-
 
 - Implement parser.py framework
      - Start with the initial stages of a table-driven parser. Use a parse table to check token sequences against Klein grammar rules and identify any syntax errors.
