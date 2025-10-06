@@ -55,14 +55,20 @@ class Parser:
 				# I.E. Map the entry M[A,"BOOL-LIT"] instead of M[A,"true"].
 
 				if token_type in self.special_cases:
-					rule = tablerow.loc[token_type.lower()]
-
+					token_key = token_type.lower()
 				else:
-					rule = tablerow.loc[token]
+					token_key = token
+
+				rule = tablerow.get(token_key,0)
 
 				# If no production rule is found
 				if rule == 0:
-					raise KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n Next token in queue is: {self.in_stream[1]}.')
+					if any(tablerow.astype(str).str.contains('ε')):
+						self.stack.pop()
+						A = self.stack[-1]
+						continue
+					else:
+						raise KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n Next token in queue is: {self.in_stream[1]}.')
 
 				# If production rule is found
 				else:

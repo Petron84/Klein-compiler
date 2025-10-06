@@ -19,9 +19,9 @@
                         | "boolean"
 
                <BODY> ::= <PRINT-EXPRESSION> <BODY>
-                        | <EXPR>
+                        | <EXPRESSION>
 
-   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")"
+   <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")"
 
 	 <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
 

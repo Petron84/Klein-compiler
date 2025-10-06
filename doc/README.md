@@ -8,8 +8,9 @@ Project Description:
 - kleinf: script to run the Klein parser
 - parser.py: Component of the Klein compiler, parses tokens of Klein programs
 - parse_validator.py: Component of parser.py. Checks to see if parser executes successfully
-- Bugs: Parsetable errors leading to parse fails with production rules involving the term' non-terminal. 
-
+- Bugs: FIXED - Parsetable errors leading to parse fails with production rules involving the term' non-terminal. 
+- 	NEEDS FIXED - Egyptian factors.kln is causing a production rule fail. 
+-	NEEDS FIXED - Divide by seven.kln is causing a token mismatch
 - Features not implemented: Semantic Analyzer.
 
 - Optimizations: token_lister.py as scanner.py extra component.
