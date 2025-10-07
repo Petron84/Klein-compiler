@@ -1,0 +1,64 @@
+class Program
+	list of definitions
+
+class Definition
+	function
+	identifier
+	list of idtype
+	type
+	list of expressions
+
+class IDwithType
+	identifier
+	type
+
+class Type
+	class integer
+		"integer"
+	class Boolean
+		"Boolean"
+
+class Expression
+
+	class PrintExpression
+		print
+		expression
+
+	class UnaryExpression
+		operator (not, -)
+		expression 
+	class BinaryExpression
+		expression 
+		operator (or, +, -, *, /, and, =, <)
+		expression
+	class FunctionCall
+		identifier
+		expression or list expression
+	class IfExpression
+		condition statement
+		then statement
+		else statement
+	class LiteralExpression
+		literal
+	class Identifier
+		identifer
+
+class Statement
+
+	class Condition
+		if
+		expression
+
+	class then
+		then
+		expression
+	class else
+		else
+		expression
+
+class Literal
+	class IntegerLiteral(Literal)
+		value
+
+	class BooleanLiteral(Literal)
+		value
