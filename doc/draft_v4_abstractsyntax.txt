@@ -7,13 +7,13 @@ class DefinitionList
 
 class Definition
 	identifier
-	IDTypeList
+	ParameterList
 	type
 	ExpressionList
 
-class IDTypeLIst
+class ParameterList
 	IDType
-	IDTypeList
+	ParameterList
 
 class IDType
 	identifier

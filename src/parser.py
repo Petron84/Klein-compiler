@@ -1,4 +1,3 @@
-
 from tableloader import parsetable
 from scanner import KleinError
 from token_lister import list_tokens
@@ -17,7 +16,7 @@ class Parser:
 	def __init__(self,text):
 
 		# Parse Table is initiated as M
-		self.M = parsetable().generate()
+		self.M = parsetable()
 
 		# Input stream from scanner
 		self.in_stream = list_tokens(text)
@@ -26,7 +25,7 @@ class Parser:
 		self.stack = []
 
 		# Nonterminals
-		self.nonterminals = self.M.index.tolist()
+		self.nonterminals = self.M.keys()
 
 		# Special cases
 		self.special_cases = ["IDENTIFIER","INT-LIT","BOOL-LIT"]
@@ -49,7 +48,7 @@ class Parser:
 		while A != "$":
 			# If nonterminal
 			if A.upper() in self.nonterminals:
-				tablerow = self.M.loc[A.upper()]
+				tablerow = self.M[A.upper()]
 
 				# If token is an unique type, then look for rules matching this type rather than the identifier token value.
 				# I.E. Map the entry M[A,"BOOL-LIT"] instead of M[A,"true"].
@@ -58,12 +57,12 @@ class Parser:
 					token_key = token_type.lower()
 				else:
 					token_key = token
-
-				rule = tablerow.get(token_key,0)
+				try:
+					rule = tablerow[token_key]
 
 				# If no production rule is found
-				if rule == 0:
-					if any(tablerow.astype(str).str.contains('ε')):
+				except:
+					if any('ε' in str(value) for value in tablerow.values()):
 						self.stack.pop()
 						A = self.stack[-1]
 						continue
