@@ -1,24 +1,24 @@
-<PROGRAM> ::=     *make-definition-list* <DEFINITION-LIST>
+<PROGRAM> ::=     <DEFINITION-LIST> ***make-program***
 
 
 
-&nbsp;   <DEFINITION-LIST> ::= ε
+&nbsp;   <DEFINITION-LIST> ::= ***make-definitionlist***
 
 &nbsp;                       | <DEFINITION> <DEFINITION-LIST>
 
 
 
-&nbsp;        <DEFINITION> ::= "function" *make-identifier* <IDENTIFIER> *make-idtypelist* "(" <PARAMETER-LIST> ")" ":" *make-type* <TYPE> *make-expressionlist* <BODY>
+&nbsp;        <DEFINITION> ::= "function" <IDENTIFIER> ***make-identifier*** "(" <PARAMETER-LIST>  ")" ":" <TYPE> <BODY> ***make-definition***
 
 
 
-&nbsp;    <PARAMETER-LIST> ::= ε
+&nbsp;    <PARAMETER-LIST> ::= ***make-parameterlist***
 
 &nbsp;                       | <FORMAL-PARAMETERS>
 
 
 
-&nbsp; <FORMAL-PARAMETERS> ::= <ID-WITH-TYPE> <FORMAL-PARAMETERS'>
+&nbsp; <FORMAL-PARAMETERS> ::= <ID-WITH-TYPE> ***make-IDType*** <FORMAL-PARAMETERS'>
 
 
 
@@ -28,13 +28,13 @@
 
 
 
-&nbsp;      <ID-WITH-TYPE> ::= <IDENTIFIER> ":" <TYPE>
+&nbsp;      <ID-WITH-TYPE> ::= <IDENTIFIER> ***make-identifier*** ":" <TYPE> ***make-type***
 
 
 
-&nbsp;              <TYPE> ::= "integer"
+&nbsp;              <TYPE> ::= "integer" m***ake-integertype***
 
-&nbsp;                       | "boolean"
+&nbsp;                       | "boolean" ***make-booleantype***
 
 
 
@@ -44,19 +44,19 @@
 
 
 
-&nbsp;  <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")"
+&nbsp;  <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")" ***make-printexpression***
 
 
 
-&nbsp;	 <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
+&nbsp;	 <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'> ***make-expression***
 
 
 
 &nbsp;	<EXPRESSION'> ::= ε
 
-&nbsp;			| "=" <SIMPLE-EXPRESSION>
+&nbsp;			| "=" ***make-binaryespression*** <SIMPLE-EXPRESSION>
 
-&nbsp;			| "<" <SIMPLE-EXPRESSION>
+&nbsp;			| "<" ***make-binaryespression*** <SIMPLE-EXPRESSION>
 
 
 
@@ -66,11 +66,11 @@
 
 &nbsp;<SIMPLE-EXPRESSION'> ::= ε
 
-&nbsp;			| "or" <TERM>
+&nbsp;			| "or" ***make-binaryexpression*** <TERM> 
 
-&nbsp;			| "+" <TERM>
+&nbsp;			| "+" ***make-binaryexpression*** <TERM> 
 
-&nbsp;			| "-" <TERM>
+&nbsp;			| "-" ***make-binaryexpression*** <TERM>
 
 
 
@@ -82,29 +82,29 @@
 
 &nbsp;	      <TERM'> ::= ε
 
-&nbsp;			| "\*" <FACTOR>
+&nbsp;			| "\*"  ***make-binaryexpression*** <FACTOR>
 
-&nbsp;			| "/" <FACTOR>
+&nbsp;			| "/" ***make-binaryexpression*** <FACTOR> 
 
-&nbsp;			| "and" <FACTOR>
-
-
-
-&nbsp;            <FACTOR> ::= <LITERAL>
-
-&nbsp;                       | "not" <FACTOR>
-
-&nbsp;                       | "-" <FACTOR>
-
-&nbsp;                       | <IDENTIFIER> <FACTOR'>
-
-&nbsp;                       | "if" <EXPRESSION> "then" <EXPRESSION> "else" <EXPRESSION>
-
-&nbsp;                       | "(" <EXPRESSION> ")"
+&nbsp;			| "and" ***make-binaryexpression*** <FACTOR> 
 
 
 
-&nbsp;	    <FACTOR'> ::= ε
+&nbsp;            <FACTOR> ::= <LITERAL> ***make-literalexpression***
+
+&nbsp;                       | "not" ***make-unaryexpression*** <FACTOR> 
+
+&nbsp;                       | "-" ***make-unaryexpression*** <FACTOR> 
+
+&nbsp;                       | <IDENTIFIER> ***make-identifier*** <FACTOR'> ***make-functioncall***
+
+&nbsp;                       | "if" <EXPRESSION> "then" <EXPRESSION> "else" <EXPRESSION> ***make-ifexpression***
+
+&nbsp;                       | "(" <EXPRESSION> ")" 
+
+
+
+&nbsp;	    <FACTOR'> ::= ***make-expressionlist***
 
 &nbsp;			| "(" <ARGUMENT-LIST> ")"
 
@@ -126,7 +126,7 @@
 
 
 
-&nbsp;           <LITERAL> ::= <INTEGER-LITERAL>
+&nbsp;           <LITERAL> ::= <INTEGER-LITERAL> ***make-integerliteral***
 
-&nbsp;                       | <BOOLEAN-LITERAL>
+&nbsp;                       | <BOOLEAN-LITERAL> ***make-booleanliteral***
 

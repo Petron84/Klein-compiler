@@ -20,7 +20,10 @@ class IDType
 	type
 
 class Type
-	value
+	class IntegerType
+		value
+	class BooleanType
+		value
 
 class ExpressionList
 	expression
@@ -32,18 +35,20 @@ class expression
 		operator (not, -)
 		expression
 		
-	class BinaryExpression 
+	class BinaryExpression
 		expression 
 		operator (=,<,or,+,-,*,/,and)
 		expression
 
 	class LiteralExpression
-		value
+		class IntegerLiteral
+			value
+		class BooleanLiteral
+			value
 
 	class FunctionCall
 		identifier
 		expressionlist
-
 
 	class IfExpression
 		expression
