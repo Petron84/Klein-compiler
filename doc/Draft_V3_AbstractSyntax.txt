@@ -2,63 +2,64 @@ class Program
 	list of definitions
 
 class Definition
-	function
-	identifier
-	list of idtype
-	type
-	list of expressions
 
-class IDwithType
 	identifier
+	list of types
 	type
+	list of expression
 
 class Type
+
+	class IDType
+		identifier
+		type
+
 	class integer
 		"integer"
+
 	class Boolean
 		"Boolean"
 
 class Expression
 
 	class PrintExpression
-		print
 		expression
 
 	class UnaryExpression
 		operator (not, -)
 		expression 
+
 	class BinaryExpression
 		expression 
 		operator (or, +, -, *, /, and, =, <)
 		expression
+
 	class FunctionCall
 		identifier
-		expression or list expression
+		list of expression
+
 	class IfExpression
-		condition statement
-		then statement
-		else statement
+		list of expressions
+
 	class LiteralExpression
 		literal
+
 	class Identifier
-		identifer
+		identifier
 
 class Statement
-
-	class Condition
-		if
+	class IfStatement
+		if 
 		expression
-
-	class then
-		then
+	class ThenState
+		then 
 		expression
-	class else
-		else
-		expression
+	class ElseState
+		else expression
 
 class Literal
-	class IntegerLiteral(Literal)
+	class IntegerLiteral
 		value
 
-	class BooleanLiteral(Literal)
+	class BooleanLiteral
 		value

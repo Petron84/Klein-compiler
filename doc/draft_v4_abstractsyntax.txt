@@ -1,0 +1,54 @@
+class Program
+	definitionlist
+
+class DefinitionList
+	definition
+	definitionlist
+
+class Definition
+	identifier
+	IDTypeList
+	type
+	ExpressionList
+
+class IDTypeLIst
+	IDType
+	IDTypeList
+
+class IDType
+	identifier
+	type
+
+class Type
+	value
+
+class ExpressionList
+	expression
+	expressionlist
+
+class expression
+
+	class UnaryExpression
+		operator (not, -)
+		expression
+		
+	class BinaryExpression 
+		expression 
+		operator (=,<,or,+,-,*,/,and)
+		expression
+
+	class LiteralExpression
+		value
+
+	class FunctionCall
+		identifier
+		expressionlist
+
+
+	class IfExpression
+		expression
+		expression
+		expression
+
+	class Identifier
+		value

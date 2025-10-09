@@ -1,4 +1,4 @@
-<PROGRAM> ::= <DEFINITION-LIST>
+<PROGRAM> ::=     <DEFINITION-LIST>
 
     <DEFINITION-LIST> ::= ε
                         | <DEFINITION> <DEFINITION-LIST>
@@ -40,7 +40,7 @@
                <TERM> ::= <FACTOR> <TERM'>
 
 	      <TERM'> ::= ε
-			| "*" <FACTOR>
+			| "*"  <FACTOR>
 			| "/" <FACTOR>
 			| "and" <FACTOR>
 
