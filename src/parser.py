@@ -46,6 +46,7 @@ class Parser:
 		token_type, token = self.in_stream[0]
 
 		while A != "$":
+
 			# If nonterminal
 			if A.upper() in self.nonterminals:
 				tablerow = self.M[A.upper()]
@@ -59,12 +60,14 @@ class Parser:
 					token_key = token
 				try:
 					rule = tablerow[token_key]
-
 				# If no production rule is found
 				except:
+
 					if any('ε' in str(value) for value in tablerow.values()):
 						self.stack.pop()
 						A = self.stack[-1]
+						if A == "$" and len(self.in_stream) > 0:
+							raise KleinError(f'Parsing failed: Reached end of stream symbol "$" early. No production rule found for token "{token}". Next token in queue is: {self.in_stream[1]}.')
 						continue
 					else:
 						raise KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n Next token in queue is: {self.in_stream[1]}.')

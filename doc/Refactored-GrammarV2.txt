@@ -1,0 +1,65 @@
+<PROGRAM> ::= <DEFINITION-LIST>
+
+    <DEFINITION-LIST> ::= <DEFINITION> <DEFINITION-LIST>
+			| ε
+
+         <DEFINITION> ::= "function" <IDENTIFIER> "(" <PARAMETER-LIST> ")" ":" <TYPE>
+                             <BODY>
+
+     <PARAMETER-LIST> ::= <FORMAL-PARAMETERS>
+			| ε
+
+  <FORMAL-PARAMETERS> ::= <ID-WITH-TYPE> <FORMAL-PARAMETERS'>
+
+ <FORMAL-PARAMETERS'> ::= "," <ID-WITH-TYPE> <FORMAL-PARAMETERS'>
+			| ε
+
+       <ID-WITH-TYPE> ::= <IDENTIFIER> ":" <TYPE>
+
+               <TYPE> ::= "integer"
+                        | "boolean"
+
+               <BODY> ::= <PRINT-EXPRESSION> <BODY>
+                        | <EXPR>
+
+   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")"
+
+         <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
+
+	<EXPRESSION'> ::= "=" <SIMPLE-EXPRESSION>
+                        |"<" <SIMPLE-EXPRESSION>
+			| ε
+
+  <SIMPLE-EXPRESSION> ::= <TERM> <SIMPLE-EXPRESSION'>
+
+ <SIMPLE-EXPRESSION'> ::= "or" <TERM>
+                        | "+" <TERM>
+                        | "-" <TERM>
+			| ε
+
+               <TERM> ::= <FACTOR> <TERM'>
+
+	      <TERM'> ::= "*" <FACTOR>
+                        | "/" <FACTOR>
+                        | "and" <FACTOR>
+			| ε
+
+             <FACTOR> ::= <LITERAL>
+                        | "not" <FACTOR>
+                        | "-" <FACTOR>
+                        | <IDENTIFIER> <FACTOR'>
+                        | "if" <SIMPLE-EXPRESSION> <EXPRESSION'> "then" <SIMPLE-EXPRESSION> <EXPRESSION'> "else" <SIMPLE-EXPRESSION> <EXPRESSION'>
+                        | "(" <SIMPLE-EXPRESSION> <EXPRESSION'> ")"
+
+	    <FACTOR'> ::= "(" <ARGUMENT-LIST> ")"
+			| ε
+      <ARGUMENT-LIST> ::= <FORMAL-ARGUMENTS>
+			| ε
+
+   <FORMAL-ARGUMENTS> ::= <EXPRESSION> <FORMAL-ARGUMENTS'>
+
+  <FORMAL-ARGUMENTS'> ::= "," <EXPRESSION> <FORMAL-ARGUMENTS'>
+			| ε
+
+            <LITERAL> ::= <INTEGER-LITERAL>
+                        | <BOOLEAN-LITERAL>
