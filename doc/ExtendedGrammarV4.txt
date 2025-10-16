@@ -1,0 +1,66 @@
+<PROGRAM> ::= <DEFINITION-LIST> *make-program*
+
+    <DEFINITION-LIST> ::= *make-definitionlist*
+			| <DEFINITION> <DEFINITION-LIST>
+
+         <DEFINITION> ::= "function" <IDENTIFIER> *make-identifier* "(" <PARAMETER-LIST> ")" ":" <TYPE> <BODY> *make-definition*
+
+     <PARAMETER-LIST> ::= ε
+			| <FORMAL-PARAMETERS>
+
+
+  <FORMAL-PARAMETERS> ::= <ID-WITH-TYPE> *make-IDType* <FORMAL-PARAMETERS'>
+
+ <FORMAL-PARAMETERS'> ::= *make-parameterlist*
+			| "," <ID-WITH-TYPE> *make-IDType* <FORMAL-PARAMETERS'>
+
+       <ID-WITH-TYPE> ::= <IDENTIFIER> *make-identifier* ":" <TYPE>
+
+               <TYPE> ::= "integer" *make-integertype*
+                        | "boolean" *make-booleantype*
+
+               <BODY> ::= <PRINT-EXPRESSION> <BODY>
+                        | <EXPR>
+
+   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")" *make-functioncall*
+
+         <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
+
+	<EXPRESSION'> ::= ε
+			| "=" <SIMPLE-EXPRESSION> *make-binaryexpression* <EXPRESSION'>
+                        |"<" <SIMPLE-EXPRESSION> *make-binaryexpression* <EXPRESSION'>
+
+  <SIMPLE-EXPRESSION> ::= <TERM> <SIMPLE-EXPRESSION'>
+
+ <SIMPLE-EXPRESSION'> ::= ε
+			| "or" <TERM> *make-orexpression* <SIMPLE-EXPRESSION'>
+                        | "+" <TERM> *make-addexpression* <SIMPLE-EXPRESSION'>
+                        | "-" <TERM> *make-binaryexpression* <SIMPLE-EXPRESSION'>
+
+               <TERM> ::= <FACTOR> <TERM'>
+
+	      <TERM'> ::= ε
+			| "*" <FACTOR> *make-binaryexpression* <TERM'>
+                        | "/" <FACTOR> *make-binaryexpression* <TERM'>
+                        | "and" <FACTOR> *make-binaryexpression* <TERM'>
+
+             <FACTOR> ::= <LITERAL>
+                        | "not" *make-unaryexpression* <FACTOR>
+                        | "-" *make-unaryexpression* <FACTOR>
+                        | <IDENTIFIER> *make-identifier* <FACTOR'>
+                        | "if" <SIMPLE-EXPRESSION> <EXPRESSION'> "then" <SIMPLE-EXPRESSION> <EXPRESSION'> "else" <SIMPLE-EXPRESSION> <EXPRESSION'> *make-ifexpression*
+                        | "(" <SIMPLE-EXPRESSION> <EXPRESSION'> ")"
+
+	    <FACTOR'> ::= ε
+			| "(" <ARGUMENT-LIST> ")" *make-functioncall*
+
+      <ARGUMENT-LIST> ::= ε
+			| <FORMAL-ARGUMENTS>
+
+   <FORMAL-ARGUMENTS> ::= <SIMPLE-EXPRESSION> <EXPRESSION'> <FORMAL-ARGUMENTS'>
+
+  <FORMAL-ARGUMENTS'> ::= *make-expressionlist*
+			| "," <SIMPLE-EXPRESSION> <EXPRESSION'> <FORMAL-ARGUMENTS'>
+
+            <LITERAL> ::= <INTEGER-LITERAL> *make-integerliteral*
+                        | <BOOLEAN-LITERAL> *make-booleanliteral*

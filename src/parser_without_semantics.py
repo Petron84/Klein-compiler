@@ -44,7 +44,6 @@ class Parser:
 		token_type, token = self.in_stream[0]
 
 		while A != "$":
-			print(self.stack)
 			if A.upper() in self.nonterminals:
 				tablerow = self.M[A.upper()]
 

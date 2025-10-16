@@ -32,7 +32,7 @@
 
 
 
-&nbsp;              <TYPE> ::= "integer" m***ake-integertype***
+&nbsp;              <TYPE> ::= "integer" ***make-integertype***
 
 &nbsp;                       | "boolean" ***make-booleantype***
 
@@ -44,7 +44,7 @@
 
 
 
-&nbsp;  <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")" ***make-printexpression***
+&nbsp;  <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")" ***make-functioncall***
 
 
 
@@ -101,8 +101,6 @@
 &nbsp;                       | "if" <EXPRESSION> "then" <EXPRESSION> "else" <EXPRESSION> ***make-ifexpression***
 
 &nbsp;                       | "(" <EXPRESSION> ")" 
-
-
 
 &nbsp;	    <FACTOR'> ::= ***make-expressionlist***
 
