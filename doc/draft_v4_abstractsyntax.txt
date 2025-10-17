@@ -19,37 +19,69 @@ class IDType
 	identifier
 	type
 
-class IntegerType
-	value
-class BooleanType
+class Type
 	value
 
-class ExpressionList
+class ArgumentList
 	expression
-	expressionlist
+	ArgumentList
 
-class UnaryExpression
-	operator (not, -)
-	expression
+class Expression
+	class UnaryExpression
+		class NotExpression
+			operator
+			expression
+		class NegateExpression
+			operator
+			expression
 		
-class BinaryExpression
-	expression 
-	operator (=,<,or,+,-,*,/,and)
-	expression
+	class BinaryExpression
+		class EqualExpression
+			expression
+			operator
+			expression
+		class LessExpression
+			expression
+			operator
+			expression
+		class OrExpression
+			expression
+			operator
+			expression
+		class AddExpression	
+			expression
+			operator
+			expression
+		class MinusExpression
+			expression
+			operator
+			expression
+		class MultiplyExpression
+			expression
+			operator
+			expression
+		class DivideExpression
+			expression
+			operator
+			expression
+		class AndExpression
+			expression
+			operator
+			expression
+[
+	class IntegerLiteral
+		value
+	class BooleanLiteral
+		value
 
-class IntegerLiteral
-	value
-class BooleanLiteral
-	value
+	class FunctionCall
+		identifier
+		expressionlist
 
-class FunctionCall
-	identifier
-	expressionlist
+	class IfExpression
+		expression
+		expression
+		expression
 
-class IfExpression
-	expression
-	expression
-	expression
-
-class Identifier
-	value
+	class Identifier
+		value
