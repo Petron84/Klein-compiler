@@ -31,7 +31,7 @@ class Parser:
 		self.actions = AstAction().valid_actions
 
 		# Initialize Valid Words
-		self.words = ["integer","boolean","print"]
+		self.words = ["integer","boolean","print","true","false"]
 
 		# Nonterminals
 		self.nonterminals = self.M.keys()
