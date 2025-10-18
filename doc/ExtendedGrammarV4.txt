@@ -3,9 +3,9 @@
     <DEFINITION-LIST> ::= *make-definitionlist*
 			| <DEFINITION> <DEFINITION-LIST>
 
-         <DEFINITION> ::= "function" <IDENTIFIER> *make-identifier* "(" <PARAMETER-LIST> ")" ":" <TYPE> *make-type* <BODY> *make-expressionlist* *make-definition*
+         <DEFINITION> ::= "function" <IDENTIFIER> *make-functionidentifier* "(" <PARAMETER-LIST> ")" ":" <TYPE> *make-type* <BODY> *make-definition*
 
-     <PARAMETER-LIST> ::= ε
+     <PARAMETER-LIST> ::= make-parameterlist
 			| <FORMAL-PARAMETERS>
 
 
@@ -47,7 +47,7 @@
              <FACTOR> ::= <LITERAL>
                         | "not" *make-notexpression* <FACTOR>
                         | "-" *make-negateexpression* <FACTOR>
-                        | <IDENTIFIER> *make-identifier* <FACTOR'>
+                        | <IDENTIFIER> *make-functionidentifier* <FACTOR'>
                         | "if" <SIMPLE-EXPRESSION> <EXPRESSION'> "then" <SIMPLE-EXPRESSION> <EXPRESSION'> "else" <SIMPLE-EXPRESSION> <EXPRESSION'> *make-ifexpression*
                         | "(" <SIMPLE-EXPRESSION> <EXPRESSION'> ")"
 

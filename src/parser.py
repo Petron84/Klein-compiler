@@ -27,11 +27,12 @@ class Parser:
 		# Initialize semantic_stack
 		self.semantic_stack = []
 
-		self.actions = [member for member in AstAction]
-		print(self.actions)
-		A = "MakeProgram"
-		
-		print(isinstance(,AstAction))
+		# Initialize Action List
+		self.actions = AstAction().valid_actions
+
+		# Initialize Valid Words
+		self.words = ["integer","boolean","print"]
+
 		# Nonterminals
 		self.nonterminals = self.M.keys()
 
@@ -40,6 +41,7 @@ class Parser:
 
 	# Table Driven Algorithm
 	def parse(self):
+
 		# End of stream token
 		self.parse_stack.append("$")
 
@@ -64,7 +66,10 @@ class Parser:
 				else:
 					token_key = token
 				try:
-					rule = tablerow[token_key]
+					if token == "print":
+						rule = tablerow['print']
+					else:
+						rule = tablerow[token_key]
 
 				# If no production rule is found
 				except:
@@ -94,10 +99,17 @@ class Parser:
 				# Check is tokens match. If the current production is an identifier, then make sure both tokens are identifiers instead.
 				if (token_type.upper() == A.upper()) or (A == token):
 					self.parse_stack.pop()
+					if (token.isnumeric()) or (token in self.words) or (token_type == "IDENTIFIER"):
+						self.semantic_stack.append(token)
 					self.in_stream.pop(0)
 					token_type, token = self.in_stream[0]
+
+				elif A in self.actions:
+					self.semantic_stack = AstAction.ApplySemantic(A,self.semantic_stack)
+					self.parse_stack.pop()
 				else:
 					raise KleinError(f'Token mismatch: Parser found "{A}" but "{token}" was next in stream.\n Next token in queue is: {self.in_stream[1]}.')
 
 			# Assign A as top of current parse_stack
 			A = self.parse_stack[-1]
+		return self.semantic_stack

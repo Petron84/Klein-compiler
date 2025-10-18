@@ -1,4 +1,4 @@
-from tableloader import parsetable
+from table_without_semantics import parsetable
 from token_lister import list_tokens
 
 class KleinError(Exception):
@@ -44,6 +44,7 @@ class Parser:
 		token_type, token = self.in_stream[0]
 
 		while A != "$":
+			print(self.in_stream)
 			if A.upper() in self.nonterminals:
 				tablerow = self.M[A.upper()]
 
@@ -55,7 +56,10 @@ class Parser:
 				else:
 					token_key = token
 				try:
-					rule = tablerow[token_key]
+					if token == "print":
+						rule = tablerow['print']
+					else:
+						rule = tablerow[token_key]
 
 				# If no production rule is found
 				except:
