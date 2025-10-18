@@ -162,7 +162,7 @@ class MakeNode:
 	def make_type_node(self):
 		terminal = self.safe_pop("TYPE","TERMINAL")
 		if isinstance(terminal,TreeNode):
-			raise KleinError("Parse Failed: Expected Terminal for Type Node, but got {terminal.type}")
+			raise KleinError(f"Parse Failed: Expected Terminal for Type Node, but got {terminal.type}")
 		return TreeNode("TYPE",value=terminal), self.ast_stack
 
 	def make_argList_node(self):
@@ -184,13 +184,13 @@ class MakeNode:
 	def make_intLit_node(self):
 		terminal = self.safe_pop("INTEGER-LITERAL","TERMINAL")
 		if isinstance(terminal,TreeNode):
-			raise KleinError("Parse Failed: Expected Terminal for INTEGER-LITERAL Node, but got {terminal.type}")
+			raise KleinError(f"Parse Failed: Expected Terminal for INTEGER-LITERAL Node, but got {terminal.type}")
 		return TreeNode("INTEGER-LITERAL",value=terminal), self.ast_stack
 
 	def make_boolLit_node(self):
 		terminal = self.safe_pop("BOOLEAN-LITERAL","TERMINAL")
 		if isinstance(terminal,TreeNode):
-			raise KleinError("Parse Failed: Expected Terminal for BOOLEAN-LITERAL Node, but got {terminal.type}")
+			raise KleinError(f"Parse Failed: Expected Terminal for BOOLEAN-LITERAL Node, but got {terminal.type}")
 
 		return TreeNode("BOOLEAN-LITERAL",value=terminal), self.ast_stack
 
@@ -208,7 +208,7 @@ class MakeNode:
 	def make_ID_node(self):
 		terminal = self.safe_pop("IDENTIFIER","TERMINAL")
 		if isinstance(terminal,TreeNode):
-			raise KleinError("Parse Failed: Expected Terminal for IDENTIFIER Node, but got {terminal.type}")
+			raise KleinError(f"Parse Failed: Expected Terminal for IDENTIFIER Node, but got {terminal.type}")
 		if terminal == "print":
 			return TreeNode("function","IDENTIFIER",value=terminal), self.ast_stack
 		else:
@@ -217,7 +217,7 @@ class MakeNode:
 	def make_FunID_node(self):
 		terminal = self.safe_pop("FUNCTION","TERMINAL")
 		if isinstance(terminal,TreeNode):
-			raise KleinError("Parse Failed: Expected Terminal for FUNCTION-ID Node, but got {terminal.type}")
+			raise KleinError(f"Parse Failed: Expected Terminal for FUNCTION-ID Node, but got {terminal.type}")
 		return TreeNode(("function","IDENTIFIER"),value=terminal), self.ast_stack
 
 class TreeNode:
