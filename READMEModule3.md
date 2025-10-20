@@ -1,7 +1,7 @@
 # **Klein Compiler — Module 3**
 
 ## **Team Name: Kleithon**  
-Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Kuora, Dylan Bock  
+Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Koura, Dylan Bock  
 
 ---
 
