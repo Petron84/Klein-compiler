@@ -137,12 +137,5 @@ Submitted on **October 10**:
 - Expand AST node coverage for expressions and statements.  
 - Improve `.dot` output formatting for readability and clarity.
 
-
 ---
-## **Planned Improvements**
-- Move AST output files to a dedicated `GraphOutput/` directory.  
-- Fully suppress Python tracebacks in Klein error messages.  
-- Expand AST node coverage for expressions and statements.  
-- Improve `.dot` output formatting for readability and clarity.
 
----
