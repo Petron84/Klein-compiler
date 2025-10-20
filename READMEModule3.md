@@ -86,7 +86,7 @@ GraphOutput/
 doc/
   abstract_syntax.txt    # Definition of AST classes and structures
   extended_grammar.txt   # Grammar updated with semantic actions
-```
+
 programs/
   legal-programs/
     prime_sum.kln       # New legal program for testing AST
@@ -100,7 +100,7 @@ src/
   DOTGenerator.py       # Exports AST as .dot and .png files
   scanner.py
   token_lister.py
-
+```
 ---
 ## **Files Implemented for Module 3**
 
