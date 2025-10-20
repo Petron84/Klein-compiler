@@ -63,19 +63,6 @@ GraphOutput/
 
 ---
 
-## **Output Files**
-
-Running `kleinp` currently produces two files in the **main project directory**:
-- `ast_output.dot` — Graphviz DOT file representation of the AST.
-- `ast_output.png` — Rendered PNG image of the AST.
-
-These will soon be redirected to a new folder:
-```
-GraphOutput/
-```
-
----
-
 ## **Project Structure**
 
 ```
