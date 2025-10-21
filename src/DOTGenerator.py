@@ -1,8 +1,9 @@
 
 import os, sys
+from pathlib import Path
 from AST_Creator import TreeNode
 
-def generate_dot(ast_list, filename="ast_output.dot"):
+def generate_dot(ast_list, filename="output.dot"):
     node_counter = 0
     node_lines = []
     edge_lines = []
@@ -36,6 +37,9 @@ def generate_dot(ast_list, filename="ast_output.dot"):
 
     dot_content = "digraph AST {\n" + "\n".join(node_lines + edge_lines) + "\n}"
 
+    root = Path(__file__).resolve().parent.parent
+    output_dir = root / "doc" / "GraphOutputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+    filename = output_dir / filename
     with open(filename, "w", encoding="utf-8") as f:
         f.write(dot_content)
-

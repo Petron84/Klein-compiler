@@ -1,10 +1,10 @@
 from parser import Parser
-from AST_Creator import TreeNode
 from DOTGenerator import generate_dot
 
-def validate(program):
+def validate(program,filename="input.kln"):
+	filename = filename + ".dot"
 	p = Parser(program)
 	AST = p.parse()
 	print("Valid Program")
-	generate_dot(AST)
+	generate_dot(AST,filename=filename)
 

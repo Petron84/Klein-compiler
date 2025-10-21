@@ -1,0 +1,101 @@
+digraph AST {
+node0 [label="PROGRAM"]
+node1 [label="DEFINITION-LIST"]
+node2 [label="DEFINITION"]
+node3 [label="BINARY-EXPRESSION\n="]
+node4 [label="('function', 'IDENTIFIER')\nelementWanted"]
+node5 [label="('function', 'IDENTIFIER')\ncurrentElement"]
+node6 [label="('function', 'IDENTIFIER')\ncurrentSum"]
+node7 [label="('function', 'IDENTIFIER')\naddNext"]
+node8 [label="EXPRESSION-LIST"]
+node9 [label="IF-EXPRESSION"]
+node10 [label="BINARY-EXPRESSION\n+"]
+node11 [label="('function', 'IDENTIFIER')\ncurrentElement"]
+node12 [label="INTEGER-LITERAL\n1"]
+node13 [label="('function', 'IDENTIFIER')\nelementWanted"]
+node14 [label="FUNCTION-CALL"]
+node15 [label="('function', 'IDENTIFIER')\ncurrentSum"]
+node16 [label="ARGUMENT-LIST"]
+node17 [label="BINARY-EXPRESSION\n+"]
+node18 [label="('function', 'IDENTIFIER')\npreviousSum"]
+node19 [label="('function', 'IDENTIFIER')\ncurrentSum"]
+node20 [label="TYPE\ninteger"]
+node21 [label="PARAMETER-LIST"]
+node22 [label="ID-TYPE"]
+node23 [label="IDENTIFIER\ncurrentSum"]
+node24 [label="ID-TYPE"]
+node25 [label="IDENTIFIER\npreviousSum"]
+node26 [label="ID-TYPE"]
+node27 [label="IDENTIFIER\nelementWanted"]
+node28 [label="ID-TYPE"]
+node29 [label="IDENTIFIER\ncurrentElement"]
+node30 [label="('function', 'IDENTIFIER')\naddNext"]
+node31 [label="DEFINITION"]
+node32 [label="('function', 'IDENTIFIER')\nmain"]
+node33 [label="PARAMETER-LIST"]
+node34 [label="ID-TYPE"]
+node35 [label="IDENTIFIER\nelementWanted"]
+node36 [label="TYPE\ninteger"]
+node37 [label="EXPRESSION-LIST"]
+node38 [label="IF-EXPRESSION"]
+node39 [label="('function', 'IDENTIFIER')\naddNext"]
+node40 [label="INTEGER-LITERAL\n1"]
+node41 [label="FUNCTION-CALL"]
+node42 [label="('function', 'IDENTIFIER')\nelementWanted"]
+node43 [label="ARGUMENT-LIST"]
+node44 [label="INTEGER-LITERAL\n1"]
+node45 [label="INTEGER-LITERAL\n0"]
+node46 [label="INTEGER-LITERAL\n0"]
+node47 [label="BINARY-EXPRESSION\n<"]
+node48 [label="('function', 'IDENTIFIER')\nelementWanted"]
+node49 [label="INTEGER-LITERAL\n1"]
+node0 -> node1
+node1 -> node2
+node2 -> node3
+node3 -> node4
+node3 -> node5
+node2 -> node6
+node2 -> node7
+node2 -> node8
+node8 -> node9
+node9 -> node10
+node10 -> node11
+node10 -> node12
+node9 -> node13
+node9 -> node14
+node14 -> node15
+node14 -> node16
+node16 -> node17
+node17 -> node18
+node17 -> node19
+node1 -> node20
+node1 -> node21
+node21 -> node22
+node22 -> node23
+node21 -> node24
+node24 -> node25
+node21 -> node26
+node26 -> node27
+node21 -> node28
+node28 -> node29
+node1 -> node30
+node1 -> node31
+node31 -> node32
+node31 -> node33
+node33 -> node34
+node34 -> node35
+node31 -> node36
+node31 -> node37
+node37 -> node38
+node38 -> node39
+node38 -> node40
+node38 -> node41
+node41 -> node42
+node41 -> node43
+node43 -> node44
+node43 -> node45
+node37 -> node46
+node37 -> node47
+node47 -> node48
+node47 -> node49
+}
