@@ -1,4 +1,4 @@
-<PROGRAM> ::= <DEFINITION-LIST>
+<PROGRAM> ::=     <DEFINITION-LIST>
 
     <DEFINITION-LIST> ::= ε
                         | <DEFINITION> <DEFINITION-LIST>
@@ -19,9 +19,9 @@
                         | "boolean"
 
                <BODY> ::= <PRINT-EXPRESSION> <BODY>
-                        | <EXPR>
+                        | <EXPRESSION>
 
-   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")"
+   <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")"
 
 	 <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
 
@@ -40,7 +40,7 @@
                <TERM> ::= <FACTOR> <TERM'>
 
 	      <TERM'> ::= ε
-			| "*" <FACTOR>
+			| "*"  <FACTOR>
 			| "/" <FACTOR>
 			| "and" <FACTOR>
 

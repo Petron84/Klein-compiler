@@ -1,4 +1,4 @@
-from parser import Parser
+from parser_without_semantics import Parser
 
 def validate(program):
 	p = Parser(program)

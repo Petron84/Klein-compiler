@@ -1,6 +1,6 @@
 function times2(x: integer): integer
-	x * 2
+	+ x
 
 function main(): integer
-	print(times2(10,2))
+	print(times2(10))
 	0

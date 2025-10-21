@@ -1,5 +1,5 @@
 function bothtrue(a: boolean, b: boolean): boolean
-	a and b c
+	a and
 
 function main(): integer
 	print(bothtrue(true, true))
