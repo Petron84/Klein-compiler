@@ -1,5 +1,5 @@
-(* function returns wrong value type *) 	
-function square(a: integer) : integer  	
+(* function returns wrong value type *)	
+function square(a: integer) : integer	
 	print(a*a)					
 	true						
 
