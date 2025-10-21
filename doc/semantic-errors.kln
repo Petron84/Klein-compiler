@@ -1,0 +1,95 @@
+(* function returns wrong value type *) 	
+function square(a: integer) : integer  	
+	print(a*a)					
+	true						
+
+(* function passes wrong number of arguments *)
+function add_squares(a: integer, b: integer): integer
+    square(a,b)
+
+(* function with variable that doesn’t exist *)
+function call_addsquare(a: integer, b:integer) : integer
+	add_squares(a,c)
+
+(* function passing wrong argument type *)
+function logic_check(a:integer, b:boolean) : boolean
+	If call_addsquare(a,b) = ((a*a)+(b*b)) then
+		true
+	Else
+		false
+
+(* function using wrong value for the operator *)
+function is_invalid(a:integer, b:integer): boolean
+	logic_check(a,b) and call_addsquare(b,a)
+
+(* function with invalid if type expression *)
+function check_nonzero(b:integer) : boolean
+	If b then
+		true
+	Else
+		false
+
+(* mismatched then/else clause types *)
+function divide(a:integer,b:integer) : integer
+	If check_nonzero(b) then
+		(a / b)
+	Else
+		false
+
+(* parameters with same name *)
+function multiply(x:integer,x:integer): integer
+	(x * x)
+
+(* function call doesn’t exist *)
+function difference(a:integer, b:integer): integer
+	subtract(a,b)
+
+(* functions with same name *)
+function difference(a:boolean, b:boolean) : boolean
+	(a = b)
+
+(* missing main *)
+function notmain(a:integer,b:integer) : integer
+	print(multiply(a,b))
+	0
+
+(* illegal print function *)
+function print(a:integer,b:integer) : integer
+	print(difference(a,b))
+	0
+
+(* OPTIONAL *)
+(* unused variable *)
+function resultprint(a:integer,b:integer) : integer
+	print(square(a))
+	0
+
+(* unused function *)
+function calculate_mean(a:integer,b:integer) : integer
+	(a + b) / 2
+
+function calculate_meansquare(a:integer, b:integer) : integer
+	((square(a) + square(b)) / 2)
+
+(* unnecessary function *)
+function redundant(a:integer) : boolean
+	(a > 0)
+function greater_than(a:integer) : boolean
+	redundant(a)
+
+(* code path that can’t execute *)
+function increment_to_max(a:integer,b;integer): integer
+	print(a)
+	If a = b then
+		b
+	Else
+		(a + 1)
+    increment_to_max(a,b)
+
+(* code never terminates. I.E. the semantic analyzer will terminate, but should detect the infinite recursion *)
+function loopToN(a:integer,b:integer) : integer
+	print(a)
+	If a < b then
+		loopToN(a,b)
+	Else
+		a

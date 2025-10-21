@@ -1,0 +1,92 @@
+(* Correct Version of Return Value Error *)
+function square(a: integer) : integer
+	print(a*a)
+	(a*a)
+
+(* Correct Version of Argument Mismatch *)
+function add_squares(a: integer, b:integer) : integer
+	(square(a) + square(b))
+
+(* Correct Version of Variable Not Initialized *)
+function call_addsquare(a:integer, b:integer): integer
+	add_squares(a,b)
+
+(* Correct Version of Argument Type Error *)
+function logic_check(a:integer, b:integer) : boolean
+	If call_addsquare(a,b) = ((a*a)+(b*b)) then
+		true
+	Else
+		false
+
+(* Correct Version of Invalid Operator Value *)
+function is_invalid(a:integer, b:integer): boolean
+	logic_check(a,b) and logic_check(b,a)
+
+(* Correct Version of Invalid If Expression *)
+function check_nonzero(b:integer) : boolean
+	If (b > 0) then
+		true
+	Else
+		false
+
+(* Correct Version of Clause Mismatch *)
+function divide(a:integer, b:integer): integer
+	If check_nonzero(b) then
+		(a / b)
+	Else
+		0
+
+(* Correct Version of Same Name Parameter *)
+function multiply(x:integer, y:integer): integer
+	(x * y)
+
+(* Correct Version of Unknown Function Call *)
+function difference(a:integer,b:integer): integer
+	(a - b)
+
+(* Correct Version of Function with Same Name (originally named "difference")*)
+function bool_difference(a:boolean,b:boolean) : boolean
+	(a = b)
+
+(* Correct Version of Main Not Defined *)
+function main(a:integer,b:integer) : integer
+	print(multiply(a,b))
+	0
+
+(* Correct Version of Illegal Print Function *)
+function resultprint(a:integer,b:integer) : integer
+	print(difference(a,b))
+	0
+
+(* OPTIONAL *)
+(* Correct Version of Unused Variable *)
+function resultprint(a:integer,b:integer) : integer
+	print(add_squares(a,b))
+	0
+
+(* Correct Version of Unused Function *)
+function calculate_mean(a:integer,b:integer) : integer
+	(a + b) / 2
+
+function calculate_meansquare(a:integer, b:integer) : integer
+	calculate_mean(square(a),square(b))
+
+(* Correct Version of Unnecessary/Redundant Function *)
+function greater_than(a: integer) : boolean
+	(a > 0)
+
+(* Correct Version of Broken Code Path *)
+function increment_to_max(a:integer,b:integer): integer
+	print(a)
+	If a = b then
+		b
+	Else
+		increment_to_max((a+1),b)
+
+(* Correct Version of Infinite Recursion *)
+	function loopToN(a:integer,b:integer) : integer
+		print(a)
+		If a < b then
+			loopToN(a+1,b)
+		Else
+			a
