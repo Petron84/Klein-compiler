@@ -1,0 +1,177 @@
+digraph AST {
+node0 [label="PROGRAM"]
+node1 [label="DEFINITION-LIST"]
+node2 [label="DEFINITION"]
+node3 [label="('function', 'IDENTIFIER')\nMOD"]
+node4 [label="PARAMETER-LIST"]
+node5 [label="ID-TYPE"]
+node6 [label="IDENTIFIER\nn"]
+node7 [label="ID-TYPE"]
+node8 [label="IDENTIFIER\nm"]
+node9 [label="TYPE\ninteger"]
+node10 [label="EXPRESSION-LIST"]
+node11 [label="BINARY-EXPRESSION\n-"]
+node12 [label="('function', 'IDENTIFIER')\nm"]
+node13 [label="BINARY-EXPRESSION\n*"]
+node14 [label="BINARY-EXPRESSION\n/"]
+node15 [label="('function', 'IDENTIFIER')\nm"]
+node16 [label="('function', 'IDENTIFIER')\nn"]
+node17 [label="('function', 'IDENTIFIER')\nn"]
+node18 [label="DEFINITION"]
+node19 [label="('function', 'IDENTIFIER')\ndivisibleByDifference"]
+node20 [label="PARAMETER-LIST"]
+node21 [label="ID-TYPE"]
+node22 [label="IDENTIFIER\ndiff"]
+node23 [label="TYPE\nboolean"]
+node24 [label="EXPRESSION-LIST"]
+node25 [label="IF-EXPRESSION"]
+node26 [label="BOOLEAN-LITERAL\ntrue"]
+node27 [label="BINARY-EXPRESSION\n<"]
+node28 [label="('function', 'IDENTIFIER')\ndiff"]
+node29 [label="INTEGER-LITERAL\n14"]
+node30 [label="IF-EXPRESSION"]
+node31 [label="BOOLEAN-LITERAL\nfalse"]
+node32 [label="('function', 'IDENTIFIER')\nmain"]
+node33 [label="FUNCTION-CALL"]
+node34 [label="('function', 'IDENTIFIER')\ndiff"]
+node35 [label="ARGUMENT-LIST"]
+node36 [label="BINARY-EXPRESSION\nor"]
+node37 [label="BINARY-EXPRESSION\nor"]
+node38 [label="BINARY-EXPRESSION\nor"]
+node39 [label="BINARY-EXPRESSION\n="]
+node40 [label="('function', 'IDENTIFIER')\ndiff"]
+node41 [label="INTEGER-LITERAL\n7"]
+node42 [label="BINARY-EXPRESSION\n="]
+node43 [label="('function', 'IDENTIFIER')\ndiff"]
+node44 [label="INTEGER-LITERAL\n0"]
+node45 [label="BINARY-EXPRESSION\n="]
+node46 [label="UNARY-EXPRESSION\n-"]
+node47 [label="('function', 'IDENTIFIER')\ndiff"]
+node48 [label="INTEGER-LITERAL\n7"]
+node49 [label="BINARY-EXPRESSION\n="]
+node50 [label="UNARY-EXPRESSION\n-"]
+node51 [label="('function', 'IDENTIFIER')\ndiff"]
+node52 [label="INTEGER-LITERAL\n14"]
+node53 [label="DEFINITION"]
+node54 [label="('function', 'IDENTIFIER')\ndivisibleByParts"]
+node55 [label="PARAMETER-LIST"]
+node56 [label="ID-TYPE"]
+node57 [label="IDENTIFIER\nright"]
+node58 [label="ID-TYPE"]
+node59 [label="IDENTIFIER\nleft"]
+node60 [label="TYPE\nboolean"]
+node61 [label="EXPRESSION-LIST"]
+node62 [label="FUNCTION-CALL"]
+node63 [label="('function', 'IDENTIFIER')\ndivisibleByDifference"]
+node64 [label="ARGUMENT-LIST"]
+node65 [label="BINARY-EXPRESSION\n-"]
+node66 [label="('function', 'IDENTIFIER')\nleft"]
+node67 [label="BINARY-EXPRESSION\n*"]
+node68 [label="('function', 'IDENTIFIER')\nright"]
+node69 [label="INTEGER-LITERAL\n2"]
+node70 [label="DEFINITION"]
+node71 [label="PARAMETER-LIST"]
+node72 [label="ID-TYPE"]
+node73 [label="IDENTIFIER\nn"]
+node74 [label="TYPE\nboolean"]
+node75 [label="('function', 'IDENTIFIER')\ndivisibleByParts"]
+node76 [label="EXPRESSION-LIST"]
+node77 [label="FUNCTION-CALL"]
+node78 [label="('function', 'IDENTIFIER')\nMOD"]
+node79 [label="ARGUMENT-LIST"]
+node80 [label="FUNCTION-CALL"]
+node81 [label="('function', 'IDENTIFIER')\nn"]
+node82 [label="ARGUMENT-LIST"]
+node83 [label="INTEGER-LITERAL\n10"]
+node84 [label="BINARY-EXPRESSION\n/"]
+node85 [label="('function', 'IDENTIFIER')\nn"]
+node86 [label="INTEGER-LITERAL\n10"]
+node87 [label="('function', 'IDENTIFIER')\nmain"]
+node0 -> node1
+node1 -> node2
+node2 -> node3
+node2 -> node4
+node4 -> node5
+node5 -> node6
+node4 -> node7
+node7 -> node8
+node2 -> node9
+node2 -> node10
+node10 -> node11
+node11 -> node12
+node11 -> node13
+node13 -> node14
+node14 -> node15
+node14 -> node16
+node13 -> node17
+node1 -> node18
+node18 -> node19
+node18 -> node20
+node20 -> node21
+node21 -> node22
+node18 -> node23
+node18 -> node24
+node24 -> node25
+node25 -> node26
+node25 -> node27
+node27 -> node28
+node27 -> node29
+node25 -> node30
+node30 -> node31
+node30 -> node32
+node30 -> node33
+node33 -> node34
+node33 -> node35
+node24 -> node36
+node36 -> node37
+node37 -> node38
+node38 -> node39
+node39 -> node40
+node39 -> node41
+node38 -> node42
+node42 -> node43
+node42 -> node44
+node37 -> node45
+node45 -> node46
+node46 -> node47
+node45 -> node48
+node36 -> node49
+node49 -> node50
+node50 -> node51
+node49 -> node52
+node1 -> node53
+node53 -> node54
+node53 -> node55
+node55 -> node56
+node56 -> node57
+node55 -> node58
+node58 -> node59
+node53 -> node60
+node53 -> node61
+node61 -> node62
+node62 -> node63
+node62 -> node64
+node64 -> node65
+node65 -> node66
+node65 -> node67
+node67 -> node68
+node67 -> node69
+node1 -> node70
+node70 -> node71
+node71 -> node72
+node72 -> node73
+node70 -> node74
+node70 -> node75
+node70 -> node76
+node76 -> node77
+node77 -> node78
+node77 -> node79
+node79 -> node80
+node80 -> node81
+node80 -> node82
+node82 -> node83
+node76 -> node84
+node84 -> node85
+node84 -> node86
+node1 -> node87
+}
