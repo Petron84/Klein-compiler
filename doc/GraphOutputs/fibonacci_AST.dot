@@ -2,100 +2,110 @@ digraph AST {
 node0 [label="PROGRAM"]
 node1 [label="DEFINITION-LIST"]
 node2 [label="DEFINITION"]
-node3 [label="BINARY-EXPRESSION\n="]
-node4 [label="('function', 'IDENTIFIER')\nelementWanted"]
-node5 [label="('function', 'IDENTIFIER')\ncurrentElement"]
-node6 [label="('function', 'IDENTIFIER')\ncurrentSum"]
-node7 [label="('function', 'IDENTIFIER')\naddNext"]
-node8 [label="EXPRESSION-LIST"]
-node9 [label="IF-EXPRESSION"]
-node10 [label="BINARY-EXPRESSION\n+"]
-node11 [label="('function', 'IDENTIFIER')\ncurrentElement"]
-node12 [label="INTEGER-LITERAL\n1"]
-node13 [label="('function', 'IDENTIFIER')\nelementWanted"]
-node14 [label="FUNCTION-CALL"]
-node15 [label="('function', 'IDENTIFIER')\ncurrentSum"]
-node16 [label="ARGUMENT-LIST"]
-node17 [label="BINARY-EXPRESSION\n+"]
-node18 [label="('function', 'IDENTIFIER')\npreviousSum"]
-node19 [label="('function', 'IDENTIFIER')\ncurrentSum"]
-node20 [label="TYPE\ninteger"]
-node21 [label="PARAMETER-LIST"]
-node22 [label="ID-TYPE"]
+node3 [label="IDENTIFIER\naddNext"]
+node4 [label="PARAMETER-LIST"]
+node5 [label="ID-TYPE"]
+node6 [label="IDENTIFIER\ncurrentSum"]
+node7 [label="TERMINAL\ninteger"]
+node8 [label="ID-TYPE"]
+node9 [label="IDENTIFIER\npreviousSum"]
+node10 [label="TERMINAL\ninteger"]
+node11 [label="ID-TYPE"]
+node12 [label="IDENTIFIER\nelementWanted"]
+node13 [label="TERMINAL\ninteger"]
+node14 [label="ID-TYPE"]
+node15 [label="IDENTIFIER\ncurrentElement"]
+node16 [label="TERMINAL\ninteger"]
+node17 [label="TYPE\ninteger"]
+node18 [label="EXPRESSION-LIST"]
+node19 [label="IF-EXPRESSION"]
+node20 [label="BINARY-EXPRESSION\n="]
+node21 [label="IDENTIFIER\nelementWanted"]
+node22 [label="IDENTIFIER\ncurrentElement"]
 node23 [label="IDENTIFIER\ncurrentSum"]
-node24 [label="ID-TYPE"]
-node25 [label="IDENTIFIER\npreviousSum"]
-node26 [label="ID-TYPE"]
-node27 [label="IDENTIFIER\nelementWanted"]
-node28 [label="ID-TYPE"]
-node29 [label="IDENTIFIER\ncurrentElement"]
-node30 [label="('function', 'IDENTIFIER')\naddNext"]
-node31 [label="DEFINITION"]
-node32 [label="('function', 'IDENTIFIER')\nmain"]
-node33 [label="PARAMETER-LIST"]
-node34 [label="ID-TYPE"]
-node35 [label="IDENTIFIER\nelementWanted"]
-node36 [label="TYPE\ninteger"]
-node37 [label="EXPRESSION-LIST"]
-node38 [label="IF-EXPRESSION"]
-node39 [label="('function', 'IDENTIFIER')\naddNext"]
-node40 [label="INTEGER-LITERAL\n1"]
-node41 [label="FUNCTION-CALL"]
-node42 [label="('function', 'IDENTIFIER')\nelementWanted"]
-node43 [label="ARGUMENT-LIST"]
-node44 [label="INTEGER-LITERAL\n1"]
-node45 [label="INTEGER-LITERAL\n0"]
-node46 [label="INTEGER-LITERAL\n0"]
-node47 [label="BINARY-EXPRESSION\n<"]
-node48 [label="('function', 'IDENTIFIER')\nelementWanted"]
-node49 [label="INTEGER-LITERAL\n1"]
-node0 -> node1
-node1 -> node2
-node2 -> node3
-node3 -> node4
-node3 -> node5
-node2 -> node6
-node2 -> node7
-node2 -> node8
-node8 -> node9
-node9 -> node10
-node10 -> node11
-node10 -> node12
-node9 -> node13
-node9 -> node14
-node14 -> node15
-node14 -> node16
-node16 -> node17
-node17 -> node18
-node17 -> node19
-node1 -> node20
-node1 -> node21
-node21 -> node22
-node22 -> node23
-node21 -> node24
-node24 -> node25
-node21 -> node26
+node24 [label="FUNCTION-CALL"]
+node25 [label="IDENTIFIER\naddNext"]
+node26 [label="ARGUMENT-LIST"]
+node27 [label="BINARY-EXPRESSION\n+"]
+node28 [label="IDENTIFIER\npreviousSum"]
+node29 [label="IDENTIFIER\ncurrentSum"]
+node30 [label="IDENTIFIER\ncurrentSum"]
+node31 [label="IDENTIFIER\nelementWanted"]
+node32 [label="BINARY-EXPRESSION\n+"]
+node33 [label="IDENTIFIER\ncurrentElement"]
+node34 [label="INTEGER-LITERAL\n1"]
+node35 [label="DEFINITION"]
+node36 [label="IDENTIFIER\nmain"]
+node37 [label="PARAMETER-LIST"]
+node38 [label="ID-TYPE"]
+node39 [label="IDENTIFIER\nelementWanted"]
+node40 [label="TERMINAL\ninteger"]
+node41 [label="TYPE\ninteger"]
+node42 [label="EXPRESSION-LIST"]
+node43 [label="IF-EXPRESSION"]
+node44 [label="BINARY-EXPRESSION\n<"]
+node45 [label="IDENTIFIER\nelementWanted"]
+node46 [label="INTEGER-LITERAL\n1"]
+node47 [label="INTEGER-LITERAL\n0"]
+node48 [label="FUNCTION-CALL"]
+node49 [label="IDENTIFIER\naddNext"]
+node50 [label="ARGUMENT-LIST"]
+node51 [label="INTEGER-LITERAL\n1"]
+node52 [label="INTEGER-LITERAL\n0"]
+node53 [label="IDENTIFIER\nelementWanted"]
+node54 [label="INTEGER-LITERAL\n1"]
+node2 -> node3 [label="function"]
+node5 -> node6 [label="id"]
+node5 -> node7 [label="type"]
+node4 -> node5
+node8 -> node9 [label="id"]
+node8 -> node10 [label="type"]
+node4 -> node8
+node11 -> node12 [label="id"]
+node11 -> node13 [label="type"]
+node4 -> node11
+node14 -> node15 [label="id"]
+node14 -> node16 [label="type"]
+node4 -> node14
+node2 -> node4
+node2 -> node17
+node20 -> node21 [label="left"]
+node20 -> node22 [label="right"]
+node19 -> node20 [label="if"]
+node19 -> node23 [label="else"]
+node24 -> node25 [label="function"]
+node27 -> node28 [label="left"]
+node27 -> node29 [label="right"]
 node26 -> node27
-node21 -> node28
-node28 -> node29
-node1 -> node30
-node1 -> node31
-node31 -> node32
-node31 -> node33
-node33 -> node34
-node34 -> node35
-node31 -> node36
-node31 -> node37
+node26 -> node30
+node26 -> node31
+node32 -> node33 [label="left"]
+node32 -> node34 [label="right"]
+node26 -> node32
+node24 -> node26 [label="arguments"]
+node19 -> node24 [label="then"]
+node18 -> node19
+node2 -> node18 [label="body"]
+node1 -> node2
+node35 -> node36 [label="function"]
+node38 -> node39 [label="id"]
+node38 -> node40 [label="type"]
 node37 -> node38
-node38 -> node39
-node38 -> node40
-node38 -> node41
-node41 -> node42
-node41 -> node43
-node43 -> node44
-node43 -> node45
-node37 -> node46
-node37 -> node47
-node47 -> node48
-node47 -> node49
+node35 -> node37
+node35 -> node41
+node44 -> node45 [label="left"]
+node44 -> node46 [label="right"]
+node43 -> node44 [label="if"]
+node43 -> node47 [label="else"]
+node48 -> node49 [label="function"]
+node50 -> node51
+node50 -> node52
+node50 -> node53
+node50 -> node54
+node48 -> node50 [label="arguments"]
+node43 -> node48 [label="then"]
+node42 -> node43
+node35 -> node42 [label="body"]
+node1 -> node35
+node0 -> node1
 }

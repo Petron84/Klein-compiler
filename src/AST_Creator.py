@@ -1,11 +1,4 @@
-class KleinError(Exception):
-
-    def __init__(self,message):
-        self.message = message
-        super().__init__(self.message)
-
-    def __str__(self):
-        return self.message
+from scanner import KleinError
 
 class AstAction:
 	def __init__(self):
@@ -90,11 +83,11 @@ class MakeNode:
 
 	def safe_pop(self,node_name,attempted_node):
 		try:
-			return self.ast_stack.pop()
+			return self.wrap_terminals(obj=self.ast_stack.pop(),label=node_name)
 		except:
-			raise KleinError(f'Parse Failed: No valid {attempted_node} child node for the parent {node_name}.')
+			KleinError(f'Parse Failed: No valid {attempted_node} child node for the parent {node_name}.')
 
-	def collect_list(self,valid,invalid,label):
+	def collect_list(self,valid,invalid):
 
 		expressions = []
 		while True:
@@ -103,25 +96,21 @@ class MakeNode:
 			except:
 				break
 			else:
-				if isinstance(expression.type,tuple):
-					if expression.type[0] in invalid:
-						break
-					else:
-						if expression.type[1] in valid:
-							expressions.append(self.ast_stack.pop())
-						else:
-							break
-
+				expression = self.wrap_terminals(expression)
+				if expression.label in invalid:
+					break
+				elif expression.type in valid:
+					expressions.append(self.ast_stack.pop())
 				else:
-					if expression.type in invalid:
-						break
-					else:
-						if expression.type in valid:
-							expressions.append(self.ast_stack.pop())
-						else:
-							break
+					break
 		return expressions
 
+	def wrap_terminals(self, obj,type_hint="TERMINAL",label=None):
+		if isinstance(obj,TreeNode):
+			return obj
+		else:
+			return TreeNode(type=type_hint,value=obj,label=label)
+		
 	def make_program_node(self):
 		deflist = self.safe_pop("PROGRAM","DEFINITION-LIST")
 		return TreeNode("PROGRAM",children=[deflist]), self.ast_stack
@@ -135,11 +124,11 @@ class MakeNode:
 
 	def make_expList_node(self):
 		ValidNodes = ExpressionNodeTypes()
-		expressions = self.collect_list(ValidNodes.types,['function'], "body")
-		return TreeNode("EXPRESSION-LIST",children=expressions), self.ast_stack
+		expressions = self.collect_list(ValidNodes.types,[])
+		return TreeNode("EXPRESSION-LIST",children=expressions,label="body"), self.ast_stack
 
 	def make_def_node(self):
-		node, ast_stack = self.make_expList_node()
+		node, _ = self.make_expList_node()
 		body = node
 		t = self.safe_pop("DEFINITION","TYPE")
 		parmlist = self.safe_pop("DEFINITION","PARAMETER-LIST")
@@ -148,7 +137,7 @@ class MakeNode:
 		return TreeNode("DEFINITION",children=[id,parmlist,t,body]), self.ast_stack
 
 	def make_parmList_node(self):
-		parameters = self.collect_list(["ID-TYPE"],["function","print"],"parameter")
+		parameters = self.collect_list(["ID-TYPE"],["function","print"])
 		# Parameters could be the empty list []. This is fine. This node is only the child of Definition. Function definitions do not require parameters. For instance: function main():integer
 		#																					print("EMPTY FUNCTION")
 		#																					0
@@ -157,20 +146,20 @@ class MakeNode:
 	def make_IDtype_node(self):
 		right = self.safe_pop("ID-TYPE","TYPE")
 		left = self.safe_pop("ID-TYPE","ID")
-		return TreeNode("ID-TYPE",children=[("id",left),("type",right)]), self.ast_stack
+		left.label = "id"
+		right.label = "type"
+		return TreeNode("ID-TYPE",children=[left,right]), self.ast_stack
 
 	def make_type_node(self):
 		terminal = self.safe_pop("TYPE","TERMINAL")
-		if isinstance(terminal,TreeNode):
-			raise KleinError(f"Parse Failed: Expected Terminal for Type Node, but got {terminal.type}")
-		return TreeNode("TYPE",value=terminal), self.ast_stack
+		return TreeNode("TYPE",value=terminal.value), self.ast_stack
 
 	def make_argList_node(self):
 		ValidNodes = ExpressionNodeTypes()
-		arguments = self.collect_list(ValidNodes.types,["function","print"],"argument")
+		arguments = self.collect_list(ValidNodes.types,["function","print"])
 
 		# Arguments could be the empty list []. This is fine. This node is only the child of Function Call. Function can be called with empty parameters, i.e. main() or print().
-		return TreeNode("ARGUMENT-LIST",children=arguments), self.ast_stack
+		return TreeNode("ARGUMENT-LIST",children=arguments,label="argument"), self.ast_stack
 
 	def make_unExp_node(self):
 		exp = self.safe_pop("UNARY-EXPRESSION","EXPRESSION")
@@ -179,52 +168,51 @@ class MakeNode:
 	def make_binExp_node(self):
 		right = self.safe_pop("BINARY EXPRESSION", "RIGHT-EXPRESSION")
 		left = self.safe_pop("BINARY EXPRESSION", "LEFT-EXPRESSION")
-		return TreeNode("BINARY-EXPRESSION",value=self.operator,children=[('left',left),("right",right)]), self.ast_stack
+		left.label = "left"
+		right.label = "right"
+		return TreeNode("BINARY-EXPRESSION",value=self.operator,children=[left,right]), self.ast_stack
 
 	def make_intLit_node(self):
 		terminal = self.safe_pop("INTEGER-LITERAL","TERMINAL")
-		if isinstance(terminal,TreeNode):
-			raise KleinError(f"Parse Failed: Expected Terminal for INTEGER-LITERAL Node, but got {terminal.type}")
-		return TreeNode("INTEGER-LITERAL",value=terminal), self.ast_stack
+		return TreeNode("INTEGER-LITERAL",value=terminal.value), self.ast_stack
 
 	def make_boolLit_node(self):
 		terminal = self.safe_pop("BOOLEAN-LITERAL","TERMINAL")
-		if isinstance(terminal,TreeNode):
-			raise KleinError(f"Parse Failed: Expected Terminal for BOOLEAN-LITERAL Node, but got {terminal.type}")
-
-		return TreeNode("BOOLEAN-LITERAL",value=terminal), self.ast_stack
+		return TreeNode("BOOLEAN-LITERAL",value=terminal.value), self.ast_stack
 
 	def make_funCall_node(self):
 		right = self.safe_pop("FUNCTION-CALL","ARGUMENT LIST")
 		left = self.safe_pop("FUNCTION-CALL","IDENTIFIER")
-		return TreeNode("FUNCTION-CALL",children=[("function",left),("arguments",right)]), self.ast_stack
+		left.label = "function"
+		right.label = "arguments"
+		return TreeNode("FUNCTION-CALL",children=[left, right]), self.ast_stack
 
 	def make_ifExp_node(self):
 		exception = self.safe_pop("IF-EXPRESSION","ELSE EXPRESSION")
 		then = self.safe_pop("IF-EXPRESSION", "THEN EXPRESSION")
 		test = self.safe_pop("IF-EXPRESSION", "TEST EXPRESSION")
-		return TreeNode("IF-EXPRESSION",children=[('if',test),('then',then),('else',exception)]), self.ast_stack
+		test.label = "if"
+		then.label = "else"
+		exception.label = "then"
+		return TreeNode("IF-EXPRESSION",children=[test,then,exception]), self.ast_stack
 
 	def make_ID_node(self):
 		terminal = self.safe_pop("IDENTIFIER","TERMINAL")
-		if isinstance(terminal,TreeNode):
-			raise KleinError(f"Parse Failed: Expected Terminal for IDENTIFIER Node, but got {terminal.type}")
-		if terminal == "print":
-			return TreeNode("function","IDENTIFIER",value=terminal), self.ast_stack
+		if terminal.value == "print":
+			return TreeNode("IDENTIFIER",value="print",label='function'), self.ast_stack
 		else:
-			return TreeNode("IDENTIFIER",value=terminal), self.ast_stack
+			return TreeNode("IDENTIFIER",value=terminal.value), self.ast_stack
 
 	def make_FunID_node(self):
 		terminal = self.safe_pop("FUNCTION","TERMINAL")
-		if isinstance(terminal,TreeNode):
-			raise KleinError(f"Parse Failed: Expected Terminal for FUNCTION-ID Node, but got {terminal.type}")
-		return TreeNode(("function","IDENTIFIER"),value=terminal), self.ast_stack
+		return TreeNode("IDENTIFIER",value=terminal.value,label="function"), self.ast_stack
 
 class TreeNode:
-	def __init__(self, type, value=None, children=[]):
+	def __init__(self, type, value=None, children=[], label=None):
 		self.type = type
 		self.value = value
 		self.children = children
+		self.label = label
 
 	def __repr__(self):
 
@@ -242,17 +230,3 @@ class TreeNode:
 		#  If node is singular (i.e. integer literals), then don't create children
 		else:
 			return f"Tree Node({self.type!r}, {self.value!r})"
-'''
-	def pretty_print(self, indent=0):
-		pad = "  " * indent
-		node_repr = f"{pad}{self.type}"
-		if self.value is not None:
-			node_repr += f": {self.value}"
-		if self.children:
-			child_repr = "\n".join(
-			child.pretty_print(indent + 1) if isinstance(child, TreeNode) else f"{'  ' * (indent + 1)}{child}"
-			for child in self.children)
-			return f"{node_repr}\n{child_repr}"
-		else:
-			return node_repr
-'''

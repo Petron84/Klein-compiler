@@ -1,16 +1,7 @@
 from tableloader import parsetable
 from AST_Creator import AstAction
 from token_lister import list_tokens
-
-class KleinError(Exception):
-
-    def __init__(self,message):
-        self.message = message
-        super().__init__(self.message)
-
-    def __str__(self):
-        return self.message
-
+from scanner import KleinError
 
 class Parser:
 	def __init__(self,text):
@@ -52,7 +43,8 @@ class Parser:
 		A = self.parse_stack[-1]
 
 		# Current token in input stream
-		token_type, token = self.in_stream[0]
+		token_type, token = self.in_stream[0][0]
+		linenumber = self.in_stream[0][1]
 
 		while A != "$":
 			if A.upper() in self.nonterminals:
@@ -77,9 +69,9 @@ class Parser:
 						if any("ε" in r for r in tablerow.values()):
 							self.parse_stack.pop()
 						else:
-							raise KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n Next token in queue is: {self.in_stream[1]}.')
+							KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n\t\tNext token in queue is: {self.in_stream[1][0][1]}.',linenumber)
 					else:
-						raise KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n Next token in queue is: {self.in_stream[1]}.')
+						KleinError(f'Parsing failed: No production rule found for token "{token}" and the non-terminal "{A}".\n\t\tNext token in queue is: {self.in_stream[1][0][1]}.',linenumber)
 
 				# If production rule is found
 				else:
@@ -102,13 +94,14 @@ class Parser:
 					if (token.isnumeric()) or (token in self.words) or (token_type == "IDENTIFIER"):
 						self.semantic_stack.append(token)
 					self.in_stream.pop(0)
-					token_type, token = self.in_stream[0]
+					token_type, token = self.in_stream[0][0]
+					linenumber = self.in_stream[0][1]
 
 				elif A in self.actions:
 					self.semantic_stack = AstAction.ApplySemantic(A,self.semantic_stack)
 					self.parse_stack.pop()
 				else:
-					raise KleinError(f'Token mismatch: Parser found "{A}" but "{token}" was next in stream.\n Next token in queue is: {self.in_stream[1]}.')
+					KleinError(f'Token mismatch: Parser found "{A}" but "{token}" was next in stream.\n\t\t Next token in queue is: {self.in_stream[1][0][1]}.',linenumber)
 
 			# Assign A as top of current parse_stack
 			A = self.parse_stack[-1]

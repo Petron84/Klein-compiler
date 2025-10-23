@@ -8,11 +8,25 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"src")))
 from validate_semanticparser import validate
 
 klein_file = sys.argv[1]
-content = open(klein_file).read()
-filename = klein_file.split('/')[-1].split('.')[0] + "_AST"
-validate(content,filename=filename)
 root = Path(__file__).resolve().parent
 output_dir = root / "doc" / "GraphOutputs"
-dot_path = output_dir / f"{filename}.dot"
-png_path = output_dir / f"{filename}.png"
-subprocess.run(['dot', '-Tpng', dot_path, '-o', png_path])
+
+klein_file = sys.argv[1]
+if os.path.isdir(klein_file):
+	for f in os.listdir(klein_file):
+		filename = f.split("/")[-1]
+		base_filename, extension = os.path.splitext(filename)
+		if extension == ".kln":
+			print("\nFILENAME:",filename)
+			output_name = base_filename + "_AST"
+			content = open(os.path.join(klein_file,f)).read()
+			validate(content,filename=output_name)
+			subprocess.run(['dot', '-Tpng', output_dir / f"{output_name}.dot", '-o', output_dir / f"{output_name}.png"])
+			
+		else:
+			continue
+else:
+	content = open(klein_file).read()
+	output_name = klein_file.split('/')[-1].split('.')[0] + "_AST"
+	validate(content,filename=output_name)
+	subprocess.run(['dot', '-Tpng', output_dir / f"{output_name}.dot", '-o', output_dir / f"{output_name}.png"])

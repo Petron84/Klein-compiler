@@ -1,3 +1,9 @@
+
+(* missing main *)
+function notmain(a:integer,b:integer) : integer
+	print(multiply(a,b))
+	0
+
 (* function returns wrong value type *)	
 function square(a: integer) : integer	
 	print(a*a)					
@@ -13,9 +19,9 @@ function call_addsquare(a: integer, b:integer) : integer
 
 (* function passing wrong argument type *)
 function logic_check(a:integer, b:boolean) : boolean
-	If call_addsquare(a,b) = ((a*a)+(b*b)) then
+	if call_addsquare(a,b) = ((a*a)+(b*b)) then
 		true
-	Else
+	else
 		false
 
 (* function using wrong value for the operator *)
@@ -24,16 +30,16 @@ function is_invalid(a:integer, b:integer): boolean
 
 (* function with invalid if type expression *)
 function check_nonzero(b:integer) : boolean
-	If b then
+	if b then
 		true
-	Else
+	else
 		false
 
 (* mismatched then/else clause types *)
 function divide(a:integer,b:integer) : integer
-	If check_nonzero(b) then
+	if check_nonzero(b) then
 		(a / b)
-	Else
+	else
 		false
 
 (* parameters with same name *)
@@ -47,11 +53,6 @@ function difference(a:integer, b:integer): integer
 (* functions with same name *)
 function difference(a:boolean, b:boolean) : boolean
 	(a = b)
-
-(* missing main *)
-function notmain(a:integer,b:integer) : integer
-	print(multiply(a,b))
-	0
 
 (* illegal print function *)
 function print(a:integer,b:integer) : integer
@@ -73,23 +74,21 @@ function calculate_meansquare(a:integer, b:integer) : integer
 
 (* unnecessary function *)
 function redundant(a:integer) : boolean
-	(a > 0)
+	(0 < a)
 function greater_than(a:integer) : boolean
 	redundant(a)
 
 (* code path that can’t execute *)
-function increment_to_max(a:integer,b;integer): integer
-	print(a)
-	If a = b then
-		b
-	Else
-		(a + 1)
-    increment_to_max(a,b)
+function is_5_positive(): boolean
+	if (0 < 5) then
+		true
+	else
+		false
 
 (* code never terminates. I.E. the semantic analyzer will terminate, but should detect the infinite recursion *)
 function loopToN(a:integer,b:integer) : integer
 	print(a)
-	If a < b then
+	if a < b then
 		loopToN(a,b)
-	Else
+	else
 		a

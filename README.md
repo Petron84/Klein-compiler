@@ -52,14 +52,9 @@ The primary deliverables for this module are:
 
 ## **Output Files**
 
-Running `kleinp` currently produces two files in the **main project directory**:
+Running `kleinp` currently produces two files in the doc/GraphOutputs directory:
 - `ast_output.dot` — Graphviz DOT file representation of the AST.
 - `ast_output.png` — Rendered PNG image of the AST.
-
-These will soon be redirected to a new folder:
-```
-GraphOutput/
-```
 
 ---
 
@@ -69,14 +64,14 @@ GraphOutput/
   kleinp                # Script to run the AST printer
   kleinf                # Parser from Module 2 (kept for reference)
   kleins
-  READMEModule3.md
+  README.md
 doc/
   abstract_syntax.txt    # Definition of AST classes and structures
   extended_grammar.txt   # Grammar updated with semantic actions
 
 programs/
   legal-programs/
-    prime_sum.kln       # New legal program for testing AST
+    sumprime.kln       # New legal program for testing AST
   illegal-programs/
     ...                 # Test programs that trigger syntax errors
     
@@ -119,10 +114,6 @@ Submitted on **October 10**:
 ---
 
 ## **Planned Improvements**
-- Move AST output files to a dedicated `GraphOutput/` directory.  
-- Fully suppress Python tracebacks in Klein error messages.  
-- Expand AST node coverage for expressions and statements.  
-- Improve `.dot` output formatting for readability and clarity.
-
+- Fully suppress Python tracebacks in Klein error messages.
 ---
 

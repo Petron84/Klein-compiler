@@ -6,7 +6,16 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"src")))
 
 from parse_validator import validate
 
-klein_file = open(sys.argv[1])
-content = klein_file.read()
-
-validate(content)
+klein_file = sys.argv[1]
+if os.path.isdir(klein_file):
+	for f in os.listdir(klein_file):
+		filename = f.split("/")[-1]
+		if os.path.splitext(filename)[-1] == ".kln":
+			print("\nFILENAME:",filename)
+			content = open(os.path.join(klein_file,f)).read()
+			validate(content)
+		else:
+			continue
+else:
+	content = open(klein_file).read()
+	validate(content)

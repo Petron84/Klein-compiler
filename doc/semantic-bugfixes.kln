@@ -1,3 +1,8 @@
+(* Correct Version of Main Not Defined *)
+function main(a:integer,b:integer) : integer
+	print(multiply(a,b))
+	0
+
 (* Correct Version of Return Value Error *)
 function square(a: integer) : integer
 	print(a*a)
@@ -13,27 +18,27 @@ function call_addsquare(a:integer, b:integer): integer
 
 (* Correct Version of Argument Type Error *)
 function logic_check(a:integer, b:integer) : boolean
-	If call_addsquare(a,b) = ((a*a)+(b*b)) then
+	if call_addsquare(a,b) = ((a*a)+(b*b)) then
 		true
-	Else
+	else
 		false
 
 (* Correct Version of Invalid Operator Value *)
 function is_invalid(a:integer, b:integer): boolean
 	logic_check(a,b) and logic_check(b,a)
 
-(* Correct Version of Invalid If Expression *)
+(* Correct Version of Invalid if Expression *)
 function check_nonzero(b:integer) : boolean
-	If (b > 0) then
+	if (0 < b) then
 		true
-	Else
+	else
 		false
 
 (* Correct Version of Clause Mismatch *)
 function divide(a:integer, b:integer): integer
-	If check_nonzero(b) then
+	if check_nonzero(b) then
 		(a / b)
-	Else
+	else
 		0
 
 (* Correct Version of Same Name Parameter *)
@@ -47,11 +52,6 @@ function difference(a:integer,b:integer): integer
 (* Correct Version of Function with Same Name (originally named "difference")*)
 function bool_difference(a:boolean,b:boolean) : boolean
 	(a = b)
-
-(* Correct Version of Main Not Defined *)
-function main(a:integer,b:integer) : integer
-	print(multiply(a,b))
-	0
 
 (* Correct Version of Illegal Print Function *)
 function resultprint(a:integer,b:integer) : integer
@@ -73,20 +73,19 @@ function calculate_meansquare(a:integer, b:integer) : integer
 
 (* Correct Version of Unnecessary/Redundant Function *)
 function greater_than(a: integer) : boolean
-	(a > 0)
+	(0 < a)
 
 (* Correct Version of Broken Code Path *)
-function increment_to_max(a:integer,b:integer): integer
-	print(a)
-	If a = b then
-		b
-	Else
-		increment_to_max((a+1),b)
+function is_A_positive(a:integer): boolean
+	if (0 < a) then
+		true
+	else
+		false
 
 (* Correct Version of Infinite Recursion *)
 	function loopToN(a:integer,b:integer) : integer
 		print(a)
-		If a < b then
+		if a < b then
 			loopToN(a+1,b)
-		Else
+		else
 			a

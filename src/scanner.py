@@ -1,12 +1,7 @@
-class KleinError(Exception):
-
-    def __init__(self,message,linenumber):
-        self.message = message
-        self.ln = linenumber
-        super().__init__(self.message)
-        
-    def __str__(self):
-        return f"line number {self.ln}: {self.message}"
+import sys
+def KleinError(message,linenumber):
+    print(f'\n\tKlein Error at line number {linenumber}: \n\t\t{message}')
+    sys.exit()
         
 class Scanner:
     def __init__(self, text: str):
@@ -49,7 +44,7 @@ class Scanner:
             else:
                 # length limit of 256
                 if len(accumulate) > 256:
-                    raise KleinError(f"Identifier exceeded length limit of 256: {accumulate}",self.linenumber)
+                    KleinError(f"Identifier exceeded length limit of 256: {accumulate}",self.linenumber)
                 return ("IDENTIFIER", accumulate)
 
         # Integer literal
@@ -60,7 +55,7 @@ class Scanner:
 
             # Reject character following integer
             if self.text[self.pos].isalpha():
-                raise KleinError(f"Illegal text following int: {self.text[self.pos]}",self.linenumber)
+                KleinError(f"Illegal text following int: {self.text[self.pos]}",self.linenumber)
             
             # accounting in illegal floats (3.14, 20.)
             if self.pos < len(self.text):
@@ -70,16 +65,16 @@ class Scanner:
                     while self.pos < len(self.text) and self.text[self.pos].isdigit():
                         accumulate += self.text[self.pos]
                         self.pos += 1
-                    raise KleinError(f"Illegal float: {accumulate}",self.linenumber)
+                    KleinError(f"Illegal float: {accumulate}",self.linenumber)
                 
             # Reject leading zero integers
             if accumulate[0] == '0' and len(accumulate) > 1:
-                raise KleinError(f"Illegal leading zero int: {accumulate}",self.linenumber)
+                KleinError(f"Illegal leading zero int: {accumulate}",self.linenumber)
 
             else:
                 # Reject numbers greater than 2^31 - 1
                 if int(accumulate) >= 2**31:
-                    raise KleinError(f"Integer greater than 2^31 - 1: {accumulate}",self.linenumber)
+                    KleinError(f"Integer greater than 2^31 - 1: {accumulate}",self.linenumber)
                 
                 # Passed all cases, return
                 return ("INT-LIT", accumulate)
@@ -112,7 +107,7 @@ class Scanner:
         # Unknown character
         else:
             self.pos += 1
-            raise KleinError(f"Unknown token: {ch}",self.linenumber)
+            KleinError(f"Unknown token: {ch}",self.linenumber)
 
     def peek(self):
         # Return next token without consuming it.
@@ -128,4 +123,3 @@ class Scanner:
             return tok
         else:
             return self._get_next_token()
-

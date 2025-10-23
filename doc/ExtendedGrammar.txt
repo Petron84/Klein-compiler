@@ -47,12 +47,12 @@
              <FACTOR> ::= <LITERAL>
                         | "not" *make-notexpression* <FACTOR>
                         | "-" *make-negateexpression* <FACTOR>
-                        | <IDENTIFIER> *make-functionidentifier* <FACTOR'>
+                        | <IDENTIFIER> <FACTOR'>
                         | "if" <SIMPLE-EXPRESSION> <EXPRESSION'> "then" <SIMPLE-EXPRESSION> <EXPRESSION'> "else" <SIMPLE-EXPRESSION> <EXPRESSION'> *make-ifexpression*
                         | "(" <SIMPLE-EXPRESSION> <EXPRESSION'> ")"
 
-	    <FACTOR'> ::= ε
-			| "(" <ARGUMENT-LIST> ")" *make-functioncall*
+	    <FACTOR'> ::= *make-identifier*
+			| "(" *make-functionidentifier* <ARGUMENT-LIST> ")" *make-functioncall*
 
       <ARGUMENT-LIST> ::= ε
 			| <FORMAL-ARGUMENTS>

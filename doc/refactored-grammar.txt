@@ -1,17 +1,19 @@
-<PROGRAM> ::=     <DEFINITION-LIST>
+<PROGRAM> ::= <DEFINITION-LIST>
 
     <DEFINITION-LIST> ::= ε
-                        | <DEFINITION> <DEFINITION-LIST>
+			| <DEFINITION> <DEFINITION-LIST>
 
-         <DEFINITION> ::= "function" <IDENTIFIER> "(" <PARAMETER-LIST> ")" ":" <TYPE> <BODY>
+         <DEFINITION> ::= "function" <IDENTIFIER> "(" <PARAMETER-LIST> ")" ":" <TYPE>
+                             <BODY>
 
      <PARAMETER-LIST> ::= ε
-                        | <FORMAL-PARAMETERS>
+			| <FORMAL-PARAMETERS>
+
 
   <FORMAL-PARAMETERS> ::= <ID-WITH-TYPE> <FORMAL-PARAMETERS'>
 
  <FORMAL-PARAMETERS'> ::= ε
-			| "," <FORMAL-PARAMETERS>
+			| "," <ID-WITH-TYPE> <FORMAL-PARAMETERS'>
 
        <ID-WITH-TYPE> ::= <IDENTIFIER> ":" <TYPE>
 
@@ -19,48 +21,47 @@
                         | "boolean"
 
                <BODY> ::= <PRINT-EXPRESSION> <BODY>
-                        | <EXPRESSION>
+                        | <EXPR>
 
-   <PRINT-EXPRESSION> ::= "print" "(" <EXPRESSION> ")"
+   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")"
 
-	 <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
+         <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
 
 	<EXPRESSION'> ::= ε
-			| "=" <SIMPLE-EXPRESSION>
-			| "<" <SIMPLE-EXPRESSION>
+			| "=" <SIMPLE-EXPRESSION> <EXPRESSION'>
+                        |"<" <SIMPLE-EXPRESSION> <EXPRESSION'>
 
   <SIMPLE-EXPRESSION> ::= <TERM> <SIMPLE-EXPRESSION'>
 
  <SIMPLE-EXPRESSION'> ::= ε
-			| "or" <TERM>
-			| "+" <TERM>
-			| "-" <TERM>
-
+			| "or" <TERM> <SIMPLE-EXPRESSION'>
+                        | "+" <TERM> <SIMPLE-EXPRESSION'>
+                        | "-" <TERM> <SIMPLE-EXPRESSION'>
 
                <TERM> ::= <FACTOR> <TERM'>
 
 	      <TERM'> ::= ε
-			| "*"  <FACTOR>
-			| "/" <FACTOR>
-			| "and" <FACTOR>
+			| "*" <FACTOR> <TERM'>
+                        | "/" <FACTOR> <TERM'>
+                        | "and" <FACTOR> <TERM'>
 
              <FACTOR> ::= <LITERAL>
                         | "not" <FACTOR>
                         | "-" <FACTOR>
                         | <IDENTIFIER> <FACTOR'>
-                        | "if" <EXPRESSION> "then" <EXPRESSION> "else" <EXPRESSION>
-                        | "(" <EXPRESSION> ")"
+                        | "if" <SIMPLE-EXPRESSION> <EXPRESSION'> "then" <SIMPLE-EXPRESSION> <EXPRESSION'> "else" <SIMPLE-EXPRESSION> <EXPRESSION'>
+                        | "(" <SIMPLE-EXPRESSION> <EXPRESSION'> ")"
 
 	    <FACTOR'> ::= ε
 			| "(" <ARGUMENT-LIST> ")"
 
       <ARGUMENT-LIST> ::= ε
-                        | <FORMAL-ARGUMENTS>
+			| <FORMAL-ARGUMENTS>
 
-   <FORMAL-ARGUMENTS> ::= <EXPRESSION> <FORMAL-ARGUMENTS'>
+   <FORMAL-ARGUMENTS> ::= <SIMPLE-EXPRESSION> <EXPRESSION'> <FORMAL-ARGUMENTS'>
 
   <FORMAL-ARGUMENTS'> ::= ε
-			| "," <FORMAL-ARGUMENTS>
+			| "," <SIMPLE-EXPRESSION> <EXPRESSION'> <FORMAL-ARGUMENTS'>
 
             <LITERAL> ::= <INTEGER-LITERAL>
                         | <BOOLEAN-LITERAL>

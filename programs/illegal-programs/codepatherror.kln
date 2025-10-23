@@ -1,0 +1,5 @@
+function is_5_positive(): boolean
+	if (0 < 5) then
+		true
+	else
+		false

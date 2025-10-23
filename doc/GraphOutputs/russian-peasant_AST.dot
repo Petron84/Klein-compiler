@@ -1,0 +1,211 @@
+digraph AST {
+node0 [label="PROGRAM"]
+node1 [label="DEFINITION-LIST"]
+node2 [label="DEFINITION"]
+node3 [label="IDENTIFIER\nmain"]
+node4 [label="PARAMETER-LIST"]
+node5 [label="ID-TYPE"]
+node6 [label="IDENTIFIER\nn"]
+node7 [label="TERMINAL\ninteger"]
+node8 [label="ID-TYPE"]
+node9 [label="IDENTIFIER\nm"]
+node10 [label="TERMINAL\ninteger"]
+node11 [label="TYPE\ninteger"]
+node12 [label="EXPRESSION-LIST"]
+node13 [label="FUNCTION-CALL"]
+node14 [label="IDENTIFIER\nmult"]
+node15 [label="ARGUMENT-LIST"]
+node16 [label="IDENTIFIER\nn"]
+node17 [label="IDENTIFIER\nm"]
+node18 [label="FUNCTION-CALL"]
+node19 [label="TERMINAL\nprint"]
+node20 [label="IDENTIFIER\nm"]
+node21 [label="DEFINITION"]
+node22 [label="IDENTIFIER\nmult"]
+node23 [label="PARAMETER-LIST"]
+node24 [label="ID-TYPE"]
+node25 [label="IDENTIFIER\nn"]
+node26 [label="TERMINAL\ninteger"]
+node27 [label="ID-TYPE"]
+node28 [label="IDENTIFIER\nm"]
+node29 [label="TERMINAL\ninteger"]
+node30 [label="TYPE\ninteger"]
+node31 [label="EXPRESSION-LIST"]
+node32 [label="FUNCTION-CALL"]
+node33 [label="IDENTIFIER\nmultWithAccum"]
+node34 [label="ARGUMENT-LIST"]
+node35 [label="INTEGER-LITERAL\n0"]
+node36 [label="IDENTIFIER\nn"]
+node37 [label="IDENTIFIER\nm"]
+node38 [label="DEFINITION"]
+node39 [label="IDENTIFIER\nmultWithAccum"]
+node40 [label="PARAMETER-LIST"]
+node41 [label="ID-TYPE"]
+node42 [label="IDENTIFIER\naccum"]
+node43 [label="TERMINAL\ninteger"]
+node44 [label="ID-TYPE"]
+node45 [label="IDENTIFIER\nn"]
+node46 [label="TERMINAL\ninteger"]
+node47 [label="ID-TYPE"]
+node48 [label="IDENTIFIER\nm"]
+node49 [label="TERMINAL\ninteger"]
+node50 [label="TYPE\ninteger"]
+node51 [label="EXPRESSION-LIST"]
+node52 [label="IF-EXPRESSION"]
+node53 [label="BINARY-EXPRESSION\n="]
+node54 [label="IDENTIFIER\nn"]
+node55 [label="INTEGER-LITERAL\n0"]
+node56 [label="IDENTIFIER\naccum"]
+node57 [label="IF-EXPRESSION"]
+node58 [label="BINARY-EXPRESSION\n="]
+node59 [label="FUNCTION-CALL"]
+node60 [label="IDENTIFIER\nMOD"]
+node61 [label="ARGUMENT-LIST"]
+node62 [label="INTEGER-LITERAL\n2"]
+node63 [label="IDENTIFIER\nn"]
+node64 [label="INTEGER-LITERAL\n1"]
+node65 [label="FUNCTION-CALL"]
+node66 [label="IDENTIFIER\nmultWithAccum"]
+node67 [label="ARGUMENT-LIST"]
+node68 [label="BINARY-EXPRESSION\n+"]
+node69 [label="IDENTIFIER\naccum"]
+node70 [label="IDENTIFIER\nm"]
+node71 [label="BINARY-EXPRESSION\n/"]
+node72 [label="IDENTIFIER\nn"]
+node73 [label="INTEGER-LITERAL\n2"]
+node74 [label="BINARY-EXPRESSION\n*"]
+node75 [label="IDENTIFIER\nm"]
+node76 [label="INTEGER-LITERAL\n2"]
+node77 [label="FUNCTION-CALL"]
+node78 [label="IDENTIFIER\nmultWithAccum"]
+node79 [label="ARGUMENT-LIST"]
+node80 [label="IDENTIFIER\naccum"]
+node81 [label="BINARY-EXPRESSION\n/"]
+node82 [label="IDENTIFIER\nn"]
+node83 [label="INTEGER-LITERAL\n2"]
+node84 [label="BINARY-EXPRESSION\n*"]
+node85 [label="IDENTIFIER\nm"]
+node86 [label="INTEGER-LITERAL\n2"]
+node87 [label="DEFINITION"]
+node88 [label="IDENTIFIER\nMOD"]
+node89 [label="PARAMETER-LIST"]
+node90 [label="ID-TYPE"]
+node91 [label="IDENTIFIER\nn"]
+node92 [label="TERMINAL\ninteger"]
+node93 [label="ID-TYPE"]
+node94 [label="IDENTIFIER\nm"]
+node95 [label="TERMINAL\ninteger"]
+node96 [label="TYPE\ninteger"]
+node97 [label="EXPRESSION-LIST"]
+node98 [label="BINARY-EXPRESSION\n-"]
+node99 [label="IDENTIFIER\nm"]
+node100 [label="BINARY-EXPRESSION\n*"]
+node101 [label="BINARY-EXPRESSION\n/"]
+node102 [label="IDENTIFIER\nm"]
+node103 [label="IDENTIFIER\nn"]
+node104 [label="IDENTIFIER\nn"]
+node2 -> node3 [label="function"]
+node5 -> node6 [label="id"]
+node5 -> node7 [label="type"]
+node4 -> node5
+node8 -> node9 [label="id"]
+node8 -> node10 [label="type"]
+node4 -> node8
+node2 -> node4
+node2 -> node11
+node13 -> node14 [label="function"]
+node15 -> node16
+node15 -> node17
+node13 -> node15 [label="arguments"]
+node12 -> node13
+node18 -> node19 [label="function"]
+node18 -> node20 [label="arguments"]
+node12 -> node18
+node2 -> node12 [label="body"]
+node1 -> node2
+node21 -> node22 [label="function"]
+node24 -> node25 [label="id"]
+node24 -> node26 [label="type"]
+node23 -> node24
+node27 -> node28 [label="id"]
+node27 -> node29 [label="type"]
+node23 -> node27
+node21 -> node23
+node21 -> node30
+node32 -> node33 [label="function"]
+node34 -> node35
+node34 -> node36
+node34 -> node37
+node32 -> node34 [label="arguments"]
+node31 -> node32
+node21 -> node31 [label="body"]
+node1 -> node21
+node38 -> node39 [label="function"]
+node41 -> node42 [label="id"]
+node41 -> node43 [label="type"]
+node40 -> node41
+node44 -> node45 [label="id"]
+node44 -> node46 [label="type"]
+node40 -> node44
+node47 -> node48 [label="id"]
+node47 -> node49 [label="type"]
+node40 -> node47
+node38 -> node40
+node38 -> node50
+node53 -> node54 [label="left"]
+node53 -> node55 [label="right"]
+node52 -> node53 [label="if"]
+node52 -> node56 [label="else"]
+node59 -> node60 [label="function"]
+node61 -> node62
+node61 -> node63
+node59 -> node61 [label="arguments"]
+node58 -> node59 [label="left"]
+node58 -> node64 [label="right"]
+node57 -> node58 [label="if"]
+node65 -> node66 [label="function"]
+node68 -> node69 [label="left"]
+node68 -> node70 [label="right"]
+node67 -> node68
+node71 -> node72 [label="left"]
+node71 -> node73 [label="right"]
+node67 -> node71
+node74 -> node75 [label="left"]
+node74 -> node76 [label="right"]
+node67 -> node74
+node65 -> node67 [label="arguments"]
+node57 -> node65 [label="else"]
+node77 -> node78 [label="function"]
+node79 -> node80
+node81 -> node82 [label="left"]
+node81 -> node83 [label="right"]
+node79 -> node81
+node84 -> node85 [label="left"]
+node84 -> node86 [label="right"]
+node79 -> node84
+node77 -> node79 [label="arguments"]
+node57 -> node77 [label="then"]
+node52 -> node57 [label="then"]
+node51 -> node52
+node38 -> node51 [label="body"]
+node1 -> node38
+node87 -> node88 [label="function"]
+node90 -> node91 [label="id"]
+node90 -> node92 [label="type"]
+node89 -> node90
+node93 -> node94 [label="id"]
+node93 -> node95 [label="type"]
+node89 -> node93
+node87 -> node89
+node87 -> node96
+node98 -> node99 [label="left"]
+node101 -> node102 [label="left"]
+node101 -> node103 [label="right"]
+node100 -> node101 [label="left"]
+node100 -> node104 [label="right"]
+node98 -> node100 [label="right"]
+node97 -> node98
+node87 -> node97 [label="body"]
+node1 -> node87
+node0 -> node1
+}
