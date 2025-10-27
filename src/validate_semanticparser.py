@@ -7,4 +7,3 @@ def validate(program,filename="input.kln"):
 	AST = p.parse()
 	print("Valid Program")
 	generate_dot(AST,filename=filename)
-

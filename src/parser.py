@@ -103,7 +103,7 @@ class Parser:
 						linenumber = self.in_stream[0][1]
 
 					elif A in self.actions:
-						self.semantic_stack = AstAction.ApplySemantic(A,self.semantic_stack)
+						self.semantic_stack = AstAction.ApplySemantic(A,self.semantic_stack,linenumber)
 						self.parse_stack.pop()
 					else:
 						KleinError(f'Token mismatch: Parser found "{A}" but "{token}" was next in stream.\n\t\t Next token in queue is: {self.in_stream[1][0][1]}.',linenumber)

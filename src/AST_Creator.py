@@ -7,8 +7,8 @@ class AstAction:
 					'MakeNotExp','MakeNegExp','MakeEqualExp','MakeLessExp','MakeOrExp','MakeAddExp','MakeMinusExp','MakeMultExp','MakeDivExp','MakeAndExp',
 					'MakeIntLit','MakeBoolLit','MakeFunCall','MakeIfExp','MakeIdentifier','MakeFunID']
 
-	def ApplySemantic(action, semantic_stack):
-		node = MakeNode(semantic_stack)
+	def ApplySemantic(action, semantic_stack, linenumber):
+		node = MakeNode(ast_stack=semantic_stack,linenumber=linenumber)
 
 		match action:
 			case "MakeProgram":
@@ -78,9 +78,10 @@ class ExpressionNodeTypes:
 
 class MakeNode:
 	try:
-		def __init__(self,ast_stack=None,operator=None):
+		def __init__(self,ast_stack=None,operator=None,	linenumber=-1):
 			self.ast_stack = ast_stack
 			self.operator = operator
+			self.linenumber = linenumber
 
 		def safe_pop(self,node_name,attempted_node):
 			try:
@@ -110,23 +111,23 @@ class MakeNode:
 			if isinstance(obj,TreeNode):
 				return obj
 			else:
-				return TreeNode(type=type_hint,value=obj,label=label)
+				return TreeNode(type=type_hint,value=obj,label=label,linenumber=self.linenumber)
 			
 		def make_program_node(self):
 			deflist = self.safe_pop("PROGRAM","DEFINITION-LIST")
-			return TreeNode("PROGRAM",children=[deflist]), self.ast_stack
+			return TreeNode("PROGRAM",children=[deflist],linenumber=self.linenumber), self.ast_stack
 
 		def make_defList_node(self):
 			definitions = []
 			while len(self.ast_stack) > 0:
 				definition = self.safe_pop("DEFINITION-LIST","DEFINITION")
 				definitions.append(definition)
-			return TreeNode("DEFINITION-LIST",children=definitions), self.ast_stack
+			return TreeNode("DEFINITION-LIST",children=definitions,linenumber=self.linenumber), self.ast_stack
 
 		def make_expList_node(self):
 			ValidNodes = ExpressionNodeTypes()
 			expressions = self.collect_list(ValidNodes.types,[])
-			return TreeNode("EXPRESSION-LIST",children=expressions,label="body"), self.ast_stack
+			return TreeNode("EXPRESSION-LIST",children=expressions,label="body",linenumber=self.linenumber), self.ast_stack
 
 		def make_def_node(self):
 			node, _ = self.make_expList_node()
@@ -135,58 +136,58 @@ class MakeNode:
 			parmlist = self.safe_pop("DEFINITION","PARAMETER-LIST")
 			id = self.safe_pop("DEFINITION","IDENTIFIER")
 
-			return TreeNode("DEFINITION",children=[id,parmlist,t,body]), self.ast_stack
+			return TreeNode("DEFINITION",children=[id,parmlist,t,body],linenumber=self.linenumber), self.ast_stack
 
 		def make_parmList_node(self):
 			parameters = self.collect_list(["ID-TYPE"],["function","print"])
 			# Parameters could be the empty list []. This is fine. This node is only the child of Definition. Function definitions do not require parameters. For instance: function main():integer
 			#																					print("EMPTY FUNCTION")
 			#																					0
-			return TreeNode("PARAMETER-LIST",children=parameters), self.ast_stack
+			return TreeNode("PARAMETER-LIST",children=parameters,linenumber=self.linenumber), self.ast_stack
 
 		def make_IDtype_node(self):
 			right = self.safe_pop("ID-TYPE","TYPE")
 			left = self.safe_pop("ID-TYPE","ID")
 			left.label = "id"
 			right.label = "type"
-			return TreeNode("ID-TYPE",children=[left,right]), self.ast_stack
+			return TreeNode("ID-TYPE",children=[left,right],linenumber=self.linenumber), self.ast_stack
 
 		def make_type_node(self):
 			terminal = self.safe_pop("TYPE","TERMINAL")
-			return TreeNode("TYPE",value=terminal.value), self.ast_stack
+			return TreeNode("TYPE",value=terminal.value,linenumber=self.linenumber), self.ast_stack
 
 		def make_argList_node(self):
 			ValidNodes = ExpressionNodeTypes()
 			arguments = self.collect_list(ValidNodes.types,["function","print"])
 
 			# Arguments could be the empty list []. This is fine. This node is only the child of Function Call. Function can be called with empty parameters, i.e. main() or print().
-			return TreeNode("ARGUMENT-LIST",children=arguments,label="argument"), self.ast_stack
+			return TreeNode("ARGUMENT-LIST",children=arguments,label="argument",linenumber=self.linenumber), self.ast_stack
 
 		def make_unExp_node(self):
 			exp = self.safe_pop("UNARY-EXPRESSION","EXPRESSION")
-			return TreeNode("UNARY-EXPRESSION",value=self.operator,children=[exp]), self.ast_stack
+			return TreeNode("UNARY-EXPRESSION",value=self.operator,children=[exp],linenumber=self.linenumber), self.ast_stack
 
 		def make_binExp_node(self):
 			right = self.safe_pop("BINARY EXPRESSION", "RIGHT-EXPRESSION")
 			left = self.safe_pop("BINARY EXPRESSION", "LEFT-EXPRESSION")
 			left.label = "left"
 			right.label = "right"
-			return TreeNode("BINARY-EXPRESSION",value=self.operator,children=[left,right]), self.ast_stack
+			return TreeNode("BINARY-EXPRESSION",value=self.operator,children=[left,right],linenumber=self.linenumber), self.ast_stack
 
 		def make_intLit_node(self):
 			terminal = self.safe_pop("INTEGER-LITERAL","TERMINAL")
-			return TreeNode("INTEGER-LITERAL",value=terminal.value), self.ast_stack
+			return TreeNode("INTEGER-LITERAL",value=terminal.value,linenumber=self.linenumber), self.ast_stack
 
 		def make_boolLit_node(self):
 			terminal = self.safe_pop("BOOLEAN-LITERAL","TERMINAL")
-			return TreeNode("BOOLEAN-LITERAL",value=terminal.value), self.ast_stack
+			return TreeNode("BOOLEAN-LITERAL",value=terminal.value,linenumber=self.linenumber), self.ast_stack
 
 		def make_funCall_node(self):
 			right = self.safe_pop("FUNCTION-CALL","ARGUMENT LIST")
 			left = self.safe_pop("FUNCTION-CALL","IDENTIFIER")
 			left.label = "function"
 			right.label = "arguments"
-			return TreeNode("FUNCTION-CALL",children=[left, right]), self.ast_stack
+			return TreeNode("FUNCTION-CALL",children=[left, right],linenumber=self.linenumber), self.ast_stack
 
 		def make_ifExp_node(self):
 			exception = self.safe_pop("IF-EXPRESSION","ELSE EXPRESSION")
@@ -195,29 +196,30 @@ class MakeNode:
 			test.label = "if"
 			then.label = "else"
 			exception.label = "then"
-			return TreeNode("IF-EXPRESSION",children=[test,then,exception]), self.ast_stack
+			return TreeNode("IF-EXPRESSION",children=[test,then,exception],linenumber=self.linenumber), self.ast_stack
 
 		def make_ID_node(self):
 			terminal = self.safe_pop("IDENTIFIER","TERMINAL")
 			if terminal.value == "print":
-				return TreeNode("IDENTIFIER",value="print",label='function'), self.ast_stack
+				return TreeNode("IDENTIFIER",value="print",label='function',linenumber=self.linenumber), self.ast_stack
 			else:
-				return TreeNode("IDENTIFIER",value=terminal.value), self.ast_stack
+				return TreeNode("IDENTIFIER",value=terminal.value,linenumber=self.linenumber), self.ast_stack
 
 		def make_FunID_node(self):
 			terminal = self.safe_pop("FUNCTION","TERMINAL")
-			return TreeNode("IDENTIFIER",value=terminal.value,label="function"), self.ast_stack
+			return TreeNode("IDENTIFIER",value=terminal.value,label="function",linenumber=self.linenumber), self.ast_stack
 	except:
 		print("Klein Error: Failed to generate an AST node")
 		print("Top of stack prior to error:", ast_stack[-1] if ast_stack else "Empty Stack")
 		sys.exit()
 
 class TreeNode:
-	def __init__(self, type, value=None, children=[], label=None):
+	def __init__(self, type, value=None, children=[], label=None, linenumber=-1):
 		self.type = type
 		self.value = value
 		self.children = children
 		self.label = label
+		self.linenumber = linenumber
 
 	def __repr__(self):
 
