@@ -52,13 +52,13 @@ class Traverser():
                 if if_returntype != "boolean":
                     KleinError(f"Semantic Error: If-clause in if-expression is not a boolean",children[0].linenumber)
                 then_returntype = self.traverse(self, children[1].children, children[1].type)
-                if then_returntype != self.symbol_table[f_name].type:
-                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[f_name].type} but got {then_returntype}", children[0].linenumber)
+                if then_returntype != self.symbol_table[self.f_name].type:
+                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {then_returntype}", children[0].linenumber)
                 else_returntype = self.traverse(self, children[2].children, children[2].type)
-                if else_returntype != self.symbol_table[f_name].type:
-                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[f_name].type} but got {else_returntype}", children[0].linenumber)
+                if else_returntype != self.symbol_table[self.f_name].type:
+                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {else_returntype}", children[0].linenumber)
                
             case "IDENTIFIER":
                 if self.children[0].value not in self.symbol_table[self.f_name].parameters[1]:
-                    KleinError(f"Semantic Error: Undeclared identifier '{children[0].value}' used in if-expression condition", children[0].linenumber)"
+                    KleinError(f"Semantic Error: Undeclared identifier '{children[0].value}' used in if-expression condition", children[0].linenumber)
                 return self.symbol_table[self.f_name].parameters[1][self.children[0].value]
