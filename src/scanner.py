@@ -1,7 +1,8 @@
 import sys
-def KleinError(message,linenumber):
+def KleinError(message,linenumber,terminate=True):
     print(f'\n\tKlein Error at line number {linenumber}: \n\t\t{message}')
-    sys.exit()
+    if terminate:
+        sys.exit()    
         
 class Scanner:
     try:

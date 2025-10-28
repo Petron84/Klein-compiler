@@ -25,7 +25,7 @@ class Analyzer():
 
             # Illegal case for two functions with same name
             if f_name in self.symbol_table:
-                KleinError(f"Semantic Error: Two or more functions have been defined with the name {f_name}.",f_def[0].linenumber)
+                KleinError(f"Semantic Error: Two or more functions have been defined with the name {f_name}.",f_def[0].linenumber,terminate=False)
 
             self.symbol_table[f_name] = Symbol(f_name)
 
@@ -37,7 +37,7 @@ class Analyzer():
 
                 # Illegal case for two parameters with same name
                 if p_name in param_list:
-                    KleinError(f"Semantic Error: The function {f_name} has two or more parameters named {p_name}",f_def[0].linenumber)
+                    KleinError(f"Semantic Error: The function {f_name} has two or more parameters named {p_name}",f_def[0].linenumber,terminate=False)
 
                 param_list[p_name] = params[1].value
 
@@ -65,32 +65,32 @@ class Traverser():
 
                 # Illegal case for integer used as boolean check
                 if node_type == "INTEGER-LITERAL":
-                    KleinError(f"Semantic Error: Condition in if-expression cannot be integer literal", curr_line)
+                    KleinError(f"Semantic Error: Condition in if-expression cannot be integer literal", curr_line,terminate=False)
 
                 if_returntype = self.traverse(self, next_children, children[0].type)
 
                 # Illegal case for boolean expression returning an integer
                 if if_returntype != "boolean":
-                    KleinError(f"Semantic Error: If-clause in if-expression is not a boolean",curr_line)
+                    KleinError(f"Semantic Error: If-clause in if-expression is not a boolean",curr_line,terminate=False)
 
                 then_returntype = self.traverse(self, children[1].children, children[1].type)
 
                 # Illegal case for the then clause containing an invalid return type
                 if then_returntype != self.symbol_table[self.f_name].type:
-                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {then_returntype}", curr_line)
+                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {then_returntype}", curr_line, terminate=False)
                 
                 else_returntype = self.traverse(self, children[2].children, children[2].type)
 
                 # Illegal case for the else clause containing an invalid return type
                 if else_returntype != self.symbol_table[self.f_name].type:
-                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {else_returntype}", curr_line)
+                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\nExpected {self.symbol_table[self.f_name].type} but got {else_returntype}", curr_line,terminate=False)
                
             case "IDENTIFIER":
 
                 # Illegal case where an identifier doesn't exist within the scope of the function
 
                 if self.curr_value not in self.symbol_table[self.f_name].parameters[1]:
-                    KleinError(f"Semantic Error: Undeclared identifier '{curr_value}' used in if-expression condition", curr_line)
+                    KleinError(f"Semantic Error: Undeclared identifier '{curr_value}' used in if-expression condition", curr_line,terminate=False)
                 return self.symbol_table[self.f_name].parameters[1][curr_value]
             
             case "INTEGER-LITERAL":
@@ -104,7 +104,7 @@ class Traverser():
 
                 # Illegal case for mismatched unary expressions. I.E. '-' used on a boolean operand, or "not" used on an integer operand.
                 if (exp_returntype == "integer" and curr_value != "-") or (exp_returntype == "boolean" and curr_value != "not"):
-                    KleinError(f"Semantic  Error: operand of unary expression returned an {exp_returntype} type, but operator was {curr_value}",curr_line)
+                    KleinError(f"Semantic  Error: operand of unary expression returned an {exp_returntype} type, but operator was {curr_value}",curr_line, terminate=False)
                 return exp_returntype
             
             case "BINARY-EXP":
