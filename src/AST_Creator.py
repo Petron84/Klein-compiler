@@ -228,12 +228,12 @@ class TreeNode:
 
 			# If node has children and a value (i.e. binary expression and unary expression), then add the value to the node
 			if self.value:
-				return f"Tree Node({self.type!r}, {self.value!r}, children={self.children})"
+				return f"Tree Node({self.type!r}, value={self.value!r}, children={self.children},line={self.linenumber})"
 
 			# If node has children and no values (i.e. expression lists or function calls), then don't include a value in the node
 			else:
-				return f"Tree Node({self.type!r}, children={self.children})"
+				return f"Tree Node({self.type!r}, children={self.children},line={self.linenumber})"
 
 		#  If node is singular (i.e. integer literals), then don't create children
 		else:
-			return f"Tree Node({self.type!r}, {self.value!r})"
+			return f"Tree Node({self.type!r}, value={self.value!r},line={self.linenumber})"
