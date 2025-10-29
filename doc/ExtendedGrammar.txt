@@ -22,7 +22,7 @@
                <BODY> ::= <PRINT-EXPRESSION> <BODY>
                         | <EXPR>
 
-   <PRINT-EXPRESSION> ::= "print" "(" <EXPR> ")" *make-functioncall*
+   <PRINT-EXPRESSION> ::= "print" *make-functionidentifier* "(" <EXPR> ")" *make-functioncall*
 
          <EXPRESSION> ::= <SIMPLE-EXPRESSION> <EXPRESSION'>
 

@@ -8,7 +8,7 @@ node5 [label="TYPE\ninteger"]
 node6 [label="EXPRESSION-LIST"]
 node7 [label="INTEGER-LITERAL\n1"]
 node8 [label="FUNCTION-CALL"]
-node9 [label="TERMINAL\nprint"]
+node9 [label="IDENTIFIER\nprint"]
 node10 [label="INTEGER-LITERAL\n1"]
 node2 -> node3 [label="function"]
 node2 -> node4

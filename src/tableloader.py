@@ -17,7 +17,7 @@ try:
             "12": "type := boolean",
             "13": "body := printexp body",
             "14": "body := exp",
-            "15": "printexp := print ( exp ) MakeFunCall",
+            "15": "printexp := print MakeFunID ( exp ) MakeFunCall",
             "16": "exp := simexp exp'",
             "17": "exp' := ε",
             "18": "exp' := = simexp MakeEqualExp exp'",

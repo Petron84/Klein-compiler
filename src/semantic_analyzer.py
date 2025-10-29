@@ -15,7 +15,7 @@ class Symbol():
 class Analyzer():
     def __init__(self, ast):
         self.AST = ast.pop().children.pop().children
-        self.primitive = Symbol("print", type=None, parameters={"expression": ["integer","boolean"]})
+        self.primitive = Symbol("print", type=None, parameters=[1,("expression",["integer,boolean"])])
         self.symbol_table = {"print": self.primitive}
         
     def load_functions(self):
@@ -46,10 +46,6 @@ class Analyzer():
                 if p_name in param_list:
                     KleinError(f"Semantic Error: The function {f_name} has two or more parameters named {p_name}",f_def[0].linenumber,terminate=False)
 
-                # Illegal case for a parameter sharing a name with a function
-                elif p_name in function_names:
-                    KleinError(f"Semantic Error: The function {f_name} contains a parameter {p_name} that shares a name with an existing function.", f_def[0].linenumber,terminate=False)
-
                 param_list.append((p_name,params[1].value))
 
             self.symbol_table[f_name].parameters = [num_params,param_list]
@@ -61,7 +57,7 @@ class Analyzer():
         body = self.load_functions()
         for f_name, expression in body.items():
             traverser = Traverser(f_name, self.symbol_table)
-            traverser.traverse(expression.pop())
+            traverser.traverse(expression.pop(),self.symbol_table[f_name].type)
     
 class Traverser():
     def __init__(self, f_name, symbol_table):
@@ -74,7 +70,9 @@ class Traverser():
                 return p[1]
         return False
     
-    def traverse(self, expression):
+    def traverse(self, expression, returntype):
+        # CURRENT ISSUE: NESTED FUNCTIONS MATCHING RETURN TYPE TO TOP-LAYER FUNCTION INSTEAD OF PARENT FUNCTION
+        # FOUND PRIMARILY IN SIEVE.KLN. SEEMS TO BE A SPECIFIC ISSUE WITH PRINT EXPRESSIONS
         children = expression.children
         curr_line = expression.linenumber
         curr_value = expression.value
@@ -86,34 +84,48 @@ class Traverser():
                 if expression.type == "INTEGER-LITERAL":
                     KleinError(f"Semantic Error: Condition in if-expression cannot be an integer literal", curr_line,terminate=False)
 
-                if_returntype = self.traverse(children[0])
+                if_returntype = self.traverse(children[0],"boolean")
 
                 # Illegal case for boolean expression returning an integer
                 if if_returntype != "boolean":
                     KleinError(f"Semantic Error: If-clause in if-expression doesn't return a boolean",curr_line,terminate=False)
-                then_returntype = self.traverse(children[1])
+                then_returntype = self.traverse(children[1],returntype)
 
                 # Illegal case for the then clause containing an invalid return type
-                if then_returntype != self.symbol_table[self.f_name].type:
-                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {self.symbol_table[self.f_name].type} but got {then_returntype}", curr_line, terminate=False)
+                if isinstance(returntype,list):
+                    if then_returntype not in returntype:
+                        KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {then_returntype}", curr_line, terminate=False)
+                elif then_returntype != returntype:
+                    KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {then_returntype}", curr_line, terminate=False)
 
-                else_returntype = self.traverse(children[2])
-
+                else_returntype = self.traverse(children[2],returntype)
+                
                 # Illegal case for the else clause containing an invalid return type
-                if else_returntype != self.symbol_table[self.f_name].type:
-                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {self.symbol_table[self.f_name].type} but got {else_returntype}", curr_line,terminate=False)
+                if isinstance(returntype,list):
+                    if else_returntype not in returntype:
+                        KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {else_returntype}", curr_line, terminate=False)
+                elif else_returntype != returntype:
+                    KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {else_returntype}", curr_line,terminate=False)
+                
+                return else_returntype
                
             case "IDENTIFIER":
                 # Illegal case for when an identifier exists outside scope of the function and is not a function name.
                 found_type = self.check_params(curr_value,self.symbol_table[self.f_name].parameters[1])
                 found_function = curr_value in self.symbol_table.keys()
-                if found_function and not found_type:
+                if not found_type and found_function:
                     return curr_value
                 elif found_type and not found_function:
                     return found_type
+                elif found_type and found_function:
+                    if expression.label == "function":
+                        return curr_value
+                    else:
+                        return found_type
                 else:
                     KleinError(f"Semantic Error: The identifier {curr_value} exists outside the scope of the current function {self.f_name} and is not a valid function name",curr_line,terminate=False)
-
+            case "TERMINAL":
+                pass
             case "INTEGER-LITERAL":
                 return "integer"
             
@@ -121,7 +133,7 @@ class Traverser():
                 return "boolean"
             
             case "UNARY-EXPRESSION":
-                exp_returntype = self.traverse(children[0])
+                exp_returntype = self.traverse(children[0],returntype)
 
                 # Illegal case for mismatched unary expressions. I.E. '-' used on a boolean operand, or "not" used on an integer operand.
                 if exp_returntype == "integer" and curr_value == "-":
@@ -133,8 +145,8 @@ class Traverser():
                 return exp_returntype
             
             case "BINARY-EXPRESSION":
-                left_returntype = self.traverse(children[0])
-                right_returntype = self.traverse(children[1])
+                left_returntype = self.traverse(children[0],returntype)
+                right_returntype = self.traverse(children[1],returntype)
                 boolean_legal = ["and","or"]
                 int_comparisons = ['<','=']
 
@@ -157,18 +169,27 @@ class Traverser():
                     KleinError(f"Semantic Error: Operands returned different types. Operands must be both boolean or both integer.", curr_line, terminate=False)
 
             case "FUNCTION-CALL":
-                nested_function = self.traverse(children[0])
+                nested_function = self.traverse(children[0],returntype)
                 self.symbol_table[self.f_name].function_calls.append(nested_function)
                 self.symbol_table[nested_function].called_by.append(self.f_name)
-                if children[1].type != "ARGUMENT-LIST":
+
+                if children[1].type != "ARGUMENT-LIST" and nested_function != "print":
                     KleinError(f"Semantic Error: Function call expected Argument List but got {children[1].type}",curr_line,terminate=False)
-                nested_body = self.traverse(children[1])
+
+                if nested_function == "print":
+                    nested_body = [self.traverse(children[1], ['integer','boolean'])]
+                else:
+                    nested_body = self.traverse(children[1],returntype)
+
                 f_params = self.symbol_table[nested_function].parameters
                 if len(nested_body) != f_params[0]:
                     KleinError(f"Semantic Error: The function {nested_function} requires {f_params[0]} parameters, but was called by {self.f_name} with {len(nested_body)} parameters", curr_line, terminate=False)
                 expected = f_params[1]
                 for i, p in enumerate(nested_body):
-                    if expected[i][1] != p:
+                    if nested_function == "print":
+                        if p not in ["integer","boolean"]:
+                            KleinError(f"Semantic Error: Print function requires a single expression that returns either an integer or boolean, but got {p}",curr_line,terminate=False)
+                    elif expected[i][1] != p:
                         KleinError(f"Semantic Error: The function {nested_function} was given {p} for the parameter {expected[i][0]}.\n\t\t\t\tExpected {expected[i][1]}",curr_line,terminate=False)
                 return self.symbol_table[nested_function].type
             
@@ -176,7 +197,7 @@ class Traverser():
                 arguments = []
                 allowed = ['integer','boolean']
                 for arg in children:
-                    arg_type = self.traverse(arg)
+                    arg_type = self.traverse(arg,returntype)
                     if arg_type not in allowed:
                         KleinError(f"Semantic Error: Argument list expects integer or boolean values, but got {arg_type}",curr_line,terminate=False)
                     arguments.append(arg_type)
