@@ -1,0 +1,245 @@
+
+	Klein Error at line number 58: 
+		Semantic Error: The function 'print' has been defined, but this function name is reserved.
+
+	Klein Error at line number 50: 
+		Semantic Error: Two or more functions have been defined with the name difference.
+
+	Klein Error at line number -1: 
+		Semantic Error: Missing function 'main'
+
+	Klein Error at line number 46: 
+		Semantic Error: The function multiply has two or more parameters named x
+
+	Klein Error at line number 90: 
+		Semantic Error: The function print requires 2 parameters, but was called by loopToN with 1 parameters
+
+	Klein Error at line number 92: 
+		Semantic Warning: Possible infinite recursion detected. The function loopToN called loopToN without any parameter changes
+
+	Klein Error at line number 89: 
+		Semantic Warning: The function is_negative contains an if expression containing no parameters or function calls.
+				Watch out for hardcoded values. The then-clause or else-clause may never be reached.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function redundant is redundant.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function calculate_mean is redundant.
+
+	Klein Error at line number 65: 
+		Semantic Error: The function print requires 2 parameters, but was called by resultprint with 1 parameters
+
+	Klein Error at line number 59: 
+		Semantic Error: The function print requires 2 parameters, but was called by print with 1 parameters
+
+	Klein Error at line number 51: 
+		Semantic Error: The identifier subtract exists outside the scope of the current function difference and is not a valid function name
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function multiply is redundant.
+
+	Klein Error at line number 46: 
+		Semantic Error: Else-clause in if-expression has an invalid return type.
+				Expected integer but got boolean
+
+	Klein Error at line number -1: 
+		Semantic Error: The function divide returns boolean, but expected integer
+
+	Klein Error at line number 39: 
+		Semantic Error: If-clause in if-expression doesn't return a boolean
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function check_nonzero is redundant.
+
+	Klein Error at line number 29: 
+		Semantic Error: The function logic_check was given integer for the parameter b.
+				Expected boolean
+
+	Klein Error at line number 32: 
+		Semantic Error: Operands returned different types. Operands must be both boolean or both integer.
+
+	Klein Error at line number -1: 
+		Semantic Error: The function is_invalid returns None, but expected boolean
+
+	Klein Error at line number 22: 
+		Semantic Error: The function call_addsquare was given boolean for the parameter b.
+				Expected integer
+
+	Klein Error at line number 22: 
+		Semantic Error: Operands of binary expression returned boolean types, but operator was *
+
+	Klein Error at line number 22: 
+		Semantic Error: Operands returned different types. Operands must be both boolean or both integer.
+
+	Klein Error at line number 22: 
+		Semantic Error: Operands returned different types. Operands must be both boolean or both integer.
+
+	Klein Error at line number 28: 
+		Semantic Error: If-clause in if-expression doesn't return a boolean
+
+	Klein Error at line number 18: 
+		Semantic Error: The identifier c exists outside the scope of the current function call_addsquare and is not a valid function name
+
+	Klein Error at line number 18: 
+		Semantic Error: Argument list expects integer or boolean values, but got None
+
+	Klein Error at line number 18: 
+		Semantic Error: The function add_squares was given None for the parameter b.
+				Expected integer
+
+	Klein Error at line number 14: 
+		Semantic Error: The function square requires 1 parameters, but was called by add_squares with 2 parameters
+
+	Klein Error at line number 9: 
+		Semantic Error: The function print requires 2 parameters, but was called by square with 1 parameters
+
+	Klein Error at line number -1: 
+		Semantic Error: The function square returns boolean, but expected integer
+
+	Klein Error at line number 4: 
+		Semantic Error: The function print requires 2 parameters, but was called by notmain with 1 parameters
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function is_negative was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function greater_than_zero was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function calculate_meansquare was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function calculate_mean was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function resultprint was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function resultprint contains the parameter b, but it was never used
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function multiply contains the parameter x, but it was never used
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function divide was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function is_invalid was never called.
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function call_addsquare contains the parameter b, but it was never used
+
+	Klein Error at line number -1: 
+		Semantic Warning: The function notmain was never called.
+
+SYMBOL TABLE:
+{'print': 
+	Function Name: print, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['print', 'difference'], 
+		Called By: ['loopToN', 'resultprint', 'print', 'square', 'notmain']
+, 'loopToN': 
+	Function Name: loopToN, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['print', 'loopToN'], 
+		Called By: ['loopToN']
+, 'is_negative': 
+	Function Name: is_negative, 
+		Type: boolean, 
+		Parameters: [0, []], 
+		Function Calls: [], 
+		Called By: []
+, 'greater_than_zero': 
+	Function Name: greater_than_zero, 
+		Type: boolean, 
+		Parameters: [1, [('a', 'integer', True)]], 
+		Function Calls: ['redundant'], 
+		Called By: []
+, 'redundant': 
+	Function Name: redundant, 
+		Type: boolean, 
+		Parameters: [1, [('a', 'integer', True)]], 
+		Function Calls: [], 
+		Called By: ['greater_than_zero']
+, 'calculate_meansquare': 
+	Function Name: calculate_meansquare, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['square', 'square'], 
+		Called By: []
+, 'calculate_mean': 
+	Function Name: calculate_mean, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: [], 
+		Called By: []
+, 'resultprint': 
+	Function Name: resultprint, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', False)]], 
+		Function Calls: ['print', 'square'], 
+		Called By: []
+, 'difference': 
+	Function Name: difference, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: [], 
+		Called By: ['print']
+, 'multiply': 
+	Function Name: multiply, 
+		Type: integer, 
+		Parameters: [2, [('x', 'integer', True), ('x', 'integer', False)]], 
+		Function Calls: [], 
+		Called By: ['notmain']
+, 'divide': 
+	Function Name: divide, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['check_nonzero'], 
+		Called By: []
+, 'check_nonzero': 
+	Function Name: check_nonzero, 
+		Type: boolean, 
+		Parameters: [1, [('b', 'integer', True)]], 
+		Function Calls: [], 
+		Called By: ['divide']
+, 'is_invalid': 
+	Function Name: is_invalid, 
+		Type: boolean, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['logic_check', 'call_addsquare'], 
+		Called By: []
+, 'logic_check': 
+	Function Name: logic_check, 
+		Type: boolean, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'boolean', True)]], 
+		Function Calls: ['call_addsquare'], 
+		Called By: ['is_invalid']
+, 'call_addsquare': 
+	Function Name: call_addsquare, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', False)]], 
+		Function Calls: ['add_squares'], 
+		Called By: ['is_invalid', 'logic_check']
+, 'add_squares': 
+	Function Name: add_squares, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['square'], 
+		Called By: ['call_addsquare']
+, 'square': 
+	Function Name: square, 
+		Type: integer, 
+		Parameters: [1, [('a', 'integer', True)]], 
+		Function Calls: ['print'], 
+		Called By: ['calculate_meansquare', 'calculate_meansquare', 'resultprint', 'add_squares']
+, 'notmain': 
+	Function Name: notmain, 
+		Type: integer, 
+		Parameters: [2, [('a', 'integer', True), ('b', 'integer', True)]], 
+		Function Calls: ['print', 'multiply'], 
+		Called By: []
+}

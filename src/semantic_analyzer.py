@@ -73,6 +73,7 @@ class Analyzer():
                 if expression.type == "FUNCTION-CALL":
                     contains_print = True
                 maxdepth = max(traverser.depth,maxdepth)
+
             if not contains_print and maxdepth <= 2:
                 KleinError(f"Semantic Warning: The function {f_name} is redundant.",terminate=False)
 
@@ -95,6 +96,7 @@ class Analyzer():
                     for p in symboldata.parameters[1]:
                         if not p[2]:
                             KleinError(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
+        return self.symbol_table
             
     
 class Traverser():
@@ -233,6 +235,7 @@ class Traverser():
 
             case "FUNCTION-CALL":
                 nested_function = self.traverse(children[0],returntype,current_depth+1)
+
                 if nested_function in self.symbol_table.keys():
                     self.symbol_table[self.f_name].function_calls.append(nested_function)
                     self.symbol_table[nested_function].called_by.append(self.f_name)
@@ -244,9 +247,30 @@ class Traverser():
                 if nested_function == "print":
                     nested_body = [self.traverse(children[1], ['integer','boolean'],current_depth+1)]
                 else:
+                     # Check if function is recursive
+                    if nested_function == self.f_name:
+                        recursive = True
+                    else:
+                        recursive = False
                     nested_body = self.traverse(children[1],returntype,current_depth+1)
+
                 if nested_function in self.symbol_table.keys():
                     f_params = self.symbol_table[nested_function].parameters
+
+                    recursive_match = []
+                    # Warning for possible infinite recursion
+                    if nested_function != "print" and recursive:
+                        for arg in children[1].children:
+                            match_found = False
+                            for p in f_params[1]:
+                                if arg.value in p:
+                                    match_found = True
+                            if match_found:
+                                recursive_match.append(True)
+                            else:
+                                recursive_match.append(False)
+                        if all(recursive_match):
+                            KleinError(f"Semantic Warning: Possible infinite recursion detected. The function {nested_function} called {self.f_name} without any parameter changes",curr_line,terminate=False)
 
                     # Illegal case for function call passing more parameters than defined
                     if len(nested_body) != f_params[0]:

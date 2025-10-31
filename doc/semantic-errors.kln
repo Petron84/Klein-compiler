@@ -52,7 +52,7 @@ function difference(a:integer, b:integer): integer
 
 (* functions with same name *)
 function difference(a:boolean, b:boolean) : boolean
-	(a and b)
+	not (a and b)
 
 (* illegal print function *)
 function print(a:integer,b:integer) : integer
@@ -75,12 +75,12 @@ function calculate_meansquare(a:integer, b:integer) : integer
 (* unnecessary function *)
 function redundant(a:integer) : boolean
 	(0 < a)
-function greater_than(a:integer) : boolean
+function greater_than_zero(a:integer) : boolean
 	redundant(a)
 
 (* code path that can’t execute *)
-function is_5_positive(): boolean
-	if (0 < 5) then
+function is_negative(): boolean
+	if (-2 < 0) then
 		true
 	else
 		false

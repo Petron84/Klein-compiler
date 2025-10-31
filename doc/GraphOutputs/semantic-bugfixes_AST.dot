@@ -28,7 +28,7 @@ node25 [label="INTEGER-LITERAL\n1"]
 node26 [label="IDENTIFIER\nb"]
 node27 [label="IDENTIFIER\na"]
 node28 [label="DEFINITION"]
-node29 [label="IDENTIFIER\nis_A_positive"]
+node29 [label="IDENTIFIER\nis_A_negative"]
 node30 [label="PARAMETER-LIST"]
 node31 [label="ID-TYPE"]
 node32 [label="IDENTIFIER\na"]
@@ -36,81 +36,81 @@ node33 [label="TERMINAL\ninteger"]
 node34 [label="TYPE\nboolean"]
 node35 [label="EXPRESSION-LIST"]
 node36 [label="IF-EXPRESSION"]
-node37 [label="BINARY-EXPRESSION\n<"]
-node38 [label="INTEGER-LITERAL\n0"]
-node39 [label="IDENTIFIER\na"]
-node40 [label="BOOLEAN-LITERAL\ntrue"]
-node41 [label="BOOLEAN-LITERAL\nfalse"]
-node42 [label="DEFINITION"]
-node43 [label="IDENTIFIER\ngreater_than"]
-node44 [label="PARAMETER-LIST"]
-node45 [label="ID-TYPE"]
-node46 [label="IDENTIFIER\na"]
-node47 [label="TERMINAL\ninteger"]
-node48 [label="TYPE\nboolean"]
-node49 [label="EXPRESSION-LIST"]
-node50 [label="BINARY-EXPRESSION\n<"]
-node51 [label="INTEGER-LITERAL\n0"]
-node52 [label="IDENTIFIER\na"]
-node53 [label="DEFINITION"]
-node54 [label="IDENTIFIER\ncalculate_meansquare"]
-node55 [label="PARAMETER-LIST"]
-node56 [label="ID-TYPE"]
-node57 [label="IDENTIFIER\na"]
-node58 [label="TERMINAL\ninteger"]
-node59 [label="ID-TYPE"]
-node60 [label="IDENTIFIER\nb"]
-node61 [label="TERMINAL\ninteger"]
-node62 [label="TYPE\ninteger"]
-node63 [label="EXPRESSION-LIST"]
-node64 [label="FUNCTION-CALL"]
-node65 [label="IDENTIFIER\ncalculate_mean"]
-node66 [label="ARGUMENT-LIST"]
-node67 [label="FUNCTION-CALL"]
-node68 [label="IDENTIFIER\nsquare"]
-node69 [label="ARGUMENT-LIST"]
-node70 [label="IDENTIFIER\na"]
-node71 [label="FUNCTION-CALL"]
-node72 [label="IDENTIFIER\nsquare"]
-node73 [label="ARGUMENT-LIST"]
-node74 [label="IDENTIFIER\nb"]
-node75 [label="DEFINITION"]
-node76 [label="IDENTIFIER\ncalculate_mean"]
-node77 [label="PARAMETER-LIST"]
-node78 [label="ID-TYPE"]
-node79 [label="IDENTIFIER\na"]
-node80 [label="TERMINAL\ninteger"]
-node81 [label="ID-TYPE"]
-node82 [label="IDENTIFIER\nb"]
-node83 [label="TERMINAL\ninteger"]
-node84 [label="TYPE\ninteger"]
-node85 [label="EXPRESSION-LIST"]
-node86 [label="BINARY-EXPRESSION\n/"]
-node87 [label="BINARY-EXPRESSION\n+"]
-node88 [label="IDENTIFIER\na"]
-node89 [label="IDENTIFIER\nb"]
-node90 [label="INTEGER-LITERAL\n2"]
-node91 [label="DEFINITION"]
-node92 [label="IDENTIFIER\nprintresult"]
-node93 [label="PARAMETER-LIST"]
-node94 [label="ID-TYPE"]
-node95 [label="IDENTIFIER\na"]
-node96 [label="TERMINAL\ninteger"]
-node97 [label="ID-TYPE"]
+node37 [label="BINARY-EXPRESSION\nand"]
+node38 [label="UNARY-EXPRESSION\nnot"]
+node39 [label="FUNCTION-CALL"]
+node40 [label="IDENTIFIER\ngreater_than_zero"]
+node41 [label="ARGUMENT-LIST"]
+node42 [label="IDENTIFIER\na"]
+node43 [label="UNARY-EXPRESSION\nnot"]
+node44 [label="BINARY-EXPRESSION\n="]
+node45 [label="IDENTIFIER\na"]
+node46 [label="INTEGER-LITERAL\n0"]
+node47 [label="BOOLEAN-LITERAL\ntrue"]
+node48 [label="BOOLEAN-LITERAL\nfalse"]
+node49 [label="DEFINITION"]
+node50 [label="IDENTIFIER\ngreater_than_zero"]
+node51 [label="PARAMETER-LIST"]
+node52 [label="ID-TYPE"]
+node53 [label="IDENTIFIER\na"]
+node54 [label="TERMINAL\ninteger"]
+node55 [label="TYPE\nboolean"]
+node56 [label="EXPRESSION-LIST"]
+node57 [label="FUNCTION-CALL"]
+node58 [label="IDENTIFIER\nprint"]
+node59 [label="IDENTIFIER\na"]
+node60 [label="FUNCTION-CALL"]
+node61 [label="IDENTIFIER\nprint"]
+node62 [label="BINARY-EXPRESSION\n<"]
+node63 [label="INTEGER-LITERAL\n0"]
+node64 [label="IDENTIFIER\na"]
+node65 [label="BINARY-EXPRESSION\n<"]
+node66 [label="INTEGER-LITERAL\n0"]
+node67 [label="IDENTIFIER\na"]
+node68 [label="DEFINITION"]
+node69 [label="IDENTIFIER\nsum_meansquare"]
+node70 [label="PARAMETER-LIST"]
+node71 [label="ID-TYPE"]
+node72 [label="IDENTIFIER\na"]
+node73 [label="TERMINAL\ninteger"]
+node74 [label="ID-TYPE"]
+node75 [label="IDENTIFIER\nb"]
+node76 [label="TERMINAL\ninteger"]
+node77 [label="ID-TYPE"]
+node78 [label="IDENTIFIER\nc"]
+node79 [label="TERMINAL\ninteger"]
+node80 [label="ID-TYPE"]
+node81 [label="IDENTIFIER\nd"]
+node82 [label="TERMINAL\ninteger"]
+node83 [label="TYPE\ninteger"]
+node84 [label="EXPRESSION-LIST"]
+node85 [label="FUNCTION-CALL"]
+node86 [label="IDENTIFIER\nprintresult"]
+node87 [label="ARGUMENT-LIST"]
+node88 [label="FUNCTION-CALL"]
+node89 [label="IDENTIFIER\ncalculate_meansquare"]
+node90 [label="ARGUMENT-LIST"]
+node91 [label="FUNCTION-CALL"]
+node92 [label="IDENTIFIER\nsquare"]
+node93 [label="ARGUMENT-LIST"]
+node94 [label="IDENTIFIER\na"]
+node95 [label="FUNCTION-CALL"]
+node96 [label="IDENTIFIER\nsquare"]
+node97 [label="ARGUMENT-LIST"]
 node98 [label="IDENTIFIER\nb"]
-node99 [label="TERMINAL\ninteger"]
-node100 [label="TYPE\ninteger"]
-node101 [label="EXPRESSION-LIST"]
+node99 [label="FUNCTION-CALL"]
+node100 [label="IDENTIFIER\ncalculate_meansquare"]
+node101 [label="ARGUMENT-LIST"]
 node102 [label="FUNCTION-CALL"]
-node103 [label="IDENTIFIER\nprint"]
-node104 [label="FUNCTION-CALL"]
-node105 [label="IDENTIFIER\nadd_squares"]
-node106 [label="ARGUMENT-LIST"]
-node107 [label="IDENTIFIER\na"]
-node108 [label="IDENTIFIER\nb"]
-node109 [label="INTEGER-LITERAL\n0"]
+node103 [label="IDENTIFIER\nsquare"]
+node104 [label="ARGUMENT-LIST"]
+node105 [label="IDENTIFIER\nc"]
+node106 [label="FUNCTION-CALL"]
+node107 [label="IDENTIFIER\nsquare"]
+node108 [label="ARGUMENT-LIST"]
+node109 [label="IDENTIFIER\nd"]
 node110 [label="DEFINITION"]
-node111 [label="IDENTIFIER\nresultprint"]
+node111 [label="IDENTIFIER\ncalculate_meansquare"]
 node112 [label="PARAMETER-LIST"]
 node113 [label="ID-TYPE"]
 node114 [label="IDENTIFIER\na"]
@@ -121,209 +121,355 @@ node118 [label="TERMINAL\ninteger"]
 node119 [label="TYPE\ninteger"]
 node120 [label="EXPRESSION-LIST"]
 node121 [label="FUNCTION-CALL"]
-node122 [label="IDENTIFIER\nprint"]
-node123 [label="FUNCTION-CALL"]
-node124 [label="IDENTIFIER\ndifference"]
-node125 [label="ARGUMENT-LIST"]
-node126 [label="IDENTIFIER\na"]
-node127 [label="IDENTIFIER\nb"]
-node128 [label="INTEGER-LITERAL\n0"]
-node129 [label="DEFINITION"]
-node130 [label="IDENTIFIER\nbool_difference"]
-node131 [label="PARAMETER-LIST"]
-node132 [label="ID-TYPE"]
-node133 [label="IDENTIFIER\na"]
-node134 [label="TERMINAL\nboolean"]
+node122 [label="IDENTIFIER\ncalculate_mean"]
+node123 [label="ARGUMENT-LIST"]
+node124 [label="FUNCTION-CALL"]
+node125 [label="IDENTIFIER\nsquare"]
+node126 [label="ARGUMENT-LIST"]
+node127 [label="IDENTIFIER\na"]
+node128 [label="FUNCTION-CALL"]
+node129 [label="IDENTIFIER\nsquare"]
+node130 [label="ARGUMENT-LIST"]
+node131 [label="IDENTIFIER\nb"]
+node132 [label="DEFINITION"]
+node133 [label="IDENTIFIER\ncalculate_mean"]
+node134 [label="PARAMETER-LIST"]
 node135 [label="ID-TYPE"]
-node136 [label="IDENTIFIER\nb"]
-node137 [label="TERMINAL\nboolean"]
-node138 [label="TYPE\nboolean"]
-node139 [label="EXPRESSION-LIST"]
-node140 [label="BINARY-EXPRESSION\nand"]
-node141 [label="IDENTIFIER\na"]
-node142 [label="IDENTIFIER\nb"]
-node143 [label="DEFINITION"]
-node144 [label="IDENTIFIER\ndifference"]
-node145 [label="PARAMETER-LIST"]
-node146 [label="ID-TYPE"]
-node147 [label="IDENTIFIER\na"]
-node148 [label="TERMINAL\ninteger"]
-node149 [label="ID-TYPE"]
+node136 [label="IDENTIFIER\na"]
+node137 [label="TERMINAL\ninteger"]
+node138 [label="ID-TYPE"]
+node139 [label="IDENTIFIER\nb"]
+node140 [label="TERMINAL\ninteger"]
+node141 [label="TYPE\ninteger"]
+node142 [label="EXPRESSION-LIST"]
+node143 [label="FUNCTION-CALL"]
+node144 [label="IDENTIFIER\nprint"]
+node145 [label="FUNCTION-CALL"]
+node146 [label="IDENTIFIER\ndivide"]
+node147 [label="ARGUMENT-LIST"]
+node148 [label="BINARY-EXPRESSION\n+"]
+node149 [label="IDENTIFIER\na"]
 node150 [label="IDENTIFIER\nb"]
-node151 [label="TERMINAL\ninteger"]
-node152 [label="TYPE\ninteger"]
-node153 [label="EXPRESSION-LIST"]
-node154 [label="BINARY-EXPRESSION\n-"]
-node155 [label="IDENTIFIER\na"]
-node156 [label="IDENTIFIER\nb"]
-node157 [label="DEFINITION"]
-node158 [label="IDENTIFIER\nmultiply"]
-node159 [label="PARAMETER-LIST"]
-node160 [label="ID-TYPE"]
-node161 [label="IDENTIFIER\nx"]
-node162 [label="TERMINAL\ninteger"]
-node163 [label="ID-TYPE"]
-node164 [label="IDENTIFIER\ny"]
-node165 [label="TERMINAL\ninteger"]
-node166 [label="TYPE\ninteger"]
-node167 [label="EXPRESSION-LIST"]
-node168 [label="BINARY-EXPRESSION\n*"]
-node169 [label="IDENTIFIER\nx"]
-node170 [label="IDENTIFIER\ny"]
-node171 [label="DEFINITION"]
-node172 [label="IDENTIFIER\ndivide"]
-node173 [label="PARAMETER-LIST"]
-node174 [label="ID-TYPE"]
+node151 [label="INTEGER-LITERAL\n2"]
+node152 [label="FUNCTION-CALL"]
+node153 [label="IDENTIFIER\ndivide"]
+node154 [label="ARGUMENT-LIST"]
+node155 [label="BINARY-EXPRESSION\n+"]
+node156 [label="IDENTIFIER\na"]
+node157 [label="IDENTIFIER\nb"]
+node158 [label="INTEGER-LITERAL\n2"]
+node159 [label="DEFINITION"]
+node160 [label="IDENTIFIER\nprintresult"]
+node161 [label="PARAMETER-LIST"]
+node162 [label="ID-TYPE"]
+node163 [label="IDENTIFIER\na"]
+node164 [label="TERMINAL\ninteger"]
+node165 [label="ID-TYPE"]
+node166 [label="IDENTIFIER\nb"]
+node167 [label="TERMINAL\ninteger"]
+node168 [label="TYPE\ninteger"]
+node169 [label="EXPRESSION-LIST"]
+node170 [label="FUNCTION-CALL"]
+node171 [label="IDENTIFIER\nprint"]
+node172 [label="FUNCTION-CALL"]
+node173 [label="IDENTIFIER\nadd_squares"]
+node174 [label="ARGUMENT-LIST"]
 node175 [label="IDENTIFIER\na"]
-node176 [label="TERMINAL\ninteger"]
-node177 [label="ID-TYPE"]
-node178 [label="IDENTIFIER\nb"]
-node179 [label="TERMINAL\ninteger"]
-node180 [label="TYPE\ninteger"]
-node181 [label="EXPRESSION-LIST"]
-node182 [label="IF-EXPRESSION"]
-node183 [label="FUNCTION-CALL"]
-node184 [label="IDENTIFIER\ncheck_nonzero"]
-node185 [label="ARGUMENT-LIST"]
-node186 [label="IDENTIFIER\nb"]
-node187 [label="BINARY-EXPRESSION\n/"]
-node188 [label="IDENTIFIER\na"]
-node189 [label="IDENTIFIER\nb"]
-node190 [label="INTEGER-LITERAL\n0"]
-node191 [label="DEFINITION"]
-node192 [label="IDENTIFIER\ncheck_nonzero"]
-node193 [label="PARAMETER-LIST"]
-node194 [label="ID-TYPE"]
+node176 [label="IDENTIFIER\nb"]
+node177 [label="INTEGER-LITERAL\n0"]
+node178 [label="DEFINITION"]
+node179 [label="IDENTIFIER\nresultprint"]
+node180 [label="PARAMETER-LIST"]
+node181 [label="ID-TYPE"]
+node182 [label="IDENTIFIER\na"]
+node183 [label="TERMINAL\ninteger"]
+node184 [label="ID-TYPE"]
+node185 [label="IDENTIFIER\nb"]
+node186 [label="TERMINAL\ninteger"]
+node187 [label="TYPE\ninteger"]
+node188 [label="EXPRESSION-LIST"]
+node189 [label="FUNCTION-CALL"]
+node190 [label="IDENTIFIER\nprint"]
+node191 [label="FUNCTION-CALL"]
+node192 [label="IDENTIFIER\ndifference"]
+node193 [label="ARGUMENT-LIST"]
+node194 [label="IDENTIFIER\na"]
 node195 [label="IDENTIFIER\nb"]
-node196 [label="TERMINAL\ninteger"]
-node197 [label="TYPE\nboolean"]
-node198 [label="EXPRESSION-LIST"]
-node199 [label="IF-EXPRESSION"]
-node200 [label="BINARY-EXPRESSION\n<"]
-node201 [label="INTEGER-LITERAL\n0"]
-node202 [label="IDENTIFIER\nb"]
-node203 [label="BOOLEAN-LITERAL\ntrue"]
-node204 [label="BOOLEAN-LITERAL\nfalse"]
-node205 [label="DEFINITION"]
-node206 [label="IDENTIFIER\nis_invalid"]
-node207 [label="PARAMETER-LIST"]
-node208 [label="ID-TYPE"]
-node209 [label="IDENTIFIER\na"]
-node210 [label="TERMINAL\ninteger"]
-node211 [label="ID-TYPE"]
-node212 [label="IDENTIFIER\nb"]
-node213 [label="TERMINAL\ninteger"]
-node214 [label="TYPE\nboolean"]
-node215 [label="EXPRESSION-LIST"]
-node216 [label="BINARY-EXPRESSION\nand"]
-node217 [label="FUNCTION-CALL"]
-node218 [label="IDENTIFIER\nlogic_check"]
-node219 [label="ARGUMENT-LIST"]
-node220 [label="IDENTIFIER\na"]
-node221 [label="IDENTIFIER\nb"]
-node222 [label="FUNCTION-CALL"]
-node223 [label="IDENTIFIER\nlogic_check"]
-node224 [label="ARGUMENT-LIST"]
+node196 [label="INTEGER-LITERAL\n0"]
+node197 [label="DEFINITION"]
+node198 [label="IDENTIFIER\nbool_difference"]
+node199 [label="PARAMETER-LIST"]
+node200 [label="ID-TYPE"]
+node201 [label="IDENTIFIER\na"]
+node202 [label="TERMINAL\nboolean"]
+node203 [label="ID-TYPE"]
+node204 [label="IDENTIFIER\nb"]
+node205 [label="TERMINAL\nboolean"]
+node206 [label="TYPE\nboolean"]
+node207 [label="EXPRESSION-LIST"]
+node208 [label="FUNCTION-CALL"]
+node209 [label="IDENTIFIER\nprint"]
+node210 [label="UNARY-EXPRESSION\nnot"]
+node211 [label="BINARY-EXPRESSION\nand"]
+node212 [label="IDENTIFIER\na"]
+node213 [label="IDENTIFIER\nb"]
+node214 [label="UNARY-EXPRESSION\nnot"]
+node215 [label="BINARY-EXPRESSION\nand"]
+node216 [label="IDENTIFIER\na"]
+node217 [label="IDENTIFIER\nb"]
+node218 [label="DEFINITION"]
+node219 [label="IDENTIFIER\ndifference"]
+node220 [label="PARAMETER-LIST"]
+node221 [label="ID-TYPE"]
+node222 [label="IDENTIFIER\na"]
+node223 [label="TERMINAL\ninteger"]
+node224 [label="ID-TYPE"]
 node225 [label="IDENTIFIER\nb"]
-node226 [label="IDENTIFIER\na"]
-node227 [label="DEFINITION"]
-node228 [label="IDENTIFIER\nlogic_check"]
-node229 [label="PARAMETER-LIST"]
-node230 [label="ID-TYPE"]
-node231 [label="IDENTIFIER\na"]
-node232 [label="TERMINAL\ninteger"]
-node233 [label="ID-TYPE"]
-node234 [label="IDENTIFIER\nb"]
-node235 [label="TERMINAL\ninteger"]
-node236 [label="TYPE\nboolean"]
-node237 [label="EXPRESSION-LIST"]
-node238 [label="IF-EXPRESSION"]
-node239 [label="BINARY-EXPRESSION\n="]
-node240 [label="FUNCTION-CALL"]
-node241 [label="IDENTIFIER\ncall_addsquare"]
-node242 [label="ARGUMENT-LIST"]
-node243 [label="IDENTIFIER\na"]
-node244 [label="IDENTIFIER\nb"]
-node245 [label="BINARY-EXPRESSION\n+"]
-node246 [label="BINARY-EXPRESSION\n*"]
-node247 [label="IDENTIFIER\na"]
-node248 [label="IDENTIFIER\na"]
-node249 [label="BINARY-EXPRESSION\n*"]
-node250 [label="IDENTIFIER\nb"]
-node251 [label="IDENTIFIER\nb"]
-node252 [label="BOOLEAN-LITERAL\ntrue"]
-node253 [label="BOOLEAN-LITERAL\nfalse"]
-node254 [label="DEFINITION"]
-node255 [label="IDENTIFIER\ncall_addsquare"]
-node256 [label="PARAMETER-LIST"]
-node257 [label="ID-TYPE"]
-node258 [label="IDENTIFIER\na"]
-node259 [label="TERMINAL\ninteger"]
-node260 [label="ID-TYPE"]
-node261 [label="IDENTIFIER\nb"]
-node262 [label="TERMINAL\ninteger"]
-node263 [label="TYPE\ninteger"]
-node264 [label="EXPRESSION-LIST"]
-node265 [label="FUNCTION-CALL"]
-node266 [label="IDENTIFIER\nadd_squares"]
-node267 [label="ARGUMENT-LIST"]
-node268 [label="IDENTIFIER\na"]
-node269 [label="IDENTIFIER\nb"]
-node270 [label="DEFINITION"]
-node271 [label="IDENTIFIER\nadd_squares"]
-node272 [label="PARAMETER-LIST"]
-node273 [label="ID-TYPE"]
-node274 [label="IDENTIFIER\na"]
-node275 [label="TERMINAL\ninteger"]
-node276 [label="ID-TYPE"]
-node277 [label="IDENTIFIER\nb"]
-node278 [label="TERMINAL\ninteger"]
-node279 [label="TYPE\ninteger"]
-node280 [label="EXPRESSION-LIST"]
-node281 [label="BINARY-EXPRESSION\n+"]
-node282 [label="FUNCTION-CALL"]
-node283 [label="IDENTIFIER\nsquare"]
-node284 [label="ARGUMENT-LIST"]
-node285 [label="IDENTIFIER\na"]
-node286 [label="FUNCTION-CALL"]
-node287 [label="IDENTIFIER\nsquare"]
-node288 [label="ARGUMENT-LIST"]
-node289 [label="IDENTIFIER\nb"]
-node290 [label="DEFINITION"]
-node291 [label="IDENTIFIER\nsquare"]
-node292 [label="PARAMETER-LIST"]
-node293 [label="ID-TYPE"]
-node294 [label="IDENTIFIER\na"]
-node295 [label="TERMINAL\ninteger"]
-node296 [label="TYPE\ninteger"]
-node297 [label="EXPRESSION-LIST"]
-node298 [label="FUNCTION-CALL"]
-node299 [label="IDENTIFIER\nprint"]
-node300 [label="BINARY-EXPRESSION\n*"]
-node301 [label="IDENTIFIER\na"]
-node302 [label="IDENTIFIER\na"]
-node303 [label="BINARY-EXPRESSION\n*"]
-node304 [label="IDENTIFIER\na"]
-node305 [label="IDENTIFIER\na"]
-node306 [label="DEFINITION"]
-node307 [label="IDENTIFIER\nmain"]
-node308 [label="PARAMETER-LIST"]
-node309 [label="ID-TYPE"]
-node310 [label="IDENTIFIER\na"]
-node311 [label="TERMINAL\ninteger"]
-node312 [label="ID-TYPE"]
-node313 [label="IDENTIFIER\nb"]
-node314 [label="TERMINAL\ninteger"]
-node315 [label="TYPE\ninteger"]
-node316 [label="EXPRESSION-LIST"]
-node317 [label="FUNCTION-CALL"]
-node318 [label="IDENTIFIER\nprint"]
-node319 [label="FUNCTION-CALL"]
-node320 [label="IDENTIFIER\nmultiply"]
-node321 [label="ARGUMENT-LIST"]
-node322 [label="IDENTIFIER\na"]
+node226 [label="TERMINAL\ninteger"]
+node227 [label="TYPE\ninteger"]
+node228 [label="EXPRESSION-LIST"]
+node229 [label="FUNCTION-CALL"]
+node230 [label="IDENTIFIER\nprint"]
+node231 [label="BINARY-EXPRESSION\n-"]
+node232 [label="IDENTIFIER\na"]
+node233 [label="IDENTIFIER\nb"]
+node234 [label="FUNCTION-CALL"]
+node235 [label="IDENTIFIER\nresultprint"]
+node236 [label="ARGUMENT-LIST"]
+node237 [label="IDENTIFIER\na"]
+node238 [label="IDENTIFIER\nb"]
+node239 [label="DEFINITION"]
+node240 [label="IDENTIFIER\nmultiply"]
+node241 [label="PARAMETER-LIST"]
+node242 [label="ID-TYPE"]
+node243 [label="IDENTIFIER\nx"]
+node244 [label="TERMINAL\ninteger"]
+node245 [label="ID-TYPE"]
+node246 [label="IDENTIFIER\ny"]
+node247 [label="TERMINAL\ninteger"]
+node248 [label="TYPE\ninteger"]
+node249 [label="EXPRESSION-LIST"]
+node250 [label="FUNCTION-CALL"]
+node251 [label="IDENTIFIER\nprint"]
+node252 [label="BINARY-EXPRESSION\n*"]
+node253 [label="IDENTIFIER\nx"]
+node254 [label="IDENTIFIER\ny"]
+node255 [label="BINARY-EXPRESSION\n*"]
+node256 [label="IDENTIFIER\nx"]
+node257 [label="IDENTIFIER\ny"]
+node258 [label="DEFINITION"]
+node259 [label="IDENTIFIER\ndivide"]
+node260 [label="PARAMETER-LIST"]
+node261 [label="ID-TYPE"]
+node262 [label="IDENTIFIER\na"]
+node263 [label="TERMINAL\ninteger"]
+node264 [label="ID-TYPE"]
+node265 [label="IDENTIFIER\nb"]
+node266 [label="TERMINAL\ninteger"]
+node267 [label="TYPE\ninteger"]
+node268 [label="EXPRESSION-LIST"]
+node269 [label="IF-EXPRESSION"]
+node270 [label="FUNCTION-CALL"]
+node271 [label="IDENTIFIER\ngreater_than_zero"]
+node272 [label="ARGUMENT-LIST"]
+node273 [label="IDENTIFIER\nb"]
+node274 [label="BINARY-EXPRESSION\n/"]
+node275 [label="IDENTIFIER\na"]
+node276 [label="IDENTIFIER\nb"]
+node277 [label="INTEGER-LITERAL\n0"]
+node278 [label="DEFINITION"]
+node279 [label="IDENTIFIER\ncheck_nonnegative"]
+node280 [label="PARAMETER-LIST"]
+node281 [label="ID-TYPE"]
+node282 [label="IDENTIFIER\nb"]
+node283 [label="TERMINAL\ninteger"]
+node284 [label="TYPE\nboolean"]
+node285 [label="EXPRESSION-LIST"]
+node286 [label="IF-EXPRESSION"]
+node287 [label="UNARY-EXPRESSION\nnot"]
+node288 [label="FUNCTION-CALL"]
+node289 [label="IDENTIFIER\nis_A_negative"]
+node290 [label="ARGUMENT-LIST"]
+node291 [label="IDENTIFIER\nb"]
+node292 [label="BOOLEAN-LITERAL\ntrue"]
+node293 [label="BOOLEAN-LITERAL\nfalse"]
+node294 [label="DEFINITION"]
+node295 [label="IDENTIFIER\nis_invalid"]
+node296 [label="PARAMETER-LIST"]
+node297 [label="ID-TYPE"]
+node298 [label="IDENTIFIER\na"]
+node299 [label="TERMINAL\ninteger"]
+node300 [label="ID-TYPE"]
+node301 [label="IDENTIFIER\nb"]
+node302 [label="TERMINAL\ninteger"]
+node303 [label="TYPE\nboolean"]
+node304 [label="EXPRESSION-LIST"]
+node305 [label="BINARY-EXPRESSION\nand"]
+node306 [label="FUNCTION-CALL"]
+node307 [label="IDENTIFIER\nlogic_check"]
+node308 [label="ARGUMENT-LIST"]
+node309 [label="IDENTIFIER\na"]
+node310 [label="IDENTIFIER\nb"]
+node311 [label="FUNCTION-CALL"]
+node312 [label="IDENTIFIER\nlogic_check"]
+node313 [label="ARGUMENT-LIST"]
+node314 [label="IDENTIFIER\nb"]
+node315 [label="IDENTIFIER\na"]
+node316 [label="DEFINITION"]
+node317 [label="IDENTIFIER\nlogic_check"]
+node318 [label="PARAMETER-LIST"]
+node319 [label="ID-TYPE"]
+node320 [label="IDENTIFIER\na"]
+node321 [label="TERMINAL\ninteger"]
+node322 [label="ID-TYPE"]
 node323 [label="IDENTIFIER\nb"]
-node324 [label="INTEGER-LITERAL\n0"]
+node324 [label="TERMINAL\ninteger"]
+node325 [label="TYPE\nboolean"]
+node326 [label="EXPRESSION-LIST"]
+node327 [label="IF-EXPRESSION"]
+node328 [label="BINARY-EXPRESSION\n="]
+node329 [label="FUNCTION-CALL"]
+node330 [label="IDENTIFIER\ncall_addsquare"]
+node331 [label="ARGUMENT-LIST"]
+node332 [label="IDENTIFIER\na"]
+node333 [label="IDENTIFIER\nb"]
+node334 [label="BINARY-EXPRESSION\n+"]
+node335 [label="BINARY-EXPRESSION\n*"]
+node336 [label="IDENTIFIER\na"]
+node337 [label="IDENTIFIER\na"]
+node338 [label="BINARY-EXPRESSION\n*"]
+node339 [label="IDENTIFIER\nb"]
+node340 [label="IDENTIFIER\nb"]
+node341 [label="BOOLEAN-LITERAL\ntrue"]
+node342 [label="BOOLEAN-LITERAL\nfalse"]
+node343 [label="DEFINITION"]
+node344 [label="IDENTIFIER\ncall_addsquare"]
+node345 [label="PARAMETER-LIST"]
+node346 [label="ID-TYPE"]
+node347 [label="IDENTIFIER\na"]
+node348 [label="TERMINAL\ninteger"]
+node349 [label="ID-TYPE"]
+node350 [label="IDENTIFIER\nb"]
+node351 [label="TERMINAL\ninteger"]
+node352 [label="TYPE\ninteger"]
+node353 [label="EXPRESSION-LIST"]
+node354 [label="FUNCTION-CALL"]
+node355 [label="IDENTIFIER\nadd_squares"]
+node356 [label="ARGUMENT-LIST"]
+node357 [label="IDENTIFIER\na"]
+node358 [label="IDENTIFIER\nb"]
+node359 [label="DEFINITION"]
+node360 [label="IDENTIFIER\nadd_squares"]
+node361 [label="PARAMETER-LIST"]
+node362 [label="ID-TYPE"]
+node363 [label="IDENTIFIER\na"]
+node364 [label="TERMINAL\ninteger"]
+node365 [label="ID-TYPE"]
+node366 [label="IDENTIFIER\nb"]
+node367 [label="TERMINAL\ninteger"]
+node368 [label="TYPE\ninteger"]
+node369 [label="EXPRESSION-LIST"]
+node370 [label="BINARY-EXPRESSION\n+"]
+node371 [label="FUNCTION-CALL"]
+node372 [label="IDENTIFIER\nsquare"]
+node373 [label="ARGUMENT-LIST"]
+node374 [label="IDENTIFIER\na"]
+node375 [label="FUNCTION-CALL"]
+node376 [label="IDENTIFIER\nsquare"]
+node377 [label="ARGUMENT-LIST"]
+node378 [label="IDENTIFIER\nb"]
+node379 [label="DEFINITION"]
+node380 [label="IDENTIFIER\nsquare"]
+node381 [label="PARAMETER-LIST"]
+node382 [label="ID-TYPE"]
+node383 [label="IDENTIFIER\na"]
+node384 [label="TERMINAL\ninteger"]
+node385 [label="TYPE\ninteger"]
+node386 [label="EXPRESSION-LIST"]
+node387 [label="FUNCTION-CALL"]
+node388 [label="IDENTIFIER\nprint"]
+node389 [label="BINARY-EXPRESSION\n*"]
+node390 [label="IDENTIFIER\na"]
+node391 [label="IDENTIFIER\na"]
+node392 [label="BINARY-EXPRESSION\n*"]
+node393 [label="IDENTIFIER\na"]
+node394 [label="IDENTIFIER\na"]
+node395 [label="DEFINITION"]
+node396 [label="IDENTIFIER\nmain"]
+node397 [label="PARAMETER-LIST"]
+node398 [label="ID-TYPE"]
+node399 [label="IDENTIFIER\na"]
+node400 [label="TERMINAL\ninteger"]
+node401 [label="ID-TYPE"]
+node402 [label="IDENTIFIER\nb"]
+node403 [label="TERMINAL\ninteger"]
+node404 [label="ID-TYPE"]
+node405 [label="IDENTIFIER\nc"]
+node406 [label="TERMINAL\ninteger"]
+node407 [label="ID-TYPE"]
+node408 [label="IDENTIFIER\nd"]
+node409 [label="TERMINAL\ninteger"]
+node410 [label="TYPE\ninteger"]
+node411 [label="EXPRESSION-LIST"]
+node412 [label="FUNCTION-CALL"]
+node413 [label="IDENTIFIER\nprint"]
+node414 [label="BINARY-EXPRESSION\n/"]
+node415 [label="FUNCTION-CALL"]
+node416 [label="IDENTIFIER\nmultiply"]
+node417 [label="ARGUMENT-LIST"]
+node418 [label="IDENTIFIER\na"]
+node419 [label="IDENTIFIER\nb"]
+node420 [label="INTEGER-LITERAL\n2"]
+node421 [label="FUNCTION-CALL"]
+node422 [label="IDENTIFIER\nprint"]
+node423 [label="BINARY-EXPRESSION\n/"]
+node424 [label="FUNCTION-CALL"]
+node425 [label="IDENTIFIER\nmultiply"]
+node426 [label="ARGUMENT-LIST"]
+node427 [label="IDENTIFIER\nc"]
+node428 [label="IDENTIFIER\nd"]
+node429 [label="INTEGER-LITERAL\n2"]
+node430 [label="FUNCTION-CALL"]
+node431 [label="IDENTIFIER\nprint"]
+node432 [label="FUNCTION-CALL"]
+node433 [label="IDENTIFIER\nbool_difference"]
+node434 [label="ARGUMENT-LIST"]
+node435 [label="BOOLEAN-LITERAL\ntrue"]
+node436 [label="BOOLEAN-LITERAL\ntrue"]
+node437 [label="FUNCTION-CALL"]
+node438 [label="IDENTIFIER\nprint"]
+node439 [label="FUNCTION-CALL"]
+node440 [label="IDENTIFIER\nbool_difference"]
+node441 [label="ARGUMENT-LIST"]
+node442 [label="BOOLEAN-LITERAL\ntrue"]
+node443 [label="BOOLEAN-LITERAL\nfalse"]
+node444 [label="FUNCTION-CALL"]
+node445 [label="IDENTIFIER\nprint"]
+node446 [label="FUNCTION-CALL"]
+node447 [label="IDENTIFIER\ncheck_nonnegative"]
+node448 [label="ARGUMENT-LIST"]
+node449 [label="IDENTIFIER\na"]
+node450 [label="FUNCTION-CALL"]
+node451 [label="IDENTIFIER\nprint"]
+node452 [label="FUNCTION-CALL"]
+node453 [label="IDENTIFIER\nis_invalid"]
+node454 [label="ARGUMENT-LIST"]
+node455 [label="IDENTIFIER\na"]
+node456 [label="IDENTIFIER\nb"]
+node457 [label="FUNCTION-CALL"]
+node458 [label="IDENTIFIER\nprint"]
+node459 [label="FUNCTION-CALL"]
+node460 [label="IDENTIFIER\nis_invalid"]
+node461 [label="ARGUMENT-LIST"]
+node462 [label="IDENTIFIER\nc"]
+node463 [label="IDENTIFIER\nd"]
+node464 [label="FUNCTION-CALL"]
+node465 [label="IDENTIFIER\nsum_meansquare"]
+node466 [label="ARGUMENT-LIST"]
+node467 [label="IDENTIFIER\na"]
+node468 [label="IDENTIFIER\nb"]
+node469 [label="IDENTIFIER\nc"]
+node470 [label="IDENTIFIER\nd"]
 node2 -> node3 [label="function"]
 node5 -> node6 [label="id"]
 node5 -> node7 [label="type"]
@@ -356,82 +502,82 @@ node31 -> node33 [label="type"]
 node30 -> node31
 node28 -> node30
 node28 -> node34
+node39 -> node40 [label="function"]
+node41 -> node42
+node39 -> node41 [label="arguments"]
+node38 -> node39
 node37 -> node38 [label="left"]
-node37 -> node39 [label="right"]
+node44 -> node45 [label="left"]
+node44 -> node46 [label="right"]
+node43 -> node44
+node37 -> node43 [label="right"]
 node36 -> node37 [label="if"]
-node36 -> node40 [label="else"]
-node36 -> node41 [label="then"]
+node36 -> node47 [label="else"]
+node36 -> node48 [label="then"]
 node35 -> node36
 node28 -> node35 [label="body"]
 node1 -> node28
-node42 -> node43 [label="function"]
-node45 -> node46 [label="id"]
-node45 -> node47 [label="type"]
-node44 -> node45
-node42 -> node44
-node42 -> node48
-node50 -> node51 [label="left"]
-node50 -> node52 [label="right"]
-node49 -> node50
-node42 -> node49 [label="body"]
-node1 -> node42
-node53 -> node54 [label="function"]
-node56 -> node57 [label="id"]
-node56 -> node58 [label="type"]
-node55 -> node56
-node59 -> node60 [label="id"]
-node59 -> node61 [label="type"]
-node55 -> node59
-node53 -> node55
-node53 -> node62
-node64 -> node65 [label="function"]
-node67 -> node68 [label="function"]
-node69 -> node70
-node67 -> node69 [label="arguments"]
-node66 -> node67
-node71 -> node72 [label="function"]
-node73 -> node74
-node71 -> node73 [label="arguments"]
-node66 -> node71
-node64 -> node66 [label="arguments"]
-node63 -> node64
-node53 -> node63 [label="body"]
-node1 -> node53
-node75 -> node76 [label="function"]
-node78 -> node79 [label="id"]
-node78 -> node80 [label="type"]
-node77 -> node78
-node81 -> node82 [label="id"]
-node81 -> node83 [label="type"]
-node77 -> node81
-node75 -> node77
-node75 -> node84
-node87 -> node88 [label="left"]
-node87 -> node89 [label="right"]
-node86 -> node87 [label="left"]
-node86 -> node90 [label="right"]
-node85 -> node86
-node75 -> node85 [label="body"]
-node1 -> node75
+node49 -> node50 [label="function"]
+node52 -> node53 [label="id"]
+node52 -> node54 [label="type"]
+node51 -> node52
+node49 -> node51
+node49 -> node55
+node57 -> node58 [label="function"]
+node57 -> node59 [label="arguments"]
+node56 -> node57
+node60 -> node61 [label="function"]
+node62 -> node63 [label="left"]
+node62 -> node64 [label="right"]
+node60 -> node62 [label="arguments"]
+node56 -> node60
+node65 -> node66 [label="left"]
+node65 -> node67 [label="right"]
+node56 -> node65
+node49 -> node56 [label="body"]
+node1 -> node49
+node68 -> node69 [label="function"]
+node71 -> node72 [label="id"]
+node71 -> node73 [label="type"]
+node70 -> node71
+node74 -> node75 [label="id"]
+node74 -> node76 [label="type"]
+node70 -> node74
+node77 -> node78 [label="id"]
+node77 -> node79 [label="type"]
+node70 -> node77
+node80 -> node81 [label="id"]
+node80 -> node82 [label="type"]
+node70 -> node80
+node68 -> node70
+node68 -> node83
+node85 -> node86 [label="function"]
+node88 -> node89 [label="function"]
 node91 -> node92 [label="function"]
-node94 -> node95 [label="id"]
-node94 -> node96 [label="type"]
 node93 -> node94
-node97 -> node98 [label="id"]
-node97 -> node99 [label="type"]
-node93 -> node97
-node91 -> node93
-node91 -> node100
+node91 -> node93 [label="arguments"]
+node90 -> node91
+node95 -> node96 [label="function"]
+node97 -> node98
+node95 -> node97 [label="arguments"]
+node90 -> node95
+node88 -> node90 [label="arguments"]
+node87 -> node88
+node99 -> node100 [label="function"]
 node102 -> node103 [label="function"]
-node104 -> node105 [label="function"]
-node106 -> node107
-node106 -> node108
-node104 -> node106 [label="arguments"]
+node104 -> node105
 node102 -> node104 [label="arguments"]
 node101 -> node102
-node101 -> node109
-node91 -> node101 [label="body"]
-node1 -> node91
+node106 -> node107 [label="function"]
+node108 -> node109
+node106 -> node108 [label="arguments"]
+node101 -> node106
+node99 -> node101 [label="arguments"]
+node87 -> node99
+node85 -> node87 [label="arguments"]
+node84 -> node85
+node68 -> node84 [label="body"]
+node1 -> node68
 node110 -> node111 [label="function"]
 node113 -> node114 [label="id"]
 node113 -> node115 [label="type"]
@@ -442,210 +588,356 @@ node112 -> node116
 node110 -> node112
 node110 -> node119
 node121 -> node122 [label="function"]
-node123 -> node124 [label="function"]
-node125 -> node126
-node125 -> node127
-node123 -> node125 [label="arguments"]
+node124 -> node125 [label="function"]
+node126 -> node127
+node124 -> node126 [label="arguments"]
+node123 -> node124
+node128 -> node129 [label="function"]
+node130 -> node131
+node128 -> node130 [label="arguments"]
+node123 -> node128
 node121 -> node123 [label="arguments"]
 node120 -> node121
-node120 -> node128
 node110 -> node120 [label="body"]
 node1 -> node110
-node129 -> node130 [label="function"]
-node132 -> node133 [label="id"]
-node132 -> node134 [label="type"]
-node131 -> node132
+node132 -> node133 [label="function"]
 node135 -> node136 [label="id"]
 node135 -> node137 [label="type"]
-node131 -> node135
-node129 -> node131
-node129 -> node138
-node140 -> node141 [label="left"]
-node140 -> node142 [label="right"]
-node139 -> node140
-node129 -> node139 [label="body"]
-node1 -> node129
+node134 -> node135
+node138 -> node139 [label="id"]
+node138 -> node140 [label="type"]
+node134 -> node138
+node132 -> node134
+node132 -> node141
 node143 -> node144 [label="function"]
-node146 -> node147 [label="id"]
-node146 -> node148 [label="type"]
-node145 -> node146
-node149 -> node150 [label="id"]
-node149 -> node151 [label="type"]
-node145 -> node149
-node143 -> node145
-node143 -> node152
-node154 -> node155 [label="left"]
-node154 -> node156 [label="right"]
-node153 -> node154
-node143 -> node153 [label="body"]
-node1 -> node143
-node157 -> node158 [label="function"]
-node160 -> node161 [label="id"]
-node160 -> node162 [label="type"]
-node159 -> node160
-node163 -> node164 [label="id"]
-node163 -> node165 [label="type"]
-node159 -> node163
-node157 -> node159
-node157 -> node166
-node168 -> node169 [label="left"]
-node168 -> node170 [label="right"]
-node167 -> node168
-node157 -> node167 [label="body"]
-node1 -> node157
-node171 -> node172 [label="function"]
-node174 -> node175 [label="id"]
-node174 -> node176 [label="type"]
-node173 -> node174
-node177 -> node178 [label="id"]
-node177 -> node179 [label="type"]
-node173 -> node177
-node171 -> node173
-node171 -> node180
-node183 -> node184 [label="function"]
-node185 -> node186
-node183 -> node185 [label="arguments"]
-node182 -> node183 [label="if"]
-node187 -> node188 [label="left"]
-node187 -> node189 [label="right"]
-node182 -> node187 [label="else"]
-node182 -> node190 [label="then"]
-node181 -> node182
-node171 -> node181 [label="body"]
-node1 -> node171
+node145 -> node146 [label="function"]
+node148 -> node149 [label="left"]
+node148 -> node150 [label="right"]
+node147 -> node148
+node147 -> node151
+node145 -> node147 [label="arguments"]
+node143 -> node145 [label="arguments"]
+node142 -> node143
+node152 -> node153 [label="function"]
+node155 -> node156 [label="left"]
+node155 -> node157 [label="right"]
+node154 -> node155
+node154 -> node158
+node152 -> node154 [label="arguments"]
+node142 -> node152
+node132 -> node142 [label="body"]
+node1 -> node132
+node159 -> node160 [label="function"]
+node162 -> node163 [label="id"]
+node162 -> node164 [label="type"]
+node161 -> node162
+node165 -> node166 [label="id"]
+node165 -> node167 [label="type"]
+node161 -> node165
+node159 -> node161
+node159 -> node168
+node170 -> node171 [label="function"]
+node172 -> node173 [label="function"]
+node174 -> node175
+node174 -> node176
+node172 -> node174 [label="arguments"]
+node170 -> node172 [label="arguments"]
+node169 -> node170
+node169 -> node177
+node159 -> node169 [label="body"]
+node1 -> node159
+node178 -> node179 [label="function"]
+node181 -> node182 [label="id"]
+node181 -> node183 [label="type"]
+node180 -> node181
+node184 -> node185 [label="id"]
+node184 -> node186 [label="type"]
+node180 -> node184
+node178 -> node180
+node178 -> node187
+node189 -> node190 [label="function"]
 node191 -> node192 [label="function"]
-node194 -> node195 [label="id"]
-node194 -> node196 [label="type"]
 node193 -> node194
-node191 -> node193
-node191 -> node197
-node200 -> node201 [label="left"]
-node200 -> node202 [label="right"]
-node199 -> node200 [label="if"]
-node199 -> node203 [label="else"]
-node199 -> node204 [label="then"]
-node198 -> node199
-node191 -> node198 [label="body"]
-node1 -> node191
-node205 -> node206 [label="function"]
-node208 -> node209 [label="id"]
-node208 -> node210 [label="type"]
+node193 -> node195
+node191 -> node193 [label="arguments"]
+node189 -> node191 [label="arguments"]
+node188 -> node189
+node188 -> node196
+node178 -> node188 [label="body"]
+node1 -> node178
+node197 -> node198 [label="function"]
+node200 -> node201 [label="id"]
+node200 -> node202 [label="type"]
+node199 -> node200
+node203 -> node204 [label="id"]
+node203 -> node205 [label="type"]
+node199 -> node203
+node197 -> node199
+node197 -> node206
+node208 -> node209 [label="function"]
+node211 -> node212 [label="left"]
+node211 -> node213 [label="right"]
+node210 -> node211
+node208 -> node210 [label="arguments"]
 node207 -> node208
-node211 -> node212 [label="id"]
-node211 -> node213 [label="type"]
-node207 -> node211
-node205 -> node207
-node205 -> node214
-node217 -> node218 [label="function"]
-node219 -> node220
-node219 -> node221
-node217 -> node219 [label="arguments"]
-node216 -> node217 [label="left"]
-node222 -> node223 [label="function"]
-node224 -> node225
-node224 -> node226
-node222 -> node224 [label="arguments"]
-node216 -> node222 [label="right"]
-node215 -> node216
-node205 -> node215 [label="body"]
-node1 -> node205
-node227 -> node228 [label="function"]
-node230 -> node231 [label="id"]
-node230 -> node232 [label="type"]
-node229 -> node230
-node233 -> node234 [label="id"]
-node233 -> node235 [label="type"]
-node229 -> node233
-node227 -> node229
-node227 -> node236
-node240 -> node241 [label="function"]
-node242 -> node243
-node242 -> node244
-node240 -> node242 [label="arguments"]
-node239 -> node240 [label="left"]
-node246 -> node247 [label="left"]
-node246 -> node248 [label="right"]
-node245 -> node246 [label="left"]
-node249 -> node250 [label="left"]
-node249 -> node251 [label="right"]
-node245 -> node249 [label="right"]
-node239 -> node245 [label="right"]
-node238 -> node239 [label="if"]
-node238 -> node252 [label="else"]
-node238 -> node253 [label="then"]
-node237 -> node238
-node227 -> node237 [label="body"]
-node1 -> node227
-node254 -> node255 [label="function"]
-node257 -> node258 [label="id"]
-node257 -> node259 [label="type"]
-node256 -> node257
-node260 -> node261 [label="id"]
-node260 -> node262 [label="type"]
-node256 -> node260
-node254 -> node256
-node254 -> node263
-node265 -> node266 [label="function"]
-node267 -> node268
-node267 -> node269
-node265 -> node267 [label="arguments"]
-node264 -> node265
-node254 -> node264 [label="body"]
-node1 -> node254
+node215 -> node216 [label="left"]
+node215 -> node217 [label="right"]
+node214 -> node215
+node207 -> node214
+node197 -> node207 [label="body"]
+node1 -> node197
+node218 -> node219 [label="function"]
+node221 -> node222 [label="id"]
+node221 -> node223 [label="type"]
+node220 -> node221
+node224 -> node225 [label="id"]
+node224 -> node226 [label="type"]
+node220 -> node224
+node218 -> node220
+node218 -> node227
+node229 -> node230 [label="function"]
+node231 -> node232 [label="left"]
+node231 -> node233 [label="right"]
+node229 -> node231 [label="arguments"]
+node228 -> node229
+node234 -> node235 [label="function"]
+node236 -> node237
+node236 -> node238
+node234 -> node236 [label="arguments"]
+node228 -> node234
+node218 -> node228 [label="body"]
+node1 -> node218
+node239 -> node240 [label="function"]
+node242 -> node243 [label="id"]
+node242 -> node244 [label="type"]
+node241 -> node242
+node245 -> node246 [label="id"]
+node245 -> node247 [label="type"]
+node241 -> node245
+node239 -> node241
+node239 -> node248
+node250 -> node251 [label="function"]
+node252 -> node253 [label="left"]
+node252 -> node254 [label="right"]
+node250 -> node252 [label="arguments"]
+node249 -> node250
+node255 -> node256 [label="left"]
+node255 -> node257 [label="right"]
+node249 -> node255
+node239 -> node249 [label="body"]
+node1 -> node239
+node258 -> node259 [label="function"]
+node261 -> node262 [label="id"]
+node261 -> node263 [label="type"]
+node260 -> node261
+node264 -> node265 [label="id"]
+node264 -> node266 [label="type"]
+node260 -> node264
+node258 -> node260
+node258 -> node267
 node270 -> node271 [label="function"]
-node273 -> node274 [label="id"]
-node273 -> node275 [label="type"]
 node272 -> node273
-node276 -> node277 [label="id"]
-node276 -> node278 [label="type"]
-node272 -> node276
-node270 -> node272
-node270 -> node279
-node282 -> node283 [label="function"]
-node284 -> node285
-node282 -> node284 [label="arguments"]
-node281 -> node282 [label="left"]
-node286 -> node287 [label="function"]
-node288 -> node289
-node286 -> node288 [label="arguments"]
-node281 -> node286 [label="right"]
+node270 -> node272 [label="arguments"]
+node269 -> node270 [label="if"]
+node274 -> node275 [label="left"]
+node274 -> node276 [label="right"]
+node269 -> node274 [label="else"]
+node269 -> node277 [label="then"]
+node268 -> node269
+node258 -> node268 [label="body"]
+node1 -> node258
+node278 -> node279 [label="function"]
+node281 -> node282 [label="id"]
+node281 -> node283 [label="type"]
 node280 -> node281
-node270 -> node280 [label="body"]
-node1 -> node270
-node290 -> node291 [label="function"]
-node293 -> node294 [label="id"]
-node293 -> node295 [label="type"]
-node292 -> node293
-node290 -> node292
-node290 -> node296
-node298 -> node299 [label="function"]
-node300 -> node301 [label="left"]
-node300 -> node302 [label="right"]
-node298 -> node300 [label="arguments"]
-node297 -> node298
-node303 -> node304 [label="left"]
-node303 -> node305 [label="right"]
-node297 -> node303
-node290 -> node297 [label="body"]
-node1 -> node290
+node278 -> node280
+node278 -> node284
+node288 -> node289 [label="function"]
+node290 -> node291
+node288 -> node290 [label="arguments"]
+node287 -> node288
+node286 -> node287 [label="if"]
+node286 -> node292 [label="else"]
+node286 -> node293 [label="then"]
+node285 -> node286
+node278 -> node285 [label="body"]
+node1 -> node278
+node294 -> node295 [label="function"]
+node297 -> node298 [label="id"]
+node297 -> node299 [label="type"]
+node296 -> node297
+node300 -> node301 [label="id"]
+node300 -> node302 [label="type"]
+node296 -> node300
+node294 -> node296
+node294 -> node303
 node306 -> node307 [label="function"]
-node309 -> node310 [label="id"]
-node309 -> node311 [label="type"]
 node308 -> node309
-node312 -> node313 [label="id"]
-node312 -> node314 [label="type"]
-node308 -> node312
-node306 -> node308
-node306 -> node315
-node317 -> node318 [label="function"]
-node319 -> node320 [label="function"]
-node321 -> node322
-node321 -> node323
-node319 -> node321 [label="arguments"]
-node317 -> node319 [label="arguments"]
-node316 -> node317
-node316 -> node324
-node306 -> node316 [label="body"]
-node1 -> node306
+node308 -> node310
+node306 -> node308 [label="arguments"]
+node305 -> node306 [label="left"]
+node311 -> node312 [label="function"]
+node313 -> node314
+node313 -> node315
+node311 -> node313 [label="arguments"]
+node305 -> node311 [label="right"]
+node304 -> node305
+node294 -> node304 [label="body"]
+node1 -> node294
+node316 -> node317 [label="function"]
+node319 -> node320 [label="id"]
+node319 -> node321 [label="type"]
+node318 -> node319
+node322 -> node323 [label="id"]
+node322 -> node324 [label="type"]
+node318 -> node322
+node316 -> node318
+node316 -> node325
+node329 -> node330 [label="function"]
+node331 -> node332
+node331 -> node333
+node329 -> node331 [label="arguments"]
+node328 -> node329 [label="left"]
+node335 -> node336 [label="left"]
+node335 -> node337 [label="right"]
+node334 -> node335 [label="left"]
+node338 -> node339 [label="left"]
+node338 -> node340 [label="right"]
+node334 -> node338 [label="right"]
+node328 -> node334 [label="right"]
+node327 -> node328 [label="if"]
+node327 -> node341 [label="else"]
+node327 -> node342 [label="then"]
+node326 -> node327
+node316 -> node326 [label="body"]
+node1 -> node316
+node343 -> node344 [label="function"]
+node346 -> node347 [label="id"]
+node346 -> node348 [label="type"]
+node345 -> node346
+node349 -> node350 [label="id"]
+node349 -> node351 [label="type"]
+node345 -> node349
+node343 -> node345
+node343 -> node352
+node354 -> node355 [label="function"]
+node356 -> node357
+node356 -> node358
+node354 -> node356 [label="arguments"]
+node353 -> node354
+node343 -> node353 [label="body"]
+node1 -> node343
+node359 -> node360 [label="function"]
+node362 -> node363 [label="id"]
+node362 -> node364 [label="type"]
+node361 -> node362
+node365 -> node366 [label="id"]
+node365 -> node367 [label="type"]
+node361 -> node365
+node359 -> node361
+node359 -> node368
+node371 -> node372 [label="function"]
+node373 -> node374
+node371 -> node373 [label="arguments"]
+node370 -> node371 [label="left"]
+node375 -> node376 [label="function"]
+node377 -> node378
+node375 -> node377 [label="arguments"]
+node370 -> node375 [label="right"]
+node369 -> node370
+node359 -> node369 [label="body"]
+node1 -> node359
+node379 -> node380 [label="function"]
+node382 -> node383 [label="id"]
+node382 -> node384 [label="type"]
+node381 -> node382
+node379 -> node381
+node379 -> node385
+node387 -> node388 [label="function"]
+node389 -> node390 [label="left"]
+node389 -> node391 [label="right"]
+node387 -> node389 [label="arguments"]
+node386 -> node387
+node392 -> node393 [label="left"]
+node392 -> node394 [label="right"]
+node386 -> node392
+node379 -> node386 [label="body"]
+node1 -> node379
+node395 -> node396 [label="function"]
+node398 -> node399 [label="id"]
+node398 -> node400 [label="type"]
+node397 -> node398
+node401 -> node402 [label="id"]
+node401 -> node403 [label="type"]
+node397 -> node401
+node404 -> node405 [label="id"]
+node404 -> node406 [label="type"]
+node397 -> node404
+node407 -> node408 [label="id"]
+node407 -> node409 [label="type"]
+node397 -> node407
+node395 -> node397
+node395 -> node410
+node412 -> node413 [label="function"]
+node415 -> node416 [label="function"]
+node417 -> node418
+node417 -> node419
+node415 -> node417 [label="arguments"]
+node414 -> node415 [label="left"]
+node414 -> node420 [label="right"]
+node412 -> node414 [label="arguments"]
+node411 -> node412
+node421 -> node422 [label="function"]
+node424 -> node425 [label="function"]
+node426 -> node427
+node426 -> node428
+node424 -> node426 [label="arguments"]
+node423 -> node424 [label="left"]
+node423 -> node429 [label="right"]
+node421 -> node423 [label="arguments"]
+node411 -> node421
+node430 -> node431 [label="function"]
+node432 -> node433 [label="function"]
+node434 -> node435
+node434 -> node436
+node432 -> node434 [label="arguments"]
+node430 -> node432 [label="arguments"]
+node411 -> node430
+node437 -> node438 [label="function"]
+node439 -> node440 [label="function"]
+node441 -> node442
+node441 -> node443
+node439 -> node441 [label="arguments"]
+node437 -> node439 [label="arguments"]
+node411 -> node437
+node444 -> node445 [label="function"]
+node446 -> node447 [label="function"]
+node448 -> node449
+node446 -> node448 [label="arguments"]
+node444 -> node446 [label="arguments"]
+node411 -> node444
+node450 -> node451 [label="function"]
+node452 -> node453 [label="function"]
+node454 -> node455
+node454 -> node456
+node452 -> node454 [label="arguments"]
+node450 -> node452 [label="arguments"]
+node411 -> node450
+node457 -> node458 [label="function"]
+node459 -> node460 [label="function"]
+node461 -> node462
+node461 -> node463
+node459 -> node461 [label="arguments"]
+node457 -> node459 [label="arguments"]
+node411 -> node457
+node464 -> node465 [label="function"]
+node466 -> node467
+node466 -> node468
+node466 -> node469
+node466 -> node470
+node464 -> node466 [label="arguments"]
+node411 -> node464
+node395 -> node411 [label="body"]
+node1 -> node395
 node0 -> node1
 }

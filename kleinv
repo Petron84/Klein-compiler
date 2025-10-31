@@ -23,11 +23,16 @@ else:
 				#output_name = base_filename + "_Annotated_AST"
 				content = open(os.path.join(klein_file,f)).read()
 				A = Analyzer(Parser(content).parse())
-				A.analyze()
+				table = A.analyze()
+				print("\nSYMBOL TABLE:")
+				print(table)
+				print()
 			else:
 				continue
 	else:
 		content = open(klein_file).read()
 		#output_name = klein_file.split('/')[-1].split('.')[0] + "_Annotated_AST"
 		A = Analyzer(Parser(content).parse())
-		A.analyze()
+		table = A.analyze()
+		print("\nSYMBOL TABLE:")
+		print(table)

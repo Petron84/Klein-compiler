@@ -1,7 +1,13 @@
 (* Correct Version of Main Not Defined *)
-function main(a:integer,b:integer) : integer
-	print(multiply(a,b))
-	0
+function main(a:integer,b:integer,c:integer,d:integer) : integer
+	print((multiply(a,b) / 2))
+	print((multiply(c,d) / 2))
+	print(bool_difference(true,true))
+	print(bool_difference(true,false))
+	print(check_nonnegative(a))
+	print(is_invalid(a,b))
+	print(is_invalid(c,d))
+	sum_meansquare(a,b,c,d)
 
 (* Correct Version of Return Value Error *)
 function square(a: integer) : integer
@@ -28,30 +34,33 @@ function is_invalid(a:integer, b:integer): boolean
 	logic_check(a,b) and logic_check(b,a)
 
 (* Correct Version of Invalid if Expression *)
-function check_nonzero(b:integer) : boolean
-	if (0 < b) then
+function check_nonnegative(b:integer) : boolean
+	if not(is_A_negative(b)) then
 		true
 	else
 		false
 
 (* Correct Version of Clause Mismatch *)
 function divide(a:integer, b:integer): integer
-	if check_nonzero(b) then
+	if greater_than_zero(b) then
 		(a / b)
 	else
 		0
 
 (* Correct Version of Same Name Parameter *)
 function multiply(x:integer, y:integer): integer
+	print( x * y )
 	(x * y)
 
 (* Correct Version of Unknown Function Call *)
 function difference(a:integer,b:integer): integer
-	(a - b)
+	print( a - b )
+	resultprint(a,b)
 
 (* Correct Version of Function with Same Name (originally named "difference")*)
 function bool_difference(a:boolean,b:boolean) : boolean
-	(a and b)
+	print( not (a and b) )
+	not (a and b)
 
 (* Correct Version of Illegal Print Function *)
 function resultprint(a:integer,b:integer) : integer
@@ -66,18 +75,24 @@ function printresult(a:integer,b:integer) : integer
 
 (* Correct Version of Unused Function *)
 function calculate_mean(a:integer,b:integer) : integer
-	(a + b) / 2
+	print(divide((a + b),2))
+	divide((a + b),2)
 
 function calculate_meansquare(a:integer, b:integer) : integer
 	calculate_mean(square(a),square(b))
 
+function sum_meansquare(a:integer, b:integer, c:integer, d:integer): integer
+	printresult(calculate_meansquare(square(a),square(b)),calculate_meansquare(square(c),square(d)))
+
 (* Correct Version of Unnecessary/Redundant Function *)
-function greater_than(a: integer) : boolean
+function greater_than_zero(a: integer) : boolean
+	print(a)
+	print(0 < a)
 	(0 < a)
 
 (* Correct Version of Broken Code Path *)
-function is_A_positive(a:integer): boolean
-	if (0 < a) then
+function is_A_negative(a:integer): boolean
+	if (not (greater_than_zero(a)) and (not (a = 0))) then
 		true
 	else
 		false
