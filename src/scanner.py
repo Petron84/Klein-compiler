@@ -1,5 +1,5 @@
 import sys
-def KleinError(message,linenumber,terminate=True):
+def KleinError(message,linenumber=-1,terminate=True):
     print(f'\n\tKlein Error at line number {linenumber}: \n\t\t{message}')
     if terminate:
         sys.exit()    

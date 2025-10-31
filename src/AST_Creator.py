@@ -103,6 +103,8 @@ class MakeNode:
 					expressions.append(self.ast_stack.pop())
 				else:
 					break
+		# reverse to put print statements before the return expression
+		expressions.reverse()
 		return expressions
 
 	def wrap_terminals(self, obj,type_hint="TERMINAL",label=None):

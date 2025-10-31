@@ -14,3 +14,5 @@ function gcd(a : integer, b : integer) : integer
    else
       gcd(b, remainder(a, b))
 
+function main(a : integer, b : integer) : integer
+   gcd(a,b)

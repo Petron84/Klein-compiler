@@ -51,7 +51,7 @@ function difference(a:integer,b:integer): integer
 
 (* Correct Version of Function with Same Name (originally named "difference")*)
 function bool_difference(a:boolean,b:boolean) : boolean
-	(a = b)
+	(a and b)
 
 (* Correct Version of Illegal Print Function *)
 function resultprint(a:integer,b:integer) : integer
@@ -60,7 +60,7 @@ function resultprint(a:integer,b:integer) : integer
 
 (* OPTIONAL *)
 (* Correct Version of Unused Variable *)
-function resultprint(a:integer,b:integer) : integer
+function printresult(a:integer,b:integer) : integer
 	print(add_squares(a,b))
 	0
 
