@@ -6,5 +6,5 @@ class Generator():
         self.AST = AST
         self.symbol_table = table
 
-    def generate():
+    def generate(self):
         pass

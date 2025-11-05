@@ -17,16 +17,29 @@ else:
 		for f in os.listdir(klein_file):
 			filename = f.split("/")[-1]
 			base_filename, extension = os.path.splitext(filename)
-			if extension == ".kln":
+			if extension == ".kln" or extension == "":
 				print("\nFILENAME:",filename)
-				content = open(os.path.join(klein_file,f)).read()
-				tree = Parser(content).parse()
-				table = Analyzer(tree)
-				Generator(tree,table).generate()
+				try:
+					content = open(os.path.join(klein_file,f)).read()
+					tree = Parser(content).parse()
+					table = Analyzer(tree)
+					Generator(tree,table).generate()
+				except:
+					print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
 			else:
 				continue
 	else:
-		content = open(klein_file).read()
-		tree = Parser(content).parse()
-		table = Analyzer(tree)
-		Generator(tree,table).generate()
+		filename = klein_file.split('/')[-1]
+		base_filename, extension = os.path.splitext(filename)
+		print('\nFILENAME:', filename)
+		if extension == ".kln" or extension == "":
+			try:
+				content = open(klein_file).read()
+				tree = Parser(content).parse()
+				table = Analyzer(tree)
+				Generator(tree,table).generate()
+			except:
+				print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
+		else:
+			print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...") 
+
