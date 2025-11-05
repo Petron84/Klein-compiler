@@ -5,6 +5,7 @@ from pathlib import Path
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__),"src")))
 
+from code_generator import Generator
 from semantic_analyzer import Analyzer
 from parser import Parser
 try:
@@ -20,19 +21,12 @@ else:
 				print("\nFILENAME:",filename)
 				content = open(os.path.join(klein_file,f)).read()
 				tree = Parser(content).parse()
-				print(tree)
-				sys.exit()
-				A = Analyzer(P.parse())
-				table = A.analyze()
-				print("\nSYMBOL TABLE:")
-				print(table)
-				print()
+				table = Analyzer(tree)
+				Generator(tree,table).generate()
 			else:
 				continue
 	else:
 		content = open(klein_file).read()
-		#output_name = klein_file.split('/')[-1].split('.')[0] + "_Annotated_AST"
-		A = Analyzer(Parser(content).parse())
-		table = A.analyze()
-		print("\nSYMBOL TABLE:")
-		print(table)
+		tree = Parser(content).parse()
+		table = Analyzer(tree)
+		Generator(tree,table).generate()
