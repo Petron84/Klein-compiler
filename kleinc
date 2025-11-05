@@ -19,7 +19,10 @@ else:
 			if extension == ".kln":
 				print("\nFILENAME:",filename)
 				content = open(os.path.join(klein_file,f)).read()
-				A = Analyzer(Parser(content).parse())
+				tree = Parser(content).parse()
+				print(tree)
+				sys.exit()
+				A = Analyzer(P.parse())
 				table = A.analyze()
 				print("\nSYMBOL TABLE:")
 				print(table)
@@ -28,6 +31,7 @@ else:
 				continue
 	else:
 		content = open(klein_file).read()
+		#output_name = klein_file.split('/')[-1].split('.')[0] + "_Annotated_AST"
 		A = Analyzer(Parser(content).parse())
 		table = A.analyze()
 		print("\nSYMBOL TABLE:")
