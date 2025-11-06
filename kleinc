@@ -10,6 +10,7 @@ from semantic_analyzer import Analyzer
 from parser import Parser
 try:
 	klein_file = sys.argv[1]
+	
 except:
 	print("Klein Error: Invalid Input. Make sure you input either a .kln file or a directory of .kln files.")
 else:
@@ -36,8 +37,11 @@ else:
 			try:
 				content = open(klein_file).read()
 				tree = Parser(content).parse()
-				table = Analyzer(tree)
-				Generator(tree,table).generate()
+				table = Analyzer(tree).analyze()
+				imem = Generator(tree,table).generate()
+				for instruction in imem:
+					print(instruction)
+
 			except:
 				print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
 		else:

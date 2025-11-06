@@ -14,7 +14,7 @@ class Symbol():
 
 class Analyzer():
     def __init__(self, ast):
-        self.AST = ast.pop().children.pop().children
+        self.AST = ast[-1].children[-1].children
         self.primitive = Symbol("print", type=None, parameters=[1,("expression",["integer,boolean"],True)])
         self.symbol_table = {"print": self.primitive}
         

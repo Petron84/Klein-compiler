@@ -1,0 +1,11 @@
+0: LDA 6, 1(7) --> return address after main
+1: LDA 7, 7(0) --> address of main
+2: OUT 1,0,0 --> output return
+3: HALT 0,0,0 --> terminate
+4: LDC 1, 1(0) --> load constant "1" into register
+5: OUT 1,0,0 --> "print"/output the register 1 value
+6: LDA 7, 8(0) --> move pointer back to main
+7: LDA 7, 4(0) --> move pointer to "print" function block
+8: LDA 7, 0(6) --> move pointer to return address
+
+DMEM[1023,0,0,0,.......]
