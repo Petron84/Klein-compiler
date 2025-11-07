@@ -1,4 +1,4 @@
-
+# CURRENT OUTPUT FROM CODE_GENERATOR.PY. ATTEMPTED TO INCLUDE DATA MEMORY ALLOCATION INSTRUCTIONS.
 FILENAME: print-one.kln
 ---INITIALIZE----
 0 : LDA  6, 5(7) # Start runtime system. Load return address into register 6
