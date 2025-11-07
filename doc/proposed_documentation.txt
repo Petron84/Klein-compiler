@@ -1,0 +1,56 @@
+Stack Frame Layout:
+
+As shown above:
+TOP OF STACK FRAME = function call return address
+MIDDLE OF STACK FRAME = arguments
+BOTTOM OF STACK FRAME = value returned by function call
+
+
+DMEM Layout Example:
+
+
+DMEM[1023] = Return address of program (output/HALT line)
+DMEM[1022] = Return address of first function call
+DMEM[1021] = Argument in first function call
+DMEM[1020] = Second Argument in first function call 
+DMEM[1019] = Value returned by function call
+DMEM[1018] = Return address of second function call
+........ # Continue until last stack frame is stored
+........ # Rest of memory is '0' until command line arguments are reached.
+DMEM[2] = COMMAND LINE ARGUMENT 2 
+DMEM[1] = COMMAND LINE ARGUMENT 1
+DMEM[0] = 1023 # size of array
+
+
+IMEM layout for print-one.kln without data memory allocation (see print-one_IMEM.txt for our current IMEM with data memory).
+
+* INITIALIZE RUN TIME SYSTEM
+*
+0: LDA 6,1(7)
+1: LDA 7,7(0)
+2: OUT 1,0,0
+3: HALT 0,0,0
+*
+* PRINT
+*
+4: LDC 1,1(0)
+5: OUT 1,0,0
+6: LDA 7,8(0)
+*
+* MAIN
+*
+7: LDA 7,4(0)
+8: LDA 7,0(6)
+
+
+How the 8 Registers are to be Used:
+
+Register 0: Stores the value 0
+Register 1: Stores value to be output or returned
+Register 2: Stores a temporary value for any operations that require two values (such as binary expressions).
+Register 3: Stores a temporary value for any memory location calculations
+Register 4: Value of current memory offset
+Register 5: Stores stack frame pointer
+Register 6: Stores current return address
+Register 7: Program counter
+

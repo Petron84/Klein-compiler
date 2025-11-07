@@ -1,11 +1,25 @@
-0: LDA 6, 1(7) --> return address after main
-1: LDA 7, 7(0) --> address of main
-2: OUT 1,0,0 --> output return
-3: HALT 0,0,0 --> terminate
-4: LDC 1, 1(0) --> load constant "1" into register
-5: OUT 1,0,0 --> "print"/output the register 1 value
-6: LDA 7, 8(0) --> move pointer back to main
-7: LDA 7, 4(0) --> move pointer to "print" function block
-8: LDA 7, 0(6) --> move pointer to return address
 
-DMEM[1023,0,0,0,.......]
+FILENAME: print-one.kln
+---INITIALIZE----
+0 : LDA  6, 5(7) # Start runtime system. Load return address into register 6
+1 : LD   5, 0(0) # Load DMEM[0] (contains the value 1023) into register 5.
+2 : ST   6, 4(5) # Store runtime return address at DMEM[1023 + 0].
+3 : LDC  3, 1(0) # Store value 1 in temporary register 3
+4 : SUB  4, 4, 3 # Decrement memory offset
+5 : LDA  7, 3(7) # Load return address of main into register 7.
+6 : OUT  1, 0, 0 # Output value from register 1.
+7 : HALT 0, 0, 0 # Terminate runtime system.
+-----PRINT------
+8 : OUT  1, 0, 0 # Hardcoded print function
+9 : LD   6, 0(5) # Load return addess from previous function call/stack frame.
+10 : LDA  7, 0(6) # Load address of previous function call into register 7.
+-----MAIN-------
+11 : LDA  6, 3(7) # Load return address into R6
+12 : ST   6, 4(5) # Store current return address in memory location 1022
+13 : LDC  1, 1(0) # Load print's value into register 1
+14 : LDA  7, 8(0) # Load address of print IMEM block
+15 : LDC  3, 1(0) # Store value 1 in temporary register 3
+16 : SUB  4, 4, 3 # Decrement memory offset
+17 : LDC  1, 1(0) # Load integer-literal value into register 1
+18 : LD   6, 0(5) # Load root return address into register 6
+19 : LDA  7, 0(6) # Load return address back into register 7
