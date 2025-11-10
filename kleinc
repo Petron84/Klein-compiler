@@ -39,8 +39,15 @@ else:
 				tree = Parser(content).parse()
 				table = Analyzer(tree).analyze()
 				imem = Generator(tree,table).generate()
-				for i, (instruction, description) in enumerate(imem):
-					print(i, ":", instruction, description)
+				program_counter = 0
+				for (instruction, description) in imem:
+					if description == "#":
+						print(instruction)
+						continue
+					else:
+						print(program_counter, ":", instruction, description)
+						program_counter += 1
+
 
 			except:
 				print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")

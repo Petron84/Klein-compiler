@@ -31,14 +31,15 @@ class Generator():
             # Command line arguments stored in DMEM from DMEM[1] to DMEM[N]
                             
         self.IMEM = [
+            ["-----INITIALIZE RUNTIME SYSTEM-----", '#'],
             ["LDA  6, 5(7)", '# Start runtime system. Load return address into register 6'],
             ["LD   5, 0(0)", '# Load DMEM[0] (contains the value 1023) into register 5.'],
-            ["ST   6, 4(5)", '# Store runtime return address at DMEM[1023 + 0].'],
-            ["LDC  3, 1(0)", '# Store value 1 in temporary register 3'],
-            ["SUB  4, 4, 3", '# Decrement memory offset'],
-            ["LDA  7, 5(7)", '# Load return address of main into register 7.'],
-            ["OUT  1, 0, 0", '# Output value from register 1.'],
+            ["ST   6, 0(5)", '# Store runtime return address at DMEM[1023 + 0].'],
+            ["LDC  4, 1(0)", '# Store value 1 in temporary register 3'],
+            ["SUB  5, 5, 4", '# Decrement memory offset'],
+            ["LDA  7, 4(7)", '# Load return address of main into register 7.'],
             ["HALT 0, 0, 0", '# Terminate runtime system.'],
+            ["-----PRINT-----",'#'],
             ["OUT  1, 0, 0", '# Hardcoded print function'],
             ["LD   6, 0(5)", '# Load return addess from previous function call/stack frame.'],
             ["LDA  7, 0(6)",  '# Load address of previous function call into register 7.']
@@ -64,6 +65,8 @@ class Generator():
         main_body = functions['main']
         for exp in main_body:
             self.instruction_rules(exp)
+        self.IMEM.append(["OUT  1, 0, 0", '# Output value from register 1.'])
+        self.IMEM.append(['LD   5, 0(0)', '# Reset memory pointer'])
         self.IMEM.append(["LD   6, 0(5)", "# Load root return address into register 6"])
         self.IMEM.append(["LDA  7, 0(6)", "# Load return address back into register 7"])
 
@@ -74,12 +77,13 @@ class Generator():
             case "FUNCTION-CALL":
                 if exp_children[0].value == "print":
                     value = exp_children[1].value
+                    self.IMEM.append(["-----MAIN-----",'#'])
                     self.IMEM.append(["LDA  6, 3(7)", '# Load return address into R6'])
-                    self.IMEM.append(["ST   6, 4(5)", '# Store current return address in memory location 1022'])
+                    self.IMEM.append(["ST   6, 0(5)", '# Store current return address in memory location 1022'])
                     self.IMEM.append([f"LDC  1, {value}(0)", "# Load print's value into register 1"])
-                    self.IMEM.append(["LDA  7, 8(0)", '# Load address of print IMEM block'])
-                    self.IMEM.append(["LDC  3, 1(0)", '# Store value 1 in temporary register 3'])
-                    self.IMEM.append(["SUB  4, 4, 3", '# Decrement memory offset'])
+                    self.IMEM.append(["LDA  7, 7(0)", '# Load address of print IMEM block'])
+                    self.IMEM.append(["LDC  4, 1(0)", '# Store value 1 in temporary register 3'])
+                    self.IMEM.append(["SUB  5, 5, 4", '# Decrement memory offset'])
                 else:
                     pass
             case "INTEGER-LITERAL":
