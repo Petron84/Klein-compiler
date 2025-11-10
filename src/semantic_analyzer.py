@@ -1,5 +1,5 @@
 from parser import Parser
-from scanner import KleinError
+from scanner import KleinError, KleinWarning
 import sys
 
 class Symbol():
@@ -80,7 +80,7 @@ class Analyzer():
                 maxdepth = max(traverser.depth,maxdepth)
 
             if not contains_print and maxdepth <= 2:
-                KleinError(f"Semantic Warning: The function {f_name} is redundant.",terminate=False)
+                KleinWarning(f"Semantic Warning: The function {f_name} is redundant.",terminate=False)
 
             if returntype != self.symbol_table[f_name].type:
                 self.reject = True
@@ -89,7 +89,7 @@ class Analyzer():
             
             # Warning for unused function
             if symboldata.called_by == [] and f_name != "main" and f_name != "print":
-                KleinError(f'Semantic Warning: The function {f_name} was never called.', terminate=False)
+                KleinWarning(f'Semantic Warning: The function {f_name} was never called.', terminate=False)
 
             if symboldata.parameters == []:
                 continue
@@ -97,12 +97,12 @@ class Analyzer():
                 # Warning for unused parameter
                 if symboldata.parameters[0] == 1:
                     if not symboldata.parameters[1][0][2]:
-                         KleinError(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
+                         KleinWarning(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
                 else:
                     for p in symboldata.parameters[1]:
                         if not p[2]:
                             self.reject = True
-                            KleinError(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
+                            KleinWarning(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
         if self.reject:
             return "REJECTED: Semantic Analyzer caught 1 or more semantic errors in the program."
         else:
@@ -150,15 +150,15 @@ class Traverser():
                 elif children[0].type == "BOOLEAN-LITERAL":
                     # Warnings for if expressions that can't reach one of the clauses
                     if curr_value == "true":
-                        KleinError(f"Semantic Warning: The function {self.f_name} contains an if expression that will never reach an else clause",curr_line,terminate=False)
+                        KleinWarning(f"Semantic Warning: The function {self.f_name} contains an if expression that will never reach an else clause",curr_line,terminate=False)
                     else:
-                        KleinError(f"Semantic Warning: The function{self.f_name} contains an if expression that will never reach the then clause",curr_line,terminate=False)
+                        KleinWarning(f"Semantic Warning: The function{self.f_name} contains an if expression that will never reach the then clause",curr_line,terminate=False)
                 
                 elif children[0].type == "BINARY-EXPRESSION":
                     onlyliteral = self.check_only_literal(children[0])
                     if onlyliteral:
                         # Warnings for if expressions that one of the clauses won't be reached due to hardcoded values
-                        KleinError(f"Semantic Warning: The function {self.f_name} contains an if expression containing no parameters or function calls.\n\t\t\t\tWatch out for hardcoded values. The then-clause or else-clause may never be reached.",curr_line,terminate=False)
+                        KleinWarning(f"Semantic Warning: The function {self.f_name} contains an if expression containing no parameters or function calls.\n\t\t\t\tWatch out for hardcoded values. The then-clause or else-clause may never be reached.",curr_line,terminate=False)
                         
                 if_returntype = self.traverse(children[0],"boolean",current_depth + 1)
 
@@ -292,7 +292,7 @@ class Traverser():
                             else:
                                 recursive_match.append(False)
                         if all(recursive_match):
-                            KleinError(f"Semantic Warning: Possible infinite recursion detected. The function {nested_function} called {self.f_name} without any parameter changes",curr_line,terminate=False)
+                            KleinWarning(f"Semantic Warning: Possible infinite recursion detected. The function {nested_function} called {self.f_name} without any parameter changes",curr_line,terminate=False)
 
                     # Illegal case for function call passing more parameters than defined
                     if len(nested_body) != f_params[0]:

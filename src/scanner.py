@@ -4,6 +4,11 @@ def KleinError(message,linenumber=-1,terminate=True):
     if terminate:
         sys.exit()    
         
+def KleinWarning(message,linenumber=-1,terminate=True):
+    print(f'\n\tKlein Warning at line number {linenumber}: \n\t\t{message}')
+    if terminate:
+        sys.exit()
+        
 class Scanner:
     try:
         def __init__(self, text: str):
