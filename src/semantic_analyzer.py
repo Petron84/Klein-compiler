@@ -17,6 +17,7 @@ class Analyzer():
         self.AST = ast[-1].children[-1].children
         self.primitive = Symbol("print", type=None, parameters=[1,("expression",["integer,boolean"],True)])
         self.symbol_table = {"print": self.primitive}
+        self.reject = False
         
     def load_functions(self):
         # Scan top-most layer to retrieve function names and prepare symbol table
@@ -28,14 +29,17 @@ class Analyzer():
             # Illegal case for two functions with same name
             if f_name in self.symbol_table:
                 if f_name == "print":
+                    self.reject = True
                     KleinError(f"Semantic Error: The function 'print' has been defined, but this function name is reserved.",f_def[0].linenumber,terminate=False)
                 else:
+                    self.reject = True
                     KleinError(f"Semantic Error: Two or more functions have been defined with the name {f_name}.",f_def[0].linenumber,terminate=False)
 
             self.symbol_table[f_name] = Symbol(f_name)
         
         # Illegal case for missing main function
         if "main" not in self.symbol_table.keys():
+            self.reject = True
             KleinError(f"Semantic Error: Missing function 'main'", -1, terminate=False)
 
         function_names = self.symbol_table.keys()
@@ -52,6 +56,7 @@ class Analyzer():
 
                 # Illegal case for two parameters with same name
                 if p_name in p_list:
+                    self.reject = True
                     KleinError(f"Semantic Error: The function {f_name} has two or more parameters named {p_name}",f_def[0].linenumber,terminate=False)
                 p_list.append(p_name)
                 param_list.append((p_name,params[1].value,False))
@@ -78,6 +83,7 @@ class Analyzer():
                 KleinError(f"Semantic Warning: The function {f_name} is redundant.",terminate=False)
 
             if returntype != self.symbol_table[f_name].type:
+                self.reject = True
                 KleinError(f'Semantic Error: The function {f_name} returns {returntype}, but expected {self.symbol_table[f_name].type}',terminate=False)
         for f_name, symboldata in self.symbol_table.items():
             
@@ -95,8 +101,12 @@ class Analyzer():
                 else:
                     for p in symboldata.parameters[1]:
                         if not p[2]:
+                            self.reject = True
                             KleinError(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
-        return self.symbol_table
+        if self.reject:
+            return "REJECTED: Semantic Analyzer caught 1 or more semantic errors in the program."
+        else:
+            return self.symbol_table
             
     
 class Traverser():
@@ -134,6 +144,7 @@ class Traverser():
 
                 # Illegal case for integer used as boolean check
                 if children[0].type == "INTEGER-LITERAL":
+                    self.reject = True
                     KleinError(f"Semantic Error: Condition in if-expression cannot be an integer literal", curr_line,terminate=False)
                 
                 elif children[0].type == "BOOLEAN-LITERAL":
@@ -153,14 +164,17 @@ class Traverser():
 
                 # Illegal case for boolean expression returning an integer
                 if if_returntype != "boolean":
+                    self.reject = True
                     KleinError(f"Semantic Error: If-clause in if-expression doesn't return a boolean",curr_line,terminate=False)
                 then_returntype = self.traverse(children[1],returntype,current_depth+1)
 
                 # Illegal case for the then clause containing an invalid return type
                 if isinstance(returntype,list):
                     if then_returntype not in returntype:
+                        self.reject = True
                         KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {then_returntype}", curr_line, terminate=False)
                 elif then_returntype != returntype:
+                    self.reject = True
                     KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {then_returntype}", curr_line, terminate=False)
 
                 else_returntype = self.traverse(children[2],returntype,current_depth+1)
@@ -168,8 +182,10 @@ class Traverser():
                 # Illegal case for the else clause containing an invalid return type
                 if isinstance(returntype,list):
                     if else_returntype not in returntype:
+                        self.reject = True
                         KleinError(f"Semantic Error: Then-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {else_returntype}", curr_line, terminate=False)
                 elif else_returntype != returntype:
+                    self.reject = True
                     KleinError(f"Semantic Error: Else-clause in if-expression has an invalid return type.\n\t\t\t\tExpected {returntype} but got {else_returntype}", curr_line,terminate=False)
                 
                 return else_returntype
@@ -190,6 +206,7 @@ class Traverser():
                         return found_type
                 else:
                     # Illegal case for parameter being used that has not been defined as a function or as a parameter of the parent function
+                    self.reject = True
                     KleinError(f"Semantic Error: The identifier {curr_value} exists outside the scope of the current function {self.f_name} and is not a valid function name",curr_line,terminate=False)
 
             case "INTEGER-LITERAL":
@@ -207,6 +224,7 @@ class Traverser():
                 elif exp_returntype == "boolean" and curr_value == "not":
                     return "boolean"
                 else:
+                    self.reject = True
                     KleinError(f"Semantic  Error: operand of unary expression returned an {exp_returntype} type, but operator was {curr_value}",curr_line, terminate=False)
                 return exp_returntype
             
@@ -220,6 +238,7 @@ class Traverser():
                     # Illegal cases for illegal operators for the operands
                     if left_returntype == "integer":
                         if curr_value in boolean_legal:
+                            self.reject = True
                             KleinError(f"Semantic Error: Operands of binary expression returned integer types, but operator was {curr_value}", curr_line, terminate=False)
                         elif curr_value in int_comparisons:
                             return "boolean"
@@ -227,10 +246,12 @@ class Traverser():
                             return "integer"
                     elif left_returntype == "boolean":
                         if curr_value not in boolean_legal:
+                            self.reject = True
                             KleinError(f"Semantic Error: Operands of binary expression returned boolean types, but operator was {curr_value}", curr_line, terminate=False)
                         else:
                             return "boolean"
                 else:
+                    self.reject = True
                     KleinError(f"Semantic Error: Operands returned different types. Operands must be both boolean or both integer.", curr_line, terminate=False)
 
             case "FUNCTION-CALL":
@@ -242,6 +263,7 @@ class Traverser():
 
                 # Illegal case function missing an argument list - exception for print, which does not have an argument list
                 if children[1].type != "ARGUMENT-LIST" and nested_function != "print":
+                    self.reject = True
                     KleinError(f"Semantic Error: Function call expected Argument List but got {children[1].type}",curr_line,terminate=False)
 
                 if nested_function == "print":
@@ -274,6 +296,7 @@ class Traverser():
 
                     # Illegal case for function call passing more parameters than defined
                     if len(nested_body) != f_params[0]:
+                        self.reject = True
                         KleinError(f"Semantic Error: The function {nested_function} requires {f_params[0]} parameters, but was called by {self.f_name} with {len(nested_body)} parameters", curr_line, terminate=False)
                     else:
                         expected = f_params[1]
@@ -281,9 +304,11 @@ class Traverser():
                             if nested_function == "print":
                                 # Illegal case for print functions containing an expression that doesn't return an integer or boolean
                                 if p not in ["integer","boolean"]:
+                                    self.reject = True
                                     KleinError(f"Semantic Error: Print function requires a single expression that returns either an integer or boolean, but got {p}",curr_line,terminate=False)
                             # Illegal case for functions passing parameters with the wrong types
                             elif expected[i][1] != p:
+                                self.reject = True
                                 KleinError(f"Semantic Error: The function {nested_function} was given {p} for the parameter {expected[i][0]}.\n\t\t\t\tExpected {expected[i][1]}",curr_line,terminate=False)
                     return self.symbol_table[nested_function].type
                 else:
@@ -296,6 +321,7 @@ class Traverser():
                     arg_type = self.traverse(arg,returntype,current_depth+1)
                     # Illegal case for arguments that are not integer or boolean (primarily used to raise errors when given Nonetypes)
                     if arg_type not in allowed:
+                        self.reject = True
                         KleinError(f"Semantic Error: Argument list expects integer or boolean values, but got {arg_type}",curr_line,terminate=False)
                     arguments.append(arg_type)
                 return arguments

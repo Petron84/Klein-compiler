@@ -36,7 +36,7 @@ class Generator():
             ["ST   6, 4(5)", '# Store runtime return address at DMEM[1023 + 0].'],
             ["LDC  3, 1(0)", '# Store value 1 in temporary register 3'],
             ["SUB  4, 4, 3", '# Decrement memory offset'],
-            ["LDA  7, 3(7)", '# Load return address of main into register 7.'],
+            ["LDA  7, 5(7)", '# Load return address of main into register 7.'],
             ["OUT  1, 0, 0", '# Output value from register 1.'],
             ["HALT 0, 0, 0", '# Terminate runtime system.'],
             ["OUT  1, 0, 0", '# Hardcoded print function'],
