@@ -247,7 +247,7 @@ Semantic Warning: Infinite recursion detected in function reverseL.
 ## **Test Programs**
 File	Purpose
 semantic-errors.kln	Demonstrates all semantic error and warning cases (including OPTIONAL warnings).
-semantic-fixed.kln	Corrected version that passes all semantic checks.
+semantic-bugfixes.kln	Corrected version that passes all semantic checks.
 two-primes.kln	Complex valid Klein program combining emirp and snowball number detection with recursion and arithmetic.
 
 Analyzer outputs and symbol tables are saved to:
@@ -267,7 +267,7 @@ Compiler-Tools/
   token_lister.py
 programs/
   semantic-errors.kln
-  semantic-fixed.kln
+  semantic-bugfixes.kln
   legal-programs/
   illegal-programs/
   two-primes.kln
@@ -323,7 +323,7 @@ semantic_analyzer.py
 
 kleinv
 
-semantic-errors.kln / semantic-fixed.kln
+semantic-errors.kln / semantic-bugfixes.kln
 
 two-primes.kln
 
