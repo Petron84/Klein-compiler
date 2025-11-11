@@ -21,10 +21,7 @@ else:
 			if extension == ".kln" or extension == "":
 				print("\nFILENAME:",filename)
 				try:
-					content = open(os.path.join(klein_file,f)).read()
-					tree = Parser(content).parse()
-					table = Analyzer(tree)
-					Generator(tree,table).generate()
+					"WRITE LATER"
 				except:
 					print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
 			else:
@@ -40,14 +37,21 @@ else:
 				table = Analyzer(tree).analyze()
 				imem = Generator(tree,table).generate()
 				program_counter = 0
+				tm_instructions = []
 				for (instruction, description) in imem:
 					if description == "#":
 						print(instruction)
 						continue
 					else:
 						print(program_counter, ":", instruction, description)
+						tm_instructions.append(instruction)
 						program_counter += 1
-
+				tm_name = base_filename + ".tm"
+				root = Path(__file__).resolve().parent
+				output_dir = root / "programs" / "tm-programs"
+				with open(os.path.join(output_dir,tm_name),'w') as f:
+					for i, inst in enumerate(tm_instructions):
+						f.write(f"{i} : {inst}\n")
 
 			except:
 				print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
