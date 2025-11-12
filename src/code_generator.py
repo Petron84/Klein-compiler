@@ -35,7 +35,7 @@ class Generator():
             ["LDA  6, 5(7)", '# Start runtime system. Load return address into register 6'],
             ["LD   5, 0(0)", '# Load DMEM[0] (contains the value 1023) into register 5.'],
             ["ST   6, 0(5)", '# Store runtime return address at DMEM[1023 + 0].'],
-            ["LDC  4, 1(0)", '# Store value 1 in temporary register 3'],
+            ["LDC  4, 1(0)", '# Store value 1 in temporary register 4'],
             ["SUB  5, 5, 4", '# Decrement memory offset'],
             ["LDA  7, 4(7)", '# Load return address of main into register 7.'],
             ["HALT 0, 0, 0", '# Terminate runtime system.'],
@@ -65,6 +65,7 @@ class Generator():
         main_body = functions['main']
         for exp in main_body:
             self.instruction_rules(exp)
+        self.IMEM.append(['LD   1, 0(5)','# Load Return Value from memory location 1021'])
         self.IMEM.append(["OUT  1, 0, 0", '# Output value from register 1.'])
         self.IMEM.append(['LD   5, 0(0)', '# Reset memory pointer'])
         self.IMEM.append(["LD   6, 0(5)", "# Load root return address into register 6"])
@@ -82,10 +83,12 @@ class Generator():
                     self.IMEM.append(["ST   6, 0(5)", '# Store current return address in memory location 1022'])
                     self.IMEM.append([f"LDC  1, {value}(0)", "# Load print's value into register 1"])
                     self.IMEM.append(["LDA  7, 7(0)", '# Load address of print IMEM block'])
-                    self.IMEM.append(["LDC  4, 1(0)", '# Store value 1 in temporary register 3'])
+                    self.IMEM.append(["LDC  4, 1(0)", '# Store value 1 in temporary register 4'])
                     self.IMEM.append(["SUB  5, 5, 4", '# Decrement memory offset'])
                 else:
                     pass
             case "INTEGER-LITERAL":
                 value = body.value
                 self.IMEM.append([f"LDC  1, {value}(0)", "# Load integer-literal value into register 1"])
+                self.IMEM.append([f"ST   1, 0(5)", '# Store return value into memory location 1021'])
+                                 
