@@ -10,6 +10,7 @@ Module 5 extends the Klein compiler by adding:
 1. A **Run-Time System** that initializes memory, executes Klein programs, and manages function calls.
 2. A **Code Generator** that produces TM programs from the AST and symbol table of semantically-correct Klein programs.
 3. A `kleinc` command-line tool, which compiles Klein source programs into TM programs automatically.
+4. Four diagrams details our run-time environment layout
 
 This stage completes the execution phase of the compiler, allowing Klein programs to run on the **Tiny Machine (TM) Virtual Machine**.
 
@@ -27,7 +28,7 @@ This stage completes the execution phase of the compiler, allowing Klein program
 ## **Implemented Optional Features**
 | Feature | Status |
 |----------|---------|
-| `kleinc` accepts optional `.kln` extension (extra credit) | Implemented |
+| `kleinc` accepts files with missing `.kln` extension (extra credit) | Implemented |
 
 ## **Core Components**
 | File | Description |
