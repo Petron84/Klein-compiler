@@ -59,7 +59,6 @@ The run-time system sets up memory, executes `main()`, prints values, and halts 
     3. Return value storage
 - Stack frames expand downward from `DMEM[1023]` toward `DMEM[1023 - N]`.
 - `DMEM[0]` contains the integer `1023` (highest legal address).
-- Command-line arguments are stored starting from `DMEM[1]` to `DMEM[N]`.
 
 ### **IMEM (Instruction Memory)**
 - Stores TM instructions for:
@@ -72,9 +71,9 @@ The run-time system sets up memory, executes `main()`, prints values, and halts 
 | R0 | Stores the value 0 |
 | R1 | Stores value to be output or returned |
 | R2 | Stores a temporary value for any operations that require two values (such as binary expressions). |
-| R3 | Stores a temporary value for any memory location calculations |
-| R4 | Value of current memory offset |
-| R5 | Stores stack frame pointer |
+| R3 | Stores a temporary value for general purpose (free register)|
+| R4 | Stores a temporary value for offset calculations |
+| R5 | Stores DMEM pointer |
 | R6 | Stores current return address |
 | R7 | Program counter |
 
@@ -103,26 +102,33 @@ function main() : integer
 ```
 #### **Example TM Output**
 ```plaintext
-* Run-Time System
-*
-0: LDA 6,1(7)
-1: LDA 7,7(0)
-2: OUT 1,0,0
-3: HALT 0,0,0
-*
-* PRINT
-*
-4: LDC 1,1(0)
-5: OUT 1,0,0
-6: LDA 7,8(0)
-*
-* MAIN
-*
-7: LDA 7,4(0)
-8: LDA 7,0(6)
+-----INITIALIZE RUNTIME SYSTEM-----
+0 : LDA  6, 5(7) # Start runtime system. Load return address into register 6
+1 : LD   5, 0(0) # Load DMEM[0] (contains the value 1023) into register 5.
+2 : ST   6, 0(5) # Store runtime return address at DMEM[1023 + 0].
+3 : LDC  4, 1(0) # Store value 1 in temporary register 4
+4 : SUB  5, 5, 4 # Decrement memory offset
+5 : LDA  7, 4(7) # Load return address of main into register 7.
+6 : HALT 0, 0, 0 # Terminate runtime system.
+-----PRINT-----
+7 : OUT  1, 0, 0 # Hardcoded print function
+8 : LD   6, 0(5) # Load return addess from previous function call/stack frame.
+9 : LDA  7, 0(6) # Load address of previous function call into register 7.
+-----MAIN-----
+10 : LDA  6, 3(7) # Load return address into R6
+11 : ST   6, 0(5) # Store current return address in memory location 1022
+12 : LDC  1, 1(0) # Load print's value into register 1
+13 : LDA  7, 7(0) # Load address of print IMEM block
+14 : LDC  4, 1(0) # Store value 1 in temporary register 4
+15 : SUB  5, 5, 4 # Decrement memory offset
+16 : LDC  1, 1(0) # Load integer-literal value into register 1
+17 : ST   1, 0(5) # Store return value into memory location 1021
+18 : LD   1, 0(5) # Load Return Value from memory location 1021
+19 : OUT  1, 0, 0 # Output value from register 1.
+20 : LD   5, 0(0) # Reset memory pointer
+21 : LD   6, 0(5) # Load root return address into register 6
+22 : LDA  7, 0(6) # Load return address back into register 7
 ```
-
-Note: The above IMEM layout for print-one.kln is without data memory allocation (see print-one_IMEM.txt for our current IMEM with data memory).
 
 ## **Running the `kleinc` Command**
 To compile a Klein source file into a TM program, run:
