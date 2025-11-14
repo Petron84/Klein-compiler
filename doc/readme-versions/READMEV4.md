@@ -1,4 +1,4 @@
-# **Klein Compiler - Module 4: Semantic Analyzer and Symbol Table**
+# **Klein Compiler - Module 5: A Run-Time System for Klein**
 
 ## **Team Name: Kleithon** 
 Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Koura, Dylan Bock  
@@ -6,336 +6,195 @@ Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Koura, Dylan Bock
 ---
 
 ## **Overview**
+Module 5 extends the Klein compiler by adding:
+1. A **Run-Time System** that initializes memory, executes Klein programs, and manages function calls.
+2. A **Code Generator** that produces TM programs from the AST and symbol table of semantically-correct Klein programs.
+3. A `kleinc` command-line tool, which compiles Klein source programs into TM programs automatically.
 
-Module 4 extends our Klein compiler by adding:
-1. A **Semantic Analyzer** that verifies program correctness and enforces Klein's language rules.  
-2. **Kleinv** which outputs a symbol table recording all functions, returntypes, function parameters, and function relationships.  
-
-This stage completes the semantic phase of the compiler and provides advanced validation and visualization tools to help developers debug Klein programs.
+This stage completes the execution phase of the compiler, allowing Klein programs to run on the **Tiny Machine (TM) Virtual Machine**.
 
 ---
 
 ## **Core Features**
-
--  Comprehensive **semantic checking** for all valid and invalid Klein programs.  
--  Reports both **semantic errors** and **semantic warnings**.  
--  Detects:
-  - Invalid or duplicate function definitions  
-  - Missing `main()`  
-  - Invalid return types or argument mismatches  
-  - Undefined identifiers  
-  - Unused parameters and functions  
-  - Unreachable or redundant branches (redundant defined as expressions with maximum depth = 2)
-  - **Infinite recursion** (newly implemented)  
--  Generates `.dot` and `.png` ASTs automatically in `doc/GraphOutputs/`.  
--  Fully integrated with the `kleinv` command-line tool.  
-
----
+- **Run-Time Environment** for executing Klein programs on TM.
+- **Code Generator** converts AST and symbol table into executable TM instructions.
+- Correctly handles the abstract syntax tree of `print-one.kln`.
+- Implements primitive `print()` function in TM.
+- Manages stack frames, including parameters, local variables, return addresses, and temporaries.
+- Uses eight TM registers consistently for frame and stack management.
+- Fully integrated with the `kleinc` command-line tool for automated compilation.
 
 ## **Implemented Optional Features**
-
-All optional features described in the Module 4 specification are now implemented, including:
-
 | Feature | Status |
 |----------|---------|
-| Unused function detection |  
-| Unused parameter detection |  
-| Unreachable clause detection in `if` expressions |  
-| Redundant function detection |  
-| Infinite recursion detection | 
-
-Each of these generates **semantic warnings** rather than fatal errors, allowing valid programs to run while informing the user of potential issues.
-
----
+| `kleinc` accepts optional `.kln` extension (extra credit) | Implemented |
 
 ## **Core Components**
-
 | File | Description |
 |------|--------------|
-| `semantic_analyzer.py` | Performs semantic validation, builds the symbol table, and raises semantic errors and warnings. |
-| `validate_semanticparser.py` | Combines parsing and semantic analysis for testing. |
-| `DOTGenerator.py` | Generates `.dot` and `.png` files for AST visualization. |
-| `AST_Creator.py` | Defines the `TreeNode` class for building AST structures. |
-| `kleinv` | Command-line tool that runs the parser, analyzer, and DOT generator. |
-| `tableloader.py` | Provides parser table logic integrated with semantic actions. |
-| `token_lister.py` | Utility for token stream inspection and debugging. |
+| `code_generator.py` | Generates TM code from AST and symbol table. |
+| `kleinc` | Command-line tool that compiles Klein source to TM programs. |
+| `AST_Creator.py` | Defines AST structure used by code generator. |
+| `semantic_analyzer.py` | Provides validated AST and symbol table as input for code generation. |
 
----
+Generated TM programs (e.g., `print-one.tm`) are executed using the Tiny Machine VM located in `tm-vm/`.
 
-## **Semantic Analyzer (`semantic_analyzer.py`)**
+## **Run-Time System**
 
-The **Analyzer** and **Traverser** classes traverse the AST to check semantic rules and build the symbol table.
+The run-time system sets up memory, executes `main()`, prints values, and halts the TM program.
 
 ### **Key Responsibilities**
-- Validate all function definitions, parameter declarations, and return types.  
-- Check scope and type correctness for every identifier.  
-- Ensure function calls match expected argument counts and types.  
-- Track call relationships and detect unused or recursive functions.  
-- Build a complete **symbol table** with:
-  - Function name  
-  - Return type  
-  - Parameters (name, type, used/unused flag)  
-  - Functions called  
-  - Functions that call it  
+- Initialize **stack pointer** and **frame pointer**.
+- Push return addresses and control links for function calls.
+- Allocate memory for parameters, local variables, and temporaries.
+- Execute `main()` and built-in `print()`.
+- Properly teardown stack frames after function returns.
 
----
+## **Memory Layout**
+### **DMEM (Data Memory)**
+- DMEM contains three main components for each function call:
+    1. Return address
+    2. Array of parameters (each function call jumps to an IMEM block)
+    3. Return value storage
+- Stack frames expand downward from `DMEM[1023]` toward `DMEM[1023 - N]`.
+- `DMEM[0]` contains the integer `1023` (highest legal address).
+- Command-line arguments are stored starting from `DMEM[1]` to `DMEM[N]`.
 
-### **Semantic Errors vs. Warnings**
+### **IMEM (Instruction Memory)**
+- Stores TM instructions for:
+    - Run-time system initialization
+    - `print()` primitive
+    - User-defined functions (`main()`)
 
-#### **Semantic Errors**
-Critical violations that make a program invalid, such as:
-- Missing `main()` or duplicate function definitions  
-- Mismatched argument or return types  
-- Use of undefined identifiers  
-- Invalid operator/operand combinations  
+### **Registers**
+| Register | Purpose |
+| R0 | Stores the value 0 |
+| R1 | Stores value to be output or returned |
+| R2 | Stores a temporary value for any operations that require two values (such as binary expressions). |
+| R3 | Stores a temporary value for any memory location calculations |
+| R4 | Value of current memory offset |
+| R5 | Stores stack frame pointer |
+| R6 | Stores current return address |
+| R7 | Program counter |
 
-#### **Semantic Warnings**
-Issues that don't invalidate the program but indicate poor structure or potential problems:
-- Unused parameters or functions  
-- Unreachable `if` branches or redundant code  
-- Hardcoded constant conditions  
-- Infinite recursion detection  
-- Style and optimization hints  
+### **Stack Frame Layout**
+Each stack frame contains:
+-------------------------
+| Return Address (R6)   |
+| Parameters 1 ... N    |
+| Return Value (R1)     |
+-------------------------
+- Return Address is stored in register `R6`.
+- Parameters are stored sequentially for each function call.
+- Return Value is stored in register `R1`.
+- Stack frames grow downward from `DMEM[1023]`.
 
-All optional warnings are implemented and demonstrated in **`semantic-errors.kln`**, where they are labeled as **OPTIONAL**.
+## **Code Generator (`code_generator.py`)**
 
----
-
-## **DOT Generator (`DOTGenerator.py`)**
-
-The **DOT generator** converts ASTs into `.dot` graphs and `.png` images using Graphviz.
-
-### **Output Location**
-All abstract syntax trees (ASTs) generated by the parser are exported to DOT and PNG format in doc/GraphOutputs/
-
-### **Example Files**
-average-digit_AST.dot
-average-digit_AST.png
-
-These represent the visualized AST for the Klein program `average-digit.kln`.  
-Each node shows the construct type and (if applicable) its value.  
-For instance, the first few lines of the DOT graph show the structure of the program:
-
-**Example Preview (first few lines of DOT file):**
+### **Responsibilities**
+- Walks AST and symbol table through producing TM instructions.
+- Generates as output an equivalent TM program.
+#### **Example Input (`print-one.kln`)**
+``` 
+function main() : integer
+    print(1)
+    1
+```
+#### **Example TM Output**
 ```plaintext
-digraph AST{
-  node0 [label="PROGRAM"]
-  node1 [label="DEFINITION-LIST"]
-  node2 [label="DEFINITION"]
-  node3 [label="IDENTIFIER\nMOD"]
-  ...
-  }
+* Run-Time System
+*
+0: LDA 6,1(7)
+1: LDA 7,7(0)
+2: OUT 1,0,0
+3: HALT 0,0,0
+*
+* PRINT
+*
+4: LDC 1,1(0)
+5: OUT 1,0,0
+6: LDA 7,8(0)
+*
+* MAIN
+*
+7: LDA 7,4(0)
+8: LDA 7,0(6)
 ```
----
 
-## **How to Run**
-Command-Line Usage:
+Note: The above IMEM layout for print-one.kln is without data memory allocation (see print-one_IMEM.txt for our current IMEM with data memory).
+
+## **Running the `kleinc` Command**
+To compile a Klein source file into a TM program, run:
+
 ```bash
-./kleinv [PATH_TO_KLEIN_FILE_OR_DIRECTORY]
+./kleinc <source-file>
 ```
----
 
-### **Examples**
+For example, to compile print-one.kln:
 
-Run a single Klein program:
 ```bash
-./kleinv programs/two-primes.kln
+./kleinc print-one.kln
 ```
 
-Run an entire directory:
+**Extra Credit**: accepts filenames without .kln extension:
 ```bash
-./kleinv programs/semantic-tests/
+./kleinc programs/print-one
 ```
 
----
-
-## **Expected Output:**
-
-1. Validation Results:
-
-"Valid Program" for correct programs.
-
-"Klein Error: .." for invalid programs.
-
-2. Symbol Table:
-
-Lists all functions, parameters, return types, and relationships.
-
-3. Graph Outputs:
-
-.dot and .png ASTs in doc/GraphOutputs/.
-
----
-
-## **Symbol Table Example**
-
-Function: emirp
-  Type: boolean
-  Parameters: n: integer
-  Calls: isPrime, reverse
-  Called By: doBoth, main
-
-Function: snowball
-  Type: boolean
-  Parameters: n: integer
-  Calls: isPrime
-  Called By: main
-
-Function: doBoth
-  Type: boolean
-  Parameters: n: integer
-  Calls: emirp, snowball, print
-  Called By: main
-
-Function: main
-  Type: boolean
-  Parameters: n: integer, selector: integer
-  Calls: emirp, snowball, doBoth
-  Called By: (none)
-
-Function: isPrime
-  Type: boolean
-  Parameters: n: integer
-  Calls: hasDivisorFrom
-  Called By: emirp, snowball
-
-Function: hasDivisorFrom
-  Type: boolean
-  Parameters: i: integer, n: integer
-  Calls: divides, hasDivisorFrom
-  Called By: isPrime
-
-Function: divides
-  Type: boolean
-  Parameters: a: integer, b: integer
-  Calls: MOD
-  Called By: hasDivisorFrom
-
-Function: reverse
-  Type: integer
-  Parameters: n: integer
-  Calls: reverseL
-  Called By: emirp
-
-Function: reverseL
-  Type: integer
-  Parameters: n: integer, nR: integer
-  Calls: reverseL
-  Called By: reverse
-
-Function: MOD
-  Type: integer
-  Parameters: m: integer, n: integer
-  Calls: (none)
-  Called By: divides
-
----
-
-## **Semantic Error & Warning Examples**
-**Errors*
-Semantic Error: Missing function 'main'
-Semantic Error: Duplicate definition of function 'foo'
-Semantic Error: Identifier 'x' undefined in scope
-Semantic Error: Function 'emirp' returns integer, expected boolean
-
-**Warnings*
-Semantic Warning: The function helper was never called.
-Semantic Warning: The function divides contains parameter b, but it was never used.
-Semantic Warning: If expression in snowball always evaluates to true - else clause unreachable.
-Semantic Warning: Infinite recursion detected in function reverseL.
-
-## **Test Programs**
-File	Purpose
-semantic-errors.kln	Demonstrates all semantic error and warning cases (including OPTIONAL warnings).
-semantic-bugfixes.kln	Corrected version that passes all semantic checks.
-two-primes.kln	Complex valid Klein program combining emirp and snowball number detection with recursion and arithmetic.
-
-Analyzer outputs and symbol tables are saved to:
+This produces a TM output file with the same base name `print-one.tm`.
+Then you can run the generated TM program using the Tiny Machine VM:
 ```bash
-doc/semantic-errors-output.txt
+./tm-vm/tm-cli print-one.tm
 ```
 
-Directory Structure
-Compiler-Tools/
-  kleinv
-  semantic_analyzer.py
-  DOTGenerator.py
-  AST_Creator.py
-  validate_semanticparser.py
-  parser.py
-  tableloader.py
-  token_lister.py
-programs/
-  semantic-errors.kln
-  semantic-bugfixes.kln
-  legal-programs/
-  illegal-programs/
-  two-primes.kln
-doc/
-  GraphOutputs/
-    average-digit_AST.dot
-    average-digit_AST.png
-  semantic-errors-output.txt
-  abstract_syntax.md
-  status_check.pdf
+### **Expected Output**
+1. TM program file (print-one.tm)
+2. Correct execution on TM Virtual Machine (tm-vm/tm-cli):
+```plaintext
+1
+```
+3. Proper memory and stack management (verified with the generated diagrams: Stack Frame Layout, DMEM Layout, IMEM Layout, and Register Usage).
 
 ## **Project Structure**
 
 ```
-  kleinp                # Script to run the AST printer
-  kleinf                # Parser from Module 2 (kept for reference)
-  kleins
-  kleinv                
-  README.md
+kleinc
+code_generator.py
+semantic_analyzer.py
+AST_Creator.py
+parser.py
+scanner.py
+tableloader.py
+token_lister.py
+validate_semanticparser.py
+
+programs/legal-programs/
+  print-one.kln
+
+tm-vm/
+  tm-cli
+  tm-cli-go-timed-ext.c
+  tm-cli-go-timed.c
+  tm-cli-go.c
+  tm-cli.c
+  tm.c
+
 doc/
   GraphOutputs/
-    average-digit_AST.dot
-    average-digit_AST.png
-  old-document-versions/
-  readme-versions/
-  semantic-errors.kln
-  semantic-bugfixes.kln
-
-   
+  readme-versions
+  code_generation_diagrams_part1.png
+  code_generation_diagrams_part2.png
 ```
-programs/
-  legal-programs/
-    sumprime.kln      
-    two-primes.kln
-  illegal-programs/
-    ...                 # Test programs that trigger syntax errors
-    
-src/
-  parser.py             # Updated parser with semantic actions
-  tableloader.py        # Updated with semantic rule integration
-  AST_Creator.py        # Builds Abstract Syntax Trees
-  DOTGenerator.py       # Exports AST as .dot and .png files
-  scanner.py
-  token_lister.py
-  semantic_analyzer.py
-  validate_semanticparser.py
-
----
 
 ## **Deliverables**
-
-semantic_analyzer.py
-
-kleinv
-
-semantic-errors.kln / semantic-bugfixes.kln
-
-two-primes.kln
-
-doc/semantic-errors-output.txt
-
-
+- `code_generator.py`
+- `kleinc` script
+- `doc/code_generation_diagrams_part1.png` and `doc/code_generation_diagrams_part2.png` (stack, DMEM, IMEM, registers)
 
 ## **Final Status**
-
-All required and optional semantic analysis features implemented.
-Automatic AST graph generation and output directory complete.
-infinite recursion detection successfully added.
-Complex valid test program (two-primes.kln) verified successfully.
-Graph outputs (average-digit_AST.dot, .png) validated.
-
+- Minimal run-time system implemented
+- Code generator produces TM output for `print-one.kln`
+- Stack frame and memory diagrams documented
+- `print()` and `main()` fully functional
+- `kleinc` automates compilation pipeline
+- TM execution verified using `tm-vm/tm-cli`
