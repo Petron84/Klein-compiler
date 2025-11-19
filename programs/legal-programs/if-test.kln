@@ -1,0 +1,5 @@
+function main(n: integer): integer
+	if (10 < n) then
+	n * 2
+	else
+	1

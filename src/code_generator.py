@@ -49,7 +49,7 @@ class Generator():
         functions = self.load_functions()
         self.generate_imem(functions)
         return self.IMEM
-
+    
     def load_functions(self):
         f_list = {}
 
@@ -62,33 +62,55 @@ class Generator():
     
     def generate_imem(self,functions):
         # Create runtime stack frame
-        main_body = functions['main']
-        for exp in main_body:
-            self.instruction_rules(exp)
+        for f in functions:
+            self.IMEM.append(["-----LOADING ARGUMENTS-----","#"])
+            if f == "main":
+                self.load_cli()
+            self.IMEM.append([f"-----{f.upper()}-----",'#'])
+            body = functions[f]
+            for exp in body:
+                self.instruction_rules(exp)
+
         self.IMEM.append(['LD   1, 0(5)','# Load Return Value from memory location 1021'])
         self.IMEM.append(["OUT  1, 0, 0", '# Output value from register 1.'])
         self.IMEM.append(['LD   5, 0(0)', '# Reset memory pointer'])
         self.IMEM.append(["LD   6, 0(5)", "# Load root return address into register 6"])
         self.IMEM.append(["LDA  7, 0(6)", "# Load return address back into register 7"])
 
+    def load_cli(self):
+        cli_params = self.symbol_table['main'].parameters
+        if cli_params[0] != 0:
+            cli_params = cli_params[1]
+            for i,p in enumerate(cli_params):
+                self.IMEM.append(['IN   1, 0, 0',f'# Load Command Line Argument {i+1} into register 1'])
+                self.IMEM.append(['ST   1, 0(5)', "# Store argument in DMEM"])
+                self.IMEM.append(['LDC  4, 1(0)','# Load value 1 in temp register 4'])
+                self.IMEM.append(['SUB  5, 5, 4','# Decrement memory offset'])
+
+
     def instruction_rules(self,body):
         exp_type = body.type
+        exp_value = body.value
         exp_children = body.children
         match exp_type:
             case "FUNCTION-CALL":
                 if exp_children[0].value == "print":
                     value = exp_children[1].value
-                    self.IMEM.append(["-----MAIN-----",'#'])
                     self.IMEM.append(["LDA  6, 3(7)", '# Load return address into R6'])
-                    self.IMEM.append(["ST   6, 0(5)", '# Store current return address in memory location 1022'])
+                    self.IMEM.append(["ST   6, 0(5)", '# Store current return address into DMEM'])
                     self.IMEM.append([f"LDC  1, {value}(0)", "# Load print's value into register 1"])
                     self.IMEM.append(["LDA  7, 7(0)", '# Load address of print IMEM block'])
                     self.IMEM.append(["LDC  4, 1(0)", '# Store value 1 in temporary register 4'])
                     self.IMEM.append(["SUB  5, 5, 4", '# Decrement memory offset'])
                 else:
+                    # FINISH LATER
                     pass
+
             case "INTEGER-LITERAL":
                 value = body.value
                 self.IMEM.append([f"LDC  1, {value}(0)", "# Load integer-literal value into register 1"])
-                self.IMEM.append([f"ST   1, 0(5)", '# Store return value into memory location 1021'])
+                self.IMEM.append([f"ST   1, 0(5)", '# Store return value into DMEM'])
+            
+            case "BINARY-EXPRESSION":
+                pass
                                  
