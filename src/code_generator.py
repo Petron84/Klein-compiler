@@ -1,6 +1,12 @@
 from scanner import KleinError
 import sys
 
+class StackFrame():
+    def __init__(self, address=0, num_parm=0, return_add=0):
+        self.address = address
+        self.num_parm = num_parm
+        self.return_add = return_add
+
 class Generator():
     def __init__(self,tree,table):
         self.AST = tree[-1].children[-1].children
@@ -11,7 +17,7 @@ class Generator():
         self.IMEM = []
         # reference to determine tops of stack frames in DMEM
         self.DMEM = 1023
-        self.frame_index = {}
+        self.stack_frames = {}
 
         # Register convention:
             # Register 0 : Value 0
@@ -50,7 +56,7 @@ class Generator():
             self.write(" LDA  6, 5(7)", '# Start runtime system. Load return address into register 6')
             self.write(" LD   5, 0(0)", '# Load DMEM[0] (contains the value 1023) into register 5.')
             self.write(" ST   6, 0(5)", '# Store runtime return address at DMEMself.write(1023 + 0].')
-            self.frame_index["main"] = self.DMEM
+            self.create_frame(self.DMEM,'main')
             self.write(" LDC  4, 1(0)", '# Store value 1 in temporary register 4')
             self.write(" SUB  5, 5, 4", '# Decrement memory offset')
             self.DMEM -= 1
@@ -69,6 +75,11 @@ class Generator():
             self.IMEM.append(f"{self.line_counter} : {instruction} | {note}")
             self.line_counter += 1
     
+    def create_frame(self,address,fname):
+        num_params = self.symbol_table[fname].parameters[0]
+        return_address = address - num_params - 1
+        self.stack_frames[fname] = StackFrame(address=address, num_parm=num_params, return_add=return_address)
+
     def load_functions(self):
         f_list = {}
 
@@ -98,9 +109,7 @@ class Generator():
             body = functions[f]
             for exp in body:
                 self.instruction_rules(exp)
-        stack_top = self.frame_index['main']
-        offset = self.symbol_table['main'].parameters[0]
-        mem_loc = stack_top - offset - 1 # Calculate return value location in DMEM by doing top of stack - number of parameters - 1
+        mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
         self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
         self.write("OUT  1, 0, 0", '# Output value from register 1.')
@@ -150,8 +159,7 @@ class Generator():
                                 offset = i+1
                             else:
                                 pass # Error
-                        stack_top = self.frame_index[curr_function]
-                        mem_loc = stack_top - offset
+                        mem_loc = self.stack_frames[curr_function].return_add
                         self.write("LDA  6, 7(7)", '# Load return address into R6')
                         self.write("ST   6, 0(5)", '# Store current return address into DMEM')
                         self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
@@ -183,9 +191,7 @@ class Generator():
             case "INTEGER-LITERAL": # Integer returns
                 value = body.value
                 self.write(f"LDC  1, {value}(0)", "# Load integer-literal value into register 1")
-                stack_top = self.frame_index[curr_function]
-                offset = self.symbol_table[curr_function].parameters[0]
-                mem_loc = stack_top - offset - 1 # Calculate return value location in DMEM by doing top of stack - number of parameters - 1
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                 self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
@@ -200,9 +206,7 @@ class Generator():
                     value = 0
 
                 self.write(f"LDC  1, {value}(0)", "# Load boolean-literal value into register 1")
-                stack_top = self.frame_index[curr_function]
-                offset = self.symbol_table[curr_function].parameters[0]
-                mem_loc = stack_top - offset - 1 # Calculate return value location in DMEM by doing top of stack - number of parameters - 1
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                 self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
@@ -221,8 +225,7 @@ class Generator():
                             offset = i+1
                         else:
                             pass # Error
-                    stack_top = self.frame_index[curr_function]
-                    mem_loc = stack_top - offset
+                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                     self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {child_value}")
                     self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
@@ -240,11 +243,10 @@ class Generator():
                         self.write("LDA  7, 1(7)","# TRUE-HANDLING - Jump to Not Evaluation")
                         self.write("LDC  2, 1(0)","# FALSE-HANDLING - Store value 1 into register 2.")
                         self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")                                 
-                    stack_top = self.frame_index[curr_function]
-                    offset = self.symbol_table[curr_function].parameters[0]
-                    mem_loc = stack_top - offset - 1 # Calculate return value location in DMEM by doing top of stack - number of parameters - 1
+                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                     self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
                     self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                     self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                     self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+            
