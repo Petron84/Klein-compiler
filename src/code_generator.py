@@ -217,13 +217,13 @@ class Generator():
                     # Determine which parameter is used. Necessary for offset calculations
                     # If param 1, then offset = 1. If param 2, then offset = 2
                     for i, p in enumerate(params[1]):
-                        if p[0] == value:
+                        if p[0] == child_value:
                             offset = i+1
                         else:
                             pass # Error
                     stack_top = self.frame_index[curr_function]
                     mem_loc = stack_top - offset
-                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
+                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {child_value}")
                     self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                     self.write(f"LD   1, 0(5)", "# Load the value of parameter from memory into register 1")

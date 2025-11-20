@@ -1,2 +1,2 @@
-function main(n: integer): boolean
-	not true
+function main(n: boolean): boolean
+	not n
