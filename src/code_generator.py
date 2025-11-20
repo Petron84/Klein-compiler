@@ -163,7 +163,7 @@ class Generator():
                         self.write("ST   6, 0(5)", '# Store current return address into DMEM')
 
                         if value_type == "BOOLEAN-LITERAL":
-                            if value == "True":
+                            if value == "true":
                                 value = 1
                             else:
                                 value = 0
@@ -192,10 +192,11 @@ class Generator():
             
             case "BOOLEAN-LITERAL": # Boolean returns
                 value = body.value
-                if value == "True":
+                if value == "true":
                     value = 1
                 else:
                     value = 0
+
                 self.write(f"LDC  1, {value}(0)", "# Load boolean-literal value into register 1")
                 stack_top = self.frame_index[curr_function]
                 offset = self.symbol_table[curr_function].parameters[0]
