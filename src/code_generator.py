@@ -159,7 +159,7 @@ class Generator():
                                 offset = i+1
                             else:
                                 pass # Error
-                        mem_loc = self.stack_frames[curr_function].return_add
+                        mem_loc = self.stack_frames[curr_function].address - offset
                         self.write("LDA  6, 7(7)", '# Load return address into R6')
                         self.write("ST   6, 0(5)", '# Store current return address into DMEM')
                         self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
@@ -225,7 +225,7 @@ class Generator():
                             offset = i+1
                         else:
                             pass # Error
-                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                    mem_loc = self.stack_frames[curr_function].address - offset
                     self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {child_value}")
                     self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
