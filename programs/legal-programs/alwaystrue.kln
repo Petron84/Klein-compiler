@@ -1,0 +1,3 @@
+function main(n: integer): boolean
+	print(n)
+	true

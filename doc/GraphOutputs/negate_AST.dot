@@ -1,0 +1,25 @@
+digraph AST {
+node0 [label="PROGRAM"]
+node1 [label="DEFINITION-LIST"]
+node2 [label="DEFINITION"]
+node3 [label="IDENTIFIER\nmain"]
+node4 [label="PARAMETER-LIST"]
+node5 [label="ID-TYPE"]
+node6 [label="IDENTIFIER\nn"]
+node7 [label="TERMINAL\ninteger"]
+node8 [label="TYPE\ninteger"]
+node9 [label="EXPRESSION-LIST"]
+node10 [label="UNARY-EXPRESSION\n-"]
+node11 [label="IDENTIFIER\nn"]
+node2 -> node3 [label="function"]
+node5 -> node6 [label="id"]
+node5 -> node7 [label="type"]
+node4 -> node5
+node2 -> node4
+node2 -> node8
+node10 -> node11
+node9 -> node10
+node2 -> node9 [label="body"]
+node1 -> node2
+node0 -> node1
+}

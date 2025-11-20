@@ -101,7 +101,6 @@ class Analyzer():
                 else:
                     for p in symboldata.parameters[1]:
                         if not p[2]:
-                            self.reject = True
                             KleinWarning(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
         if self.reject:
             return "REJECTED: Semantic Analyzer caught 1 or more semantic errors in the program."
