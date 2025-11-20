@@ -139,9 +139,6 @@ class Generator():
                     value = exp_children[1].value
                     value_type = exp_children[1].type
 
-                    self.write("LDA  6, 3(7)", '# Load return address into R6')
-                    self.write("ST   6, 0(5)", '# Store current return address into DMEM')
-
                     if value_type == "IDENTIFIER":
                         params = self.symbol_table[curr_function].parameters
                         # Determine which parameter is used. Necessary for offset calculations
@@ -153,20 +150,24 @@ class Generator():
                                 pass # Error
                         stack_top = self.frame_index[curr_function]
                         mem_loc = stack_top - offset
+                        self.write("LDA  6, 7(7)", '# Load return address into R6')
+                        self.write("ST   6, 0(5)", '# Store current return address into DMEM')
                         self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
                         self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
                         self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                         self.write(f"LD   1, 0(5)", "# Load the value of parameter from memory into register 1")
                         self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
-
-                    elif value_type == "BOOLEAN-LITERAL":
-                        if value == "True":
-                            value = 1
-                        else:
-                            value = 0
-                        self.write(f"LDC  1, {value}(0)", "# Load print's value into register 1")
-
+                        
                     else:
+                        self.write("LDA  6, 3(7)", '# Load return address into R6')
+                        self.write("ST   6, 0(5)", '# Store current return address into DMEM')
+
+                        if value_type == "BOOLEAN-LITERAL":
+                            if value == "True":
+                                value = 1
+                            else:
+                                value = 0
+
                         self.write(f"LDC  1, {value}(0)", "# Load print's value into register 1")
 
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to print')
