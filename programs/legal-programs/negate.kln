@@ -1,2 +1,2 @@
-function main(n: integer): integer
-	-n
+function main(n: integer): boolean
+	not false

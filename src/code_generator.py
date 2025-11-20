@@ -77,6 +77,7 @@ class Generator():
             f_name = f.children[0].value
             f_body = f.children[3].children
             f_list[f_name] = f_body
+            f_name = "@" + f_name
             self.placeholders[f_name] = -1
         return f_list
     
@@ -125,6 +126,7 @@ class Generator():
                 self.write('SUB  5, 5, 4','# Decrement memory offset')
     
     def fill_placeholders(self):
+        print(self.placeholders)
         for i in range(len(self.IMEM)):
             for p, v in self.placeholders.items():
                 self.IMEM[i] = self.IMEM[i].replace(str(p),str(v))
@@ -208,5 +210,33 @@ class Generator():
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "UNARY-EXPRESSION":
-                pass
-                                 
+                child_value = exp_children[0].value
+                child_type = exp_children[0].type
+                if child_type == "IDENTIFIER":
+                    params = self.symbol_table[curr_function].parameters
+                    # Determine which parameter is used. Necessary for offset calculations
+                    # If param 1, then offset = 1. If param 2, then offset = 2
+                    for i, p in enumerate(params[1]):
+                        if p[0] == value:
+                            offset = i+1
+                        else:
+                            pass # Error
+                    stack_top = self.frame_index[curr_function]
+                    mem_loc = stack_top - offset
+                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
+                    self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                    self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                    self.write(f"LD   1, 0(5)", "# Load the value of parameter from memory into register 1")
+                    self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+
+                if exp_value == "not":
+                    if child_value == "true":
+                        self.write("LDC  1, 0(0)","# If True, load 0 into register 1")
+                    elif child_value == "false":
+                        self.write("LDC  1, 1(0)","# If False, load 1 into register 1")
+                    else: # Otherwise, use TM logic handling to determine if value in memory is True or False.
+                        self.write("JEQ  1, 2(7)","# If binary value is False(0), then branch to False handling")
+                        self.write("LDC  2, 0(0)","# TRUE-HANDLING - Store value 0 into register 2.)")
+                        self.write("LDA  7, 1(7)","# TRUE-HANDLING - Jump to Not Evaluation")
+                        self.write("LDC  2, 1(0)","# FALSE-HANDLING - Store value 1 into register 2.")
+                        self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")                                 

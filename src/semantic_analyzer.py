@@ -97,7 +97,7 @@ class Analyzer():
                 # Warning for unused parameter
                 if symboldata.parameters[0] == 1:
                     if not symboldata.parameters[1][0][2]:
-                         KleinWarning(f"Semantic Warning: The function {f_name} contains the parameter {p[0]}, but it was never used",terminate=False)
+                         KleinWarning(f"Semantic Warning: The function {f_name} contains the parameter {symboldata.parameters[1][0][0]}, but it was never used",terminate=False)
                 else:
                     for p in symboldata.parameters[1]:
                         if not p[2]:
