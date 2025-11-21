@@ -213,6 +213,10 @@ class Generator():
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "UNARY-EXPRESSION":
+                print(exp_children)
+                if exp_children[0].children != []:
+                    self.instruction_rules(exp_children[0],curr_function)
+
                 child_value = exp_children[0].value
                 child_type = exp_children[0].type
                 if child_type == "IDENTIFIER":
