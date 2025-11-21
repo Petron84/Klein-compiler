@@ -222,8 +222,7 @@ class Generator():
                 elif exp_value == "not":
                     self.write("LDC  2, 1(0)", "# Load value 1 into register 2")
                     self.write("SUB  1, 2, 1", "# Flip boolean value")
-                    self.write("ST   2, 0(5)", "# Store the return value into memory")
-
+                    
                 mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
