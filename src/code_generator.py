@@ -139,100 +139,107 @@ class Generator():
             for p, v in self.placeholders.items():
                 self.IMEM[i] = self.IMEM[i].replace(str(p),str(v))
 
-    
-    def instruction_rules(self, body, curr_function, store_result=True):
+    def instruction_rules(self,body,curr_function):
         exp_type = body.type
         exp_value = body.value
         exp_children = body.children
-
         match exp_type:
             case "FUNCTION-CALL":
                 if exp_children[0].value == "print":
                     value = exp_children[1].value
                     value_type = exp_children[1].type
+
                     if value_type == "IDENTIFIER":
                         params = self.symbol_table[curr_function].parameters
+                        # Determine which parameter is used. Necessary for offset calculations
+                        # If param 1, then offset = 1. If param 2, then offset = 2
                         for i, p in enumerate(params[1]):
                             if p[0] == value:
-                                offset = i + 1
-                                break
+                                offset = i+1
+                            else:
+                                pass # Error
                         mem_loc = self.stack_frames[curr_function].address - offset
-                        self.write("LDA 6, 7(7)", "# Load return address into R6")
-                        self.write("ST 6, 0(5)", "# Save return address in DMEM")
-                        self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location")
-                        self.write("SUB 4, 3, 5", "# Calculate offset")
-                        self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                        self.write("LD 1, 0(5)", "# Load parameter into R1")
-                        self.write("SUB 5, 5, 4", "# Reset memory pointer")
+                        self.write("LDA  6, 7(7)", '# Load return address into R6')
+                        self.write("ST   6, 0(5)", '# Store current return address into DMEM')
+                        self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
+                        self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                        self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                        self.write(f"LD   1, 0(5)", "# Load the value of parameter from memory into register 1")
+                        self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+                        
                     else:
-                        self.write("LDA 6, 3(7)", "# Load return address into R6")
-                        self.write("ST 6, 0(5)", "# Save return address in DMEM")
+                        self.write("LDA  6, 3(7)", '# Load return address into R6')
+                        self.write("ST   6, 0(5)", '# Store current return address into DMEM')
+
                         if value_type == "BOOLEAN-LITERAL":
-                            value = 1 if value == "true" else 0
-                        self.write(f"LDC 1, {value}(0)", "# Load print value into R1")
-                    self.write("LDA 7, @print(0)", "# Jump to print block")
-                    self.write("LDC 4, 1(0)", "# Temp register")
+                            if value == "true":
+                                value = 1
+                            else:
+                                value = 0
+
+                        self.write(f"LDC  1, {value}(0)", "# Load print's value into register 1")
+
+                    self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to print')
+                    self.write("LDC  4, 1(0)", '# Store value 1 in temporary register 4')
                     self.DMEM -= 1
-                    self.write("SUB 5, 5, 4", "# Decrement memory offset")
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
                 else:
-                    pass # FINSIH LATER
+                    # FINISH LATER. Calls to user-defined functions
+                    pass
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.write(f"LDC 1, {value}(0)", "# Load integer literal into R1")
-                if store_result:
-                    mem_loc = self.stack_frames[curr_function].return_add
-                    self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location")
-                    self.write("SUB 4, 3, 5", "# Calculate offset")
-                    self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                    self.write("ST 1, 0(5)", "# Store return value")
-                    self.write("SUB 5, 5, 4", "# Reset memory pointer")
-
+                self.write(f"LDC  1, {value}(0)", "# Load integer-literal value into register 1")
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+            
             case "BOOLEAN-LITERAL":
-                value = 1 if body.value == "true" else 0
-                self.write(f"LDC 1, {value}(0)", "# Load boolean literal into R1")
-                if store_result:
-                    mem_loc = self.stack_frames[curr_function].return_add
-                    self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location")
-                    self.write("SUB 4, 3, 5", "# Calculate offset")
-                    self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                    self.write("ST 1, 0(5)", "# Store return value")
-                    self.write("SUB 5, 5, 4", "# Reset memory pointer")
+                value = body.value
+                if value == "true":
+                    value = 1
+                else:
+                    value = 0
+
+                self.write(f"LDC  1, {value}(0)", "# Load boolean-literal value into register 1")
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {value}")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = i + 1
-                        break
+                        offset = i+1
+                    else:
+                        pass # Error
                 mem_loc = self.stack_frames[curr_function].address - offset
-                self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location for identifier")
-                self.write("SUB 4, 3, 5", "# Calculate offset")
-                self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                self.write("LD 1, 0(5)", "# Load identifier value into R1")
-                self.write("SUB 5, 5, 4", "# Reset memory pointer")
-                if store_result:
-                    mem_loc = self.stack_frames[curr_function].return_add
-                    self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location for return value")
-                    self.write("SUB 4, 3, 5", "# Calculate offset")
-                    self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                    self.write("ST 1, 0(5)", "# Store result in memory")
-                    self.write("SUB 5, 5, 4", "# Reset memory pointer")
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"LD   1, 0(5)", "# Load the value of identifier from memory into register 1")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
-                self.instruction_rules(inner_exp, curr_function, store_result=False)
-
+                self.instruction_rules(inner_exp,curr_function)
+                
                 if exp_value == "-":
-                    self.write("SUB 1, 0, 1", "# Negate numeric value in R1")
-                elif exp_value == "not":
-                    self.write("LDC 2, 1(0)", "# Load constant 1 into R2")
-                    self.write("SUB 1, 2, 1", "# Boolean NOT: R1 = 1 - R1")
+                    self.write("SUB  1, 0, 1","# Switch sign of value")
 
-                if store_result:
-                    mem_loc = self.stack_frames[curr_function].return_add
-                    self.write(f"LDC 3, {mem_loc}(0)", "# Target memory location")
-                    self.write("SUB 4, 3, 5", "# Calculate offset")
-                    self.write("ADD 5, 5, 4", "# Adjust memory pointer")
-                    self.write("ST 1, 0(5)", "# Store result in memory")
-                    self.write("SUB 5, 5, 4", "# Reset memory pointer")
+                elif exp_value == "not":
+                    self.write("LDC  2, 1(0)", "# Load value 1 into register 2")
+                    self.write("SUB  1, 2, 1", "# Flip boolean value")
+
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
