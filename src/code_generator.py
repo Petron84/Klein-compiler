@@ -242,16 +242,15 @@ class Generator():
                         self.write("LDA  7, 1(7)","# TRUE-HANDLING - Jump to Not Evaluation")
                         self.write("LDC  2, 1(0)","# FALSE-HANDLING - Store value 1 into register 2.")
                         self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")
-
-                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
-                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
-                    self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
-                    self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
-                    self.write(f"ST   1, 0(5)", "# Store the return value into memory")
-                    self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
-
                 else:
                     if child_type == "IDENTIFIER":
                         self.write("SUB  1, 0, 1","# Switch value to negative")
                     else:
                         self.write("LDC  1, -{child_value}(0)", "# Convert value to negative")
+                        
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
