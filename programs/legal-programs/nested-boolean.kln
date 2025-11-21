@@ -1,2 +1,2 @@
 function main (n: boolean) : boolean
-	not(not(not true))
+	not (not (not true))
