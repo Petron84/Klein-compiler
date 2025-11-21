@@ -216,17 +216,6 @@ class Generator():
                 child_value = exp_children[0].value
                 child_type = exp_children[0].type
 
-                if exp_children[0].children != []:
-                    self.instruction_rules(exp_children[0],curr_function)
-                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
-                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
-                    self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
-                    self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
-                    self.write(f"LD   1, 0(5)", "# Store the return value into memory")
-                    self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
-                else:
-                    self.write(f"LDC  1, {child_value}(0)","# Load value into register 1")
-
                 if child_type == "IDENTIFIER":
                     params = self.symbol_table[curr_function].parameters
                     # Determine which parameter is used. Necessary for offset calculations
@@ -242,6 +231,17 @@ class Generator():
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                     self.write(f"LD   1, 0(5)", "# Load the value of parameter from memory into register 1")
                     self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+
+                if exp_children[0].children != []:
+                    self.instruction_rules(exp_children[0],curr_function)
+                    mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                    self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                    self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                    self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                    self.write(f"LD   1, 0(5)", "# Store the return value into memory")
+                    self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+                else:
+                    self.write(f"LDC  1, {child_value}(0)","# Load value into register 1")
 
                 if exp_value == "not":
                     if child_value == "true":
