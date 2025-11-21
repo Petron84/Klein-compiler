@@ -135,7 +135,6 @@ class Generator():
                 self.write('SUB  5, 5, 4','# Decrement memory offset')
     
     def fill_placeholders(self):
-        print(self.placeholders)
         for i in range(len(self.IMEM)):
             for p, v in self.placeholders.items():
                 self.IMEM[i] = self.IMEM[i].replace(str(p),str(v))
@@ -242,7 +241,8 @@ class Generator():
                         self.write("LDC  2, 0(0)","# TRUE-HANDLING - Store value 0 into register 2.)")
                         self.write("LDA  7, 1(7)","# TRUE-HANDLING - Jump to Not Evaluation")
                         self.write("LDC  2, 1(0)","# FALSE-HANDLING - Store value 1 into register 2.")
-                        self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")                                 
+                        self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")
+
                     mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                     self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
                     self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
