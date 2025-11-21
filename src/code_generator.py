@@ -218,13 +218,11 @@ class Generator():
 
                 if exp_value == "-":
                     self.write("SUB  1, 0, 1","# Switch sign of value")
-                    
+
                 elif exp_value == "not":
-                    self.write("JEQ  1, 2(7)","# If binary value is False(0), then branch to False handling")
-                    self.write("LDC  2, 0(0)","# TRUE-HANDLING - Store value 0 into register 2.)")
-                    self.write("LDA  7, 1(7)","# TRUE-HANDLING - Jump to Not Evaluation")
-                    self.write("LDC  2, 1(0)","# FALSE-HANDLING - Store value 1 into register 2.")
-                    self.write("ADD  1, 2, 0","# If False, add 1 to 0. Switches to True. If True, Add 0 to 0. Switches to False.")
+                    self.write("LDC  2, 1(0)", "# Load value 1 into register 2")
+                    self.write("SUB  1, 2, 1", "# Flip boolean value")
+                    self.write("ST   2, 0(5)", "# Store the return value into memory")
 
                 mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
