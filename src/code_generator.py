@@ -258,10 +258,10 @@ class Generator():
                         self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
                     else:
                         if child_value == "true":
-                            child_value = 1
-                        elif child_value == "false":
                             child_value = 0
-                            
+                        elif child_value == "false":
+                            child_value = 1
+
                         self.write(f"LDC  1, {child_value}(0)","# Load value into register 1")
 
                 if exp_value == "not":
