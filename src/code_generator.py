@@ -218,7 +218,7 @@ class Generator():
                     if p[0] == exp_value:
                         offset = i+1
                     else:
-                        pass # Error
+                        pass # FILL IN THIS ERROR LATER
                 mem_loc = self.stack_frames[curr_function].address - offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
