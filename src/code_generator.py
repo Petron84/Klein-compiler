@@ -230,6 +230,13 @@ class Generator():
                 inner_exp = exp_children[0]
                 self.instruction_rules(inner_exp,curr_function)
 
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"LD   1, 0(5)", "# Load the return value into register 1")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+                
                 if exp_value == "-":
                     self.write("SUB  1, 0, 1","# Switch sign of value")
 
