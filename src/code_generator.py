@@ -123,8 +123,11 @@ class Generator():
             cli_params = cli_params[1]
             num_params = len(cli_params)
             for i,p in enumerate(cli_params):
-                self.write('IN   1, 0, 0',f'# Load Command Line Argument {i+1} into register 1')
-                self.write('ST   1, 0(5)', "# Store argument in DMEM")
+                index = i + 1
+                self.write(f"LD   1, 0({index})",f"# Load command line argument {index} into register 1")
+                self.write(f"ST   0, 0({index})",f"# Replace DMEM[{index}] with 0")
+                self.write(f"ST   1, 0(5)", "# Store command line argument into MAIN stack frame")
+                
                 if i+1 == num_params:
                     # Skip a memory location - save this location for stack frame return value
                     self.write('LDC  4, 2(0)','# Load value 2 in temp register 4')
