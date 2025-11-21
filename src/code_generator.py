@@ -187,7 +187,7 @@ class Generator():
                     # FINISH LATER. Calls to user-defined functions
                     pass
 
-            case "INTEGER-LITERAL": # Integer returns
+            case "INTEGER-LITERAL":
                 value = body.value
                 self.write(f"LDC  1, {value}(0)", "# Load integer-literal value into register 1")
                 mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
@@ -197,7 +197,7 @@ class Generator():
                 self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
             
-            case "BOOLEAN-LITERAL": # Boolean returns
+            case "BOOLEAN-LITERAL":
                 value = body.value
                 if value == "true":
                     value = 1
@@ -212,6 +212,20 @@ class Generator():
                 self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
+            case "IDENTIFIER":
+                params = self.symbol_table[curr_function].parameters
+                for i, p in enumerate(params[1]):
+                    if p[0] == exp_value:
+                        offset = i+1
+                    else:
+                        pass # Error
+                mem_loc = self.stack_frames[curr_function].address - offset
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"LD   1, 0(5)", "# Load the value of identifier from memory into register 1")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
                 self.instruction_rules(inner_exp,curr_function)
@@ -222,7 +236,7 @@ class Generator():
                 elif exp_value == "not":
                     self.write("LDC  2, 1(0)", "# Load value 1 into register 2")
                     self.write("SUB  1, 2, 1", "# Flip boolean value")
-                    
+
                 mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
