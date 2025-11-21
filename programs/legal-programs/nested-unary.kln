@@ -1,2 +1,2 @@
 function main (n: integer) : integer
-	-(-5)
+	-(-(-5))
