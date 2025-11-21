@@ -113,6 +113,8 @@ class Generator():
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
         self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
         self.write("OUT  1, 0, 0", '# Output value from register 1.')
+        self.write('LDC  1, -1(0)',"# TESTING")
+        self.write("OUT  1, 0, 0", "# TESTING")
         self.write('LD   5, 0(0)', '# Reset memory pointer')
         self.write("LD   6, 0(5)", "# Load root return address into register 6")
         self.write("LDA  7, 0(6)", "# Load return address back into register 7")
@@ -249,4 +251,3 @@ class Generator():
                     self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                     self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                     self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
-            
