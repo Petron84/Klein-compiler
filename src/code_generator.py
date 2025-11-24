@@ -247,3 +247,50 @@ class Generator():
                 self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                 self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+            
+            case "BINARY-EXPRESSION":
+                left_exp = exp_children[0]
+                right_exp = exp_children[1]
+                self.instruction_rules(left_exp,curr_function)
+                self.write("ST   1, 0(5)", "# Store left expression value into memory")
+                self.write("LDC  4, 1(0)", "# Load value 1 into temporary register 4")
+                self.DMEM -= 1
+                self.write("SUB  5, 5, 4", "# Decrement memory offset")
+                self.instruction_rules(right_exp,curr_function)
+                self.write("LDC  4, 1(0)", "# Load value 1 into temporary register 4")
+                self.DMEM += 1
+                self.write("ADD  5, 5, 4", "# Increment memory offset")
+                self.write("LD   2, 0(5)", "# Load left expression value from memory into register 2")
+
+                match exp_value:
+                    case "+":
+                        self.write("ADD  1, 2, 1", "# Add left and right expression values")
+                    case "-":
+                        self.write("SUB  1, 2, 1", "# Subtract left expression from right expression value")
+                    case "*":
+                        self.write("MUL  1, 2, 1", "# Multiply left and right expression values")
+                    case "/":
+                        self.write("DIV  1, 2, 1", "# Divide left expression by right expression value")
+                    case "and":
+                        self.write("MUL  1, 2, 1", "# Compute logical AND for left and right expression values")
+                    case "or":
+                        self.write("ADD  1, 2, 1", "# Compute logical OR for left and right expression values")
+                    case "=":
+                        self.write("SUB  1, 2, 1", "# Subtract right expression from left expression value for equality check")
+                        self.write("JEQ  1, 2(7)", "# If Register 1 is 0, then jump to true handling")
+                        self.write("LDC  1, 0(0)", "# Load false (0) into register 1")
+                        self.write("LDA  7, 2(7)", "# Jump to end of equality handling")
+                        self.write("LDC  1, 1(0)", "# Load true (1) into register 1")
+                    case "<":
+                        self.write("SUB  1, 2, 1", "# Subtract right expression from left expression value for less-than check")
+                        self.write("JLT  1, 2(7)", "# If Register 1 is negative, then jump to true handling")
+                        self.write("LDC  1, 0(0)", "# Load false (0) into register 1")
+                        self.write("LDA  7, 2(7)", "# Jump to end of less-than handling")
+                        self.write("LDC  1, 1(0)", "# Load true (1) into register 1")
+
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
