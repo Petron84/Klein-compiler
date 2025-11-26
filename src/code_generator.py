@@ -294,3 +294,27 @@ class Generator():
                 self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
                 self.write(f"ST   1, 0(5)", "# Store the return value into memory")
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
+
+            case "IF-EXPRESSION":
+                condition_exp = exp_children[0]
+                # you know what lets just assume the if part is already handled
+                # a binary value 1/0 will be stored in DMEM
+                self.instruction_rules(condition_exp,curr_function)
+                self.write(f"JEQ  1, {some_offset}(7)", "# If condition is true, jump to THEN handling")
+
+                # else part
+                else_exp = exp_children[1]
+                self.instruction_rules(else_exp,curr_function)
+                self.write(f"LDA  7, {end_if_offset}(7)", "# Jump to end of IF handling")
+
+                # then part
+                then_exp = exp_children[2]
+                self.instruction_rules(then_exp,curr_function)
+                
+                # end if
+                mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
+                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
+                self.write(f"SUB  4, 3, 5", "# Calculate memory offset")
+                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
+                self.write(f"ST   1, 0(5)", "# Store the return value into memory")
+                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
