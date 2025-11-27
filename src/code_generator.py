@@ -297,6 +297,9 @@ class Generator():
 
             case "IF-EXPRESSION":
                 condition_exp = exp_children[0]
+                print(exp_children)
+                print(condition_exp)
+                sys.exit()
                 # you know what lets just assume the if part is already handled
                 # a binary value 1/0 will be stored in DMEM
                 self.instruction_rules(condition_exp,curr_function)
