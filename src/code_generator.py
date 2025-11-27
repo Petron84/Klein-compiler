@@ -303,7 +303,7 @@ class Generator():
                 # The resulting binary result will be stored in DMEM
                 self.instruction_rules(condition_exp,curr_function)
 
-                self.write(f"JEQ  1, @then(7)", "# If condition is false, skip the THEN block")
+                self.write(f"JEQ  1, @then(0)", "# If condition is false, skip the THEN block")
 
                 # Recursively evaluate the THEN expression
                 self.write(f"-----THEN-BLOCK-----",'#',header=True)
