@@ -62,7 +62,7 @@ class Generator():
             self.DMEM -= 1
             self.write(" LDA  7, 4(7)", '# Load address of load-arguments into register 7.')
             self.write(" HALT 0, 0, 0", '# Terminate runtime system.')
-            self.write("-----PRINT-----",'#',header=True)
+            self.write("------PRINT------",'#',header=True)
             self.placeholders["@print"] = self.line_counter
             self.write(" OUT  1, 0, 0", '# Hardcoded print function')
             self.write(" LD   6, 0(5)", '# Load return addess from previous function call/stack frame.')
@@ -93,11 +93,11 @@ class Generator():
         return f_list
     
     def generate_imem(self,functions):
-        self.write("-----LOAD ARGUMENTS-----","#",header=True)
+        self.write("----LOAD-ARGS----","#",header=True)
         self.load_cli()
 
         main_body = functions['main']
-        self.write("-----MAIN-----",'#',header=True)
+        self.write("------MAIN-------",'#',header=True)
         self.placeholders['@main'] = self.line_counter
 
         for exp in main_body:
@@ -296,25 +296,30 @@ class Generator():
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "IF-EXPRESSION":
+                self.write("-----IF-BLOCK-----",'#',header=True)
                 condition_exp = exp_children[0]
-                print(exp_children)
-                print(condition_exp)
-                sys.exit()
-                # you know what lets just assume the if part is already handled
-                # a binary value 1/0 will be stored in DMEM
+
+                # Recursively evaluate the condition expression.
+                # The resulting binary result will be stored in DMEM
                 self.instruction_rules(condition_exp,curr_function)
-                self.write(f"JEQ  1, {some_offset}(7)", "# If condition is true, jump to THEN handling")
 
-                # else part
-                else_exp = exp_children[1]
-                self.instruction_rules(else_exp,curr_function)
-                self.write(f"LDA  7, {end_if_offset}(7)", "# Jump to end of IF handling")
+                self.write(f"JEQ  1, @then(7)", "# If condition is false, skip the THEN block")
 
-                # then part
-                then_exp = exp_children[2]
+                # Recursively evaluate the THEN expression
+                self.write(f"-----THEN-BLOCK-----",'#',header=True)
+                then_exp = exp_children[1]
                 self.instruction_rules(then_exp,curr_function)
-                
+                self.write(f"LDA  7, @else(7)", "# Skip the ELSE block")
+                self.placeholders["@then"] = self.line_counter
+
+                # Recursively evaluate the ELSE expression
+                self.write(f"-----ELSE-BLOCK-----",'#',header=True)
+                else_exp = exp_children[2]
+                self.instruction_rules(else_exp,curr_function)
+                self.placeholders["@else"] = self.line_counter
+
                 # end if
+                self.write("-----END-IF-----",'#',header=True)
                 mem_loc = self.stack_frames[curr_function].return_add # Retrieve return address of return value
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location")
                 self.write(f"SUB  4, 3, 5", "# Calculate memory offset")
