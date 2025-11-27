@@ -309,7 +309,7 @@ class Generator():
                 self.write(f"-----THEN-BLOCK-----",'#',header=True)
                 then_exp = exp_children[1]
                 self.instruction_rules(then_exp,curr_function)
-                self.write(f"LDA  7, @else(7)", "# Skip the ELSE block")
+                self.write(f"LDA  7, @else(0)", "# Skip the ELSE block")
                 self.placeholders["@then"] = self.line_counter
 
                 # Recursively evaluate the ELSE expression
