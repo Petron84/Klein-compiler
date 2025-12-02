@@ -212,10 +212,10 @@ class Generator():
                 params = self.symbol_table[curr_function].parameters
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = i+1
+                        offset = i+2
                     else:
                         pass # FILL IN THIS ERROR LATER
-                mem_loc = self.stack_frames[curr_function].return_add - offset
+                mem_loc = self.stack_frames[curr_function].return_add + offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
                 self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
 
