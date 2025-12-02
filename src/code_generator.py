@@ -218,6 +218,7 @@ class Generator():
                 mem_loc = self.stack_frames[curr_function].return_add + offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
                 self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
+
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
                 self.instruction_rules(inner_exp,curr_function)
@@ -233,16 +234,15 @@ class Generator():
                 left_exp = exp_children[0]
                 right_exp = exp_children[1]
                 self.instruction_rules(left_exp,curr_function)
-                self.write("ST   1, 0(5)", "# Store left expression value into memory")
                 self.write("LDC  4, 1(0)", "# Load value 1 into temporary register 4")
                 self.DMEM -= 1
                 self.write("SUB  5, 5, 4", "# Decrement memory offset")
+                self.write("ST   1, 0(5)", "# Store left expression value into memory")
                 self.instruction_rules(right_exp,curr_function)
-                self.write("LDC  4, 1(0)", "# Load value 1 into temporary register 4")
-                self.DMEM += 1
-                self.write("ADD  5, 5, 4", "# Increment memory offset")
                 self.write("LD   2, 0(5)", "# Load left expression value from memory into register 2")
-
+                self.write("ADD  5, 5, 4", "# Increment memory offset")
+                self.DMEM += 1 
+                               
                 match exp_value:
                     case "+":
                         self.write("ADD  1, 2, 1", "# Add left and right expression values")
