@@ -161,6 +161,7 @@ class Generator():
                 # Store location of temporary label that needs to be replaced
                 temp_label = "!temp_" + str(self.label_id)
                 self.label_id += 1
+
                 self.write(f"LDA  6, {temp_label}(0)", '# Load return address into R6')
                 self.write("ST   6, 0(5)", '# Store current return address into DMEM')
 
@@ -169,10 +170,11 @@ class Generator():
                     self.instruction_rules(exp_children[1],curr_function)
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
+                else:
                     self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
                     self.DMEM -= 1
                     self.write("SUB  5, 5, 4", '# Decrement memory offset')
-                else:
+
                     num_params = self.symbol_table[f_name].parameters[0]
                     self.create_frame(self.DMEM,f_name)
                     args = exp_children[1].children
@@ -185,11 +187,15 @@ class Generator():
                         self.DMEM -= 1
                         self.write("SUB  5, 5, 4", "# Decrement memory offset")
 
+                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
+                    self.DMEM -= 1
+
                     # Jump to function
                     self.write(f"LDA  7, @{f_name}(0)", f'# Load address of {f_name} IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
-                    self.DMEM += 1 + num_params
-                    self.write(f"LDC  4, {1 + num_params}(0)", '# Load value of parameters + return value into temporary register 4')
+                    offset = 1 + num_params + 1
+                    self.write(f"LDC  4, {offset}(0)", '# Load value of parameters + return value into temporary register 4')
                     self.write("ADD  5, 5, 4", '# Increment memory offset')
 
             case "INTEGER-LITERAL":
