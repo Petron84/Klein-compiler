@@ -216,11 +216,8 @@ class Generator():
                         offset = i+1
                     else:
                         pass # FILL IN THIS ERROR LATER
-                mem_loc = self.stack_frames[curr_function].address - offset
+                mem_loc = self.stack_frames[curr_function].return_add + offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
-                self.write(f"SUB  4, 3, 5", "# Calculate memory offset. I.E. Target = 1023 and Current = 1020, R4 = 3")
-                self.write(f"ADD  5, 5, 4", "# Add offset to current memory location.")
-                self.write(f"LD   1, 0(5)", "# Load the value of identifier from memory into register 1")
                 self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
 
             case "UNARY-EXPRESSION":
