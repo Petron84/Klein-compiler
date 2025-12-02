@@ -218,8 +218,7 @@ class Generator():
                         pass # FILL IN THIS ERROR LATER
                 mem_loc = self.stack_frames[curr_function].return_add + offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
-                self.write(f"SUB  5, 5, 4","# Subtract the offset off of the memory pointer")
-
+                self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
                 self.instruction_rules(inner_exp,curr_function)
