@@ -147,7 +147,6 @@ class Generator():
                 self.write('SUB  5, 5, 4','# Decrement memory offset')
     
     def fill_placeholders(self):
-        print(self.placeholders)
         for i in range(len(self.IMEM)):
             for p, v in self.placeholders.items():
                 self.IMEM[i] = self.IMEM[i].replace(str(p),str(v))
