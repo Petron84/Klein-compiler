@@ -84,7 +84,7 @@ class Generator():
     
     def create_frame(self,address,fname):
         num_params = self.symbol_table[fname].parameters[0]
-        return_address = address - num_params - 1
+        return_address = address - 1
         self.stack_frames[fname] = StackFrame(address=address, num_parm=num_params, return_add=return_address)
 
     def load_functions(self):
@@ -212,7 +212,7 @@ class Generator():
                 params = self.symbol_table[curr_function].parameters
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = i+2
+                        offset = i+1
                     else:
                         pass # FILL IN THIS ERROR LATER
                 mem_loc = self.stack_frames[curr_function].return_add + offset
