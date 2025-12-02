@@ -215,7 +215,7 @@ class Generator():
                         offset = i+1
                     else:
                         pass # FILL IN THIS ERROR LATER
-                mem_loc = self.stack_frames[curr_function].return_add + offset
+                mem_loc = self.stack_frames[curr_function].return_add - offset
                 self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
                 self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
 
@@ -242,7 +242,7 @@ class Generator():
                 self.write("LD   2, 0(5)", "# Load left expression value from memory into register 2")
                 self.write("ADD  5, 5, 4", "# Increment memory offset")
                 self.DMEM += 1 
-                               
+
                 match exp_value:
                     case "+":
                         self.write("ADD  1, 2, 1", "# Add left and right expression values")
