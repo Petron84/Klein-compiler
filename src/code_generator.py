@@ -84,7 +84,7 @@ class Generator():
     
     def create_frame(self,address,fname):
         num_params = self.symbol_table[fname].parameters[0]
-        return_address = address - num_params
+        return_address = address - num_params - 1
         self.stack_frames[fname] = StackFrame(address=address, num_parm=num_params, return_add=return_address)
 
     def load_functions(self):
@@ -163,9 +163,6 @@ class Generator():
                 self.label_id += 1
                 self.write(f"LDA  6, {temp_label}(0)", '# Load return address into R6')
                 self.write("ST   6, 0(5)", '# Store current return address into DMEM')
-                self.write("LDC  4, 1(0)", '# Store value 1 in temporary register 4')
-                self.DMEM -= 1
-                self.write("SUB  5, 5, 4", '# Decrement memory offset')
 
                 if f_name== "print":
                     # Evaluate expression value
@@ -173,8 +170,8 @@ class Generator():
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
                     self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
-                    self.DMEM += 1
-                    self.write("ADD  5, 5, 4", '# Increment memory offset')
+                    self.DMEM -= 1
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
                 else:
                     num_params = self.symbol_table[f_name].parameters[0]
                     self.create_frame(self.DMEM,f_name)
