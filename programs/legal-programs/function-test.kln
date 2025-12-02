@@ -1,0 +1,6 @@
+function main(a:integer, b:integer): integer
+	eval_and_print(a,b)
+
+function eval_and_print(a: integer, b:integer): integer
+	print(a * b)
+	(a * b)
