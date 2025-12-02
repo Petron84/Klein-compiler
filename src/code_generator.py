@@ -112,7 +112,7 @@ class Generator():
         del functions['main']
 
         for f in functions:
-            self.write(f"-----{f.upper()}-----",'#')
+            self.write(f"-----{f.upper()}-----",'#',header=True)
             self.placeholders[f"@{f}"] = self.line_counter
             body = functions[f]
             for exp in body:
