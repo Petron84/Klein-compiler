@@ -85,6 +85,7 @@ class Generator():
     def create_frame(self,address,fname):
         num_params = self.symbol_table[fname].parameters[0]
         return_address = address - num_params - 1
+        address = return_address
         self.stack_frames[fname] = StackFrame(address=address, num_parm=num_params, return_add=return_address)
 
     def load_functions(self):
@@ -216,11 +217,10 @@ class Generator():
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
                         offset = i+1
-                    else:
-                        pass # FILL IN THIS ERROR LATER
-                mem_loc = self.stack_frames[curr_function].address - offset
-                self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
-                self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
+                        mem_loc = self.stack_frames[curr_function].address + offset
+                        self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
+                        self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
+                        break
 
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
