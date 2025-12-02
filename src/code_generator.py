@@ -172,14 +172,14 @@ class Generator():
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
                 else:
+                    num_params = self.symbol_table[f_name].parameters[0]
+                    self.create_frame(self.DMEM,f_name)
+
                     self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
                     self.DMEM -= 1
                     self.write("SUB  5, 5, 4", '# Decrement memory offset')
 
-                    num_params = self.symbol_table[f_name].parameters[0]
-                    self.create_frame(self.DMEM,f_name)
                     args = exp_children[1].children
-
                     # Store function arguments
                     for a in args:
                         self.instruction_rules(a,curr_function)
@@ -195,9 +195,11 @@ class Generator():
                     # Jump to function
                     self.write(f"LDA  7, @{f_name}(0)", f'# Load address of {f_name} IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
-                    offset = 1 + num_params + 1
+
+                    offset = num_params + 2
                     self.write(f"LDC  4, {offset}(0)", '# Load value of parameters + return value into temporary register 4')
                     self.write("ADD  5, 5, 4", '# Increment memory offset')
+                    self.DMEM += offset
 
             case "INTEGER-LITERAL":
                 value = body.value
