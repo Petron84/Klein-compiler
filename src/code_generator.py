@@ -110,18 +110,6 @@ class Generator():
 
         for exp in main_body:
             self.instruction_rules(exp,"main")
-
-        self.return_block = self.line_counter
-        mem_loc = self.stack_frames['main'].return_add
-        self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location of main return value")
-        self.write("ST   1, 0(3)", f"# Store return value from register 1 into DMEM")
-
-        self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
-        self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
-        self.write("OUT  1, 0, 0", '# Output value from register 1.')
-        self.write('LD   5, 0(0)', '# Reset memory pointer')
-        self.write("LD   6, 0(5)", "# Load root return address into register 6")
-        self.write("LDA  7, 0(6)", "# Load return address back into register 7")
         del functions['main']
 
         for f in functions:
@@ -131,16 +119,14 @@ class Generator():
             self.create_frame(self.DMEM,f)
             for exp in body:
                 self.instruction_rules(exp,f)
+        mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
+        self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
+        self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
+        self.write("OUT  1, 0, 0", '# Output value from register 1.')
+        self.write('LD   5, 0(0)', '# Reset memory pointer')
+        self.write("LD   6, 0(5)", "# Load root return address into register 6")
+        self.write("LDA  7, 0(6)", "# Load return address back into register 7")
 
-            mem_loc = self.stack_frames[f].return_add
-            self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location of {f} return value")
-            self.write("ST   1, 0(3)", f"# Store return value from register 1 into DMEM")
-            num_params = self.symbol_table[f].parameters[0]
-            self.write(f"LDC  4, {num_params + 1}(0)", '# Load value of number of parameters + return value into temporary register 4')
-            self.write("ADD  3, 5, 4", '# Increment memory offset to point to return address')
-            self.write("LD   6, 0(3)", f"# Load return address for function {f} into register 6")
-            self.write("LDA  7, 0(6)", f"# Load return address back into register 7")
-            
     def load_cli(self):
         cli_params = self.symbol_table['main'].parameters
         if cli_params[0] != 0:
@@ -179,24 +165,20 @@ class Generator():
                 self.label_id += 1
 
                 self.write(f"LDA  6, {temp_label}(0)", '# Load return address into R6')
-                self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
-                self.DMEM -= 1
-                self.write("SUB  5, 5, 4", '# Decrement memory offset')
-
-                self.write("ST   6, 0(5)", '# Store return address into memory')
+                self.write("ST   6, 0(5)", '# Store current return address into DMEM')
 
                 if f_name== "print":
                     # Evaluate expression value
                     self.instruction_rules(exp_children[1],curr_function)
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
-                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
-                    self.write("ADD  5, 5, 4", '# Increment memory offset')
-                    self.DMEM += 1
-                    
                 else:
                     num_params = self.symbol_table[f_name].parameters[0]
                     self.create_frame(self.DMEM,f_name)
+
+                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                    self.DMEM -= 1
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
 
                     args = exp_children[1].children
                     # Store function arguments
