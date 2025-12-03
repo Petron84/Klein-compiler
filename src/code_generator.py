@@ -111,16 +111,6 @@ class Generator():
         for exp in main_body:
             self.instruction_rules(exp,"main")
 
-        mem_loc = self.stack_frames['main'].return_add
-        self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location of main return value")
-        self.write("ST   1, 0(3)", f"# Store return value from register 1 into DMEM")
-
-        self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
-        self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
-        self.write("OUT  1, 0, 0", '# Output value from register 1.')
-        self.write('LD   5, 0(0)', '# Reset memory pointer')
-        self.write("LD   6, 0(5)", "# Load root return address into register 6")
-        self.write("LDA  7, 0(6)", "# Load return address back into register 7")
         del functions['main']
 
         for f in functions:
@@ -212,11 +202,6 @@ class Generator():
                     # Jump to function
                     self.write(f"LDA  7, @{f_name}(0)", f'# Load address of {f_name} IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
-
-                    offset = num_params + 2
-                    self.write(f"LDC  4, {offset}(0)", '# Load value of parameters + return value into temporary register 4')
-                    self.write("ADD  5, 5, 4", '# Increment memory offset')
-                    self.DMEM += offset
 
             case "INTEGER-LITERAL":
                 value = body.value
