@@ -235,10 +235,6 @@ class Generator():
                 elif exp_value == "not":
                     self.write("LDC  2, 1(0)", "# Load value 1 into register 2")
                     self.write("SUB  1, 2, 1", "# Flip boolean value")
-                    
-                mem_loc = self.stack_frames[curr_function].return_add # Retrieve memory address of return value
-                self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of {curr_function} return value")
-                self.write("ST   1, 0(5)", f"# Store return value of unary expression into DMEM")
             
             case "BINARY-EXPRESSION":
                 left_exp = exp_children[0]
@@ -305,3 +301,7 @@ class Generator():
                 else_exp = exp_children[2]
                 self.instruction_rules(else_exp,curr_function)
                 self.placeholders[temp_label_endif] = self.line_counter
+                
+        mem_loc = self.stack_frames[curr_function].return_add # Retrieve memory address of return value
+        self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of {curr_function} return value")
+        self.write("ST   1, 0(5)", f"# Store return value of unary expression into DMEM")
