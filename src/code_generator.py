@@ -217,9 +217,10 @@ class Generator():
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
+                num_params=  len(params)
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = i+1
+                        offset = num_params - (i+1) + 1
                         mem_loc = self.stack_frames[curr_function].address + offset
                         self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
                         self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
@@ -301,7 +302,7 @@ class Generator():
                 else_exp = exp_children[2]
                 self.instruction_rules(else_exp,curr_function)
                 self.placeholders[temp_label_endif] = self.line_counter
-                
+
         mem_loc = self.stack_frames[curr_function].return_add # Retrieve memory address of return value
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of {curr_function} return value")
         self.write("ST   1, 0(5)", f"# Store return value of unary expression into DMEM")
