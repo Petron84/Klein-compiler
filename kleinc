@@ -15,15 +15,36 @@ except:
 	print("Klein Error: Invalid Input. Make sure you input either a .kln file or a directory of .kln files.")
 else:
 	if os.path.isdir(klein_file):
-		for f in os.listdir(klein_file):
+		klein_dir = klein_file
+		for f in os.listdir(klein_dir):
 			filename = f.split("/")[-1]
 			base_filename, extension = os.path.splitext(filename)
 			if extension == ".kln" or extension == "":
 				print("\nFILENAME:",filename)
-				try:
-					"WRITE LATER"
-				except:
-					print("Klein Warning: This file is either not a Klein program, or it doesn't exist. Skipping code generation...")
+				klein_file = os.path.join(klein_dir,f)
+				content = open(klein_file).read()
+				tree = Parser(content).parse()
+				table = Analyzer(tree).analyze()
+				
+				if isinstance(table,dict) == False:
+					print("\n\tSkipping file. Semantic Analyzer detected errors.")
+					continue
+
+				imem = Generator(tree,table).generate()
+				tm_instructions = []
+				for instruction in imem:
+					if instruction[0] == "-":
+						continue
+					tm_i = instruction.split('|')[0].strip()
+					tm_instructions.append(tm_i)
+
+				tm_name = base_filename + ".tm"
+				root = Path(__file__).resolve().parent
+				output_dir = root / "programs" / "tm-programs"
+				with open(os.path.join(output_dir,tm_name),'w') as f:
+					for inst in tm_instructions:
+						f.write(inst + '\n')
+
 			else:
 				continue
 	else:
@@ -34,6 +55,11 @@ else:
 			content = open(klein_file).read()
 			tree = Parser(content).parse()
 			table = Analyzer(tree).analyze()
+
+			if isinstance(table,dict) == False:
+				print("\nKlein Error: Code Generation Failed. Semantic Analyzer detected errors.")
+				sys.exit()
+
 			imem = Generator(tree,table).generate()
 			tm_instructions = []
 			for instruction in imem:

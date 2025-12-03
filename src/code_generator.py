@@ -116,6 +116,7 @@ class Generator():
             self.write(f"-----{f.upper()}-----",'#',header=True)
             self.placeholders[f"@{f}"] = self.line_counter
             body = functions[f]
+            self.create_frame(self.DMEM,f)
             for exp in body:
                 self.instruction_rules(exp,f)
         mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
