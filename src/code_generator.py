@@ -110,6 +110,9 @@ class Generator():
 
         for exp in main_body:
             self.instruction_rules(exp,"main")
+            mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
+            self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location for main return value")
+            self.write("ST   1, 0(3)", "# Store main return value from register 1 into DMEM")
         del functions['main']
 
         for f in functions:
@@ -119,6 +122,13 @@ class Generator():
             self.create_frame(self.DMEM,f)
             for exp in body:
                 self.instruction_rules(exp,f)
+            self.write("ST   1, 0(5)", "# Store function return value from register 1 into DMEM")
+            num_params = self.symbol_table[f].parameters[0]
+            self.write(f"LDC  4, {num_params + 1}(0)", '# Load value of parameters + return value into temporary register 4')
+            self.write("ADD  3, 5, 4", '# Increment memory offset')
+            self.write("LD   6, 0(3)", '# Load return address from previous function call/stack frame.')
+            self.write("LDA  7, 0(6)",  '# Load address of previous function call into register 7.')
+
         mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
         self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
