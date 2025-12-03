@@ -185,9 +185,7 @@ class Generator():
                     self.instruction_rules(exp_children[1],curr_function)
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
-                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
-                    self.write("ADD  5, 5, 4", '# Increment memory offset')
-                    self.DMEM += 1
+                    
                 else:
                     num_params = self.symbol_table[f_name].parameters[0]
                     self.create_frame(self.DMEM,f_name)
