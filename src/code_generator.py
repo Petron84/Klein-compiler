@@ -135,16 +135,10 @@ class Generator():
             self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location of {f} return value")
             self.write("ST   1, 0(3)", f"# Store return value from register 1 into DMEM")
             num_params = self.symbol_table[f].parameters[0]
-            self.write(f"LDC  4, {num_params}(0)", f"# Load number of parameters for function {f} into register 4")
-            self.write("ADD  5, 5, 4", f"# Increment memory offset to remove stack frame for function {f}")
-            self.DMEM += num_params
-
-            self.write("LD  6, 0(5)", f"# Load return address from stack frame into register 6")
-            self.write("LDA  7, 0(6)", f"# Load return address back into register 7")
-            self.write("LDC  4, 1(0)", f"# Load value 1 into temporary register 4")
-            self.write("ADD  5, 5, 4", f"# Increment memory offset to remove return value for function {f}")
-            self.DMEM += 1
-
+            self.write(f"LDC  4, {num_params + 1}(0)", '# Load value of number of parameters + return value into temporary register 4')
+            self.write("ADD  3, 5, 4", '# Increment memory offset to point to return address')
+            self.write("LD   6, 0(3)", f"# Load return address for function {f} into register 6")
+            
     def load_cli(self):
         cli_params = self.symbol_table['main'].parameters
         if cli_params[0] != 0:
@@ -194,6 +188,9 @@ class Generator():
                     self.instruction_rules(exp_children[1],curr_function)
                     self.write("LDA  7, @print(0)", '# Load address of print IMEM block - branch to function')
                     self.placeholders[temp_label] = self.line_counter
+                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                    self.write("ADD  5, 5, 4", '# Increment memory offset')
+                    self.DMEM += 1
                     
                 else:
                     num_params = self.symbol_table[f_name].parameters[0]
