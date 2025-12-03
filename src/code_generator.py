@@ -113,6 +113,8 @@ class Generator():
             mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
             self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location for main return value")
             self.write("ST   1, 0(3)", "# Store main return value from register 1 into DMEM")
+            self.write("LDA  7, 7(0)", "# Return to runtime system")
+            
         del functions['main']
 
         for f in functions:
