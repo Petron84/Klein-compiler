@@ -127,6 +127,7 @@ class Generator():
                 self.write("ST   1, 0(5)", f"# Store return value of into DMEM")
 
         mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
+        self.write(f"STD  1, 0(5)", f"# Store return value of into DMEM")
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
         self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
         self.write("OUT  1, 0, 0", '# Output value from register 1.')
