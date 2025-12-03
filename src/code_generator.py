@@ -226,7 +226,7 @@ class Generator():
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
-                num_params=  len(params)
+                num_params=  params[0]
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
                         offset = num_params - (i+1) + 1
