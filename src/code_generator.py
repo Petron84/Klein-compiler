@@ -111,6 +111,7 @@ class Generator():
         for exp in main_body:
             self.instruction_rules(exp,"main")
 
+        self.return_block = self.line_counter
         mem_loc = self.stack_frames['main'].return_add
         self.write(f"LDC  3, {mem_loc}(0)", f"# Store the memory location of main return value")
         self.write("ST   1, 0(3)", f"# Store return value from register 1 into DMEM")
@@ -138,6 +139,7 @@ class Generator():
             self.write(f"LDC  4, {num_params + 1}(0)", '# Load value of number of parameters + return value into temporary register 4')
             self.write("ADD  3, 5, 4", '# Increment memory offset to point to return address')
             self.write("LD   6, 0(3)", f"# Load return address for function {f} into register 6")
+            self.write("LDA  7, 0(6)", f"# Load return address back into register 7")
             
     def load_cli(self):
         cli_params = self.symbol_table['main'].parameters
