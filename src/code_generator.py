@@ -150,8 +150,8 @@ class Generator():
     
     def fill_placeholders(self):
         for i in range(len(self.IMEM)):
-            for p, v in self.placeholders.items():
-                self.IMEM[i] = self.IMEM[i].replace(str(p),str(v))
+            for p in sorted(self.placeholders.keys(), key=len, reverse=True):
+                self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
     def instruction_rules(self,body,curr_function):
         exp_type = body.type
