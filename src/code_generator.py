@@ -178,7 +178,11 @@ class Generator():
                 self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
                 self.DMEM -= 1
                 self.write("SUB  5, 5, 4", '# Decrement memory offset')
-                self.write("ST   6, 0(5)", '# Store current return address into DMEM')
+
+                self.write("ST   6, 0(5)", '# Store return address into memory')
+                self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                self.write("SUB  5, 5, 4", '# Decrement memory offset')
+                self.DMEM -= 1
 
                 if f_name== "print":
                     # Evaluate expression value
