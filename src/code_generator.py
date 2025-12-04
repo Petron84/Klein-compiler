@@ -1,3 +1,4 @@
+
 from dataclasses import dataclass
 
 # Keep KleinError import style consistent with your draft
@@ -264,3 +265,176 @@ class Generator:
 
                     # Jump to function body
                     self.write(f" LDA 7, @{f_name}(0)", f"# Branch to {f_name}")
+                    self.placeholders[ret_lbl] = self.line_counter
+
+                    # On return: load the return value from top (callee left it)
+                    self.write(" LD 1, 0(5)", "# Load return value from DMEM into R1")
+
+                    # Pop args + return + extra bookkeeping (num_params + 2)
+                    offset = num_params + 2
+                    self.write(f" LDC 4, {offset}(0)", "# Pop args+ret bookkeeping")
+                    self.write(" ADD 5, 5, 4", "# Increment memory offset")
+                    self.DMEM += offset
+
+            # -------- literals --------
+            case "INTEGER-LITERAL":
+                value = int(node.value)
+                self.write(f" LDC 1, {value}(0)", "# Load integer-literal value into R1")
+
+            case "BOOLEAN-LITERAL":
+                value = 1 if str(node.value).lower() == "true" else 0
+                self.write(f" LDC 1, {value}(0)", "# Load boolean-literal value into R1")
+
+            # -------- identifiers (parameters) --------
+            case "IDENTIFIER":
+                params = self.symbol_table[curr_function].parameters
+                num_params = params[0]
+                for i, p in enumerate(params[1]):
+                    if p[0] == exp_value:
+                        # Parameter at (frame.address + (num_params - i))
+                        offset = num_params - i
+                        mem_loc = self.stack_frames[curr_function].address + offset
+                        self.write(f" LDC 3, {mem_loc}(0)", f"# Param {exp_value} location -> R3")
+                        self.write(" LD 1, 0(3)", f"# Load param {exp_value} into R1")
+                        break
+
+            # -------- unary --------
+            case "UNARY-EXPRESSION":
+                inner = exp_children[0]
+                self.instruction_rules(inner, curr_function)
+                if exp_value == "-":
+                    self.write(" SUB 1, 0, 1", "# Negate (0 - R1)")
+                elif exp_value == "not":
+                    self.write(" LDC 2, 1(0)", "# Load 1 into R2")
+                    self.write(" SUB 1, 2, 1", "# Flip boolean (1 - R1)")
+                else:
+                    raise KleinError(f"Unknown unary operator: {exp_value}")
+
+            # -------- binary --------
+            case "BINARY-EXPRESSION":
+                left = exp_children[0]
+                right = exp_children[1]
+
+                # Evaluate left -> store -> eval right -> load left back
+                self.instruction_rules(left, curr_function)
+                self.write(" LDC 4, 1(0)", "# temp 4 = 1")
+                self.DMEM -= 1
+                self.write(" SUB 5, 5, 4", "# stack down")
+                self.write(" ST 1, 0(5)", "# save left in DMEM")
+
+                self.instruction_rules(right, curr_function)
+                self.write(" LD 2, 0(5)", "# R2 = left")
+                self.write(" ADD 5, 5, 4", "# stack up")
+                self.DMEM += 1
+
+                # Arithmetic / boolean (non-short-circuit) operators
+                match exp_value:
+                    case "+":
+                        self.write(" ADD 1, 2, 1", "# R1 = left + right")
+                    case "-":
+                        self.write(" SUB 1, 2, 1", "# R1 = left - right")
+                    case "*":
+                        self.write(" MUL 1, 2, 1", "# R1 = left * right")
+                    case "/":
+                        self.write(" DIV 1, 2, 1", "# R1 = left / right")
+                    case "and":
+                        self.write(" MUL 1, 2, 1", "# boolean AND via multiply")
+                    case "or":
+                        self.write(" ADD 1, 2, 1", "# boolean OR via add (0/1 inputs)")
+
+                    # Relational ops: set R1 to 0/1 using labels (consistent pattern)
+                    case "=":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JEQ 1, {t_lbl}(0)", "# if == 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case "<":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JLT 1, {t_lbl}(0)", "# if < 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case "<=":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JLE 1, {t_lbl}(0)", "# if <= 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case ">":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JGT 1, {t_lbl}(0)", "# if > 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case ">=":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JGE 1, {t_lbl}(0)", "# if >= 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case "!=":
+                        t_lbl = self.new_label()
+                        e_lbl = self.new_label()
+                        self.write(" SUB 1, 2, 1", "# temp = left - right")
+                        self.write(f" JNE 1, {t_lbl}(0)", "# if != 0 -> true")
+                        self.write(" LDC 1, 0(0)", "# false")
+                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
+                        self.placeholders[t_lbl] = self.line_counter
+                        self.write(" LDC 1, 1(0)", "# true")
+                        self.placeholders[e_lbl] = self.line_counter
+
+                    case _:
+                        raise KleinError(f"Unknown binary operator: {exp_value}")
+
+            # -------- if-expression --------
+            case "IF-EXPRESSION":
+                self.write("-----IF-BLOCK-----", "#", header=True)
+
+                cond = exp_children[0]
+                self.instruction_rules(cond, curr_function)
+
+                l_else = self.new_label()
+                self.write(f" JEQ 1, {l_else}(0)", "# if condition false -> ELSE")
+
+                # THEN
+                self.write("-----THEN-BLOCK-----", "#", header=True)
+                then_exp = exp_children[1]
+                self.instruction_rules(then_exp, curr_function)
+
+                l_end = self.new_label()
+                self.write(f" LDA 7, {l_end}(0)", "# skip ELSE")
+                # ELSE
+                self.write("-----ELSE-BLOCK-----", "#", header=True)
+                self.placeholders[l_else] = self.line_counter
+                else_exp = exp_children[2]
+                self.instruction_rules(else_exp, curr_function)
+                self.placeholders[l_end] = self.line_counter
+
+            case _:
+                raise KleinError(f"Unhandled node type: {exp_type}")
