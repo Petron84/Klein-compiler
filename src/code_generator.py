@@ -123,6 +123,11 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
+    def load_return(self, value):
+            self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+            val_loc = self.stack_frames[-1].val_loc
+            self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
+
     def instruction_rules(self,body,curr_function):
         exp_type = body.type
         exp_value = body.value
@@ -136,13 +141,13 @@ class Generator:
                 self.label_id += 1
             
                 if f_name== "print":
-                    pass
+                    self.instruction_rules(exp_children[1],curr_function)
                 else:
                     pass
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.write(f"LDC  1, {value}(0)", " Load integer-literal value into register 1")
+                self.load_return(value)
             
             case "BOOLEAN-LITERAL":
                 value = body.value
@@ -150,10 +155,7 @@ class Generator:
                     value = 1
                 else:
                     value = 0
-
-                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
-                val_loc = self.stack_frames[-1].val_loc
-                self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
+                self.load_return(value)
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters

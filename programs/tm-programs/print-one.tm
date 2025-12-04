@@ -1,14 +1,16 @@
-0 : LDC  3, 2(7) ;  Calculate return address for main function
-1 : ST   3, 1(0) ;  Store return address for main function in DMEM
-2 : LDA  7, 7(0) ;  Load address of main IMEM block - branch to function
-3 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-4 :  OUT  1, 0, 0 ;  Hardcoded print function
-5 :  LD   6, 0(5) ;  Load return addess from previous function call/stack frame.
-6 :  LDA  7, 0(6) ;  Load address of previous function call into register 7.
-7 : LDA  6, 11(0) ;  Load return address into R6
-8 : ST   6, 0(5) ;  Store current return address into DMEM
-9 : LDC  1, 1(0) ;  Load integer-literal value into register 1
-10 : LDA  7, 4(0) ;  Load address of print IMEM block - branch to function
-11 : LDC  1, 1(0) ;  Load integer-literal value into register 1
-12 : LD  6, 1(0) ;  Load return address for main function into register 6
-13 : LDA  7, 0(6) ;  Jump to return address of main function
+0 : LDA  6, 3(7) ;  Calculate return address for main function
+1 : LDC  5, 2(0) ;  Update DMEM pointer
+2 : ST   6, 0(5) ;  Store return address for main function in DMEM
+3 : LDA  7, 9(0) ;  Load address of main IMEM block - branch to function
+4 : OUT  1, 0, 0 ;  Return result
+5 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+6 : OUT  1, 0, 0 ;  Hardcoded print function
+7 : LD   6, 0(5) ;  Load return addess from stack frame.
+8 : LDA  7, 0(6) ;  Jump to return address.
+9 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+10 : ST   1, 1(0)) ;  Store value into return value in stack frame
+11 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+12 : ST   1, 1(0)) ;  Store value into return value in stack frame
+13 : LD   1, 1(0)) ;  Load return value into register 1
+14 : LD  6, 2(0) ;  Load return address for main function into register 6
+15 : LDA  7, 0(6) ;  Jump to return address of main function
