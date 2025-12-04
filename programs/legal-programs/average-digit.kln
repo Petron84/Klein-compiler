@@ -13,5 +13,5 @@ function print_and_return(sum : integer, n : integer): integer
 
 (* from the Klein library *)
 function MOD(m : integer, n : integer): integer
-    m - m/n * n
+    m - ((m/n) * n)
 
