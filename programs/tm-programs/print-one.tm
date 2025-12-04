@@ -12,7 +12,7 @@
 11 : LDA  6, 2(7) ;  Compute return address
 12 : ST   6, 0(5) ;  Store return address
 13 : LDA  7, 6(0) ; Call print
-14 : LDC  5, 1(0) ;  zMove pointer to previous stack frame
+14 : LDC  5, 1(0) ;  Move pointer to previous stack frame
 15 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 16 : ST   1, 2(0) ;  Store value into return value in stack frame
 17 : LD   1, 2(0) ;  Load return value into register 1

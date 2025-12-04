@@ -18,10 +18,27 @@
 17 : LDC  5, 7(0) ;  Set DMEM pointer to callee frame 'eval_and_print'
 18 : LDA  6, 2(7) ;  Compute return address
 19 : ST   6, 0(5) ;  Store return address in frame
-20 : LDA  7, -1(0) ;  Call eval_and_print
+20 : LDA  7, 27(0) ;  Call eval_and_print
 21 : LD   1, 3(5) ;  Load return value into R1
 22 : LDC  5, 3(0) ;  Restore DMEM pointer to caller frame
 23 : ST   1, 6(0) ;  Store function-call result into caller's return slot
 24 : LD   1, 6(0) ;  Load return value into register 1
 25 : LD  6, 3(0) ;  Load return address for main function into register 6
 26 : LDA  7, 0(6) ;  Jump to return address of main function
+27 : LD   1, 1(5) ;  Load parameter 'a' into R1
+28 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+29 : LD   1, 2(5) ;  Load parameter 'b' into R1
+30 : MUL  1, 2, 1 ;  R1 = left * right
+31 : LDC  5, 7(0) ;  Update DMEM pointer
+32 : LDA  6, 2(7) ;  Compute return address
+33 : ST   6, 0(5) ;  Store return address
+34 : LDA  7, 10(0) ; Call print
+35 : LDC  5, 7(0) ;  Move pointer to previous stack frame
+36 : ST   1, 3(5) ;  Store function result into stack frame
+37 : LD   1, 1(5) ;  Load parameter 'a' into R1
+38 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+39 : LD   1, 2(5) ;  Load parameter 'b' into R1
+40 : MUL  1, 2, 1 ;  R1 = left * right
+41 : ST   1, 3(5) ;  Store function result into stack frame
+42 : LD   6, 0(5) ;  Load return address
+43 : LDA  7, 0(6) ;  Return to caller

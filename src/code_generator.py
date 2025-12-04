@@ -129,6 +129,20 @@ class Generator:
 
         del functions['main']
 
+        for f, body in functions.items():
+            self.write(f"------{f.upper()}------", header=True)
+            self.placeholders[f'@{f}'] = self.line_counter
+            num_params = self.symbol_table[f].parameters[0]
+            offset = num_params + 1
+
+            self.create_frame(f)
+            for exp in body:
+                self.instruction_rules(exp, f, callee=True)       
+                self.write(f"ST   1, {offset}(5)", " Store function result into stack frame")
+            self.write("LD   6, 0(5)", " Load return address")
+            self.write("LDA  7, 0(6)", " Return to caller")
+            self.stack_frames.pop()
+
     def fill_placeholders(self):
         for i in range(len(self.IMEM)):
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
@@ -152,7 +166,8 @@ class Generator:
                     self.write("LDA  6, 2(7)"," Compute return address")
                     self.write("ST   6, 0(5)", " Store return address")
                     self.write("LDA  7, @print(0)", "Call print")
-                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " zMove pointer to previous stack frame")
+                    print(self.stack_frames)
+                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Move pointer to previous stack frame")
                     self.DMEM = print_frame.top # Print frame is now gone, so it is the next empty frame
                     self.stack_frames.pop() # Pop print stack frame
                     
