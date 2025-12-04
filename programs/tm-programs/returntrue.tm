@@ -1,4 +1,4 @@
-0 : LDC  6, 3(7) ;  Calculate return address for main function
+0 : LDA  6, 3(7) ;  Calculate return address for main function
 1 : LDC  5, 1(0) ;  Update DMEM pointer
 2 : ST   6, 0(5) ;  Store return address for main function in DMEM
 3 : LDA  7, 9(0) ;  Load address of main IMEM block - branch to function
