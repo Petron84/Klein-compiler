@@ -112,7 +112,7 @@ class Generator:
         mem_loc = frame.mem_loc
         val_loc = frame.val_loc
 
-        self.write(f"LD   1, 0({val_loc})"," Load return value into register 1")
+        self.write(f"LD   1, {val_loc}(0))"," Load return value into register 1")
         self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
         self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
@@ -153,7 +153,7 @@ class Generator:
 
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
                 val_loc = self.stack_frames[-1].val_loc
-                self.write(f"ST   1, 0({val_loc})"," Store value into return value in stack frame")
+                self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
