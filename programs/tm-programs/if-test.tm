@@ -10,28 +10,30 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : LDA  5, 3(5) ;  Update DMEM pointer
+12 : LDA  3, 3(5) ;  Update DMEM pointer
 13 : LDA  6, 2(7) ;  Compute return address
-14 : ST   6, 0(5) ;  Store return address
-15 : LDA  7, 8(0) ; Call print
-16 : LDC  5, -3(5) ;  Move pointer to previous stack frame
-17 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-18 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-19 : LD   1, 1(5) ;  Load parameter 'n' into R1
-20 : SUB  1, 2, 1 ;  left - right for less-than check
-21 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-22 : LDC  1, 0(0) ;  false
-23 : LDA  7, 1(7) ;  skip setting true
-24 : LDC  1, 1(0) ;  true
-25 : JEQ  1, 32(0) ;  If condition is false, jump to ELSE
-26 : LD   1, 1(5) ;  Load parameter 'n' into R1
-27 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-28 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-29 : MUL  1, 2, 1 ;  R1 = left * right
-30 : ST   1, 4(0) ;  Store binary result into return slot
-31 : LDA  7, 34(0) ;  Skip ELSE block
-32 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-33 : ST   1, 4(0) ;  Store value into return value in stack frame
-34 : LD   1, 4(0) ;  Load return value into register 1
-35 : LD  6, 2(0) ;  Load return address for main function into register 6
-36 : LDA  7, 0(6) ;  Jump to return address of main function
+14 : ST   6, 0(3) ;  Store return address
+15 : ADD  5, 3, 0 ;  Updated Pointer
+16 : LDA  7, 8(0) ; Call print
+17 : LDC  4, 3)0) ;  Load frame size
+18 : SUB  5, 5, 4 ;  Restore pointer
+19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+20 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+21 : LD   1, 1(5) ;  Load parameter 'n' into R1
+22 : SUB  1, 2, 1 ;  left - right for less-than check
+23 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+24 : LDC  1, 0(0) ;  false
+25 : LDA  7, 1(7) ;  skip setting true
+26 : LDC  1, 1(0) ;  true
+27 : JEQ  1, 34(0) ;  If condition is false, jump to ELSE
+28 : LD   1, 1(5) ;  Load parameter 'n' into R1
+29 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+30 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+31 : MUL  1, 2, 1 ;  R1 = left * right
+32 : ST   1, 4(0) ;  Store binary result into return slot
+33 : LDA  7, 36(0) ;  Skip ELSE block
+34 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+35 : ST   1, 4(0) ;  Store value into return value in stack frame
+36 : LD   1, 4(0) ;  Load return value into register 1
+37 : LD  6, 2(0) ;  Load return address for main function into register 6
+38 : LDA  7, 0(6) ;  Jump to return address of main function

@@ -162,33 +162,38 @@ class Generator:
             
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
-                    self.write(f"LDA  5, {call_size}(5)", " Update DMEM pointer")
+                    self.write(f"LDA  3, {call_size}(5)", " Update DMEM pointer")
                     self.write("LDA  6, 2(7)"," Compute return address")
-                    self.write("ST   6, 0(5)", " Store return address")
+                    self.write("ST   6, 0(3)", " Store return address")
+                    self.write("ADD  5, 3, 0", " Updated Pointer")
                     self.write("LDA  7, @print(0)", "Call print")
-                    self.write(f"LDC  5, {-call_size}(5)", " Move pointer to previous stack frame")
+                    self.write(f"LDC  4, {call_size})0)", " Load frame size")
+                    self.write("SUB  5, 5, 4", " Restore pointer")
                     
                 else:
                     
                     args = exp_children[1].children
 
-                    self.write(f"LDA 5, {call_size}(5)", f" Advance DMEM pointer to callee frame '{f_name}'")
+                    self.write(f"LDA 3, {call_size}(5)", f" Advance DMEM pointer to callee frame '{f_name}'")
 
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"ST 1, {i+1}(5)", f" Store argument {arg} into callee frame")
+                        self.write(f"ST 1, {i+1}(3)", f" Store argument {arg} into callee frame")
 
                     self.write("LDA 6, 2(7)", " Compute return address")
-                    self.write("ST 6, 0(5)", " Store return address in callee frame")
+                    self.write("ST 6, 0(3)", " Store return address in callee frame")
+
+                    self.write("ADD  5, 3, 0", " Update pointer")
 
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
                     callee_params = self.symbol_table[f_name].parameters[0]
-                    callee_ret_offset = callee_params + 1
-                    self.write(f"LD 1, {callee_ret_offset}(5)", " Load callee return value into R1")
+                    call_offset = callee_params + 1
+                    self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
 
-                    self.write(f"LDA 5, {-call_size}(5)", " Restore DMEM pointer to caller frame")
-
+                    self.write(f"LDC  4, {call_size}(0)", " Load frame size")
+                    self.write("SUB  5, 5, 4", " Restore pointer")
+                    
                     if not callee:
                         caller_val_loc = self.stack_frames[-1].val_loc
                         self.write(f"ST 1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")

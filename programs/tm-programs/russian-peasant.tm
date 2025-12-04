@@ -12,122 +12,134 @@
 11 : LD   6, 0(5) ;  Load return addess from stack frame.
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'm' into R1
-14 : LDA  5, 4(5) ;  Update DMEM pointer
+14 : LDA  3, 4(5) ;  Update DMEM pointer
 15 : LDA  6, 2(7) ;  Compute return address
-16 : ST   6, 0(5) ;  Store return address
-17 : LDA  7, 10(0) ; Call print
-18 : LDC  5, -4(5) ;  Move pointer to previous stack frame
-19 : LDA 5, 4(5) ;  Advance DMEM pointer to callee frame 'mult'
-20 : LD   1, 1(5) ;  Load parameter 'm' into R1
-21 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='m',line=18) into callee frame
-22 : LD   1, 2(5) ;  Load parameter 'n' into R1
-23 : ST 1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=18) into callee frame
-24 : LDA 6, 2(7) ;  Compute return address
-25 : ST 6, 0(5) ;  Store return address in callee frame
-26 : LDA 7, 33(0) ;  Call mult
-27 : LD 1, 3(5) ;  Load callee return value into R1
-28 : LDA 5, -4(5) ;  Restore DMEM pointer to caller frame
-29 : ST 1, 6(0) ;  Store function-call result into caller's return slot
-30 : LD   1, 6(0) ;  Load return value into register 1
-31 : LD  6, 3(0) ;  Load return address for main function into register 6
-32 : LDA  7, 0(6) ;  Jump to return address of main function
-33 : LDA 5, 4(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
-34 : LD   1, 1(5) ;  Load parameter 'm' into R1
-35 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='m',line=14) into callee frame
-36 : LD   1, 2(5) ;  Load parameter 'n' into R1
-37 : ST 1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=14) into callee frame
-38 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-39 : ST 1, 3(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='0',line=14) into callee frame
-40 : LDA 6, 2(7) ;  Compute return address
-41 : ST 6, 0(5) ;  Store return address in callee frame
-42 : LDA 7, 48(0) ;  Call multWithAccum
-43 : LD 1, 4(5) ;  Load callee return value into R1
-44 : LDA 5, -4(5) ;  Restore DMEM pointer to caller frame
-45 : ST   1, 3(5) ;  Store function result into stack frame
-46 : LD   6, 0(5) ;  Load return address
-47 : LDA  7, 0(6) ;  Return to caller
-48 : LD   1, 2(5) ;  Load parameter 'n' into R1
-49 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-50 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-51 : SUB  1, 2, 1 ;  left - right for equality check
-52 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-53 : LDC  1, 0(0) ;  false
-54 : LDA  7, 1(7) ;  skip setting true
-55 : LDC  1, 1(0) ;  true
-56 : JEQ  1, 59(0) ;  If condition is false, jump to ELSE
-57 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-58 : LDA  7, 117(0) ;  Skip ELSE block
-59 : LDA 5, 5(5) ;  Advance DMEM pointer to callee frame 'MOD'
-60 : LD   1, 2(5) ;  Load parameter 'n' into R1
-61 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=8) into callee frame
-62 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-63 : ST 1, 2(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=8) into callee frame
-64 : LDA 6, 2(7) ;  Compute return address
-65 : ST 6, 0(5) ;  Store return address in callee frame
-66 : LDA 7, 120(0) ;  Call MOD
-67 : LD 1, 3(5) ;  Load callee return value into R1
-68 : LDA 5, -5(5) ;  Restore DMEM pointer to caller frame
-69 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-70 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-71 : SUB  1, 2, 1 ;  left - right for equality check
-72 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-73 : LDC  1, 0(0) ;  false
-74 : LDA  7, 1(7) ;  skip setting true
-75 : LDC  1, 1(0) ;  true
-76 : JEQ  1, 99(0) ;  If condition is false, jump to ELSE
-77 : LDA 5, 5(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
-78 : LD   1, 1(5) ;  Load parameter 'm' into R1
-79 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-80 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-81 : MUL  1, 2, 1 ;  R1 = left * right
-82 : ST 1, 1(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='m',line=9), Tree Node('INTEGER-LITERAL', value='2',line=9)],line=9) into callee frame
-83 : LD   1, 2(5) ;  Load parameter 'n' into R1
-84 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-85 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-86 : DIV  1, 2, 1 ;  R1 = left / right
-87 : ST 1, 2(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='/', children=[Tree Node('IDENTIFIER', value='n',line=9), Tree Node('INTEGER-LITERAL', value='2',line=9)],line=9) into callee frame
-88 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-89 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-90 : LD   1, 1(5) ;  Load parameter 'm' into R1
-91 : ADD  1, 2, 1 ;  R1 = left + right
-92 : ST 1, 3(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='accum',line=9), Tree Node('IDENTIFIER', value='m',line=9)],line=9) into callee frame
-93 : LDA 6, 2(7) ;  Compute return address
-94 : ST 6, 0(5) ;  Store return address in callee frame
-95 : LDA 7, 48(0) ;  Call multWithAccum
-96 : LD 1, 4(5) ;  Load callee return value into R1
-97 : LDA 5, -5(5) ;  Restore DMEM pointer to caller frame
-98 : LDA  7, 117(0) ;  Skip ELSE block
-99 : LDA 5, 5(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
-100 : LD   1, 1(5) ;  Load parameter 'm' into R1
-101 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-102 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-103 : MUL  1, 2, 1 ;  R1 = left * right
-104 : ST 1, 1(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='m',line=11), Tree Node('INTEGER-LITERAL', value='2',line=11)],line=11) into callee frame
-105 : LD   1, 2(5) ;  Load parameter 'n' into R1
-106 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-107 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-108 : DIV  1, 2, 1 ;  R1 = left / right
-109 : ST 1, 2(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='/', children=[Tree Node('IDENTIFIER', value='n',line=11), Tree Node('INTEGER-LITERAL', value='2',line=11)],line=11) into callee frame
-110 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-111 : ST 1, 3(5) ;  Store argument Tree Node('IDENTIFIER', value='accum',line=11) into callee frame
-112 : LDA 6, 2(7) ;  Compute return address
-113 : ST 6, 0(5) ;  Store return address in callee frame
-114 : LDA 7, 48(0) ;  Call multWithAccum
-115 : LD 1, 4(5) ;  Load callee return value into R1
-116 : LDA 5, -5(5) ;  Restore DMEM pointer to caller frame
-117 : ST   1, 4(5) ;  Store function result into stack frame
-118 : LD   6, 0(5) ;  Load return address
-119 : LDA  7, 0(6) ;  Return to caller
-120 : LD   1, 1(5) ;  Load parameter 'm' into R1
-121 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-122 : LD   1, 1(5) ;  Load parameter 'm' into R1
-123 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-124 : LD   1, 2(5) ;  Load parameter 'n' into R1
-125 : DIV  1, 2, 1 ;  R1 = left / right
-126 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-127 : LD   1, 2(5) ;  Load parameter 'n' into R1
-128 : MUL  1, 2, 1 ;  R1 = left * right
-129 : SUB  1, 2, 1 ;  R1 = left - right
-130 : ST   1, 3(5) ;  Store function result into stack frame
-131 : LD   6, 0(5) ;  Load return address
-132 : LDA  7, 0(6) ;  Return to caller
+16 : ST   6, 0(3) ;  Store return address
+17 : ADD  5, 3, 0 ;  Updated Pointer
+18 : LDA  7, 10(0) ; Call print
+19 : LDC  4, 4)0) ;  Load frame size
+20 : SUB  5, 5, 4 ;  Restore pointer
+21 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mult'
+22 : LD   1, 1(5) ;  Load parameter 'm' into R1
+23 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='m',line=18) into callee frame
+24 : LD   1, 2(5) ;  Load parameter 'n' into R1
+25 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=18) into callee frame
+26 : LDA 6, 2(7) ;  Compute return address
+27 : ST 6, 0(3) ;  Store return address in callee frame
+28 : ADD  5, 3, 0 ;  Update pointer
+29 : LDA 7, 37(0) ;  Call mult
+30 : LD 1, 3(5) ;  Load callee return value into R1
+31 : LDC  4, 4(0) ;  Load frame size
+32 : SUB  5, 5, 4 ;  Restore pointer
+33 : ST 1, 6(0) ;  Store function-call result into caller's return slot
+34 : LD   1, 6(0) ;  Load return value into register 1
+35 : LD  6, 3(0) ;  Load return address for main function into register 6
+36 : LDA  7, 0(6) ;  Jump to return address of main function
+37 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
+38 : LD   1, 1(5) ;  Load parameter 'm' into R1
+39 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='m',line=14) into callee frame
+40 : LD   1, 2(5) ;  Load parameter 'n' into R1
+41 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=14) into callee frame
+42 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+43 : ST 1, 3(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='0',line=14) into callee frame
+44 : LDA 6, 2(7) ;  Compute return address
+45 : ST 6, 0(3) ;  Store return address in callee frame
+46 : ADD  5, 3, 0 ;  Update pointer
+47 : LDA 7, 54(0) ;  Call multWithAccum
+48 : LD 1, 4(5) ;  Load callee return value into R1
+49 : LDC  4, 4(0) ;  Load frame size
+50 : SUB  5, 5, 4 ;  Restore pointer
+51 : ST   1, 3(5) ;  Store function result into stack frame
+52 : LD   6, 0(5) ;  Load return address
+53 : LDA  7, 0(6) ;  Return to caller
+54 : LD   1, 2(5) ;  Load parameter 'n' into R1
+55 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+56 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+57 : SUB  1, 2, 1 ;  left - right for equality check
+58 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+59 : LDC  1, 0(0) ;  false
+60 : LDA  7, 1(7) ;  skip setting true
+61 : LDC  1, 1(0) ;  true
+62 : JEQ  1, 65(0) ;  If condition is false, jump to ELSE
+63 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+64 : LDA  7, 129(0) ;  Skip ELSE block
+65 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'MOD'
+66 : LD   1, 2(5) ;  Load parameter 'n' into R1
+67 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=8) into callee frame
+68 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+69 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=8) into callee frame
+70 : LDA 6, 2(7) ;  Compute return address
+71 : ST 6, 0(3) ;  Store return address in callee frame
+72 : ADD  5, 3, 0 ;  Update pointer
+73 : LDA 7, 132(0) ;  Call MOD
+74 : LD 1, 3(5) ;  Load callee return value into R1
+75 : LDC  4, 5(0) ;  Load frame size
+76 : SUB  5, 5, 4 ;  Restore pointer
+77 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+78 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+79 : SUB  1, 2, 1 ;  left - right for equality check
+80 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+81 : LDC  1, 0(0) ;  false
+82 : LDA  7, 1(7) ;  skip setting true
+83 : LDC  1, 1(0) ;  true
+84 : JEQ  1, 109(0) ;  If condition is false, jump to ELSE
+85 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
+86 : LD   1, 1(5) ;  Load parameter 'm' into R1
+87 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+88 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+89 : MUL  1, 2, 1 ;  R1 = left * right
+90 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='m',line=9), Tree Node('INTEGER-LITERAL', value='2',line=9)],line=9) into callee frame
+91 : LD   1, 2(5) ;  Load parameter 'n' into R1
+92 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+93 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+94 : DIV  1, 2, 1 ;  R1 = left / right
+95 : ST 1, 2(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='/', children=[Tree Node('IDENTIFIER', value='n',line=9), Tree Node('INTEGER-LITERAL', value='2',line=9)],line=9) into callee frame
+96 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+97 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+98 : LD   1, 1(5) ;  Load parameter 'm' into R1
+99 : ADD  1, 2, 1 ;  R1 = left + right
+100 : ST 1, 3(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='accum',line=9), Tree Node('IDENTIFIER', value='m',line=9)],line=9) into callee frame
+101 : LDA 6, 2(7) ;  Compute return address
+102 : ST 6, 0(3) ;  Store return address in callee frame
+103 : ADD  5, 3, 0 ;  Update pointer
+104 : LDA 7, 54(0) ;  Call multWithAccum
+105 : LD 1, 4(5) ;  Load callee return value into R1
+106 : LDC  4, 5(0) ;  Load frame size
+107 : SUB  5, 5, 4 ;  Restore pointer
+108 : LDA  7, 129(0) ;  Skip ELSE block
+109 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
+110 : LD   1, 1(5) ;  Load parameter 'm' into R1
+111 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+112 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+113 : MUL  1, 2, 1 ;  R1 = left * right
+114 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='m',line=11), Tree Node('INTEGER-LITERAL', value='2',line=11)],line=11) into callee frame
+115 : LD   1, 2(5) ;  Load parameter 'n' into R1
+116 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+117 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+118 : DIV  1, 2, 1 ;  R1 = left / right
+119 : ST 1, 2(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='/', children=[Tree Node('IDENTIFIER', value='n',line=11), Tree Node('INTEGER-LITERAL', value='2',line=11)],line=11) into callee frame
+120 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+121 : ST 1, 3(3) ;  Store argument Tree Node('IDENTIFIER', value='accum',line=11) into callee frame
+122 : LDA 6, 2(7) ;  Compute return address
+123 : ST 6, 0(3) ;  Store return address in callee frame
+124 : ADD  5, 3, 0 ;  Update pointer
+125 : LDA 7, 54(0) ;  Call multWithAccum
+126 : LD 1, 4(5) ;  Load callee return value into R1
+127 : LDC  4, 5(0) ;  Load frame size
+128 : SUB  5, 5, 4 ;  Restore pointer
+129 : ST   1, 4(5) ;  Store function result into stack frame
+130 : LD   6, 0(5) ;  Load return address
+131 : LDA  7, 0(6) ;  Return to caller
+132 : LD   1, 1(5) ;  Load parameter 'm' into R1
+133 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+134 : LD   1, 1(5) ;  Load parameter 'm' into R1
+135 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+136 : LD   1, 2(5) ;  Load parameter 'n' into R1
+137 : DIV  1, 2, 1 ;  R1 = left / right
+138 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+139 : LD   1, 2(5) ;  Load parameter 'n' into R1
+140 : MUL  1, 2, 1 ;  R1 = left * right
+141 : SUB  1, 2, 1 ;  R1 = left - right
+142 : ST   1, 3(5) ;  Store function result into stack frame
+143 : LD   6, 0(5) ;  Load return address
+144 : LDA  7, 0(6) ;  Return to caller

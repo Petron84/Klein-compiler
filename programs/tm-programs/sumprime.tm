@@ -7,154 +7,168 @@
 6 : OUT  1, 0, 0 ;  Hardcoded print function
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
-9 : LDA 5, 2(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
+9 : LDA 3, 2(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
 10 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-11 : ST 1, 1(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=30) into callee frame
+11 : ST 1, 1(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=30) into callee frame
 12 : LDC  1, 20(0) ;  Load boolean-literal value into register 1
-13 : ST 1, 2(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='20',line=30) into callee frame
+13 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='20',line=30) into callee frame
 14 : LDA 6, 2(7) ;  Compute return address
-15 : ST 6, 0(5) ;  Store return address in callee frame
-16 : LDA 7, 23(0) ;  Call sumPrimes
-17 : LD 1, 3(5) ;  Load callee return value into R1
-18 : LDA 5, -2(5) ;  Restore DMEM pointer to caller frame
-19 : ST 1, 2(0) ;  Store function-call result into caller's return slot
-20 : LD   1, 2(0) ;  Load return value into register 1
-21 : LD  6, 1(0) ;  Load return address for main function into register 6
-22 : LDA  7, 0(6) ;  Jump to return address of main function
-23 : LD   1, 2(5) ;  Load parameter 'b' into R1
-24 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-25 : LD   1, 1(5) ;  Load parameter 'a' into R1
-26 : SUB  1, 2, 1 ;  left - right for less-than check
-27 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-28 : LDC  1, 0(0) ;  false
-29 : LDA  7, 1(7) ;  skip setting true
-30 : LDC  1, 1(0) ;  true
-31 : JEQ  1, 34(0) ;  If condition is false, jump to ELSE
-32 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-33 : LDA  7, 73(0) ;  Skip ELSE block
-34 : LDA 5, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
-35 : LD   1, 1(5) ;  Load parameter 'a' into R1
-36 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='a',line=24) into callee frame
-37 : LDA 6, 2(7) ;  Compute return address
-38 : ST 6, 0(5) ;  Store return address in callee frame
-39 : LDA 7, 76(0) ;  Call isPrime
-40 : LD 1, 2(5) ;  Load callee return value into R1
-41 : LDA 5, -4(5) ;  Restore DMEM pointer to caller frame
-42 : JEQ  1, 60(0) ;  If condition is false, jump to ELSE
-43 : LD   1, 1(5) ;  Load parameter 'a' into R1
-44 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-45 : LDA 5, 4(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
-46 : LD   1, 1(5) ;  Load parameter 'a' into R1
-47 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-48 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-49 : ADD  1, 2, 1 ;  R1 = left + right
-50 : ST 1, 1(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=25), Tree Node('INTEGER-LITERAL', value='1',line=25)],line=25) into callee frame
-51 : LD   1, 2(5) ;  Load parameter 'b' into R1
-52 : ST 1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='b',line=25) into callee frame
-53 : LDA 6, 2(7) ;  Compute return address
-54 : ST 6, 0(5) ;  Store return address in callee frame
-55 : LDA 7, 23(0) ;  Call sumPrimes
-56 : LD 1, 3(5) ;  Load callee return value into R1
-57 : LDA 5, -4(5) ;  Restore DMEM pointer to caller frame
-58 : ADD  1, 2, 1 ;  R1 = left + right
-59 : LDA  7, 73(0) ;  Skip ELSE block
-60 : LDA 5, 4(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
-61 : LD   1, 1(5) ;  Load parameter 'a' into R1
-62 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-63 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+15 : ST 6, 0(3) ;  Store return address in callee frame
+16 : ADD  5, 3, 0 ;  Update pointer
+17 : LDA 7, 25(0) ;  Call sumPrimes
+18 : LD 1, 3(5) ;  Load callee return value into R1
+19 : LDC  4, 2(0) ;  Load frame size
+20 : SUB  5, 5, 4 ;  Restore pointer
+21 : ST 1, 2(0) ;  Store function-call result into caller's return slot
+22 : LD   1, 2(0) ;  Load return value into register 1
+23 : LD  6, 1(0) ;  Load return address for main function into register 6
+24 : LDA  7, 0(6) ;  Jump to return address of main function
+25 : LD   1, 2(5) ;  Load parameter 'b' into R1
+26 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+27 : LD   1, 1(5) ;  Load parameter 'a' into R1
+28 : SUB  1, 2, 1 ;  left - right for less-than check
+29 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+30 : LDC  1, 0(0) ;  false
+31 : LDA  7, 1(7) ;  skip setting true
+32 : LDC  1, 1(0) ;  true
+33 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
+34 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+35 : LDA  7, 81(0) ;  Skip ELSE block
+36 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
+37 : LD   1, 1(5) ;  Load parameter 'a' into R1
+38 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=24) into callee frame
+39 : LDA 6, 2(7) ;  Compute return address
+40 : ST 6, 0(3) ;  Store return address in callee frame
+41 : ADD  5, 3, 0 ;  Update pointer
+42 : LDA 7, 84(0) ;  Call isPrime
+43 : LD 1, 2(5) ;  Load callee return value into R1
+44 : LDC  4, 4(0) ;  Load frame size
+45 : SUB  5, 5, 4 ;  Restore pointer
+46 : JEQ  1, 66(0) ;  If condition is false, jump to ELSE
+47 : LD   1, 1(5) ;  Load parameter 'a' into R1
+48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+49 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
+50 : LD   1, 1(5) ;  Load parameter 'a' into R1
+51 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+52 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+53 : ADD  1, 2, 1 ;  R1 = left + right
+54 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=25), Tree Node('INTEGER-LITERAL', value='1',line=25)],line=25) into callee frame
+55 : LD   1, 2(5) ;  Load parameter 'b' into R1
+56 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=25) into callee frame
+57 : LDA 6, 2(7) ;  Compute return address
+58 : ST 6, 0(3) ;  Store return address in callee frame
+59 : ADD  5, 3, 0 ;  Update pointer
+60 : LDA 7, 25(0) ;  Call sumPrimes
+61 : LD 1, 3(5) ;  Load callee return value into R1
+62 : LDC  4, 4(0) ;  Load frame size
+63 : SUB  5, 5, 4 ;  Restore pointer
 64 : ADD  1, 2, 1 ;  R1 = left + right
-65 : ST 1, 1(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=27), Tree Node('INTEGER-LITERAL', value='1',line=27)],line=27) into callee frame
-66 : LD   1, 2(5) ;  Load parameter 'b' into R1
-67 : ST 1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='b',line=27) into callee frame
-68 : LDA 6, 2(7) ;  Compute return address
-69 : ST 6, 0(5) ;  Store return address in callee frame
-70 : LDA 7, 23(0) ;  Call sumPrimes
-71 : LD 1, 3(5) ;  Load callee return value into R1
-72 : LDA 5, -4(5) ;  Restore DMEM pointer to caller frame
-73 : ST   1, 3(5) ;  Store function result into stack frame
-74 : LD   6, 0(5) ;  Load return address
-75 : LDA  7, 0(6) ;  Return to caller
-76 : LD   1, 1(5) ;  Load parameter 'n' into R1
-77 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-78 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-79 : SUB  1, 2, 1 ;  left - right for less-than check
-80 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-81 : LDC  1, 0(0) ;  false
-82 : LDA  7, 1(7) ;  skip setting true
-83 : LDC  1, 1(0) ;  true
-84 : JEQ  1, 87(0) ;  If condition is false, jump to ELSE
-85 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-86 : LDA  7, 136(0) ;  Skip ELSE block
-87 : LD   1, 1(5) ;  Load parameter 'n' into R1
-88 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-89 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-90 : SUB  1, 2, 1 ;  left - right for equality check
-91 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-92 : LDC  1, 0(0) ;  false
-93 : LDA  7, 1(7) ;  skip setting true
-94 : LDC  1, 1(0) ;  true
-95 : JEQ  1, 98(0) ;  If condition is false, jump to ELSE
-96 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-97 : LDA  7, 136(0) ;  Skip ELSE block
-98 : LDA 5, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
-99 : LD   1, 1(5) ;  Load parameter 'n' into R1
-100 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
-101 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-102 : ST 1, 2(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=15) into callee frame
-103 : LDA 6, 2(7) ;  Compute return address
-104 : ST 6, 0(5) ;  Store return address in callee frame
-105 : LDA 7, 139(0) ;  Call divisible
-106 : LD 1, 3(5) ;  Load callee return value into R1
-107 : LDA 5, -3(5) ;  Restore DMEM pointer to caller frame
-108 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-109 : LDA 5, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
-110 : LD   1, 1(5) ;  Load parameter 'n' into R1
-111 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
-112 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
-113 : ST 1, 2(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='3',line=15) into callee frame
-114 : LDA 6, 2(7) ;  Compute return address
-115 : ST 6, 0(5) ;  Store return address in callee frame
-116 : LDA 7, 139(0) ;  Call divisible
-117 : LD 1, 3(5) ;  Load callee return value into R1
-118 : LDA 5, -3(5) ;  Restore DMEM pointer to caller frame
-119 : ADD  1, 2, 1 ;  R1 = left OR right
-120 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-121 : LDA 5, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
-122 : LD   1, 1(5) ;  Load parameter 'n' into R1
-123 : ST 1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
-124 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
-125 : ST 1, 2(5) ;  Store argument Tree Node('INTEGER-LITERAL', value='5',line=15) into callee frame
-126 : LDA 6, 2(7) ;  Compute return address
-127 : ST 6, 0(5) ;  Store return address in callee frame
-128 : LDA 7, 139(0) ;  Call divisible
-129 : LD 1, 3(5) ;  Load callee return value into R1
-130 : LDA 5, -3(5) ;  Restore DMEM pointer to caller frame
+65 : LDA  7, 81(0) ;  Skip ELSE block
+66 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
+67 : LD   1, 1(5) ;  Load parameter 'a' into R1
+68 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+69 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+70 : ADD  1, 2, 1 ;  R1 = left + right
+71 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=27), Tree Node('INTEGER-LITERAL', value='1',line=27)],line=27) into callee frame
+72 : LD   1, 2(5) ;  Load parameter 'b' into R1
+73 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=27) into callee frame
+74 : LDA 6, 2(7) ;  Compute return address
+75 : ST 6, 0(3) ;  Store return address in callee frame
+76 : ADD  5, 3, 0 ;  Update pointer
+77 : LDA 7, 25(0) ;  Call sumPrimes
+78 : LD 1, 3(5) ;  Load callee return value into R1
+79 : LDC  4, 4(0) ;  Load frame size
+80 : SUB  5, 5, 4 ;  Restore pointer
+81 : ST   1, 3(5) ;  Store function result into stack frame
+82 : LD   6, 0(5) ;  Load return address
+83 : LDA  7, 0(6) ;  Return to caller
+84 : LD   1, 1(5) ;  Load parameter 'n' into R1
+85 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+86 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+87 : SUB  1, 2, 1 ;  left - right for less-than check
+88 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+89 : LDC  1, 0(0) ;  false
+90 : LDA  7, 1(7) ;  skip setting true
+91 : LDC  1, 1(0) ;  true
+92 : JEQ  1, 95(0) ;  If condition is false, jump to ELSE
+93 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+94 : LDA  7, 150(0) ;  Skip ELSE block
+95 : LD   1, 1(5) ;  Load parameter 'n' into R1
+96 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+97 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+98 : SUB  1, 2, 1 ;  left - right for equality check
+99 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+100 : LDC  1, 0(0) ;  false
+101 : LDA  7, 1(7) ;  skip setting true
+102 : LDC  1, 1(0) ;  true
+103 : JEQ  1, 106(0) ;  If condition is false, jump to ELSE
+104 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+105 : LDA  7, 150(0) ;  Skip ELSE block
+106 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+107 : LD   1, 1(5) ;  Load parameter 'n' into R1
+108 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
+109 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+110 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=15) into callee frame
+111 : LDA 6, 2(7) ;  Compute return address
+112 : ST 6, 0(3) ;  Store return address in callee frame
+113 : ADD  5, 3, 0 ;  Update pointer
+114 : LDA 7, 153(0) ;  Call divisible
+115 : LD 1, 3(5) ;  Load callee return value into R1
+116 : LDC  4, 3(0) ;  Load frame size
+117 : SUB  5, 5, 4 ;  Restore pointer
+118 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+119 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+120 : LD   1, 1(5) ;  Load parameter 'n' into R1
+121 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
+122 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
+123 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='3',line=15) into callee frame
+124 : LDA 6, 2(7) ;  Compute return address
+125 : ST 6, 0(3) ;  Store return address in callee frame
+126 : ADD  5, 3, 0 ;  Update pointer
+127 : LDA 7, 153(0) ;  Call divisible
+128 : LD 1, 3(5) ;  Load callee return value into R1
+129 : LDC  4, 3(0) ;  Load frame size
+130 : SUB  5, 5, 4 ;  Restore pointer
 131 : ADD  1, 2, 1 ;  R1 = left OR right
-132 : JEQ  1, 135(0) ;  If condition is false, jump to ELSE
-133 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-134 : LDA  7, 136(0) ;  Skip ELSE block
-135 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-136 : ST   1, 2(5) ;  Store function result into stack frame
-137 : LD   6, 0(5) ;  Load return address
-138 : LDA  7, 0(6) ;  Return to caller
-139 : LD   1, 1(5) ;  Load parameter 'x' into R1
-140 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-141 : LD   1, 2(5) ;  Load parameter 'y' into R1
-142 : DIV  1, 2, 1 ;  R1 = left / right
-143 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-144 : LD   1, 2(5) ;  Load parameter 'y' into R1
-145 : MUL  1, 2, 1 ;  R1 = left * right
-146 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-147 : LD   1, 1(5) ;  Load parameter 'x' into R1
-148 : SUB  1, 2, 1 ;  left - right for equality check
-149 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-150 : LDC  1, 0(0) ;  false
-151 : LDA  7, 1(7) ;  skip setting true
-152 : LDC  1, 1(0) ;  true
-153 : JEQ  1, 156(0) ;  If condition is false, jump to ELSE
-154 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-155 : LDA  7, 157(0) ;  Skip ELSE block
-156 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-157 : ST   1, 3(5) ;  Store function result into stack frame
-158 : LD   6, 0(5) ;  Load return address
-159 : LDA  7, 0(6) ;  Return to caller
+132 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+133 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+134 : LD   1, 1(5) ;  Load parameter 'n' into R1
+135 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
+136 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
+137 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='5',line=15) into callee frame
+138 : LDA 6, 2(7) ;  Compute return address
+139 : ST 6, 0(3) ;  Store return address in callee frame
+140 : ADD  5, 3, 0 ;  Update pointer
+141 : LDA 7, 153(0) ;  Call divisible
+142 : LD 1, 3(5) ;  Load callee return value into R1
+143 : LDC  4, 3(0) ;  Load frame size
+144 : SUB  5, 5, 4 ;  Restore pointer
+145 : ADD  1, 2, 1 ;  R1 = left OR right
+146 : JEQ  1, 149(0) ;  If condition is false, jump to ELSE
+147 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+148 : LDA  7, 150(0) ;  Skip ELSE block
+149 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+150 : ST   1, 2(5) ;  Store function result into stack frame
+151 : LD   6, 0(5) ;  Load return address
+152 : LDA  7, 0(6) ;  Return to caller
+153 : LD   1, 1(5) ;  Load parameter 'x' into R1
+154 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+155 : LD   1, 2(5) ;  Load parameter 'y' into R1
+156 : DIV  1, 2, 1 ;  R1 = left / right
+157 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+158 : LD   1, 2(5) ;  Load parameter 'y' into R1
+159 : MUL  1, 2, 1 ;  R1 = left * right
+160 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+161 : LD   1, 1(5) ;  Load parameter 'x' into R1
+162 : SUB  1, 2, 1 ;  left - right for equality check
+163 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+164 : LDC  1, 0(0) ;  false
+165 : LDA  7, 1(7) ;  skip setting true
+166 : LDC  1, 1(0) ;  true
+167 : JEQ  1, 170(0) ;  If condition is false, jump to ELSE
+168 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+169 : LDA  7, 171(0) ;  Skip ELSE block
+170 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+171 : ST   1, 3(5) ;  Store function result into stack frame
+172 : LD   6, 0(5) ;  Load return address
+173 : LDA  7, 0(6) ;  Return to caller
