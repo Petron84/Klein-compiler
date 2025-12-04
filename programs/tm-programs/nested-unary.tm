@@ -1,22 +1,22 @@
-0 : LDC  3, 1(0)
-1 : LD   1, 0(3)
-2 : ST   0, 0(3)
-3 : ST   1, 0(5)
-4 : LDC  4, 2(0)
-5 : SUB  5, 5, 4
-6 : LDA  7, 10(0)
-7 :  OUT  1, 0, 0
-8 :  LD   6, 0(5)
-9 :  LDA  7, 0(6)
-10 : LDC   3, 1022(0)
-11 : LD  1, 0(3)
-12 : SUB  1, 0, 1
-13 : SUB  1, 0, 1
-14 : SUB  1, 0, 1
-15 : LDC  5, 1021(0)
-16 : ST   1, 0(5)
-17 : LDC  5, 1021(0)
-18 : ST   1, 0(5)
-19 : LD   1, 0(5)
-20 : OUT  1, 0, 0
-21 : HALT 0, 0, 0
+0 : LDC  3, 1(0) ;  Load target memory location for command line argument {index}
+1 : LD   1, 0(3) ;  Load command line argument 1 into register 1
+2 : ST   0, 0(3) ;  Replace DMEM[1] with 0
+3 : ST   1, 0(5) ;  Store command line argument into MAIN stack frame
+4 : LDC  4, 2(0) ;  Load value 2 in temp register 4
+5 : SUB  5, 5, 4 ;  Decrement memory offset
+6 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function
+7 :  OUT  1, 0, 0 ;  Hardcoded print function
+8 :  LD   6, 0(5) ;  Load return addess from previous function call/stack frame.
+9 :  LDA  7, 0(6) ;  Load address of previous function call into register 7.
+10 : LDC   3, 1022(0) ;  Load offset for parameter n into register 3
+11 : LD  1, 0(3) ;  Load parameter n value into register 1
+12 : SUB  1, 0, 1 ;  Switch sign of value
+13 : SUB  1, 0, 1 ;  Switch sign of value
+14 : SUB  1, 0, 1 ;  Switch sign of value
+15 : LDC  5, 1021(0) ;  Store the memory location of main return value
+16 : ST   1, 0(5) ;  Store return value of into DMEM
+17 : LDC  5, 1021(0) ;  Store the memory location of main return value
+18 : ST   1, 0(5) ;  Store return value of into DMEM
+19 : LD   1, 0(5) ;  Load Return Value from DMEM
+20 : OUT  1, 0, 0 ;  Output value from register 1.
+21 : HALT 0, 0, 0 ;  Terminate program execution.

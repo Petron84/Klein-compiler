@@ -1,243 +1,243 @@
-0 : LDC  3, 1(0)
-1 : LD   1, 0(3)
-2 : ST   0, 0(3)
-3 : ST   1, 0(5)
-4 : LDC  4, 2(0)
-5 : SUB  5, 5, 4
-6 : LDA  7, 10(0)
-7 :  OUT  1, 0, 0
-8 :  LD   6, 0(5)
-9 :  LDA  7, 0(6)
-10 : LDA  6, 30(0)
-11 : ST   6, 0(5)
-12 : LDC  4, 1(0)
-13 : SUB  5, 5, 4
-14 : LDC   3, 1022(0)
-15 : LD  1, 0(3)
-16 : ST   1, 0(5)
-17 : LDC  4, 1(0)
-18 : SUB  5, 5, 4
-19 : LDC  1, 0(0)
-20 : ST   1, 0(5)
-21 : LDC  4, 1(0)
-22 : SUB  5, 5, 4
-23 : LDC  1, 0(0)
-24 : ST   1, 0(5)
-25 : LDC  4, 1(0)
-26 : SUB  5, 5, 4
-27 : LDC  4, 1(0)
-28 : SUB  5, 5, 4
-29 : LDA  7, 119(0)
-30 : LD   1, 0(5)
-31 : LDC  4, 5(0)
-32 : ADD  5, 5, 4
-33 : LDC  5, 1021(0)
-34 : ST   1, 0(5)
-35 : LDC   3, 1020(0)
-36 : LD  1, 0(3)
-37 : LDC  4, 1(0)
-38 : SUB  5, 5, 4
-39 : ST   1, 0(5)
-40 : LDC   3, 1020(0)
-41 : LD  1, 0(3)
-42 : LDC  4, 1(0)
-43 : SUB  5, 5, 4
-44 : ST   1, 0(5)
-45 : LDC   3, 1019(0)
-46 : LD  1, 0(3)
-47 : LD   2, 0(5)
-48 : ADD  5, 5, 4
-49 : DIV  1, 2, 1
-50 : LDC  4, 1(0)
-51 : SUB  5, 5, 4
-52 : ST   1, 0(5)
-53 : LDC   3, 1019(0)
-54 : LD  1, 0(3)
-55 : LD   2, 0(5)
-56 : ADD  5, 5, 4
-57 : MUL  1, 2, 1
-58 : LD   2, 0(5)
-59 : ADD  5, 5, 4
-60 : SUB  1, 2, 1
-61 : LDC  5, 1018(0)
-62 : ST   1, 0(5)
-63 : LDC  3, 1021(0)
-64 : LD   6, 0(3)
-65 : LDA  7, 0(6)
-66 : LDA  6, 79(0)
-67 : ST   6, 0(5)
-68 : LDC   3, 1020(0)
-69 : LD  1, 0(3)
-70 : LDC  4, 1(0)
-71 : SUB  5, 5, 4
-72 : ST   1, 0(5)
-73 : LDC   3, 1019(0)
-74 : LD  1, 0(3)
-75 : LD   2, 0(5)
-76 : ADD  5, 5, 4
-77 : DIV  1, 2, 1
-78 : LDA  7, 7(0)
-79 : LDC  5, 1018(0)
-80 : ST   1, 0(5)
-81 : LDC  3, 1021(0)
-82 : LD   6, 0(3)
-83 : LDA  7, 0(6)
-84 : LDA  6, 107(0)
-85 : ST   6, 0(5)
-86 : LDA  6, 103(0)
-87 : ST   6, 0(5)
-88 : LDC  4, 1(0)
-89 : SUB  5, 5, 4
-90 : LDC   3, 1020(0)
-91 : LD  1, 0(3)
-92 : ST   1, 0(5)
-93 : LDC  4, 1(0)
-94 : SUB  5, 5, 4
-95 : LDC   3, 1019(0)
-96 : LD  1, 0(3)
-97 : ST   1, 0(5)
-98 : LDC  4, 1(0)
-99 : SUB  5, 5, 4
-100 : LDC  4, 1(0)
-101 : SUB  5, 5, 4
-102 : LDA  7, 35(0)
-103 : LD   1, 0(5)
-104 : LDC  4, 4(0)
-105 : ADD  5, 5, 4
-106 : LDA  7, 7(0)
-107 : LDC  5, 1018(0)
-108 : ST   1, 0(5)
-109 : LDC  3, 1021(0)
-110 : LD   6, 0(3)
-111 : LDA  7, 0(6)
-112 : LDC   3, 1019(0)
-113 : LD  1, 0(3)
-114 : LDC  5, 1018(0)
-115 : ST   1, 0(5)
-116 : LDC  3, 1021(0)
-117 : LD   6, 0(3)
-118 : LDA  7, 0(6)
-119 : LDC   3, 1020(0)
-120 : LD  1, 0(3)
-121 : LDC  4, 1(0)
-122 : SUB  5, 5, 4
-123 : ST   1, 0(5)
-124 : LDC  1, 10(0)
-125 : LD   2, 0(5)
-126 : ADD  5, 5, 4
-127 : SUB  1, 2, 1
-128 : JLT  1, 2(7)
-129 : LDC  1, 0(0)
-130 : LDA  7, 1(7)
-131 : LDC  1, 1(0)
-132 : JEQ  1, 169(0)
-133 : LDA  6, 165(0)
-134 : ST   6, 0(5)
-135 : LDC  4, 1(0)
-136 : SUB  5, 5, 4
-137 : LDC   3, 1019(0)
-138 : LD  1, 0(3)
-139 : LDC  4, 1(0)
-140 : SUB  5, 5, 4
-141 : ST   1, 0(5)
-142 : LDC   3, 1020(0)
-143 : LD  1, 0(3)
-144 : LD   2, 0(5)
-145 : ADD  5, 5, 4
-146 : ADD  1, 2, 1
-147 : ST   1, 0(5)
-148 : LDC  4, 1(0)
-149 : SUB  5, 5, 4
-150 : LDC   3, 1018(0)
-151 : LD  1, 0(3)
-152 : LDC  4, 1(0)
-153 : SUB  5, 5, 4
-154 : ST   1, 0(5)
-155 : LDC  1, 1(0)
-156 : LD   2, 0(5)
-157 : ADD  5, 5, 4
-158 : ADD  1, 2, 1
-159 : ST   1, 0(5)
-160 : LDC  4, 1(0)
-161 : SUB  5, 5, 4
-162 : LDC  4, 1(0)
-163 : SUB  5, 5, 4
-164 : LDA  7, 66(0)
-165 : LD   1, 0(5)
-166 : LDC  4, 4(0)
-167 : ADD  5, 5, 4
-168 : LDA  7, 233(0)
-169 : LDA  6, 230(0)
-170 : ST   6, 0(5)
-171 : LDC  4, 1(0)
-172 : SUB  5, 5, 4
-173 : LDC   3, 1020(0)
-174 : LD  1, 0(3)
-175 : LDC  4, 1(0)
-176 : SUB  5, 5, 4
-177 : ST   1, 0(5)
-178 : LDC  1, 10(0)
-179 : LD   2, 0(5)
-180 : ADD  5, 5, 4
-181 : DIV  1, 2, 1
-182 : ST   1, 0(5)
-183 : LDC  4, 1(0)
-184 : SUB  5, 5, 4
-185 : LDC   3, 1019(0)
-186 : LD  1, 0(3)
-187 : LDC  4, 1(0)
-188 : SUB  5, 5, 4
-189 : ST   1, 0(5)
-190 : LDA  6, 206(0)
-191 : ST   6, 0(5)
-192 : LDC  4, 1(0)
-193 : SUB  5, 5, 4
-194 : LDC   3, 1020(0)
-195 : LD  1, 0(3)
-196 : ST   1, 0(5)
-197 : LDC  4, 1(0)
-198 : SUB  5, 5, 4
-199 : LDC  1, 10(0)
-200 : ST   1, 0(5)
-201 : LDC  4, 1(0)
-202 : SUB  5, 5, 4
-203 : LDC  4, 1(0)
-204 : SUB  5, 5, 4
-205 : LDA  7, 35(0)
-206 : LD   1, 0(5)
-207 : LDC  4, 4(0)
-208 : ADD  5, 5, 4
-209 : LD   2, 0(5)
-210 : ADD  5, 5, 4
-211 : ADD  1, 2, 1
-212 : ST   1, 0(5)
-213 : LDC  4, 1(0)
-214 : SUB  5, 5, 4
-215 : LDC   3, 1018(0)
-216 : LD  1, 0(3)
-217 : LDC  4, 1(0)
-218 : SUB  5, 5, 4
-219 : ST   1, 0(5)
-220 : LDC  1, 1(0)
-221 : LD   2, 0(5)
-222 : ADD  5, 5, 4
-223 : ADD  1, 2, 1
-224 : ST   1, 0(5)
-225 : LDC  4, 1(0)
-226 : SUB  5, 5, 4
-227 : LDC  4, 1(0)
-228 : SUB  5, 5, 4
-229 : LDA  7, 119(0)
-230 : LD   1, 0(5)
-231 : LDC  4, 5(0)
-232 : ADD  5, 5, 4
-233 : LDC  5, 1017(0)
-234 : ST   1, 0(5)
-235 : LDC  3, 1021(0)
-236 : LD   6, 0(3)
-237 : LDA  7, 0(6)
-238 : LDC  5, 1021(0)
-239 : ST   1, 0(5)
-240 : LD   1, 0(5)
-241 : OUT  1, 0, 0
-242 : HALT 0, 0, 0
+0 : LDC  3, 1(0) ;  Load target memory location for command line argument {index}
+1 : LD   1, 0(3) ;  Load command line argument 1 into register 1
+2 : ST   0, 0(3) ;  Replace DMEM[1] with 0
+3 : ST   1, 0(5) ;  Store command line argument into MAIN stack frame
+4 : LDC  4, 2(0) ;  Load value 2 in temp register 4
+5 : SUB  5, 5, 4 ;  Decrement memory offset
+6 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function
+7 :  OUT  1, 0, 0 ;  Hardcoded print function
+8 :  LD   6, 0(5) ;  Load return addess from previous function call/stack frame.
+9 :  LDA  7, 0(6) ;  Load address of previous function call into register 7.
+10 : LDA  6, 30(0) ;  Load return address into R6
+11 : ST   6, 0(5) ;  Store current return address into DMEM
+12 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+13 : SUB  5, 5, 4 ;  Decrement memory offset
+14 : LDC   3, 1022(0) ;  Load offset for parameter n into register 3
+15 : LD  1, 0(3) ;  Load parameter n value into register 1
+16 : ST   1, 0(5) ;  Store parameter into memory
+17 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+18 : SUB  5, 5, 4 ;  Decrement memory offset
+19 : LDC  1, 0(0) ;  Load integer-literal value into register 1
+20 : ST   1, 0(5) ;  Store parameter into memory
+21 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+22 : SUB  5, 5, 4 ;  Decrement memory offset
+23 : LDC  1, 0(0) ;  Load integer-literal value into register 1
+24 : ST   1, 0(5) ;  Store parameter into memory
+25 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+26 : SUB  5, 5, 4 ;  Decrement memory offset
+27 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+28 : SUB  5, 5, 4 ;  Decrement memory offset
+29 : LDA  7, 119(0) ;  Load address of average_digit IMEM block - branch to function
+30 : LD   1, 0(5) ;  Load return value from DMEM into register 1
+31 : LDC  4, 5(0) ;  Load value of parameters + return value into temporary register 4
+32 : ADD  5, 5, 4 ;  Increment memory offset
+33 : LDC  5, 1021(0) ;  Store the memory location of main return value
+34 : ST   1, 0(5) ;  Store return value of into DMEM
+35 : LDC   3, 1020(0) ;  Load offset for parameter m into register 3
+36 : LD  1, 0(3) ;  Load parameter m value into register 1
+37 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+38 : SUB  5, 5, 4 ;  Decrement memory offset
+39 : ST   1, 0(5) ;  Store left expression value into memory
+40 : LDC   3, 1020(0) ;  Load offset for parameter m into register 3
+41 : LD  1, 0(3) ;  Load parameter m value into register 1
+42 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+43 : SUB  5, 5, 4 ;  Decrement memory offset
+44 : ST   1, 0(5) ;  Store left expression value into memory
+45 : LDC   3, 1019(0) ;  Load offset for parameter n into register 3
+46 : LD  1, 0(3) ;  Load parameter n value into register 1
+47 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+48 : ADD  5, 5, 4 ;  Increment memory offset
+49 : DIV  1, 2, 1 ;  Divide left expression by right expression value
+50 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+51 : SUB  5, 5, 4 ;  Decrement memory offset
+52 : ST   1, 0(5) ;  Store left expression value into memory
+53 : LDC   3, 1019(0) ;  Load offset for parameter n into register 3
+54 : LD  1, 0(3) ;  Load parameter n value into register 1
+55 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+56 : ADD  5, 5, 4 ;  Increment memory offset
+57 : MUL  1, 2, 1 ;  Multiply left and right expression values
+58 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+59 : ADD  5, 5, 4 ;  Increment memory offset
+60 : SUB  1, 2, 1 ;  Subtract left expression from right expression value
+61 : LDC  5, 1018(0) ;  Store the memory location of MOD return value
+62 : ST   1, 0(5) ;  Store return value of into DMEM
+63 : LDC  3, 1021(0) ;  Load return address for function MOD into register 3
+64 : LD   6, 0(3) ;  Load return address into register 6
+65 : LDA  7, 0(6) ;  Load return address back into register 7
+66 : LDA  6, 79(0) ;  Load return address into R6
+67 : ST   6, 0(5) ;  Store current return address into DMEM
+68 : LDC   3, 1020(0) ;  Load offset for parameter sum into register 3
+69 : LD  1, 0(3) ;  Load parameter sum value into register 1
+70 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+71 : SUB  5, 5, 4 ;  Decrement memory offset
+72 : ST   1, 0(5) ;  Store left expression value into memory
+73 : LDC   3, 1019(0) ;  Load offset for parameter n into register 3
+74 : LD  1, 0(3) ;  Load parameter n value into register 1
+75 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+76 : ADD  5, 5, 4 ;  Increment memory offset
+77 : DIV  1, 2, 1 ;  Divide left expression by right expression value
+78 : LDA  7, 7(0) ;  Load address of print IMEM block - branch to function
+79 : LDC  5, 1018(0) ;  Store the memory location of print_and_return return value
+80 : ST   1, 0(5) ;  Store return value of into DMEM
+81 : LDC  3, 1021(0) ;  Load return address for function print_and_return into register 3
+82 : LD   6, 0(3) ;  Load return address into register 6
+83 : LDA  7, 0(6) ;  Load return address back into register 7
+84 : LDA  6, 107(0) ;  Load return address into R6
+85 : ST   6, 0(5) ;  Store current return address into DMEM
+86 : LDA  6, 103(0) ;  Load return address into R6
+87 : ST   6, 0(5) ;  Store current return address into DMEM
+88 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+89 : SUB  5, 5, 4 ;  Decrement memory offset
+90 : LDC   3, 1020(0) ;  Load offset for parameter sum into register 3
+91 : LD  1, 0(3) ;  Load parameter sum value into register 1
+92 : ST   1, 0(5) ;  Store parameter into memory
+93 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+94 : SUB  5, 5, 4 ;  Decrement memory offset
+95 : LDC   3, 1019(0) ;  Load offset for parameter n into register 3
+96 : LD  1, 0(3) ;  Load parameter n value into register 1
+97 : ST   1, 0(5) ;  Store parameter into memory
+98 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+99 : SUB  5, 5, 4 ;  Decrement memory offset
+100 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+101 : SUB  5, 5, 4 ;  Decrement memory offset
+102 : LDA  7, 35(0) ;  Load address of MOD IMEM block - branch to function
+103 : LD   1, 0(5) ;  Load return value from DMEM into register 1
+104 : LDC  4, 4(0) ;  Load value of parameters + return value into temporary register 4
+105 : ADD  5, 5, 4 ;  Increment memory offset
+106 : LDA  7, 7(0) ;  Load address of print IMEM block - branch to function
+107 : LDC  5, 1018(0) ;  Store the memory location of print_and_return return value
+108 : ST   1, 0(5) ;  Store return value of into DMEM
+109 : LDC  3, 1021(0) ;  Load return address for function print_and_return into register 3
+110 : LD   6, 0(3) ;  Load return address into register 6
+111 : LDA  7, 0(6) ;  Load return address back into register 7
+112 : LDC   3, 1019(0) ;  Load offset for parameter n into register 3
+113 : LD  1, 0(3) ;  Load parameter n value into register 1
+114 : LDC  5, 1018(0) ;  Store the memory location of print_and_return return value
+115 : ST   1, 0(5) ;  Store return value of into DMEM
+116 : LDC  3, 1021(0) ;  Load return address for function print_and_return into register 3
+117 : LD   6, 0(3) ;  Load return address into register 6
+118 : LDA  7, 0(6) ;  Load return address back into register 7
+119 : LDC   3, 1020(0) ;  Load offset for parameter n into register 3
+120 : LD  1, 0(3) ;  Load parameter n value into register 1
+121 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+122 : SUB  5, 5, 4 ;  Decrement memory offset
+123 : ST   1, 0(5) ;  Store left expression value into memory
+124 : LDC  1, 10(0) ;  Load integer-literal value into register 1
+125 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+126 : ADD  5, 5, 4 ;  Increment memory offset
+127 : SUB  1, 2, 1 ;  Subtract right expression from left expression value for less-than check
+128 : JLT  1, 2(7) ;  If Register 1 is negative, then jump to true handling
+129 : LDC  1, 0(0) ;  Load false (0) into register 1
+130 : LDA  7, 1(7) ;  Jump to end of less-than handling
+131 : LDC  1, 1(0) ;  Load true (1) into register 1
+132 : JEQ  1, 169(0) ;  If condition is false, skip to ELSE block
+133 : LDA  6, 165(0) ;  Load return address into R6
+134 : ST   6, 0(5) ;  Store current return address into DMEM
+135 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+136 : SUB  5, 5, 4 ;  Decrement memory offset
+137 : LDC   3, 1019(0) ;  Load offset for parameter sum into register 3
+138 : LD  1, 0(3) ;  Load parameter sum value into register 1
+139 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+140 : SUB  5, 5, 4 ;  Decrement memory offset
+141 : ST   1, 0(5) ;  Store left expression value into memory
+142 : LDC   3, 1020(0) ;  Load offset for parameter n into register 3
+143 : LD  1, 0(3) ;  Load parameter n value into register 1
+144 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+145 : ADD  5, 5, 4 ;  Increment memory offset
+146 : ADD  1, 2, 1 ;  Add left and right expression values
+147 : ST   1, 0(5) ;  Store parameter into memory
+148 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+149 : SUB  5, 5, 4 ;  Decrement memory offset
+150 : LDC   3, 1018(0) ;  Load offset for parameter i into register 3
+151 : LD  1, 0(3) ;  Load parameter i value into register 1
+152 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+153 : SUB  5, 5, 4 ;  Decrement memory offset
+154 : ST   1, 0(5) ;  Store left expression value into memory
+155 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+156 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+157 : ADD  5, 5, 4 ;  Increment memory offset
+158 : ADD  1, 2, 1 ;  Add left and right expression values
+159 : ST   1, 0(5) ;  Store parameter into memory
+160 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+161 : SUB  5, 5, 4 ;  Decrement memory offset
+162 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+163 : SUB  5, 5, 4 ;  Decrement memory offset
+164 : LDA  7, 66(0) ;  Load address of print_and_return IMEM block - branch to function
+165 : LD   1, 0(5) ;  Load return value from DMEM into register 1
+166 : LDC  4, 4(0) ;  Load value of parameters + return value into temporary register 4
+167 : ADD  5, 5, 4 ;  Increment memory offset
+168 : LDA  7, 233(0) ;  Skip the ELSE block
+169 : LDA  6, 230(0) ;  Load return address into R6
+170 : ST   6, 0(5) ;  Store current return address into DMEM
+171 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+172 : SUB  5, 5, 4 ;  Decrement memory offset
+173 : LDC   3, 1020(0) ;  Load offset for parameter n into register 3
+174 : LD  1, 0(3) ;  Load parameter n value into register 1
+175 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+176 : SUB  5, 5, 4 ;  Decrement memory offset
+177 : ST   1, 0(5) ;  Store left expression value into memory
+178 : LDC  1, 10(0) ;  Load integer-literal value into register 1
+179 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+180 : ADD  5, 5, 4 ;  Increment memory offset
+181 : DIV  1, 2, 1 ;  Divide left expression by right expression value
+182 : ST   1, 0(5) ;  Store parameter into memory
+183 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+184 : SUB  5, 5, 4 ;  Decrement memory offset
+185 : LDC   3, 1019(0) ;  Load offset for parameter sum into register 3
+186 : LD  1, 0(3) ;  Load parameter sum value into register 1
+187 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+188 : SUB  5, 5, 4 ;  Decrement memory offset
+189 : ST   1, 0(5) ;  Store left expression value into memory
+190 : LDA  6, 206(0) ;  Load return address into R6
+191 : ST   6, 0(5) ;  Store current return address into DMEM
+192 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+193 : SUB  5, 5, 4 ;  Decrement memory offset
+194 : LDC   3, 1020(0) ;  Load offset for parameter n into register 3
+195 : LD  1, 0(3) ;  Load parameter n value into register 1
+196 : ST   1, 0(5) ;  Store parameter into memory
+197 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+198 : SUB  5, 5, 4 ;  Decrement memory offset
+199 : LDC  1, 10(0) ;  Load integer-literal value into register 1
+200 : ST   1, 0(5) ;  Store parameter into memory
+201 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+202 : SUB  5, 5, 4 ;  Decrement memory offset
+203 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+204 : SUB  5, 5, 4 ;  Decrement memory offset
+205 : LDA  7, 35(0) ;  Load address of MOD IMEM block - branch to function
+206 : LD   1, 0(5) ;  Load return value from DMEM into register 1
+207 : LDC  4, 4(0) ;  Load value of parameters + return value into temporary register 4
+208 : ADD  5, 5, 4 ;  Increment memory offset
+209 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+210 : ADD  5, 5, 4 ;  Increment memory offset
+211 : ADD  1, 2, 1 ;  Add left and right expression values
+212 : ST   1, 0(5) ;  Store parameter into memory
+213 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+214 : SUB  5, 5, 4 ;  Decrement memory offset
+215 : LDC   3, 1018(0) ;  Load offset for parameter i into register 3
+216 : LD  1, 0(3) ;  Load parameter i value into register 1
+217 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+218 : SUB  5, 5, 4 ;  Decrement memory offset
+219 : ST   1, 0(5) ;  Store left expression value into memory
+220 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+221 : LD   2, 0(5) ;  Load left expression value from memory into register 2
+222 : ADD  5, 5, 4 ;  Increment memory offset
+223 : ADD  1, 2, 1 ;  Add left and right expression values
+224 : ST   1, 0(5) ;  Store parameter into memory
+225 : LDC  4, 1(0) ;  Load value 1 into temporary register 4
+226 : SUB  5, 5, 4 ;  Decrement memory offset
+227 : LDC  4, 1(0) ;  Load value 1 in temporary register 4
+228 : SUB  5, 5, 4 ;  Decrement memory offset
+229 : LDA  7, 119(0) ;  Load address of average_digit IMEM block - branch to function
+230 : LD   1, 0(5) ;  Load return value from DMEM into register 1
+231 : LDC  4, 5(0) ;  Load value of parameters + return value into temporary register 4
+232 : ADD  5, 5, 4 ;  Increment memory offset
+233 : LDC  5, 1017(0) ;  Store the memory location of average_digit return value
+234 : ST   1, 0(5) ;  Store return value of into DMEM
+235 : LDC  3, 1021(0) ;  Load return address for function average_digit into register 3
+236 : LD   6, 0(3) ;  Load return address into register 6
+237 : LDA  7, 0(6) ;  Load return address back into register 7
+238 : LDC  5, 1021(0) ;  Store the memory location of main return value
+239 : ST   1, 0(5) ;  Store return value of into DMEM
+240 : LD   1, 0(5) ;  Load Return Value from DMEM
+241 : OUT  1, 0, 0 ;  Output value from register 1.
+242 : HALT 0, 0, 0 ;  Terminate program execution.

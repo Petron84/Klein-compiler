@@ -1,25 +1,25 @@
-0 : LDC  3, 1(0)
-1 : LD   1, 0(3)
-2 : ST   0, 0(3)
-3 : ST   1, 0(5)
-4 : LDC  4, 2(0)
-5 : SUB  5, 5, 4
-6 : LDA  7, 10(0)
-7 :  OUT  1, 0, 0
-8 :  LD   6, 0(5)
-9 :  LDA  7, 0(6)
-10 : LDA  6, 15(0)
-11 : ST   6, 0(5)
-12 : LDC   3, 1022(0)
-13 : LD  1, 0(3)
-14 : LDA  7, 7(0)
-15 : LDC  5, 1021(0)
-16 : ST   1, 0(5)
-17 : LDC  1, 1(0)
-18 : LDC  5, 1021(0)
-19 : ST   1, 0(5)
-20 : LDC  5, 1021(0)
-21 : ST   1, 0(5)
-22 : LD   1, 0(5)
-23 : OUT  1, 0, 0
-24 : HALT 0, 0, 0
+0 : LDC  3, 1(0) ;  Load target memory location for command line argument {index}
+1 : LD   1, 0(3) ;  Load command line argument 1 into register 1
+2 : ST   0, 0(3) ;  Replace DMEM[1] with 0
+3 : ST   1, 0(5) ;  Store command line argument into MAIN stack frame
+4 : LDC  4, 2(0) ;  Load value 2 in temp register 4
+5 : SUB  5, 5, 4 ;  Decrement memory offset
+6 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function
+7 :  OUT  1, 0, 0 ;  Hardcoded print function
+8 :  LD   6, 0(5) ;  Load return addess from previous function call/stack frame.
+9 :  LDA  7, 0(6) ;  Load address of previous function call into register 7.
+10 : LDA  6, 15(0) ;  Load return address into R6
+11 : ST   6, 0(5) ;  Store current return address into DMEM
+12 : LDC   3, 1022(0) ;  Load offset for parameter n into register 3
+13 : LD  1, 0(3) ;  Load parameter n value into register 1
+14 : LDA  7, 7(0) ;  Load address of print IMEM block - branch to function
+15 : LDC  5, 1021(0) ;  Store the memory location of main return value
+16 : ST   1, 0(5) ;  Store return value of into DMEM
+17 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+18 : LDC  5, 1021(0) ;  Store the memory location of main return value
+19 : ST   1, 0(5) ;  Store return value of into DMEM
+20 : LDC  5, 1021(0) ;  Store the memory location of main return value
+21 : ST   1, 0(5) ;  Store return value of into DMEM
+22 : LD   1, 0(5) ;  Load Return Value from DMEM
+23 : OUT  1, 0, 0 ;  Output value from register 1.
+24 : HALT 0, 0, 0 ;  Terminate program execution.

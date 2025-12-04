@@ -35,8 +35,8 @@ else:
 				for instruction in imem:
 					if instruction[0] == "-":
 						continue
-					tm_i = instruction.split('|')[0].strip()
-					tm_instructions.append(tm_i)
+					else:
+						tm_instructions.append(instruction)
 
 				tm_name = base_filename + ".tm"
 				root = Path(__file__).resolve().parent
@@ -66,8 +66,8 @@ else:
 				print(instruction)
 				if instruction[0] == "-":
 					continue
-				tm_i = instruction.split('|')[0].strip()
-				tm_instructions.append(tm_i)
+				else:
+					tm_instructions.append(instruction)
 
 			tm_name = base_filename + ".tm"
 			root = Path(__file__).resolve().parent
