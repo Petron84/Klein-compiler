@@ -14,7 +14,7 @@
 13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LDC  1, 40(0) ;  Load boolean-literal value into register 1
 15 : ST 1, 2(3) ;  Store argument 1 into callee frame
-16 : LDA 6, 20(7) ;  Compute return address
+16 : LDA 6, 20(0)) ;  Compute return address
 17 : ST 6, 0(3) ;  Store return address in callee frame
 18 : ADD  5, 3, 0 ;  Update pointer
 19 : LDA 7, 178(0) ;  Call sieveAt
@@ -44,7 +44,7 @@
 43 : ST 1, 1(3) ;  Store argument 0 into callee frame
 44 : LD   1, 2(5) ;  Load parameter 'den' into R1
 45 : ST 1, 2(3) ;  Store argument 1 into callee frame
-46 : LDA 6, 50(7) ;  Compute return address
+46 : LDA 6, 50(0)) ;  Compute return address
 47 : ST 6, 0(3) ;  Store return address in callee frame
 48 : ADD  5, 3, 0 ;  Update pointer
 49 : LDA 7, 27(0) ;  Call rem
@@ -59,7 +59,7 @@
 58 : ST 1, 1(3) ;  Store argument 0 into callee frame
 59 : LD   1, 1(5) ;  Load parameter 'a' into R1
 60 : ST 1, 2(3) ;  Store argument 1 into callee frame
-61 : LDA 6, 65(7) ;  Compute return address
+61 : LDA 6, 65(0)) ;  Compute return address
 62 : ST 6, 0(3) ;  Store return address in callee frame
 63 : ADD  5, 3, 0 ;  Update pointer
 64 : LDA 7, 27(0) ;  Call rem
@@ -90,7 +90,7 @@
 89 : ST 1, 1(3) ;  Store argument 0 into callee frame
 90 : LD   1, 2(5) ;  Load parameter 'n' into R1
 91 : ST 1, 2(3) ;  Store argument 1 into callee frame
-92 : LDA 6, 96(7) ;  Compute return address
+92 : LDA 6, 96(0)) ;  Compute return address
 93 : ST 6, 0(3) ;  Store return address in callee frame
 94 : ADD  5, 3, 0 ;  Update pointer
 95 : LDA 7, 56(0) ;  Call divides
@@ -106,7 +106,7 @@
 105 : ST 1, 1(3) ;  Store argument 0 into callee frame
 106 : LD   1, 2(5) ;  Load parameter 'n' into R1
 107 : ST 1, 2(3) ;  Store argument 1 into callee frame
-108 : LDA 6, 112(7) ;  Compute return address
+108 : LDA 6, 112(0)) ;  Compute return address
 109 : ST 6, 0(3) ;  Store return address in callee frame
 110 : ADD  5, 3, 0 ;  Update pointer
 111 : LDA 7, 78(0) ;  Call hasDivisorFrom
@@ -124,7 +124,7 @@
 123 : ST 1, 1(3) ;  Store argument 0 into callee frame
 124 : LD   1, 1(5) ;  Load parameter 'n' into R1
 125 : ST 1, 2(3) ;  Store argument 1 into callee frame
-126 : LDA 6, 130(7) ;  Compute return address
+126 : LDA 6, 130(0)) ;  Compute return address
 127 : ST 6, 0(3) ;  Store return address in callee frame
 128 : ADD  5, 3, 0 ;  Update pointer
 129 : LDA 7, 78(0) ;  Call hasDivisorFrom
@@ -139,7 +139,7 @@
 138 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 139 : LD   1, 1(5) ;  Load parameter 'current' into R1
 140 : ST 1, 1(3) ;  Store argument 0 into callee frame
-141 : LDA 6, 145(7) ;  Compute return address
+141 : LDA 6, 145(0)) ;  Compute return address
 142 : ST 6, 0(3) ;  Store return address in callee frame
 143 : ADD  5, 3, 0 ;  Update pointer
 144 : LDA 7, 121(0) ;  Call isPrime
@@ -151,7 +151,7 @@
 150 : LDA  7, 152(0) ;  Skip ELSE block
 151 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 152 : LDA  3, 4(5) ;  Update DMEM pointer
-153 : LDA 6, 157(7) ;  Compute return address
+153 : LDA 6, 157(0) ;  Compute return address
 154 : ST   6, 0(3) ;  Store return address
 155 : ADD  5, 3, 0 ;  Updated Pointer
 156 : LDA  7, 8(0) ; Call print
@@ -166,7 +166,7 @@
 165 : ST 1, 1(3) ;  Store argument 0 into callee frame
 166 : LD   1, 2(5) ;  Load parameter 'max' into R1
 167 : ST 1, 2(3) ;  Store argument 1 into callee frame
-168 : LDA 6, 172(7) ;  Compute return address
+168 : LDA 6, 172(0)) ;  Compute return address
 169 : ST 6, 0(3) ;  Store return address in callee frame
 170 : ADD  5, 3, 0 ;  Update pointer
 171 : LDA 7, 178(0) ;  Call sieveAt
@@ -192,7 +192,7 @@
 191 : ST 1, 1(3) ;  Store argument 0 into callee frame
 192 : LD   1, 2(5) ;  Load parameter 'max' into R1
 193 : ST 1, 2(3) ;  Store argument 1 into callee frame
-194 : LDA 6, 198(7) ;  Compute return address
+194 : LDA 6, 198(0)) ;  Compute return address
 195 : ST 6, 0(3) ;  Store return address in callee frame
 196 : ADD  5, 3, 0 ;  Update pointer
 197 : LDA 7, 138(0) ;  Call doSieveAt

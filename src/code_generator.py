@@ -167,7 +167,7 @@ class Generator:
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1
 
-                    self.write(f"LDA 6, {temp_label}(7)", " Compute return address")
+                    self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
 
                     self.write("ST   6, 0(3)", " Store return address")
                     self.write("ADD  5, 3, 0", " Updated Pointer")
@@ -189,7 +189,7 @@ class Generator:
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1
 
-                    self.write(f"LDA 6, {temp_label}(7)", " Compute return address")
+                    self.write(f"LDA 6, {temp_label}(0))", " Compute return address")
                     self.write("ST 6, 0(3)", " Store return address in callee frame")
 
                     self.write("ADD  5, 3, 0", " Update pointer")

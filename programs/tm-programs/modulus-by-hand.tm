@@ -16,7 +16,7 @@
 15 : LD   1, 2(5) ;  Load parameter 'n' into R1
 16 : DIV  1, 2, 1 ;  R1 = left / right
 17 : LDA  3, 4(5) ;  Update DMEM pointer
-18 : LDA 6, 22(7) ;  Compute return address
+18 : LDA 6, 22(0) ;  Compute return address
 19 : ST   6, 0(3) ;  Store return address
 20 : ADD  5, 3, 0 ;  Updated Pointer
 21 : LDA  7, 10(0) ; Call print
@@ -27,7 +27,7 @@
 26 : ST 1, 1(3) ;  Store argument 0 into callee frame
 27 : LD   1, 2(5) ;  Load parameter 'n' into R1
 28 : ST 1, 2(3) ;  Store argument 1 into callee frame
-29 : LDA 6, 33(7) ;  Compute return address
+29 : LDA 6, 33(0)) ;  Compute return address
 30 : ST 6, 0(3) ;  Store return address in callee frame
 31 : ADD  5, 3, 0 ;  Update pointer
 32 : LDA 7, 40(0) ;  Call mod
@@ -57,7 +57,7 @@
 56 : ST 1, 1(3) ;  Store argument 0 into callee frame
 57 : LD   1, 2(5) ;  Load parameter 'n' into R1
 58 : ST 1, 2(3) ;  Store argument 1 into callee frame
-59 : LDA 6, 63(7) ;  Compute return address
+59 : LDA 6, 63(0)) ;  Compute return address
 60 : ST 6, 0(3) ;  Store return address in callee frame
 61 : ADD  5, 3, 0 ;  Update pointer
 62 : LDA 7, 40(0) ;  Call mod

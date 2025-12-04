@@ -28,7 +28,7 @@
 27 : ST 1, 1(3) ;  Store argument 0 into callee frame
 28 : LD   1, 1(5) ;  Load parameter 'm' into R1
 29 : ST 1, 2(3) ;  Store argument 1 into callee frame
-30 : LDA 6, 34(7) ;  Compute return address
+30 : LDA 6, 34(0)) ;  Compute return address
 31 : ST 6, 0(3) ;  Store return address in callee frame
 32 : ADD  5, 3, 0 ;  Update pointer
 33 : LDA 7, 75(0) ;  Call MOD
@@ -62,7 +62,7 @@
 61 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 62 : ADD  1, 2, 1 ;  R1 = left + right
 63 : ST 1, 3(3) ;  Store argument 2 into callee frame
-64 : LDA 6, 68(7) ;  Compute return address
+64 : LDA 6, 68(0)) ;  Compute return address
 65 : ST 6, 0(3) ;  Store return address in callee frame
 66 : ADD  5, 3, 0 ;  Update pointer
 67 : LDA 7, 88(0) ;  Call print_and_continue
@@ -88,7 +88,7 @@
 87 : LDA  7, 0(6) ;  Return to caller
 88 : LD   1, 3(5) ;  Load parameter 'unit' into R1
 89 : LDA  3, 5(5) ;  Update DMEM pointer
-90 : LDA 6, 94(7) ;  Compute return address
+90 : LDA 6, 94(0) ;  Compute return address
 91 : ST   6, 0(3) ;  Store return address
 92 : ADD  5, 3, 0 ;  Updated Pointer
 93 : LDA  7, 10(0) ; Call print
@@ -109,7 +109,7 @@
 108 : LD   1, 3(5) ;  Load parameter 'unit' into R1
 109 : MUL  1, 2, 1 ;  R1 = left * right
 110 : ST 1, 2(3) ;  Store argument 1 into callee frame
-111 : LDA 6, 115(7) ;  Compute return address
+111 : LDA 6, 115(0)) ;  Compute return address
 112 : ST 6, 0(3) ;  Store return address in callee frame
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 13(0) ;  Call main

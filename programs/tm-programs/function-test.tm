@@ -16,7 +16,7 @@
 15 : ST 1, 1(3) ;  Store argument 0 into callee frame
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
 17 : ST 1, 2(3) ;  Store argument 1 into callee frame
-18 : LDA 6, 22(7) ;  Compute return address
+18 : LDA 6, 22(0)) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 29(0) ;  Call eval_and_print
@@ -32,7 +32,7 @@
 31 : LD   1, 2(5) ;  Load parameter 'b' into R1
 32 : MUL  1, 2, 1 ;  R1 = left * right
 33 : LDA  3, 4(5) ;  Update DMEM pointer
-34 : LDA 6, 38(7) ;  Compute return address
+34 : LDA 6, 38(0) ;  Compute return address
 35 : ST   6, 0(3) ;  Store return address
 36 : ADD  5, 3, 0 ;  Updated Pointer
 37 : LDA  7, 10(0) ; Call print

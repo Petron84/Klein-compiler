@@ -25,7 +25,7 @@
 24 : ST 1, 1(3) ;  Store argument 0 into callee frame
 25 : LDC  1, 2047483747(0) ;  Load boolean-literal value into register 1
 26 : ST 1, 2(3) ;  Store argument 1 into callee frame
-27 : LDA 6, 31(7) ;  Compute return address
+27 : LDA 6, 31(0)) ;  Compute return address
 28 : ST 6, 0(3) ;  Store return address in callee frame
 29 : ADD  5, 3, 0 ;  Update pointer
 30 : LDA 7, 146(0) ;  Call factor
@@ -39,7 +39,7 @@
 38 : ST 1, 1(3) ;  Store argument 0 into callee frame
 39 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
 40 : ST 1, 2(3) ;  Store argument 1 into callee frame
-41 : LDA 6, 45(7) ;  Compute return address
+41 : LDA 6, 45(0)) ;  Compute return address
 42 : ST 6, 0(3) ;  Store return address in callee frame
 43 : ADD  5, 3, 0 ;  Update pointer
 44 : LDA 7, 146(0) ;  Call factor
@@ -69,7 +69,7 @@
 68 : ST 1, 1(3) ;  Store argument 0 into callee frame
 69 : LD   1, 2(5) ;  Load parameter 'b' into R1
 70 : ST 1, 2(3) ;  Store argument 1 into callee frame
-71 : LDA 6, 75(7) ;  Compute return address
+71 : LDA 6, 75(0)) ;  Compute return address
 72 : ST 6, 0(3) ;  Store return address in callee frame
 73 : ADD  5, 3, 0 ;  Update pointer
 74 : LDA 7, 52(0) ;  Call remainder
@@ -98,7 +98,7 @@
 97 : ST 1, 1(3) ;  Store argument 0 into callee frame
 98 : LD   1, 2(5) ;  Load parameter 'b' into R1
 99 : ST 1, 2(3) ;  Store argument 1 into callee frame
-100 : LDA 6, 104(7) ;  Compute return address
+100 : LDA 6, 104(0)) ;  Compute return address
 101 : ST 6, 0(3) ;  Store return address in callee frame
 102 : ADD  5, 3, 0 ;  Update pointer
 103 : LDA 7, 52(0) ;  Call remainder
@@ -106,7 +106,7 @@
 105 : LDC  4, 4(0) ;  Load frame size
 106 : SUB  5, 5, 4 ;  Restore pointer
 107 : ST 1, 2(3) ;  Store argument 1 into callee frame
-108 : LDA 6, 112(7) ;  Compute return address
+108 : LDA 6, 112(0)) ;  Compute return address
 109 : ST 6, 0(3) ;  Store return address in callee frame
 110 : ADD  5, 3, 0 ;  Update pointer
 111 : LDA 7, 81(0) ;  Call gcd
@@ -121,7 +121,7 @@
 120 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 121 : DIV  1, 2, 1 ;  R1 = left / right
 122 : LDA  3, 5(5) ;  Update DMEM pointer
-123 : LDA 6, 127(7) ;  Compute return address
+123 : LDA 6, 127(0) ;  Compute return address
 124 : ST   6, 0(3) ;  Store return address
 125 : ADD  5, 3, 0 ;  Updated Pointer
 126 : LDA  7, 10(0) ; Call print
@@ -133,7 +133,7 @@
 132 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 133 : DIV  1, 2, 1 ;  R1 = left / right
 134 : LDA  3, 5(5) ;  Update DMEM pointer
-135 : LDA 6, 139(7) ;  Compute return address
+135 : LDA 6, 139(0) ;  Compute return address
 136 : ST   6, 0(3) ;  Store return address
 137 : ADD  5, 3, 0 ;  Updated Pointer
 138 : LDA  7, 10(0) ; Call print
@@ -154,7 +154,7 @@
 153 : ST 1, 1(3) ;  Store argument 0 into callee frame
 154 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
 155 : ST 1, 2(3) ;  Store argument 1 into callee frame
-156 : LDA 6, 160(7) ;  Compute return address
+156 : LDA 6, 160(0)) ;  Compute return address
 157 : ST 6, 0(3) ;  Store return address in callee frame
 158 : ADD  5, 3, 0 ;  Update pointer
 159 : LDA 7, 81(0) ;  Call gcd
@@ -162,7 +162,7 @@
 161 : LDC  4, 4(0) ;  Load frame size
 162 : SUB  5, 5, 4 ;  Restore pointer
 163 : ST 1, 3(3) ;  Store argument 2 into callee frame
-164 : LDA 6, 168(7) ;  Compute return address
+164 : LDA 6, 168(0)) ;  Compute return address
 165 : ST 6, 0(3) ;  Store return address in callee frame
 166 : ADD  5, 3, 0 ;  Update pointer
 167 : LDA 7, 118(0) ;  Call displayAndPrint

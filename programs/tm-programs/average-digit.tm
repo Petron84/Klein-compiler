@@ -16,7 +16,7 @@
 15 : ST 1, 2(3) ;  Store argument 1 into callee frame
 16 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 17 : ST 1, 3(3) ;  Store argument 2 into callee frame
-18 : LDA 6, 22(7) ;  Compute return address
+18 : LDA 6, 22(0)) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 78(0) ;  Call average_digit
@@ -45,7 +45,7 @@
 44 : LD   1, 2(5) ;  Load parameter 'n' into R1
 45 : DIV  1, 2, 1 ;  R1 = left / right
 46 : LDA  3, 4(5) ;  Update DMEM pointer
-47 : LDA 6, 51(7) ;  Compute return address
+47 : LDA 6, 51(0) ;  Compute return address
 48 : ST   6, 0(3) ;  Store return address
 49 : ADD  5, 3, 0 ;  Updated Pointer
 50 : LDA  7, 8(0) ; Call print
@@ -57,7 +57,7 @@
 56 : ST 1, 1(3) ;  Store argument 0 into callee frame
 57 : LD   1, 2(5) ;  Load parameter 'n' into R1
 58 : ST 1, 2(3) ;  Store argument 1 into callee frame
-59 : LDA 6, 63(7) ;  Compute return address
+59 : LDA 6, 63(0)) ;  Compute return address
 60 : ST 6, 0(3) ;  Store return address in callee frame
 61 : ADD  5, 3, 0 ;  Update pointer
 62 : LDA 7, 29(0) ;  Call MOD
@@ -65,7 +65,7 @@
 64 : LDC  4, 4(0) ;  Load frame size
 65 : SUB  5, 5, 4 ;  Restore pointer
 66 : LDA  3, 4(5) ;  Update DMEM pointer
-67 : LDA 6, 71(7) ;  Compute return address
+67 : LDA 6, 71(0) ;  Compute return address
 68 : ST   6, 0(3) ;  Store return address
 69 : ADD  5, 3, 0 ;  Updated Pointer
 70 : LDA  7, 8(0) ; Call print
@@ -96,7 +96,7 @@
 95 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 96 : ADD  1, 2, 1 ;  R1 = left + right
 97 : ST 1, 2(3) ;  Store argument 1 into callee frame
-98 : LDA 6, 102(7) ;  Compute return address
+98 : LDA 6, 102(0)) ;  Compute return address
 99 : ST 6, 0(3) ;  Store return address in callee frame
 100 : ADD  5, 3, 0 ;  Update pointer
 101 : LDA 7, 42(0) ;  Call print_and_return
@@ -117,7 +117,7 @@
 116 : ST 1, 1(3) ;  Store argument 0 into callee frame
 117 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 118 : ST 1, 2(3) ;  Store argument 1 into callee frame
-119 : LDA 6, 123(7) ;  Compute return address
+119 : LDA 6, 123(0)) ;  Compute return address
 120 : ST 6, 0(3) ;  Store return address in callee frame
 121 : ADD  5, 3, 0 ;  Update pointer
 122 : LDA 7, 29(0) ;  Call MOD
@@ -131,7 +131,7 @@
 130 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 131 : ADD  1, 2, 1 ;  R1 = left + right
 132 : ST 1, 3(3) ;  Store argument 2 into callee frame
-133 : LDA 6, 137(7) ;  Compute return address
+133 : LDA 6, 137(0)) ;  Compute return address
 134 : ST 6, 0(3) ;  Store return address in callee frame
 135 : ADD  5, 3, 0 ;  Update pointer
 136 : LDA 7, 78(0) ;  Call average_digit

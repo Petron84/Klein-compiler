@@ -13,7 +13,7 @@
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'm' into R1
 14 : LDA  3, 4(5) ;  Update DMEM pointer
-15 : LDA 6, 19(7) ;  Compute return address
+15 : LDA 6, 19(0) ;  Compute return address
 16 : ST   6, 0(3) ;  Store return address
 17 : ADD  5, 3, 0 ;  Updated Pointer
 18 : LDA  7, 10(0) ; Call print
@@ -24,7 +24,7 @@
 23 : ST 1, 1(3) ;  Store argument 0 into callee frame
 24 : LD   1, 2(5) ;  Load parameter 'n' into R1
 25 : ST 1, 2(3) ;  Store argument 1 into callee frame
-26 : LDA 6, 30(7) ;  Compute return address
+26 : LDA 6, 30(0)) ;  Compute return address
 27 : ST 6, 0(3) ;  Store return address in callee frame
 28 : ADD  5, 3, 0 ;  Update pointer
 29 : LDA 7, 37(0) ;  Call mult
@@ -42,7 +42,7 @@
 41 : ST 1, 2(3) ;  Store argument 1 into callee frame
 42 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 43 : ST 1, 3(3) ;  Store argument 2 into callee frame
-44 : LDA 6, 48(7) ;  Compute return address
+44 : LDA 6, 48(0)) ;  Compute return address
 45 : ST 6, 0(3) ;  Store return address in callee frame
 46 : ADD  5, 3, 0 ;  Update pointer
 47 : LDA 7, 54(0) ;  Call multWithAccum
@@ -68,7 +68,7 @@
 67 : ST 1, 1(3) ;  Store argument 0 into callee frame
 68 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 69 : ST 1, 2(3) ;  Store argument 1 into callee frame
-70 : LDA 6, 74(7) ;  Compute return address
+70 : LDA 6, 74(0)) ;  Compute return address
 71 : ST 6, 0(3) ;  Store return address in callee frame
 72 : ADD  5, 3, 0 ;  Update pointer
 73 : LDA 7, 132(0) ;  Call MOD
@@ -99,7 +99,7 @@
 98 : LD   1, 1(5) ;  Load parameter 'm' into R1
 99 : ADD  1, 2, 1 ;  R1 = left + right
 100 : ST 1, 3(3) ;  Store argument 2 into callee frame
-101 : LDA 6, 105(7) ;  Compute return address
+101 : LDA 6, 105(0)) ;  Compute return address
 102 : ST 6, 0(3) ;  Store return address in callee frame
 103 : ADD  5, 3, 0 ;  Update pointer
 104 : LDA 7, 54(0) ;  Call multWithAccum
@@ -120,7 +120,7 @@
 119 : ST 1, 2(3) ;  Store argument 1 into callee frame
 120 : LD   1, 3(5) ;  Load parameter 'accum' into R1
 121 : ST 1, 3(3) ;  Store argument 2 into callee frame
-122 : LDA 6, 126(7) ;  Compute return address
+122 : LDA 6, 126(0)) ;  Compute return address
 123 : ST 6, 0(3) ;  Store return address in callee frame
 124 : ADD  5, 3, 0 ;  Update pointer
 125 : LDA 7, 54(0) ;  Call multWithAccum
