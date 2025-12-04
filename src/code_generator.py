@@ -206,7 +206,7 @@ class Generator():
                     self.placeholders[temp_label] = self.line_counter
                     self.write("LD   1, 0(5)", '# Load return value from DMEM into register 1')
 
-                    offset = num_params + 1
+                    offset = num_params + 2
                     self.write(f"LDC  4, {offset}(0)", '# Load value of parameters + return value into temporary register 4')
                     self.write("ADD  5, 5, 4", '# Increment memory offset')
                     self.DMEM += offset
