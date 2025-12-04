@@ -231,8 +231,7 @@ class Generator():
                     if p[0] == exp_value:
                         offset = num_params - i + 1 # +1 to skip return value slot
                         mem_loc = self.stack_frames[curr_function].address + offset
-                        self.write(f"LDC   4, {mem_loc}(0)", f"# Load offset for parameter {exp_value} into register 3")
-                        self.write("ADD  3, 5, 4", f"# Calculate target memory location for parameter {exp_value}")
+                        self.write(f"LDC   3, {mem_loc}(0)", f"# Load offset for parameter {exp_value} into register 3")
                         self.write("LD  1, 0(3)", f"# Load parameter {exp_value} value into register 1")
                         break
 
