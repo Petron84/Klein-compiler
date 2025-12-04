@@ -15,5 +15,5 @@
 14 : SUB  1, 0, 1 ;  Negate value in R1
 15 : ST   1, 4(0) ;  Store unary result into return slot
 16 : LD   1, 4(0) ;  Load return value into register 1
-17 : LD  6, 3(0) ;  Load return address for main function into register 6
+17 : LD  6, 2(0) ;  Load return address for main function into register 6
 18 : LDA  7, 0(6) ;  Jump to return address of main function

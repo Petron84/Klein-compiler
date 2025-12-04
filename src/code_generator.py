@@ -124,7 +124,7 @@ class Generator:
         val_loc = frame.val_loc
 
         self.write(f"LD   1, {val_loc}(0)"," Load return value into register 1")
-        self.write(f"LD  6, {mem_loc + frame.num_params}(0)", f" Load return address for main function into register 6")
+        self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
         self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
         del functions['main']

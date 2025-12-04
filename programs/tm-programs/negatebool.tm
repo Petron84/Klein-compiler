@@ -14,5 +14,5 @@
 13 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
 14 : ST   1, 4(0) ;  Store unary result into return slot
 15 : LD   1, 4(0) ;  Load return value into register 1
-16 : LD  6, 3(0) ;  Load return address for main function into register 6
+16 : LD  6, 2(0) ;  Load return address for main function into register 6
 17 : LDA  7, 0(6) ;  Jump to return address of main function

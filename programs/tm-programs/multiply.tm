@@ -17,5 +17,5 @@
 16 : MUL  1, 2, 1 ;  R1 = left * right
 17 : ST   1, 6(0) ;  Store binary result into return slot
 18 : LD   1, 6(0) ;  Load return value into register 1
-19 : LD  6, 5(0) ;  Load return address for main function into register 6
+19 : LD  6, 3(0) ;  Load return address for main function into register 6
 20 : LDA  7, 0(6) ;  Jump to return address of main function

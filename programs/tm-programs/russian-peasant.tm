@@ -29,5 +29,5 @@
 28 : LDC  5, 3(0) ;  Restore DMEM pointer to caller frame
 29 : ST   1, 6(0) ;  Store function-call result into caller's return slot
 30 : LD   1, 6(0) ;  Load return value into register 1
-31 : LD  6, 5(0) ;  Load return address for main function into register 6
+31 : LD  6, 3(0) ;  Load return address for main function into register 6
 32 : LDA  7, 0(6) ;  Jump to return address of main function

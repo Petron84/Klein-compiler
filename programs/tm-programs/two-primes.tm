@@ -71,5 +71,5 @@
 70 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 71 : ST   1, 6(0) ;  Store value into return value in stack frame
 72 : LD   1, 6(0) ;  Load return value into register 1
-73 : LD  6, 5(0) ;  Load return address for main function into register 6
+73 : LD  6, 3(0) ;  Load return address for main function into register 6
 74 : LDA  7, 0(6) ;  Jump to return address of main function
