@@ -122,9 +122,9 @@ class Generator():
             self.create_frame(self.DMEM,f)
             for exp in body:
                 self.instruction_rules(exp,f)
-                num_params = self.symbol_table[f].parameters[0]
-                return_add = self.stack_frames[f].return_add - (num_params + 1)
-                self.write("ST   1, 0(5)", f"# Store return value of {f} into DMEM")
+                mem_loc = self.stack_frames[f].return_add # Retrieve memory address of return value
+                self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of {f} return value")
+                self.write("ST   1, 0(5)", f"# Store return value of into DMEM")
 
         mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
@@ -183,21 +183,23 @@ class Generator():
                 else:
                     num_params = self.symbol_table[f_name].parameters[0]
                     self.create_frame(self.DMEM,f_name)
-                    call_frame = self.stack_frames[f_name]
-                    self.write(f"LDC  5, {call_frame.address}(0)", f'# Load memory address of {f_name} stack frame into register 5')
-                    self.write("ST   6, 0(5)", '# Store return address into DMEM')
+
+                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                    self.DMEM -= 1
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
 
                     args = exp_children[1].children
                     # Store function arguments
-                    for i,a in enumerate(args):
-                        param_addr = call_frame.return_add - (i + 1)
+                    for a in args:
                         self.instruction_rules(a,curr_function)
-                        self.write(f"LDC  5, {param_addr}(0)", f"# Store the memory location for parameter {i+1} of function {f_name}")
                         self.write("ST   1, 0(5)", "# Store parameter into memory")
+                        self.write("LDC  4, 1(0)", "# Load value 1 into temporary register 4")
+                        self.DMEM -= 1
+                        self.write("SUB  5, 5, 4", "# Decrement memory offset")
 
-                    return_add = call_frame.return_add - (num_params + 1)
-                    self.write(f"LDC  5, {return_add}(0)", f'# Load memory address of return value for {f_name} into register 5')
-                    self.DMEM = return_add
+                    self.write("LDC  4, 1(0)", '# Load value 1 in temporary register 4')
+                    self.write("SUB  5, 5, 4", '# Decrement memory offset')
+                    self.DMEM -= 1
 
                     # Jump to function
                     self.write(f"LDA  7, @{f_name}(0)", f'# Load address of {f_name} IMEM block - branch to function')
