@@ -68,13 +68,14 @@ class Generator:
             main_frame = self.stack_frames[-1]
 
             self.write(f"LDC  5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
-            self.write("LDA  6, 2(7)", " Calculate return address for main function")
-            self.write(f"ST   6, 0(5)", " Store return address in main stack frame")
 
             for i in range(1, num_params + 1):
                 self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
                 self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
 
+            self.write("LDA  6, 2(7)", " Calculate return address")
+            self.write("ST   6, 0(5)", " Store return address in main stack frame")
+            
             self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
 
             self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')

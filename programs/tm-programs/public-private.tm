@@ -1,10 +1,10 @@
 0 : LDC  5, 3(0) ;  Set DMEM pointer to main stack frame
-1 : LDA  6, 2(7) ;  Calculate return address for main function
-2 : ST   6, 0(5) ;  Store return address in main stack frame
-3 : LD   2, 1(0) ;  Load CLI arg 1 into register
-4 : ST   2, 1(5) ;  Store the argument into stack frame
-5 : LD   2, 2(0) ;  Load CLI arg 2 into register
-6 : ST   2, 2(5) ;  Store the argument into stack frame
+1 : LD   2, 1(0) ;  Load CLI arg 1 into register
+2 : ST   2, 1(5) ;  Store the argument into stack frame
+3 : LD   2, 2(0) ;  Load CLI arg 2 into register
+4 : ST   2, 2(5) ;  Store the argument into stack frame
+5 : LDA  6, 2(7) ;  Calculate return address
+6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
 9 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
