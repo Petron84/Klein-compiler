@@ -60,15 +60,9 @@ class Generator():
     def initialize(self):
             self.write("-----INITIALIZE RUNTIME SYSTEM-----", '#',header=True)
             # Space added in front of instructions here to help with aligning all instructions in output.
-            self.write(" LDA  6, 5(7)", '# Start runtime system. Load return address into register 6')
-            self.write(" LD   5, 0(0)", '# Load DMEM[0] (contains the value 1023) into register 5.')
-            self.write(" ST   6, 0(5)", '# Store runtime return address at DMEM[1023].')
             self.create_frame(self.DMEM,'main')
-            self.write(" LDC  4, 1(0)", '# Store value 1 in temporary register 4')
-            self.write(" SUB  5, 5, 4", '# Decrement memory offset')
-            self.DMEM -= 1
-            self.write(" LDA  7, 4(7)", '# Load address of load-arguments into register 7.')
-            self.write(" HALT 0, 0, 0", '# Terminate runtime system.')
+            self.load_cli()
+            self.write("LDA  7, @main(0)", '# Load address of main IMEM block - branch to function')
             self.write("------PRINT------",'#',header=True)
             self.placeholders["@print"] = self.line_counter
             self.write(" OUT  1, 0, 0", '# Hardcoded print function')
@@ -101,8 +95,6 @@ class Generator():
         return f_list
     
     def generate_imem(self,functions):
-        self.write("----LOAD-ARGS----","#",header=True)
-        self.load_cli()
 
         main_body = functions['main']
         self.write("------MAIN-------",'#',header=True)
@@ -135,9 +127,7 @@ class Generator():
         self.write(f"ST   1, 0(5)", f"# Store return value of into DMEM")
         self.write(f"LD   1, 0(5)","# Load Return Value from DMEM")
         self.write("OUT  1, 0, 0", '# Output value from register 1.')
-        self.write('LD   5, 0(0)', '# Reset memory pointer')
-        self.write("LD   6, 0(5)", "# Load root return address into register 6")
-        self.write("LDA  7, 0(6)", "# Load return address back into register 7")
+        self.write("HALT 0, 0, 0", '# Terminate program execution.')
 
     def load_cli(self):
         cli_params = self.symbol_table['main'].parameters
