@@ -4,10 +4,9 @@ import sys
 class StackFrame:
     def __init__(self,name,top,num_params):
         self.name = name # function name
-        self.top = top
+        self.top = top # Top of frame - return address
         self.num_params = num_params
-        self.val_loc = self.top + self.num_params # memory location of return value
-        self.mem_loc = self.val_loc + 1 # memory location of return address
+        self.val_loc = self.top + self.num_params + 1 # memory location of return value
 
 class Generator:
     def __init__(self,tree,table):
@@ -63,16 +62,19 @@ class Generator:
     def initialize(self):
             self.write("-----INITIALIZE RUNTIME SYSTEM-----",header=True)
             self.create_frame('main') # Create stack frame for initial main function call
+            main_frame = self.stack_frames[-1]
             num_params = self.symbol_table['main'].parameters[0]
-            self.write(f"LDA  6, 3(7)", ' Calculate return address for main function')
-            self.write(f"LDC  5, {num_params + 2}(0)", ' Update DMEM pointer')
-            self.write(f"ST   6, 0(5)", ' Store return address for main function in DMEM')
-            self.DMEM = num_params + 3 # Set DMEM pointer to top of first empty stack frame
+            self.write(f"LDC  5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
+            self.write("LDA  6, 2(7)", " Calculate return address for main function")
+            self.write("ST   6, 0(5)", " Store return address in main stack frame")
+            self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
+
             self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
             self.write(f"OUT  1, 0, 0", " Return result")
             self.write("HALT 0, 0, 0", ' Terminate program execution if no main function found.')
             self.write("------PRINT------",header=True)
             self.placeholders["@print"] = self.line_counter
+            self.write("LD   1, 1(5)", " Load return value into register 1")
             self.write("OUT  1, 0, 0", ' Hardcoded print function')
             self.write("LD   6, 0(5)", ' Load return addess from stack frame.')
             self.write("LDA  7, 0(6)",  ' Jump to return address.')
@@ -108,8 +110,9 @@ class Generator:
 
         for exp in main_body:
             self.instruction_rules(exp,"main")
+
         frame = self.stack_frames.pop()
-        mem_loc = frame.mem_loc
+        mem_loc = frame.top
         val_loc = frame.val_loc
 
         self.write(f"LD   1, {val_loc}(0))"," Load return value into register 1")
@@ -123,12 +126,14 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
-    def load_return(self, value):
+    def load_return(self, value, callee=False):
             self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
-            val_loc = self.stack_frames[-1].val_loc
-            self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
 
-    def instruction_rules(self,body,curr_function):
+            if not callee: # Only store as return value if it is a function return
+                val_loc = self.stack_frames[-1].val_loc
+                self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
+
+    def instruction_rules(self,body,curr_function,callee=False):
         exp_type = body.type
         exp_value = body.value
         exp_children = body.children
@@ -141,7 +146,16 @@ class Generator:
                 self.label_id += 1
             
                 if f_name== "print":
-                    self.instruction_rules(exp_children[1],curr_function)
+                    self.create_frame('print')
+                    print_frame = self.stack_frames[-1]
+                    self.write(f"LDC  5, {print_frame.top}(0)", " Update DMEM pointer")
+                    self.instruction_rules(exp_children[1], 'print',callee=True)
+                    self.write("LDA  6, 2(7)"," Compute return address")
+                    self.write("ST   6, 0(5)", " Store return address")
+                    self.write("LDA  7, @print(0)", "Call print")
+                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Push pointer to previous stack frame")
+                    self.DMEM = print_frame.top # Print frame is now gone, so it is the next empty frame
+                    self.stack_frames.pop() # Pop print stack frame
                 else:
                     pass
 
