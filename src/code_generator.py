@@ -1,4 +1,3 @@
-from scanner import KleinError
 import sys
 
 class StackFrame:
@@ -114,7 +113,7 @@ class Generator:
         mem_loc = frame.top
         val_loc = frame.val_loc
 
-        self.write(f"LD   1, {val_loc}(0))"," Load return value into register 1")
+        self.write(f"LD   1, {val_loc}(0)"," Load return value into register 1")
         self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
         self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
@@ -125,13 +124,6 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
-    def load_return(self, value, callee=False):
-            self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
-
-            if not callee: # Only store as return value if it is a function return
-                val_loc = self.stack_frames[-1].val_loc
-                self.write(f"ST   1, {val_loc}(0))"," Store value into return value in stack frame")
-
     def instruction_rules(self,body,curr_function,callee=False):
         exp_type = body.type
         exp_value = body.value
@@ -141,26 +133,51 @@ class Generator:
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
                 # Store location of temporary label that needs to be replaced
-                temp_label = "!temp_" + str(self.label_id)
-                self.label_id += 1
             
                 if f_name== "print":
                     self.create_frame('print')
                     print_frame = self.stack_frames[-1]
+                    self.instruction_rules(exp_children[1], curr_function,callee=True)
                     self.write(f"LDC  5, {print_frame.top}(0)", " Update DMEM pointer")
-                    self.instruction_rules(exp_children[1], 'print',callee=True)
                     self.write("LDA  6, 2(7)"," Compute return address")
                     self.write("ST   6, 0(5)", " Store return address")
                     self.write("LDA  7, @print(0)", "Call print")
-                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Push pointer to previous stack frame")
+                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " zMove pointer to previous stack frame")
                     self.DMEM = print_frame.top # Print frame is now gone, so it is the next empty frame
                     self.stack_frames.pop() # Pop print stack frame
+                    
                 else:
-                    pass
+                    self.create_frame(f_name)
+                    callee_frame = self.stack_frames[-1]
+
+                    args = exp_children[1].children 
+                    for i, arg in enumerate(args):
+                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.write(f"ST   1, {i}(5)", f" Store argument {arg}")
+
+                    self.write(f"LDC  5, {callee_frame.top}(0)", f" Set DMEM pointer to callee frame '{f_name}'")
+                    self.write("LDA  6, 2(7)", " Compute return address")
+                    self.write("ST   6, 0(5)", " Store return address in frame")
+                    self.write(f"LDA  7, @{f_name}(0)", f" Call {f_name}")
+
+                    offset = self.symbol_table[f_name].parameters[0] + 1
+                    self.write(f"LD   1, {offset}(5)", " Load return value into R1")
+
+                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Restore DMEM pointer to caller frame")
+                    self.stack_frames.pop()
+                    self.DMEM = callee_frame.top  # next free frame
+
+                    if not callee:
+                        caller_val_loc = self.stack_frames[-1].val_loc
+                        self.write(f"ST   1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.load_return(value,callee)
+                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+
+                if not callee: # Only store as return value if it is a function return
+                    val_loc = self.stack_frames[-1].val_loc
+                    self.write(f"ST   1, {val_loc}(0)"," Store value into return value in stack frame")
             
             case "BOOLEAN-LITERAL":
                 value = body.value
@@ -168,92 +185,97 @@ class Generator:
                     value = 1
                 else:
                     value = 0
-                self.load_return(value,callee)
+                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+
+                if not callee: # Only store as return value if it is a function return
+                    val_loc = self.stack_frames[-1].val_loc
+                    self.write(f"ST   1, {val_loc}(0)"," Store value into return value in stack frame")
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
-                num_params=  params[0]
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = num_params - i
-                        mem_loc = self.stack_frames[curr_function].address + offset
-                        self.write(f"LDC   3, {mem_loc}(0)", f" Load offset for parameter {exp_value} into register 3")
-                        self.write("LD  1, 0(3)", f" Load parameter {exp_value} value into register 1")
+                        offset = i + 1
+                        self.write(f"LD   1, {offset}(5)", f" Load parameter '{exp_value}' into R1")
                         break
+
+                if not callee:
+                    val_loc = self.stack_frames[-1].val_loc
+                    self.write(f"ST   1, {val_loc}(0)", " Store identifier value into current frame's return slot")
 
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
-                self.instruction_rules(inner_exp,curr_function)
-                
+                self.instruction_rules(inner_exp, curr_function, callee=True)
+
                 if exp_value == "-":
-                    self.write("SUB  1, 0, 1"," Switch sign of value")
+                    self.write("SUB  1, 0, 1", " Negate value in R1")
 
                 elif exp_value == "not":
-                    self.write("LDC  2, 1(0)", " Load value 1 into register 2")
-                    self.write("SUB  1, 2, 1", " Flip boolean value")
-            
+                    self.write("LDC  2, 1(0)", " Load 1 into R2")
+                    self.write("SUB  1, 2, 1", " Logical NOT: 1 - R1")
+
+                if not callee:
+                    val_loc = self.stack_frames[-1].val_loc
+                    self.write(f"ST   1, {val_loc}(0)", " Store unary result into return slot")
+
             case "BINARY-EXPRESSION":
                 left_exp = exp_children[0]
                 right_exp = exp_children[1]
-                self.instruction_rules(left_exp,curr_function)
-                self.write("LDC  4, 1(0)", " Load value 1 into temporary register 4")
-                self.DMEM -= 1
-                self.write("SUB  5, 5, 4", " Decrement memory offset")
-                self.write("ST   1, 0(5)", " Store left expression value into memory")
-                self.instruction_rules(right_exp,curr_function)
-                self.write("LD   2, 0(5)", " Load left expression value from memory into register 2")
-                self.write("ADD  5, 5, 4", " Increment memory offset")
-                self.DMEM += 1 
+
+                self.instruction_rules(left_exp, curr_function, callee=True)
+                self.write("ADD  2, 1, 0", " Move left operand from R1 to R2")
+
+                self.instruction_rules(right_exp, curr_function, callee=True)
 
                 match exp_value:
                     case "+":
-                        self.write("ADD  1, 2, 1", " Add left and right expression values")
+                        self.write("ADD  1, 2, 1", " R1 = left + right")
                     case "-":
-                        self.write("SUB  1, 2, 1", " Subtract left expression from right expression value")
+                        self.write("SUB  1, 2, 1", " R1 = left - right")
                     case "*":
-                        self.write("MUL  1, 2, 1", " Multiply left and right expression values")
+                        self.write("MUL  1, 2, 1", " R1 = left * right")
                     case "/":
-                        self.write("DIV  1, 2, 1", " Divide left expression by right expression value")
+                        self.write("DIV  1, 2, 1", " R1 = left / right")
                     case "and":
-                        self.write("MUL  1, 2, 1", " Compute logical AND for left and right expression values")
+                        self.write("MUL  1, 2, 1", " R1 = left AND right")
                     case "or":
-                        self.write("ADD  1, 2, 1", " Compute logical OR for left and right expression values")
+                        self.write("ADD  1, 2, 1", " R1 = left OR right")
                     case "=":
-                        self.write("SUB  1, 2, 1", " Subtract right expression from left expression value for equality check")
-                        self.write("JEQ  1, 2(7)", " If Register 1 is 0, then jump to true handling")
-                        self.write("LDC  1, 0(0)", " Load false (0) into register 1")
-                        self.write("LDA  7, 1(7)", " Jump to end of equality handling")
-                        self.write("LDC  1, 1(0)", " Load true (1) into register 1")
+                        self.write("SUB  1, 2, 1", " left - right for equality check")
+                        self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
+                        self.write("LDC  1, 0(0)", " false")
+                        self.write("LDA  7, 1(7)", " skip setting true")
+                        self.write("LDC  1, 1(0)", " true")
                     case "<":
-                        self.write("SUB  1, 2, 1", " Subtract right expression from left expression value for less-than check")
-                        self.write("JLT  1, 2(7)", " If Register 1 is negative, then jump to true handling")
-                        self.write("LDC  1, 0(0)", " Load false (0) into register 1")
-                        self.write("LDA  7, 1(7)", " Jump to end of less-than handling")
-                        self.write("LDC  1, 1(0)", " Load true (1) into register 1")
+                        self.write("SUB  1, 2, 1", " left - right for less-than check")
+                        self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
+                        self.write("LDC  1, 0(0)", " false")
+                        self.write("LDA  7, 1(7)", " skip setting true")
+                        self.write("LDC  1, 1(0)", " true")
+
+                if not callee:
+                    val_loc = self.stack_frames[-1].val_loc
+                    self.write(f"ST   1, {val_loc}(0)", " Store binary result into return slot")
 
             case "IF-EXPRESSION":
-                self.write("-----IF-BLOCK-----",header=True)
+                self.write("-----IF-BLOCK-----", header=True)
                 condition_exp = exp_children[0]
 
-                # Recursively evaluate the condition expression.
-                # The resulting binary result will be stored in DMEM
-                self.instruction_rules(condition_exp,curr_function)
+                self.instruction_rules(condition_exp, curr_function, callee=True)
 
-                temp_label_else = "!temp_" + str(self.label_id)
-                self.label_id += 1
-                self.write(f"JEQ  1, {temp_label_else}(0)", " If condition is false, skip to ELSE block")
+                temp_label_else = "!temp_" + str(self.label_id); self.label_id += 1
+                self.write(f"JEQ  1, {temp_label_else}(0)", " If condition is false, jump to ELSE")
 
-                # Recursively evaluate the THEN expression
-                self.write(f"-----THEN-BLOCK-----",header=True)
+                self.write("-----THEN-BLOCK-----", header=True)
                 then_exp = exp_children[1]
-                self.instruction_rules(then_exp,curr_function)
-                temp_label_endif = "!temp_" + str(self.label_id)
-                self.label_id += 1
-                self.write(f"LDA  7, {temp_label_endif}(0)", " Skip the ELSE block")
+                self.instruction_rules(then_exp, curr_function, callee=callee)
 
-                # Recursively evaluate the ELSE expression
-                self.write(f"-----ELSE-BLOCK-----",header=True)
+                temp_label_endif = "!temp_" + str(self.label_id); self.label_id += 1
+                self.write(f"LDA  7, {temp_label_endif}(0)", " Skip ELSE block")
+
+                self.write("-----ELSE-BLOCK-----", header=True)
                 self.placeholders[temp_label_else] = self.line_counter
                 else_exp = exp_children[2]
-                self.instruction_rules(else_exp,curr_function)
+                self.instruction_rules(else_exp, curr_function, callee=callee)
+
                 self.placeholders[temp_label_endif] = self.line_counter

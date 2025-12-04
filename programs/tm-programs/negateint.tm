@@ -1,20 +1,15 @@
-0 : LDC  3, 1(0) ;  Load target memory location for command line argument {index}
-1 : LD   1, 0(3) ;  Load command line argument 1 into register 1
-2 : ST   0, 0(3) ;  Replace DMEM[1] with 0
-3 : ST   1, 0(5) ;  Store command line argument into MAIN stack frame
-4 : LDC  4, 2(0) ;  Load value 2 in temp register 4
-5 : SUB  5, 5, 4 ;  Decrement memory offset
-6 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function
-7 :  OUT  1, 0, 0 ;  Hardcoded print function
-8 :  LD   6, 0(5) ;  Load return addess from previous function call/stack frame.
-9 :  LDA  7, 0(6) ;  Load address of previous function call into register 7.
-10 : LDC   3, 1022(0) ;  Load offset for parameter n into register 3
-11 : LD  1, 0(3) ;  Load parameter n value into register 1
-12 : SUB  1, 0, 1 ;  Switch sign of value
-13 : LDC  5, 1021(0) ;  Store the memory location of main return value
-14 : ST   1, 0(5) ;  Store return value of into DMEM
-15 : LDC  5, 1021(0) ;  Store the memory location of main return value
-16 : ST   1, 0(5) ;  Store return value of into DMEM
-17 : LD   1, 0(5) ;  Load Return Value from DMEM
-18 : OUT  1, 0, 0 ;  Output value from register 1.
-19 : HALT 0, 0, 0 ;  Terminate program execution.
+0 : LDC  5, 1(0) ;  Set DMEM pointer to main stack frame
+1 : LDA  6, 2(7) ;  Calculate return address for main function
+2 : ST   6, 0(5) ;  Store return address in main stack frame
+3 : LDA  7, 9(0) ;  Load address of main IMEM block - branch to function
+4 : OUT  1, 0, 0 ;  Return result
+5 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+6 : OUT  1, 0, 0 ;  Hardcoded print function
+7 : LD   6, 0(5) ;  Load return addess from stack frame.
+8 : LDA  7, 0(6) ;  Jump to return address.
+9 : LD   1, 1(5) ;  Load parameter 'n' into R1
+10 : SUB  1, 0, 1 ;  Negate value in R1
+11 : ST   1, 3(0) ;  Store unary result into return slot
+12 : LD   1, 3(0) ;  Load return value into register 1
+13 : LD  6, 1(0) ;  Load return address for main function into register 6
+14 : LDA  7, 0(6) ;  Jump to return address of main function
