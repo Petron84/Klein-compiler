@@ -65,7 +65,7 @@ class Generator:
             self.create_frame('main') # Create stack frame for initial main function call
             num_params = self.symbol_table['main'].parameters[0]
             self.write(f"LDA  6, 3(7)", ' Calculate return address for main function')
-            self.write(f"LDC  5, {num_params + 1}(0)", ' Update DMEM pointer')
+            self.write(f"LDC  5, {num_params + 2}(0)", ' Update DMEM pointer')
             self.write(f"ST   6, 0(5)", ' Store return address for main function in DMEM')
             self.DMEM = num_params + 3 # Set DMEM pointer to top of first empty stack frame
             self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
