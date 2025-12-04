@@ -37,8 +37,9 @@ class Generator:
             # Register 7 : program counter
 
         # Stack frame structure:
+            # Return address
             # Parameters 1 - N (expressions)
-            # Return address R6
+            # Return value
 
         # DMEM structure:
             # Three components:
@@ -60,12 +61,20 @@ class Generator:
     
     def initialize(self):
             self.write("-----INITIALIZE RUNTIME SYSTEM-----",header=True)
+            num_params = self.symbol_table['main'].parameters[0]
+            self.DMEM = num_params + 1 # Set DMEM to top of main stack frame
+
             self.create_frame('main') # Create stack frame for initial main function call
             main_frame = self.stack_frames[-1]
-            num_params = self.symbol_table['main'].parameters[0]
+
             self.write(f"LDC  5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
             self.write("LDA  6, 2(7)", " Calculate return address for main function")
-            self.write("ST   6, 0(5)", " Store return address in main stack frame")
+            self.write(f"ST   6, 0(5)", " Store return address in main stack frame")
+
+            for i in range(1, num_params + 1):
+                self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
+                self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
+
             self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
 
             self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
@@ -114,7 +123,7 @@ class Generator:
         val_loc = frame.val_loc
 
         self.write(f"LD   1, {val_loc}(0)"," Load return value into register 1")
-        self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
+        self.write(f"LD  6, {mem_loc + frame.num_params}(0)", f" Load return address for main function into register 6")
         self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
         del functions['main']
