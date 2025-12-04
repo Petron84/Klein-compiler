@@ -92,7 +92,7 @@
 91 : ST   6, 0(3) ;  Store return address
 92 : ADD  5, 3, 0 ;  Updated Pointer
 93 : LDA  7, 10(0) ; Call print
-94 : LDC  4, 5)0) ;  Load frame size
+94 : LDC  4, 5(0) ;  Load frame size
 95 : SUB  5, 5, 4 ;  Restore pointer
 96 : ST   1, 4(5) ;  Store function result into stack frame
 97 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'main'

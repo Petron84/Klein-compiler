@@ -68,7 +68,7 @@
 67 : ST   6, 0(3) ;  Store return address
 68 : ADD  5, 3, 0 ;  Updated Pointer
 69 : LDA  7, 12(0) ; Call print
-70 : LDC  4, 5)0) ;  Load frame size
+70 : LDC  4, 5(0) ;  Load frame size
 71 : SUB  5, 5, 4 ;  Restore pointer
 72 : ST   1, 4(5) ;  Store function result into stack frame
 73 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'main'

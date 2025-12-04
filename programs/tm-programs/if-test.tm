@@ -15,7 +15,7 @@
 14 : ST   6, 0(3) ;  Store return address
 15 : ADD  5, 3, 0 ;  Updated Pointer
 16 : LDA  7, 8(0) ; Call print
-17 : LDC  4, 3)0) ;  Load frame size
+17 : LDC  4, 3(0) ;  Load frame size
 18 : SUB  5, 5, 4 ;  Restore pointer
 19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 20 : ADD  2, 1, 0 ;  Move left operand from R1 to R2

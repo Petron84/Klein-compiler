@@ -125,7 +125,7 @@
 124 : ST   6, 0(3) ;  Store return address
 125 : ADD  5, 3, 0 ;  Updated Pointer
 126 : LDA  7, 10(0) ; Call print
-127 : LDC  4, 5)0) ;  Load frame size
+127 : LDC  4, 5(0) ;  Load frame size
 128 : SUB  5, 5, 4 ;  Restore pointer
 129 : ST   1, 4(5) ;  Store function result into stack frame
 130 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
@@ -137,7 +137,7 @@
 136 : ST   6, 0(3) ;  Store return address
 137 : ADD  5, 3, 0 ;  Updated Pointer
 138 : LDA  7, 10(0) ; Call print
-139 : LDC  4, 5)0) ;  Load frame size
+139 : LDC  4, 5(0) ;  Load frame size
 140 : SUB  5, 5, 4 ;  Restore pointer
 141 : ST   1, 4(5) ;  Store function result into stack frame
 142 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1

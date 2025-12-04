@@ -24,7 +24,7 @@
 23 : ST   6, 0(3) ;  Store return address
 24 : ADD  5, 3, 0 ;  Updated Pointer
 25 : LDA  7, 8(0) ; Call print
-26 : LDC  4, 3)0) ;  Load frame size
+26 : LDC  4, 3(0) ;  Load frame size
 27 : SUB  5, 5, 4 ;  Restore pointer
 28 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'ODD'
 29 : LD   1, 1(5) ;  Load parameter 'testArgument' into R1

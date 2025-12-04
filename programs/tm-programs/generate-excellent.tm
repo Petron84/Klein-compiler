@@ -291,7 +291,7 @@
 290 : ST   6, 0(3) ;  Store return address
 291 : ADD  5, 3, 0 ;  Updated Pointer
 292 : LDA  7, 8(0) ; Call print
-293 : LDC  4, 6)0) ;  Load frame size
+293 : LDC  4, 6(0) ;  Load frame size
 294 : SUB  5, 5, 4 ;  Restore pointer
 295 : ST   1, 5(5) ;  Store function result into stack frame
 296 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'aLoop'

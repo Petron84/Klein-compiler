@@ -167,7 +167,7 @@ class Generator:
                     self.write("ST   6, 0(3)", " Store return address")
                     self.write("ADD  5, 3, 0", " Updated Pointer")
                     self.write("LDA  7, @print(0)", "Call print")
-                    self.write(f"LDC  4, {call_size})0)", " Load frame size")
+                    self.write(f"LDC  4, {call_size}(0)", " Load frame size")
                     self.write("SUB  5, 5, 4", " Restore pointer")
                     
                 else:
@@ -193,7 +193,7 @@ class Generator:
 
                     self.write(f"LDC  4, {call_size}(0)", " Load frame size")
                     self.write("SUB  5, 5, 4", " Restore pointer")
-                    
+
                     if not callee:
                         caller_val_loc = self.stack_frames[-1].val_loc
                         self.write(f"ST 1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")

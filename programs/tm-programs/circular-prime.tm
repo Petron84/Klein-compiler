@@ -296,7 +296,7 @@
 295 : ST   6, 0(3) ;  Store return address
 296 : ADD  5, 3, 0 ;  Updated Pointer
 297 : LDA  7, 8(0) ; Call print
-298 : LDC  4, 3)0) ;  Load frame size
+298 : LDC  4, 3(0) ;  Load frame size
 299 : SUB  5, 5, 4 ;  Restore pointer
 300 : ST   1, 2(5) ;  Store function result into stack frame
 301 : LDC  1, 1(0) ;  Load boolean-literal value into register 1

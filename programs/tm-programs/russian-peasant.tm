@@ -17,7 +17,7 @@
 16 : ST   6, 0(3) ;  Store return address
 17 : ADD  5, 3, 0 ;  Updated Pointer
 18 : LDA  7, 10(0) ; Call print
-19 : LDC  4, 4)0) ;  Load frame size
+19 : LDC  4, 4(0) ;  Load frame size
 20 : SUB  5, 5, 4 ;  Restore pointer
 21 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mult'
 22 : LD   1, 1(5) ;  Load parameter 'm' into R1

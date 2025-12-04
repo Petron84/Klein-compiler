@@ -250,7 +250,7 @@
 249 : ST   6, 0(3) ;  Store return address
 250 : ADD  5, 3, 0 ;  Updated Pointer
 251 : LDA  7, 10(0) ; Call print
-252 : LDC  4, 3)0) ;  Load frame size
+252 : LDC  4, 3(0) ;  Load frame size
 253 : SUB  5, 5, 4 ;  Restore pointer
 254 : ST   1, 2(5) ;  Store function result into stack frame
 255 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'snowball'

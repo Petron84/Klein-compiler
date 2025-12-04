@@ -49,7 +49,7 @@
 48 : ST   6, 0(3) ;  Store return address
 49 : ADD  5, 3, 0 ;  Updated Pointer
 50 : LDA  7, 8(0) ; Call print
-51 : LDC  4, 4)0) ;  Load frame size
+51 : LDC  4, 4(0) ;  Load frame size
 52 : SUB  5, 5, 4 ;  Restore pointer
 53 : ST   1, 3(5) ;  Store function result into stack frame
 54 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
@@ -69,7 +69,7 @@
 68 : ST   6, 0(3) ;  Store return address
 69 : ADD  5, 3, 0 ;  Updated Pointer
 70 : LDA  7, 8(0) ; Call print
-71 : LDC  4, 4)0) ;  Load frame size
+71 : LDC  4, 4(0) ;  Load frame size
 72 : SUB  5, 5, 4 ;  Restore pointer
 73 : ST   1, 3(5) ;  Store function result into stack frame
 74 : LD   1, 2(5) ;  Load parameter 'n' into R1

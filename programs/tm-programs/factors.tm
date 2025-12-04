@@ -82,7 +82,7 @@
 81 : ST   6, 0(3) ;  Store return address
 82 : ADD  5, 3, 0 ;  Updated Pointer
 83 : LDA  7, 8(0) ; Call print
-84 : LDC  4, 4)0) ;  Load frame size
+84 : LDC  4, 4(0) ;  Load frame size
 85 : SUB  5, 5, 4 ;  Restore pointer
 86 : ST   1, 3(5) ;  Store function result into stack frame
 87 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'loopToN'

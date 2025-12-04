@@ -32,7 +32,7 @@
 31 : ST   6, 0(3) ;  Store return address
 32 : ADD  5, 3, 0 ;  Updated Pointer
 33 : LDA  7, 12(0) ; Call print
-34 : LDC  4, 5)0) ;  Load frame size
+34 : LDC  4, 5(0) ;  Load frame size
 35 : SUB  5, 5, 4 ;  Restore pointer
 36 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'fareyDen'
 37 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
