@@ -159,26 +159,28 @@ class Generator:
                 # Store location of temporary label that needs to be replaced
             
                 if f_name== "print":
+                    self.instruction_rules(exp_children[1], curr_function,callee=True)
+                    caller_top = self.stack_frames[-1].top
                     self.create_frame('print')
                     print_frame = self.stack_frames[-1]
-                    self.instruction_rules(exp_children[1], curr_function,callee=True)
                     self.write(f"LDC  5, {print_frame.top}(0)", " Update DMEM pointer")
                     self.write("LDA  6, 2(7)"," Compute return address")
                     self.write("ST   6, 0(5)", " Store return address")
                     self.write("LDA  7, @print(0)", "Call print")
-                    print(self.stack_frames)
-                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Move pointer to previous stack frame")
-                    self.DMEM = print_frame.top # Print frame is now gone, so it is the next empty frame
+                    self.write(f"LDC  5, {caller_top}(0)", " Move pointer to previous stack frame")
+                    self.DMEM = caller_top # Print frame is now gone, so it is the next empty frame
                     self.stack_frames.pop() # Pop print stack frame
                     
                 else:
+                    caller_top = self.stack_frames[-1].top
+
                     self.create_frame(f_name)
                     callee_frame = self.stack_frames[-1]
 
                     args = exp_children[1].children 
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"ST   1, {i}(5)", f" Store argument {arg}")
+                        self.write(f"ST   1, {i+1}(5)", f" Store argument {arg}")
 
                     self.write(f"LDC  5, {callee_frame.top}(0)", f" Set DMEM pointer to callee frame '{f_name}'")
                     self.write("LDA  6, 2(7)", " Compute return address")
@@ -188,9 +190,9 @@ class Generator:
                     offset = self.symbol_table[f_name].parameters[0] + 1
                     self.write(f"LD   1, {offset}(5)", " Load return value into R1")
 
-                    self.write(f"LDC  5, {self.stack_frames[-2].top}(0)", " Restore DMEM pointer to caller frame")
+                    self.write(f"LDC  5, {caller_top}(0)", " Restore DMEM pointer to caller frame")
                     self.stack_frames.pop()
-                    self.DMEM = callee_frame.top  # next free frame
+                    self.DMEM = caller_top  # next free frame
 
                     if not callee:
                         caller_val_loc = self.stack_frames[-1].val_loc

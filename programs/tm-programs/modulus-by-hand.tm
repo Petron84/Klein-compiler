@@ -19,18 +19,45 @@
 18 : LDA  6, 2(7) ;  Compute return address
 19 : ST   6, 0(5) ;  Store return address
 20 : LDA  7, 10(0) ; Call print
-21 : LDC  5, 3(0) ;  zMove pointer to previous stack frame
+21 : LDC  5, 3(0) ;  Move pointer to previous stack frame
 22 : LD   1, 1(5) ;  Load parameter 'm' into R1
-23 : ST   1, 0(5) ;  Store argument Tree Node('IDENTIFIER', value='m',line=9)
+23 : ST   1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='m',line=9)
 24 : LD   1, 2(5) ;  Load parameter 'n' into R1
-25 : ST   1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=9)
-26 : LDC  5, 7(0) ;  Set DMEM pointer to callee frame 'mod'
+25 : ST   1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=9)
+26 : LDC  5, 3(0) ;  Set DMEM pointer to callee frame 'mod'
 27 : LDA  6, 2(7) ;  Compute return address
 28 : ST   6, 0(5) ;  Store return address in frame
-29 : LDA  7, -1(0) ;  Call mod
+29 : LDA  7, 36(0) ;  Call mod
 30 : LD   1, 3(5) ;  Load return value into R1
 31 : LDC  5, 3(0) ;  Restore DMEM pointer to caller frame
 32 : ST   1, 6(0) ;  Store function-call result into caller's return slot
 33 : LD   1, 6(0) ;  Load return value into register 1
 34 : LD  6, 3(0) ;  Load return address for main function into register 6
 35 : LDA  7, 0(6) ;  Jump to return address of main function
+36 : LD   1, 1(5) ;  Load parameter 'm' into R1
+37 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+38 : LD   1, 2(5) ;  Load parameter 'n' into R1
+39 : SUB  1, 2, 1 ;  left - right for less-than check
+40 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+41 : LDC  1, 0(0) ;  false
+42 : LDA  7, 1(7) ;  skip setting true
+43 : LDC  1, 1(0) ;  true
+44 : JEQ  1, 47(0) ;  If condition is false, jump to ELSE
+45 : LD   1, 1(5) ;  Load parameter 'm' into R1
+46 : LDA  7, 60(0) ;  Skip ELSE block
+47 : LD   1, 1(5) ;  Load parameter 'm' into R1
+48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+49 : LD   1, 2(5) ;  Load parameter 'n' into R1
+50 : SUB  1, 2, 1 ;  R1 = left - right
+51 : ST   1, 1(5) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='m',line=5), Tree Node('IDENTIFIER', value='n',line=5)],line=5)
+52 : LD   1, 2(5) ;  Load parameter 'n' into R1
+53 : ST   1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='n',line=5)
+54 : LDC  5, 3(0) ;  Set DMEM pointer to callee frame 'mod'
+55 : LDA  6, 2(7) ;  Compute return address
+56 : ST   6, 0(5) ;  Store return address in frame
+57 : LDA  7, 36(0) ;  Call mod
+58 : LD   1, 3(5) ;  Load return value into R1
+59 : LDC  5, 3(0) ;  Restore DMEM pointer to caller frame
+60 : ST   1, 3(5) ;  Store function result into stack frame
+61 : LD   6, 0(5) ;  Load return address
+62 : LDA  7, 0(6) ;  Return to caller

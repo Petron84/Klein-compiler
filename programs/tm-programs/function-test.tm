@@ -12,9 +12,9 @@
 11 : LD   6, 0(5) ;  Load return addess from stack frame.
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'a' into R1
-14 : ST   1, 0(5) ;  Store argument Tree Node('IDENTIFIER', value='a',line=2)
+14 : ST   1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='a',line=2)
 15 : LD   1, 2(5) ;  Load parameter 'b' into R1
-16 : ST   1, 1(5) ;  Store argument Tree Node('IDENTIFIER', value='b',line=2)
+16 : ST   1, 2(5) ;  Store argument Tree Node('IDENTIFIER', value='b',line=2)
 17 : LDC  5, 7(0) ;  Set DMEM pointer to callee frame 'eval_and_print'
 18 : LDA  6, 2(7) ;  Compute return address
 19 : ST   6, 0(5) ;  Store return address in frame
@@ -29,11 +29,11 @@
 28 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 29 : LD   1, 2(5) ;  Load parameter 'b' into R1
 30 : MUL  1, 2, 1 ;  R1 = left * right
-31 : LDC  5, 7(0) ;  Update DMEM pointer
+31 : LDC  5, 3(0) ;  Update DMEM pointer
 32 : LDA  6, 2(7) ;  Compute return address
 33 : ST   6, 0(5) ;  Store return address
 34 : LDA  7, 10(0) ; Call print
-35 : LDC  5, 7(0) ;  Move pointer to previous stack frame
+35 : LDC  5, 3(0) ;  Move pointer to previous stack frame
 36 : ST   1, 3(5) ;  Store function result into stack frame
 37 : LD   1, 1(5) ;  Load parameter 'a' into R1
 38 : ADD  2, 1, 0 ;  Move left operand from R1 to R2

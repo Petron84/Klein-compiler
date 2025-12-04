@@ -14,7 +14,7 @@
 13 : LDA  6, 2(7) ;  Compute return address
 14 : ST   6, 0(5) ;  Store return address
 15 : LDA  7, 8(0) ; Call print
-16 : LDC  5, 2(0) ;  zMove pointer to previous stack frame
+16 : LDC  5, 2(0) ;  Move pointer to previous stack frame
 17 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 18 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 19 : LD   1, 1(5) ;  Load parameter 'n' into R1
