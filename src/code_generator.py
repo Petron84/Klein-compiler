@@ -125,6 +125,10 @@ class Generator():
                 mem_loc = self.stack_frames[f].return_add # Retrieve memory address of return value
                 self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of {f} return value")
                 self.write("ST   1, 0(5)", f"# Store return value of into DMEM")
+                ret_add = mem_loc + self.stack_frames[f].num_parm + 1 # Calculate return address
+                self.write(f"LDC  3, {ret_add}(0)", f"# Load return address for function {f} into register 3")
+                self.write("LD   6, 0(3)", f"# Load return address into register 6")
+                self.write("LDA  7, 0(6)", f"# Load return address back into register 7")
 
         mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
         self.write(f"LDC  5, {mem_loc}(0)", f"# Store the memory location of main return value")
