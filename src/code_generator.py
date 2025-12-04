@@ -157,46 +157,41 @@ class Generator:
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
                 # Store location of temporary label that needs to be replaced
+                call_params = self.symbol_table[curr_function].parameters[0]
+                call_size = call_params + 2
             
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
-                    caller_top = self.stack_frames[-1].top
-                    self.create_frame('print')
-                    print_frame = self.stack_frames[-1]
-                    self.write(f"LDC  5, {print_frame.top}(0)", " Update DMEM pointer")
+                    self.write(f"LDA  5, {call_size}(5)", " Update DMEM pointer")
                     self.write("LDA  6, 2(7)"," Compute return address")
                     self.write("ST   6, 0(5)", " Store return address")
                     self.write("LDA  7, @print(0)", "Call print")
-                    self.write(f"LDC  5, {caller_top}(0)", " Move pointer to previous stack frame")
-                    self.DMEM = caller_top # Print frame is now gone, so it is the next empty frame
-                    self.stack_frames.pop() # Pop print stack frame
+                    self.write(f"LDC  5, {-call_size}(5)", " Move pointer to previous stack frame")
                     
                 else:
-                    caller_top = self.stack_frames[-1].top
+                    
+                    args = exp_children[1].children
 
-                    self.create_frame(f_name)
-                    callee_frame = self.stack_frames[-1]
+                    self.write(f"LDA 5, {call_size}(5)", f" Advance DMEM pointer to callee frame '{f_name}'")
 
-                    args = exp_children[1].children 
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"ST   1, {i+1}(5)", f" Store argument {arg}")
+                        self.write(f"ST 1, {i+1}(5)", f" Store argument {arg} into callee frame")
 
-                    self.write(f"LDC  5, {callee_frame.top}(0)", f" Set DMEM pointer to callee frame '{f_name}'")
-                    self.write("LDA  6, 2(7)", " Compute return address")
-                    self.write("ST   6, 0(5)", " Store return address in frame")
-                    self.write(f"LDA  7, @{f_name}(0)", f" Call {f_name}")
+                    self.write("LDA 6, 2(7)", " Compute return address")
+                    self.write("ST 6, 0(5)", " Store return address in callee frame")
 
-                    offset = self.symbol_table[f_name].parameters[0] + 1
-                    self.write(f"LD   1, {offset}(5)", " Load return value into R1")
+                    self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
-                    self.write(f"LDC  5, {caller_top}(0)", " Restore DMEM pointer to caller frame")
-                    self.stack_frames.pop()
-                    self.DMEM = caller_top  # next free frame
+                    callee_params = self.symbol_table[f_name].parameters[0]
+                    callee_ret_offset = callee_params + 1
+                    self.write(f"LD 1, {callee_ret_offset}(5)", " Load callee return value into R1")
+
+                    self.write(f"LDA 5, {-call_size}(5)", " Restore DMEM pointer to caller frame")
 
                     if not callee:
                         caller_val_loc = self.stack_frames[-1].val_loc
-                        self.write(f"ST   1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")
+                        self.write(f"ST 1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")
 
             case "INTEGER-LITERAL":
                 value = body.value
