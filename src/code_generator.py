@@ -276,7 +276,7 @@ class Generator():
                         self.write("SUB  1, 2, 1", "# Subtract right expression from left expression value for equality check")
                         self.write("JEQ  1, 2(7)", "# If Register 1 is 0, then jump to true handling")
                         self.write("LDC  1, 0(0)", "# Load false (0) into register 1")
-                        self.write("LDA  7, 2(7)", "# Jump to end of equality handling")
+                        self.write("LDA  7, 1(7)", "# Jump to end of equality handling")
                         self.write("LDC  1, 1(0)", "# Load true (1) into register 1")
                     case "<":
                         self.write("SUB  1, 2, 1", "# Subtract right expression from left expression value for less-than check")
