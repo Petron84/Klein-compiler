@@ -20,7 +20,7 @@
 19 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=2) into callee frame
 20 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 21 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='10',line=2) into callee frame
-22 : LDA 6, 2(7) ;  Compute return address
+22 : LDA 6, 26(7) ;  Compute return address
 23 : ST 6, 0(3) ;  Store return address in callee frame
 24 : ADD  5, 3, 0 ;  Update pointer
 25 : LDA 7, 41(0) ;  Call MOD
@@ -28,7 +28,7 @@
 27 : LDC  4, 3(0) ;  Load frame size
 28 : SUB  5, 5, 4 ;  Restore pointer
 29 : ST 1, 2(3) ;  Store argument Tree Node('FUNCTION-CALL', children=[Tree Node('IDENTIFIER', value='MOD',line=2), Tree Node('ARGUMENT-LIST', children=[Tree Node('IDENTIFIER', value='n',line=2), Tree Node('INTEGER-LITERAL', value='10',line=2)],line=2)],line=2) into callee frame
-30 : LDA 6, 2(7) ;  Compute return address
+30 : LDA 6, 34(7) ;  Compute return address
 31 : ST 6, 0(3) ;  Store return address in callee frame
 32 : ADD  5, 3, 0 ;  Update pointer
 33 : LDA 7, 121(0) ;  Call divisibleByParts
@@ -109,7 +109,7 @@
 108 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'main'
 109 : LD   1, 1(5) ;  Load parameter 'diff' into R1
 110 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='diff',line=14) into callee frame
-111 : LDA 6, 2(7) ;  Compute return address
+111 : LDA 6, 115(7) ;  Compute return address
 112 : ST 6, 0(3) ;  Store return address in callee frame
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 11(0) ;  Call main
@@ -128,7 +128,7 @@
 127 : MUL  1, 2, 1 ;  R1 = left * right
 128 : SUB  1, 2, 1 ;  R1 = left - right
 129 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='left',line=5), Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='right',line=5), Tree Node('INTEGER-LITERAL', value='2',line=5)],line=5)],line=5) into callee frame
-130 : LDA 6, 2(7) ;  Compute return address
+130 : LDA 6, 134(7) ;  Compute return address
 131 : ST 6, 0(3) ;  Store return address in callee frame
 132 : ADD  5, 3, 0 ;  Update pointer
 133 : LDA 7, 54(0) ;  Call divisibleByDifference

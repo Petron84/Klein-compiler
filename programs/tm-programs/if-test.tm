@@ -11,7 +11,7 @@
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
 12 : LDA  3, 3(5) ;  Update DMEM pointer
-13 : LDA  6, 2(7) ;  Compute return address
+13 : LDA 6, 17(7) ;  Compute return address
 14 : ST   6, 0(3) ;  Store return address
 15 : ADD  5, 3, 0 ;  Updated Pointer
 16 : LDA  7, 8(0) ; Call print

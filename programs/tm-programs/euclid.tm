@@ -16,7 +16,7 @@
 15 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=18) into callee frame
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
 17 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=18) into callee frame
-18 : LDA 6, 2(7) ;  Compute return address
+18 : LDA 6, 22(7) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 29(0) ;  Call gcd
@@ -46,7 +46,7 @@
 45 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=15) into callee frame
 46 : LD   1, 2(5) ;  Load parameter 'b' into R1
 47 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=15) into callee frame
-48 : LDA 6, 2(7) ;  Compute return address
+48 : LDA 6, 52(7) ;  Compute return address
 49 : ST 6, 0(3) ;  Store return address in callee frame
 50 : ADD  5, 3, 0 ;  Update pointer
 51 : LDA 7, 66(0) ;  Call remainder
@@ -54,7 +54,7 @@
 53 : LDC  4, 4(0) ;  Load frame size
 54 : SUB  5, 5, 4 ;  Restore pointer
 55 : ST 1, 2(3) ;  Store argument Tree Node('FUNCTION-CALL', children=[Tree Node('IDENTIFIER', value='remainder',line=15), Tree Node('ARGUMENT-LIST', children=[Tree Node('IDENTIFIER', value='a',line=15), Tree Node('IDENTIFIER', value='b',line=15)],line=15)],line=15) into callee frame
-56 : LDA 6, 2(7) ;  Compute return address
+56 : LDA 6, 60(7) ;  Compute return address
 57 : ST 6, 0(3) ;  Store return address in callee frame
 58 : ADD  5, 3, 0 ;  Update pointer
 59 : LDA 7, 29(0) ;  Call gcd
@@ -83,7 +83,7 @@
 82 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='a',line=8), Tree Node('IDENTIFIER', value='b',line=8)],line=8) into callee frame
 83 : LD   1, 2(5) ;  Load parameter 'b' into R1
 84 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=8) into callee frame
-85 : LDA 6, 2(7) ;  Compute return address
+85 : LDA 6, 89(7) ;  Compute return address
 86 : ST 6, 0(3) ;  Store return address in callee frame
 87 : ADD  5, 3, 0 ;  Update pointer
 88 : LDA 7, 66(0) ;  Call remainder

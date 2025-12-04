@@ -12,7 +12,7 @@
 11 : ST 1, 1(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=30) into callee frame
 12 : LDC  1, 20(0) ;  Load boolean-literal value into register 1
 13 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='20',line=30) into callee frame
-14 : LDA 6, 2(7) ;  Compute return address
+14 : LDA 6, 18(7) ;  Compute return address
 15 : ST 6, 0(3) ;  Store return address in callee frame
 16 : ADD  5, 3, 0 ;  Update pointer
 17 : LDA 7, 25(0) ;  Call sumPrimes
@@ -37,7 +37,7 @@
 36 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 37 : LD   1, 1(5) ;  Load parameter 'a' into R1
 38 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=24) into callee frame
-39 : LDA 6, 2(7) ;  Compute return address
+39 : LDA 6, 43(7) ;  Compute return address
 40 : ST 6, 0(3) ;  Store return address in callee frame
 41 : ADD  5, 3, 0 ;  Update pointer
 42 : LDA 7, 84(0) ;  Call isPrime
@@ -55,7 +55,7 @@
 54 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=25), Tree Node('INTEGER-LITERAL', value='1',line=25)],line=25) into callee frame
 55 : LD   1, 2(5) ;  Load parameter 'b' into R1
 56 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=25) into callee frame
-57 : LDA 6, 2(7) ;  Compute return address
+57 : LDA 6, 61(7) ;  Compute return address
 58 : ST 6, 0(3) ;  Store return address in callee frame
 59 : ADD  5, 3, 0 ;  Update pointer
 60 : LDA 7, 25(0) ;  Call sumPrimes
@@ -72,7 +72,7 @@
 71 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='a',line=27), Tree Node('INTEGER-LITERAL', value='1',line=27)],line=27) into callee frame
 72 : LD   1, 2(5) ;  Load parameter 'b' into R1
 73 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=27) into callee frame
-74 : LDA 6, 2(7) ;  Compute return address
+74 : LDA 6, 78(7) ;  Compute return address
 75 : ST 6, 0(3) ;  Store return address in callee frame
 76 : ADD  5, 3, 0 ;  Update pointer
 77 : LDA 7, 25(0) ;  Call sumPrimes
@@ -109,7 +109,7 @@
 108 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
 109 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 110 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=15) into callee frame
-111 : LDA 6, 2(7) ;  Compute return address
+111 : LDA 6, 115(7) ;  Compute return address
 112 : ST 6, 0(3) ;  Store return address in callee frame
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 153(0) ;  Call divisible
@@ -122,7 +122,7 @@
 121 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
 122 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
 123 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='3',line=15) into callee frame
-124 : LDA 6, 2(7) ;  Compute return address
+124 : LDA 6, 128(7) ;  Compute return address
 125 : ST 6, 0(3) ;  Store return address in callee frame
 126 : ADD  5, 3, 0 ;  Update pointer
 127 : LDA 7, 153(0) ;  Call divisible
@@ -136,7 +136,7 @@
 135 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=15) into callee frame
 136 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
 137 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='5',line=15) into callee frame
-138 : LDA 6, 2(7) ;  Compute return address
+138 : LDA 6, 142(7) ;  Compute return address
 139 : ST 6, 0(3) ;  Store return address in callee frame
 140 : ADD  5, 3, 0 ;  Update pointer
 141 : LDA 7, 153(0) ;  Call divisible

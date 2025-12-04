@@ -32,7 +32,7 @@
 31 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=6) into callee frame
 32 : LD   1, 3(5) ;  Load parameter 'n' into R1
 33 : ST 1, 3(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=6) into callee frame
-34 : LDA 6, 2(7) ;  Compute return address
+34 : LDA 6, 38(7) ;  Compute return address
 35 : ST 6, 0(3) ;  Store return address in callee frame
 36 : ADD  5, 3, 0 ;  Update pointer
 37 : LDA 7, 58(0) ;  Call printAndDivide
@@ -64,7 +64,7 @@
 63 : LD   1, 2(5) ;  Load parameter 'b' into R1
 64 : DIV  1, 2, 1 ;  R1 = left / right
 65 : LDA  3, 5(5) ;  Update DMEM pointer
-66 : LDA  6, 2(7) ;  Compute return address
+66 : LDA 6, 70(7) ;  Compute return address
 67 : ST   6, 0(3) ;  Store return address
 68 : ADD  5, 3, 0 ;  Updated Pointer
 69 : LDA  7, 12(0) ; Call print
@@ -80,7 +80,7 @@
 79 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='a',line=12), Tree Node('INTEGER-LITERAL', value='10',line=12)],line=12) into callee frame
 80 : LD   1, 2(5) ;  Load parameter 'b' into R1
 81 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=12) into callee frame
-82 : LDA 6, 2(7) ;  Compute return address
+82 : LDA 6, 86(7) ;  Compute return address
 83 : ST 6, 0(3) ;  Store return address in callee frame
 84 : ADD  5, 3, 0 ;  Update pointer
 85 : LDA 7, 45(0) ;  Call MOD
@@ -95,7 +95,7 @@
 94 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 95 : SUB  1, 2, 1 ;  R1 = left - right
 96 : ST 1, 3(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='n',line=12), Tree Node('INTEGER-LITERAL', value='1',line=12)],line=12) into callee frame
-97 : LDA 6, 2(7) ;  Compute return address
+97 : LDA 6, 101(7) ;  Compute return address
 98 : ST 6, 0(3) ;  Store return address in callee frame
 99 : ADD  5, 3, 0 ;  Update pointer
 100 : LDA 7, 15(0) ;  Call main

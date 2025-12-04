@@ -9,7 +9,7 @@
 8 : LDA  7, 0(6) ;  Jump to return address.
 9 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 10 : LDA  3, 2(5) ;  Update DMEM pointer
-11 : LDA  6, 2(7) ;  Compute return address
+11 : LDA 6, 15(7) ;  Compute return address
 12 : ST   6, 0(3) ;  Store return address
 13 : ADD  5, 3, 0 ;  Updated Pointer
 14 : LDA  7, 6(0) ; Call print

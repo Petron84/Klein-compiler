@@ -163,10 +163,16 @@ class Generator:
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
                     self.write(f"LDA  3, {call_size}(5)", " Update DMEM pointer")
-                    self.write("LDA  6, 2(7)"," Compute return address")
+
+                    temp_label = f"!return_{self.label_id}"
+                    self.label_id += 1
+
+                    self.write(f"LDA 6, {temp_label}(7)", " Compute return address")
+
                     self.write("ST   6, 0(3)", " Store return address")
                     self.write("ADD  5, 3, 0", " Updated Pointer")
                     self.write("LDA  7, @print(0)", "Call print")
+                    self.placeholders[temp_label] = self.line_counter
                     self.write(f"LDC  4, {call_size}(0)", " Load frame size")
                     self.write("SUB  5, 5, 4", " Restore pointer")
                     
@@ -180,12 +186,17 @@ class Generator:
                         self.instruction_rules(arg, curr_function, callee=True)
                         self.write(f"ST 1, {i+1}(3)", f" Store argument {arg} into callee frame")
 
-                    self.write("LDA 6, 2(7)", " Compute return address")
+                    temp_label = f"!return_{self.label_id}"
+                    self.label_id += 1
+
+                    self.write(f"LDA 6, {temp_label}(7)", " Compute return address")
                     self.write("ST 6, 0(3)", " Store return address in callee frame")
 
                     self.write("ADD  5, 3, 0", " Update pointer")
 
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
+
+                    self.placeholders[temp_label] = self.line_counter
 
                     callee_params = self.symbol_table[f_name].parameters[0]
                     call_offset = callee_params + 1
