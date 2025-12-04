@@ -1,3 +1,2 @@
-function main(n: integer): boolean
-	print(n)
+function main(): boolean
 	true

@@ -1,13 +1,15 @@
 from scanner import KleinError
 import sys
 
-class StackFrame():
-    def __init__(self, address=0, num_parm=0, return_add=0):
-        self.address = address
-        self.num_parm = num_parm
-        self.return_add = return_add
+class StackFrame:
+    def __init__(self,name,top,num_params):
+        self.name = name # function name
+        self.top = top
+        self.num_params = num_params
+        self.val_loc = self.top + self.num_params # memory location of return value
+        self.mem_loc = self.val_loc + 1 # memory location of return address
 
-class Generator():
+class Generator:
     def __init__(self,tree,table):
         self.AST = tree[-1].children[-1].children
         self.symbol_table = table
@@ -23,32 +25,33 @@ class Generator():
         self.IMEM = []
 
         # reference to determine tops of stack frames in DMEM
-        self.DMEM = 1023
-        self.stack_frames = {}
+        self.DMEM = 1
+        self.stack_frames = []
 
         # Register convention:
             # Register 0 : Value 0
-            # Register 1 : Value for outputs/returns
-            # Register 2 : Temporary values
+            # Register 1 : Return value
+            # Register 2 : Temporary value for calculations
             # Register 3 : Target Memory Location
-            # Register 4 : Memory offsets
-            # Register 5 : Current Memory Location
-            # Register 6 : Current return address
+            # Register 4 : Memory offset
+            # Register 5 : DMEM pointer
+            # Register 6 : Temporary return address
             # Register 7 : program counter
 
         # Stack frame structure:
-            # Return address R6
             # Parameters 1 - N (expressions)
-            # Return Value R1
+            # Return address R6
 
         # DMEM structure:
             # Three components:
                 # Return address
                 # Array of "parameters", i.e., every function "jump" to IMEM blocks
                 # Store return value
-            # Stack frames expand downward from DMEM[1023] to DMEM[1023 - N].
+            # Stack frames expand upward from DMEM[1] to DMEM[1023].
             # DMEM[0] is the integer 1023
-            # Command line arguments stored in DMEM from DMEM[1] to DMEM[N]
+            # DMEM [1:N] stores main command-line arguments
+            # DMEM [N+1] stores return address at bottom of main stack frame
+            # DMEM [N+2] stores parameters for second stack frame
                       
     def generate(self):
         self.initialize()
@@ -59,16 +62,25 @@ class Generator():
     
     def initialize(self):
             self.write("-----INITIALIZE RUNTIME SYSTEM-----",header=True)
-            # Space added in front of instructions here to help with aligning all instructions in output.
-            self.create_frame(self.DMEM,'main')
-            self.load_cli()
-            self.write("LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
+            self.create_frame('main') # Create stack frame for initial main function call
+            num_params = self.symbol_table['main'].parameters[0]
+            self.write(f"LDC  6, 3(7)", ' Calculate return address for main function')
+            self.write(f"LDC  5, {num_params + 1}(0)", ' Update DMEM pointer')
+            self.write(f"ST   6, 0(5)", ' Store return address for main function in DMEM')
+            self.DMEM = num_params + 3 # Set DMEM pointer to top of first empty stack frame
+            self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
+            self.write(f"OUT  1, 0, 0", " Return result")
+            self.write("HALT 0, 0, 0", ' Terminate program execution if no main function found.')
             self.write("------PRINT------",header=True)
             self.placeholders["@print"] = self.line_counter
-            self.write(" OUT  1, 0, 0", ' Hardcoded print function')
-            self.write(" LD   6, 0(5)", ' Load return addess from previous function call/stack frame.')
-            self.write(" LDA  7, 0(6)",  ' Load address of previous function call into register 7.')
-            
+            self.write("OUT  1, 0, 0", ' Hardcoded print function')
+            self.write("LD   6, 0(5)", ' Load return addess from stack frame.')
+            self.write("LDA  7, 0(6)",  ' Jump to return address.')
+    
+    def create_frame(self,f_name):
+        num_params = self.symbol_table[f_name].parameters[0]
+        self.stack_frames.append(StackFrame(f_name, self.DMEM, num_params))
+
     def write(self, instruction, note=None, header=False):
         if header:
             self.IMEM.append(f"{instruction}")
@@ -76,12 +88,6 @@ class Generator():
             self.IMEM.append(f"{self.line_counter} : {instruction} ; {note}")
             self.line_counter += 1
     
-    def create_frame(self,address,fname):
-        num_params = self.symbol_table[fname].parameters[0]
-        return_address = address - num_params - 1
-        address = return_address
-        self.stack_frames[fname] = StackFrame(address=address, num_parm=num_params, return_add=return_address)
-
     def load_functions(self):
         f_list = {}
 
@@ -102,54 +108,16 @@ class Generator():
 
         for exp in main_body:
             self.instruction_rules(exp,"main")
-            mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
-            self.write(f"LDC  5, {mem_loc}(0)", f" Store the memory location of main return value")
-            self.write("ST   1, 0(5)", f" Store return value of into DMEM")
+        frame = self.stack_frames.pop()
+        mem_loc = frame.mem_loc
+        val_loc = frame.val_loc
+
+        self.write(f"LD   1, 0({val_loc})"," Load return value into register 1")
+        self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
+        self.write("LDA  7, 0(6)", f" Jump to return address of main function")
+
         del functions['main']
 
-        for f in functions:
-            self.write(f"-----{f.upper()}-----",header=True)
-            self.placeholders[f"@{f}"] = self.line_counter
-            body = functions[f]
-            self.create_frame(self.DMEM,f)
-            for exp in body:
-                self.instruction_rules(exp,f)
-                mem_loc = self.stack_frames[f].return_add # Retrieve memory address of return value
-                self.write(f"LDC  5, {mem_loc}(0)", f" Store the memory location of {f} return value")
-                self.write("ST   1, 0(5)", f" Store return value of into DMEM")
-                ret_add = mem_loc + self.stack_frames[f].num_parm + 1 # Calculate return address
-                self.write(f"LDC  3, {ret_add}(0)", f" Load return address for function {f} into register 3")
-                self.write("LD   6, 0(3)", f" Load return address into register 6")
-                self.write("LDA  7, 0(6)", f" Load return address back into register 7")
-
-        mem_loc = self.stack_frames['main'].return_add # Retrieve memory address of return value
-        self.write(f"LDC  5, {mem_loc}(0)", f" Store the memory location of main return value")
-        self.write(f"ST   1, 0(5)", f" Store return value of into DMEM")
-        self.write(f"LD   1, 0(5)"," Load Return Value from DMEM")
-        self.write("OUT  1, 0, 0", ' Output value from register 1.')
-        self.write("HALT 0, 0, 0", ' Terminate program execution.')
-
-    def load_cli(self):
-        cli_params = self.symbol_table['main'].parameters
-        if cli_params[0] != 0:
-            cli_params = cli_params[1]
-            num_params = len(cli_params)
-            for i,p in enumerate(cli_params):
-                index = i + 1
-                self.write(f"LDC  3, {index}(0)"," Load target memory location for command line argument {index}")
-                self.write(f"LD   1, 0(3)",f" Load command line argument {index} into register 1")
-                self.write(f"ST   0, 0(3)",f" Replace DMEM[{index}] with 0")
-                self.write(f"ST   1, 0(5)", " Store command line argument into MAIN stack frame")
-
-                if i+1 == num_params:
-                    # Skip a memory location - save this location for stack frame return value
-                    self.write('LDC  4, 2(0)',' Load value 2 in temp register 4')
-                    self.DMEM -= 2
-                else:
-                    self.write('LDC  4, 1(0)',' Load value 1 in temp register 4')
-                    self.DMEM -= 1
-                self.write('SUB  5, 5, 4',' Decrement memory offset')
-    
     def fill_placeholders(self):
         for i in range(len(self.IMEM)):
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
@@ -159,51 +127,18 @@ class Generator():
         exp_type = body.type
         exp_value = body.value
         exp_children = body.children
+
         match exp_type:
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
                 # Store location of temporary label that needs to be replaced
                 temp_label = "!temp_" + str(self.label_id)
                 self.label_id += 1
-
-                self.write(f"LDA  6, {temp_label}(0)", ' Load return address into R6')
-                self.write("ST   6, 0(5)", ' Store current return address into DMEM')
-
+            
                 if f_name== "print":
-                    # Evaluate expression value
-                    self.instruction_rules(exp_children[1],curr_function)
-                    self.write("LDA  7, @print(0)", ' Load address of print IMEM block - branch to function')
-                    self.placeholders[temp_label] = self.line_counter
+                    pass
                 else:
-                    num_params = self.symbol_table[f_name].parameters[0]
-                    self.create_frame(self.DMEM,f_name)
-
-                    self.write("LDC  4, 1(0)", ' Load value 1 in temporary register 4')
-                    self.DMEM -= 1
-                    self.write("SUB  5, 5, 4", ' Decrement memory offset')
-
-                    args = exp_children[1].children
-                    # Store function arguments
-                    for a in args:
-                        self.instruction_rules(a,curr_function)
-                        self.write("ST   1, 0(5)", " Store parameter into memory")
-                        self.write("LDC  4, 1(0)", " Load value 1 into temporary register 4")
-                        self.DMEM -= 1
-                        self.write("SUB  5, 5, 4", " Decrement memory offset")
-
-                    self.write("LDC  4, 1(0)", ' Load value 1 in temporary register 4')
-                    self.write("SUB  5, 5, 4", ' Decrement memory offset')
-                    self.DMEM -= 1
-
-                    # Jump to function
-                    self.write(f"LDA  7, @{f_name}(0)", f' Load address of {f_name} IMEM block - branch to function')
-                    self.placeholders[temp_label] = self.line_counter
-                    self.write("LD   1, 0(5)", ' Load return value from DMEM into register 1')
-
-                    offset = num_params + 2
-                    self.write(f"LDC  4, {offset}(0)", ' Load value of parameters + return value into temporary register 4')
-                    self.write("ADD  5, 5, 4", ' Increment memory offset')
-                    self.DMEM += offset
+                    pass
 
             case "INTEGER-LITERAL":
                 value = body.value
@@ -217,6 +152,8 @@ class Generator():
                     value = 0
 
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+                val_loc = self.stack_frames[-1].val_loc
+                self.write(f"ST   1, 0({val_loc})"," Store value into return value in stack frame")
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
