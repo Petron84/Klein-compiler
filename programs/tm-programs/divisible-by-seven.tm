@@ -14,12 +14,12 @@
 13 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 14 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 15 : DIV  1, 2, 1 ;  R1 = left / right
-16 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='/', children=[Tree Node('IDENTIFIER', value='n',line=2), Tree Node('INTEGER-LITERAL', value='10',line=2)],line=2) into callee frame
+16 : ST 1, 1(3) ;  Store argument 0 into callee frame
 17 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'MOD'
 18 : LD   1, 1(5) ;  Load parameter 'n' into R1
-19 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=2) into callee frame
+19 : ST 1, 1(3) ;  Store argument 0 into callee frame
 20 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-21 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='10',line=2) into callee frame
+21 : ST 1, 2(3) ;  Store argument 1 into callee frame
 22 : LDA 6, 26(7) ;  Compute return address
 23 : ST 6, 0(3) ;  Store return address in callee frame
 24 : ADD  5, 3, 0 ;  Update pointer
@@ -27,7 +27,7 @@
 26 : LD 1, 3(5) ;  Load callee return value into R1
 27 : LDC  4, 3(0) ;  Load frame size
 28 : SUB  5, 5, 4 ;  Restore pointer
-29 : ST 1, 2(3) ;  Store argument Tree Node('FUNCTION-CALL', children=[Tree Node('IDENTIFIER', value='MOD',line=2), Tree Node('ARGUMENT-LIST', children=[Tree Node('IDENTIFIER', value='n',line=2), Tree Node('INTEGER-LITERAL', value='10',line=2)],line=2)],line=2) into callee frame
+29 : ST 1, 2(3) ;  Store argument 1 into callee frame
 30 : LDA 6, 34(7) ;  Compute return address
 31 : ST 6, 0(3) ;  Store return address in callee frame
 32 : ADD  5, 3, 0 ;  Update pointer
@@ -108,7 +108,7 @@
 107 : LDA  7, 118(0) ;  Skip ELSE block
 108 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'main'
 109 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-110 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='diff',line=14) into callee frame
+110 : ST 1, 1(3) ;  Store argument 0 into callee frame
 111 : LDA 6, 115(7) ;  Compute return address
 112 : ST 6, 0(3) ;  Store return address in callee frame
 113 : ADD  5, 3, 0 ;  Update pointer
@@ -127,7 +127,7 @@
 126 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 127 : MUL  1, 2, 1 ;  R1 = left * right
 128 : SUB  1, 2, 1 ;  R1 = left - right
-129 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='left',line=5), Tree Node('BINARY-EXPRESSION', value='*', children=[Tree Node('IDENTIFIER', value='right',line=5), Tree Node('INTEGER-LITERAL', value='2',line=5)],line=5)],line=5) into callee frame
+129 : ST 1, 1(3) ;  Store argument 0 into callee frame
 130 : LDA 6, 134(7) ;  Compute return address
 131 : ST 6, 0(3) ;  Store return address in callee frame
 132 : ADD  5, 3, 0 ;  Update pointer

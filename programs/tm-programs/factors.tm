@@ -11,9 +11,9 @@
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'loopToN'
 12 : LD   1, 1(5) ;  Load parameter 'n' into R1
-13 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=4) into callee frame
+13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-15 : ST 1, 2(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='1',line=4) into callee frame
+15 : ST 1, 2(3) ;  Store argument 1 into callee frame
 16 : LDA 6, 20(7) ;  Compute return address
 17 : ST 6, 0(3) ;  Store return address in callee frame
 18 : ADD  5, 3, 0 ;  Update pointer
@@ -41,9 +41,9 @@
 40 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 41 : LD   1, 2(5) ;  Load parameter 'den' into R1
 42 : SUB  1, 2, 1 ;  R1 = left - right
-43 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='num',line=29), Tree Node('IDENTIFIER', value='den',line=29)],line=29) into callee frame
+43 : ST 1, 1(3) ;  Store argument 0 into callee frame
 44 : LD   1, 2(5) ;  Load parameter 'den' into R1
-45 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='den',line=29) into callee frame
+45 : ST 1, 2(3) ;  Store argument 1 into callee frame
 46 : LDA 6, 50(7) ;  Compute return address
 47 : ST 6, 0(3) ;  Store return address in callee frame
 48 : ADD  5, 3, 0 ;  Update pointer
@@ -56,9 +56,9 @@
 55 : LDA  7, 0(6) ;  Return to caller
 56 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'remainder'
 57 : LD   1, 2(5) ;  Load parameter 'b' into R1
-58 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=23) into callee frame
+58 : ST 1, 1(3) ;  Store argument 0 into callee frame
 59 : LD   1, 1(5) ;  Load parameter 'a' into R1
-60 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=23) into callee frame
+60 : ST 1, 2(3) ;  Store argument 1 into callee frame
 61 : LDA 6, 65(7) ;  Compute return address
 62 : ST 6, 0(3) ;  Store return address in callee frame
 63 : ADD  5, 3, 0 ;  Update pointer
@@ -87,12 +87,12 @@
 86 : ST   1, 3(5) ;  Store function result into stack frame
 87 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'loopToN'
 88 : LD   1, 1(5) ;  Load parameter 'n' into R1
-89 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=20) into callee frame
+89 : ST 1, 1(3) ;  Store argument 0 into callee frame
 90 : LD   1, 2(5) ;  Load parameter 'current' into R1
 91 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 92 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 93 : ADD  1, 2, 1 ;  R1 = left + right
-94 : ST 1, 2(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='current',line=20), Tree Node('INTEGER-LITERAL', value='1',line=20)],line=20) into callee frame
+94 : ST 1, 2(3) ;  Store argument 1 into callee frame
 95 : LDA 6, 99(7) ;  Compute return address
 96 : ST 6, 0(3) ;  Store return address in callee frame
 97 : ADD  5, 3, 0 ;  Update pointer
@@ -105,9 +105,9 @@
 104 : LDA  7, 0(6) ;  Return to caller
 105 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divides'
 106 : LD   1, 2(5) ;  Load parameter 'current' into R1
-107 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='current',line=13) into callee frame
+107 : ST 1, 1(3) ;  Store argument 0 into callee frame
 108 : LD   1, 1(5) ;  Load parameter 'n' into R1
-109 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=13) into callee frame
+109 : ST 1, 2(3) ;  Store argument 1 into callee frame
 110 : LDA 6, 114(7) ;  Compute return address
 111 : ST 6, 0(3) ;  Store return address in callee frame
 112 : ADD  5, 3, 0 ;  Update pointer
@@ -118,9 +118,9 @@
 117 : JEQ  1, 131(0) ;  If condition is false, jump to ELSE
 118 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'printAndLoop'
 119 : LD   1, 1(5) ;  Load parameter 'n' into R1
-120 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=14) into callee frame
+120 : ST 1, 1(3) ;  Store argument 0 into callee frame
 121 : LD   1, 2(5) ;  Load parameter 'current' into R1
-122 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='current',line=14) into callee frame
+122 : ST 1, 2(3) ;  Store argument 1 into callee frame
 123 : LDA 6, 127(7) ;  Compute return address
 124 : ST 6, 0(3) ;  Store return address in callee frame
 125 : ADD  5, 3, 0 ;  Update pointer
@@ -131,12 +131,12 @@
 130 : LDA  7, 146(0) ;  Skip ELSE block
 131 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'loopToN'
 132 : LD   1, 1(5) ;  Load parameter 'n' into R1
-133 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=16) into callee frame
+133 : ST 1, 1(3) ;  Store argument 0 into callee frame
 134 : LD   1, 2(5) ;  Load parameter 'current' into R1
 135 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 136 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 137 : ADD  1, 2, 1 ;  R1 = left + right
-138 : ST 1, 2(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='current',line=16), Tree Node('INTEGER-LITERAL', value='1',line=16)],line=16) into callee frame
+138 : ST 1, 2(3) ;  Store argument 1 into callee frame
 139 : LDA 6, 143(7) ;  Compute return address
 140 : ST 6, 0(3) ;  Store return address in callee frame
 141 : ADD  5, 3, 0 ;  Update pointer
@@ -160,9 +160,9 @@
 159 : LDA  7, 172(0) ;  Skip ELSE block
 160 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'testAndLoop'
 161 : LD   1, 1(5) ;  Load parameter 'n' into R1
-162 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=10) into callee frame
+162 : ST 1, 1(3) ;  Store argument 0 into callee frame
 163 : LD   1, 2(5) ;  Load parameter 'current' into R1
-164 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='current',line=10) into callee frame
+164 : ST 1, 2(3) ;  Store argument 1 into callee frame
 165 : LDA 6, 169(7) ;  Compute return address
 166 : ST 6, 0(3) ;  Store return address in callee frame
 167 : ADD  5, 3, 0 ;  Update pointer

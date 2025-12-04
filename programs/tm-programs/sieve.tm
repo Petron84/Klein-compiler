@@ -11,9 +11,9 @@
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'sieveAt'
 12 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-13 : ST 1, 1(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=4) into callee frame
+13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LD   1, 1(5) ;  Load parameter 'n' into R1
-15 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=4) into callee frame
+15 : ST 1, 2(3) ;  Store argument 1 into callee frame
 16 : LDA 6, 20(7) ;  Compute return address
 17 : ST 6, 0(3) ;  Store return address in callee frame
 18 : ADD  5, 3, 0 ;  Update pointer
@@ -41,9 +41,9 @@
 40 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 41 : LD   1, 2(5) ;  Load parameter 'den' into R1
 42 : SUB  1, 2, 1 ;  R1 = left - right
-43 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='-', children=[Tree Node('IDENTIFIER', value='num',line=34), Tree Node('IDENTIFIER', value='den',line=34)],line=34) into callee frame
+43 : ST 1, 1(3) ;  Store argument 0 into callee frame
 44 : LD   1, 2(5) ;  Load parameter 'den' into R1
-45 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='den',line=34) into callee frame
+45 : ST 1, 2(3) ;  Store argument 1 into callee frame
 46 : LDA 6, 50(7) ;  Compute return address
 47 : ST 6, 0(3) ;  Store return address in callee frame
 48 : ADD  5, 3, 0 ;  Update pointer
@@ -56,9 +56,9 @@
 55 : LDA  7, 0(6) ;  Return to caller
 56 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'rem'
 57 : LD   1, 2(5) ;  Load parameter 'b' into R1
-58 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=28) into callee frame
+58 : ST 1, 1(3) ;  Store argument 0 into callee frame
 59 : LD   1, 1(5) ;  Load parameter 'a' into R1
-60 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=28) into callee frame
+60 : ST 1, 2(3) ;  Store argument 1 into callee frame
 61 : LDA 6, 65(7) ;  Compute return address
 62 : ST 6, 0(3) ;  Store return address in callee frame
 63 : ADD  5, 3, 0 ;  Update pointer
@@ -87,9 +87,9 @@
 86 : JEQ  1, 117(0) ;  If condition is false, jump to ELSE
 87 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divides'
 88 : LD   1, 1(5) ;  Load parameter 'i' into R1
-89 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='i',line=23) into callee frame
+89 : ST 1, 1(3) ;  Store argument 0 into callee frame
 90 : LD   1, 2(5) ;  Load parameter 'n' into R1
-91 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=23) into callee frame
+91 : ST 1, 2(3) ;  Store argument 1 into callee frame
 92 : LDA 6, 96(7) ;  Compute return address
 93 : ST 6, 0(3) ;  Store return address in callee frame
 94 : ADD  5, 3, 0 ;  Update pointer
@@ -103,9 +103,9 @@
 102 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 103 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 104 : ADD  1, 2, 1 ;  R1 = left + right
-105 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='i',line=23), Tree Node('INTEGER-LITERAL', value='1',line=23)],line=23) into callee frame
+105 : ST 1, 1(3) ;  Store argument 0 into callee frame
 106 : LD   1, 2(5) ;  Load parameter 'n' into R1
-107 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=23) into callee frame
+107 : ST 1, 2(3) ;  Store argument 1 into callee frame
 108 : LDA 6, 112(7) ;  Compute return address
 109 : ST 6, 0(3) ;  Store return address in callee frame
 110 : ADD  5, 3, 0 ;  Update pointer
@@ -121,9 +121,9 @@
 120 : LDA  7, 0(6) ;  Return to caller
 121 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
 122 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-123 : ST 1, 1(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='2',line=19) into callee frame
+123 : ST 1, 1(3) ;  Store argument 0 into callee frame
 124 : LD   1, 1(5) ;  Load parameter 'n' into R1
-125 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='n',line=19) into callee frame
+125 : ST 1, 2(3) ;  Store argument 1 into callee frame
 126 : LDA 6, 130(7) ;  Compute return address
 127 : ST 6, 0(3) ;  Store return address in callee frame
 128 : ADD  5, 3, 0 ;  Update pointer
@@ -138,7 +138,7 @@
 137 : LDA  7, 0(6) ;  Return to caller
 138 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 139 : LD   1, 1(5) ;  Load parameter 'current' into R1
-140 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='current',line=15) into callee frame
+140 : ST 1, 1(3) ;  Store argument 0 into callee frame
 141 : LDA 6, 145(7) ;  Compute return address
 142 : ST 6, 0(3) ;  Store return address in callee frame
 143 : ADD  5, 3, 0 ;  Update pointer
@@ -163,9 +163,9 @@
 162 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 163 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 164 : ADD  1, 2, 1 ;  R1 = left + right
-165 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='current',line=16), Tree Node('INTEGER-LITERAL', value='1',line=16)],line=16) into callee frame
+165 : ST 1, 1(3) ;  Store argument 0 into callee frame
 166 : LD   1, 2(5) ;  Load parameter 'max' into R1
-167 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='max',line=16) into callee frame
+167 : ST 1, 2(3) ;  Store argument 1 into callee frame
 168 : LDA 6, 172(7) ;  Compute return address
 169 : ST 6, 0(3) ;  Store return address in callee frame
 170 : ADD  5, 3, 0 ;  Update pointer
@@ -189,9 +189,9 @@
 188 : LDA  7, 201(0) ;  Skip ELSE block
 189 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'doSieveAt'
 190 : LD   1, 1(5) ;  Load parameter 'current' into R1
-191 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='current',line=10) into callee frame
+191 : ST 1, 1(3) ;  Store argument 0 into callee frame
 192 : LD   1, 2(5) ;  Load parameter 'max' into R1
-193 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='max',line=10) into callee frame
+193 : ST 1, 2(3) ;  Store argument 1 into callee frame
 194 : LDA 6, 198(7) ;  Compute return address
 195 : ST 6, 0(3) ;  Store return address in callee frame
 196 : ADD  5, 3, 0 ;  Update pointer

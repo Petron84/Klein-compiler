@@ -184,7 +184,7 @@ class Generator:
 
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"ST 1, {i+1}(3)", f" Store argument {arg} into callee frame")
+                        self.write(f"ST 1, {i+1}(3)", f" Store argument {i} into callee frame")
 
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1

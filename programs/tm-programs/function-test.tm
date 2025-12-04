@@ -13,9 +13,9 @@
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'eval_and_print'
 14 : LD   1, 1(5) ;  Load parameter 'a' into R1
-15 : ST 1, 1(3) ;  Store argument Tree Node('IDENTIFIER', value='a',line=2) into callee frame
+15 : ST 1, 1(3) ;  Store argument 0 into callee frame
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
-17 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='b',line=2) into callee frame
+17 : ST 1, 2(3) ;  Store argument 1 into callee frame
 18 : LDA 6, 22(7) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer

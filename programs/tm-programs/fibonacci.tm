@@ -23,13 +23,13 @@
 22 : LDA  7, 40(0) ;  Skip ELSE block
 23 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'addNext'
 24 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-25 : ST 1, 1(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='1',line=7) into callee frame
+25 : ST 1, 1(3) ;  Store argument 0 into callee frame
 26 : LD   1, 1(5) ;  Load parameter 'elementWanted' into R1
-27 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='elementWanted',line=7) into callee frame
+27 : ST 1, 2(3) ;  Store argument 1 into callee frame
 28 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-29 : ST 1, 3(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='0',line=7) into callee frame
+29 : ST 1, 3(3) ;  Store argument 2 into callee frame
 30 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-31 : ST 1, 4(3) ;  Store argument Tree Node('INTEGER-LITERAL', value='1',line=7) into callee frame
+31 : ST 1, 4(3) ;  Store argument 3 into callee frame
 32 : LDA 6, 36(7) ;  Compute return address
 33 : ST 6, 0(3) ;  Store return address in callee frame
 34 : ADD  5, 3, 0 ;  Update pointer
@@ -57,16 +57,16 @@
 56 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 57 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 58 : ADD  1, 2, 1 ;  R1 = left + right
-59 : ST 1, 1(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='currentElement',line=16), Tree Node('INTEGER-LITERAL', value='1',line=16)],line=16) into callee frame
+59 : ST 1, 1(3) ;  Store argument 0 into callee frame
 60 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
-61 : ST 1, 2(3) ;  Store argument Tree Node('IDENTIFIER', value='elementWanted',line=16) into callee frame
+61 : ST 1, 2(3) ;  Store argument 1 into callee frame
 62 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
-63 : ST 1, 3(3) ;  Store argument Tree Node('IDENTIFIER', value='currentSum',line=17) into callee frame
+63 : ST 1, 3(3) ;  Store argument 2 into callee frame
 64 : LD   1, 3(5) ;  Load parameter 'previousSum' into R1
 65 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 66 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
 67 : ADD  1, 2, 1 ;  R1 = left + right
-68 : ST 1, 4(3) ;  Store argument Tree Node('BINARY-EXPRESSION', value='+', children=[Tree Node('IDENTIFIER', value='previousSum',line=18), Tree Node('IDENTIFIER', value='currentSum',line=19)],line=19) into callee frame
+68 : ST 1, 4(3) ;  Store argument 3 into callee frame
 69 : LDA 6, 73(7) ;  Compute return address
 70 : ST 6, 0(3) ;  Store return address in callee frame
 71 : ADD  5, 3, 0 ;  Update pointer
