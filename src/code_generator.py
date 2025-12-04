@@ -229,10 +229,10 @@ class Generator():
                 num_params=  params[0]
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = num_params - (i+1) + 1
-                        mem_loc = self.stack_frames[curr_function].address + offset
-                        self.write(f"LDC  3, {mem_loc}(0)", f"# Store the target memory location for the parameter {exp_value}")
-                        self.write("LD   1, 0(3)", f"# Load parameter {exp_value} value into register 1")
+                        offset = num_params - i
+                        self.write(f"LDC   4, {offset}(0)", f"# Load offset for parameter {exp_value} into register 3")
+                        self.write("ADD  3, 5, 4", f"# Calculate target memory location for parameter {exp_value}")
+                        self.write("LD  1, 0(3)", f"# Load parameter {exp_value} value into register 1")
                         break
 
             case "UNARY-EXPRESSION":
