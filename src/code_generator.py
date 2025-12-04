@@ -74,7 +74,6 @@ class Generator:
             self.write("HALT 0, 0, 0", ' Terminate program execution if no main function found.')
             self.write("------PRINT------",header=True)
             self.placeholders["@print"] = self.line_counter
-            self.write("LD   1, 1(5)", " Load return value into register 1")
             self.write("OUT  1, 0, 0", ' Hardcoded print function')
             self.write("LD   6, 0(5)", ' Load return addess from stack frame.')
             self.write("LDA  7, 0(6)",  ' Jump to return address.')
@@ -161,7 +160,7 @@ class Generator:
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.load_return(value)
+                self.load_return(value,callee)
             
             case "BOOLEAN-LITERAL":
                 value = body.value
@@ -169,7 +168,7 @@ class Generator:
                     value = 1
                 else:
                     value = 0
-                self.load_return(value)
+                self.load_return(value,callee)
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
