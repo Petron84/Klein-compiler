@@ -117,7 +117,6 @@ class Generator:
         self.placeholders['@main'] = self.line_counter
 
         for exp in main_body:
-            self.temp_sp = 0
             self.instruction_rules(exp,"main")
 
         frame = self.stack_frames.pop()
@@ -138,7 +137,6 @@ class Generator:
 
             self.create_frame(f)
             for exp in body:
-                self.temp_sp = 0
                 self.instruction_rules(exp, f, callee=True)       
                 self.write(f"ST   1, {offset}(5)", " Store function result into stack frame")
             self.write("LD   6, 0(5)", " Load return address")
@@ -150,30 +148,6 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
-    def subtree_check(self,node):
-        stack = [node]
-        while stack:
-            n = stack.pop()
-            if getattr(n, "type", None) == "FUNCTION-CALL":
-                return True
-            stack.extend(getattr(n, "children", []))
-        return False
-    
-    def temp_spill(self, value, curr_function):
-        if not hasattr(self, 'temp_sp'):
-            self.temp_sp = 0
-
-        curr_params = self.symbol_table[curr_function].parameters[0]
-        offset = curr_params + 2 + self.temp_sp
-        self.write(f"ST   {value}, {offset}(5)", " Spill Temporary")
-        self.temp_sp += 1
-    
-    def temp_restore(self, value, curr_function):
-        self.temp_sp -= 1
-        curr_params = self.symbol_table[curr_function].parameters[0]
-        offset = curr_params + 2 + self.temp_sp
-        self.write(f"LD   {value}, {offset}(5)", " Restore Temporary")
-    
     def instruction_rules(self,body,curr_function,callee=False):
         exp_type = body.type
         exp_value = body.value
@@ -207,42 +181,37 @@ class Generator:
                     self.write("SUB  5, 5, 4", " Restore pointer")
                     
                 else:
-                    # Evaluate all argument expressions first and spill each to caller scratch.
+                    
                     args = exp_children[1].children
-                    arg_count = len(args)
-                    for arg in args:
-                        # Compute argument value into R1 (may invoke nested calls safely)
-                        self.instruction_rules(arg, curr_function, callee=True)
-                        # Spill R1 into caller's ephemeral scratch: P+2, P+3, ...
-                        self.temp_spill(1, curr_function)
 
-                    # Now write all arguments into the callee frame in one batch.
-                    self.write(f"LDA 4, {callee_size}(5)", "Restore Callee frame base")
-                    # Restore spills in LIFO, store to callee slots from last to first
-                    for i in range(arg_count - 1, -1, -1):
-                        self.temp_restore(1, curr_function)                      # R1 <- arg_i
+                    for i, arg in enumerate(args):
+                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.write(f"LDA  4, {callee_size}(5)", "Restore Callee frame base")
                         self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
 
-                    # Set return address, push callee, call
-                    temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {callee_size}(5)", "Restore Call frame base")
+                    temp_label = f"!return_{self.label_id}"
+                    self.label_id += 1
+
+                    self.write(f"LDA  4, {callee_size}(5)", "Restore Call frame base")
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
                     self.write("ST 6, 0(4)", " Store return address in callee frame")
-                    self.write("ADD 5, 4, 0", " Update pointer")
+
+                    self.write("ADD  5, 4, 0", " Update pointer")
+
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
+
                     self.placeholders[temp_label] = self.line_counter
 
-                    # Read callee return value, restore caller pointer
                     call_offset = callee_params + 1
+
                     self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
-                    self.write(f"LDC 4, {callee_size}(0)", " Load frame size")
-                    self.write("SUB 5, 5, 4", " Restore pointer")
 
-                    # If this call is the result of the top-level expression, store it
-                    if not callee:
-                        ret_off = caller_params + 1
-                        self.write(f"ST 1, {ret_off}(5)", " Store result into current frame's return slot")
+                    self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
+                    self.write("SUB  5, 5, 4", " Restore pointer")
 
+                    if not callee: # Only store as return value if it is a function return
+                        offset = caller_params + 1
+                        self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "INTEGER-LITERAL":
                 value = body.value
@@ -296,68 +265,41 @@ class Generator:
                     self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "BINARY-EXPRESSION":
-                def combine(op):
-                    match op:
-                        case "+":
-                            self.write("ADD  1, 2, 1", " R1 = left + right")
-                        case "-":
-                            self.write("SUB  1, 2, 1", " R1 = left - right")
-                        case "*":
-                            self.write("MUL  1, 2, 1", " R1 = left * right")
-                        case "/":
-                            self.write("DIV  1, 2, 1", " R1 = left / right")
-                        case "and":
-                            self.write("MUL  1, 2, 1", " R1 = left AND right")
-                        case "or":
-                            self.write("ADD  1, 2, 1", " R1 = left OR right")
-                        case "=":
-                            self.write("SUB  1, 2, 1", " left - right for equality check")
-                            self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
-                            self.write("LDC  1, 0(0)", " false")
-                            self.write("LDA  7, 1(7)", " skip setting true")
-                            self.write("LDC  1, 1(0)", " true")
-                        case "<":
-                            self.write("SUB  1, 2, 1", " left - right for less-than check")
-                            self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
-                            self.write("LDC  1, 0(0)", " false")
-                            self.write("LDA  7, 1(7)", " skip setting true")
-                            self.write("LDC  1, 1(0)", " true")
-
                 left_exp = exp_children[0]
                 right_exp = exp_children[1]
                 curr_params = self.symbol_table[curr_function].parameters[0]
 
-                right_calls = self.subtree_check(right_exp)
-                left_calls = self.subtree_check(left_exp)
+                self.instruction_rules(left_exp, curr_function, callee=True)
+                self.write("ADD  3, 1, 0"," Store left operand into temporary register")
 
-                if right_calls and not left_calls:
-                    self.instruction_rules(left_exp, curr_function, callee=True)
-                    self.temp_spill(1, curr_function)
-                    self.instruction_rules(right_exp, curr_function, callee=True)
-                    self.temp_restore(2, curr_function)
-                    combine(exp_value)
+                self.instruction_rules(right_exp, curr_function, callee=True)
+                self.write(f"ADD  2, 3, 0", " Restore left operand")
 
-                elif left_calls and not right_calls:
-                    self.instruction_rules(right_exp, curr_function, callee=True)
-                    self.write("ADD  3, 1, 0", " Save right operand")
-                    self.instruction_rules(left_exp, curr_function, callee=True)
-                    self.write("ADD  2, 3, 0", " Restore right operand")
-                    combine(exp_value)
-
-                else:
-                    if not left_calls and not right_calls:
-                        self.instruction_rules(left_exp, curr_function, callee=True)
-                        self.write("ADD  3, 1, 0", " Save left operand")
-                        self.instruction_rules(right_exp, curr_function, callee=True)
-                        self.write("ADD  2, 3, 0", " restore left operand")
-                        combine(exp_value)
-
-                    else:
-                        self.instruction_rules(left_exp, curr_function, callee=True)
-                        self.temp_spill(1, curr_function)
-                        self.instruction_rules(right_exp, curr_function, callee=True)
-                        self.temp_restore(2, curr_function)
-                        combine(exp_value)
+                match exp_value:
+                    case "+":
+                        self.write("ADD  1, 2, 1", " R1 = left + right")
+                    case "-":
+                        self.write("SUB  1, 2, 1", " R1 = left - right")
+                    case "*":
+                        self.write("MUL  1, 2, 1", " R1 = left * right")
+                    case "/":
+                        self.write("DIV  1, 2, 1", " R1 = left / right")
+                    case "and":
+                        self.write("MUL  1, 2, 1", " R1 = left AND right")
+                    case "or":
+                        self.write("ADD  1, 2, 1", " R1 = left OR right")
+                    case "=":
+                        self.write("SUB  1, 2, 1", " left - right for equality check")
+                        self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
+                        self.write("LDC  1, 0(0)", " false")
+                        self.write("LDA  7, 1(7)", " skip setting true")
+                        self.write("LDC  1, 1(0)", " true")
+                    case "<":
+                        self.write("SUB  1, 2, 1", " left - right for less-than check")
+                        self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
+                        self.write("LDC  1, 0(0)", " false")
+                        self.write("LDA  7, 1(7)", " skip setting true")
+                        self.write("LDC  1, 1(0)", " true")
 
                 if not callee: # Only store as return value if it is a function return
                     offset = curr_params + 1
