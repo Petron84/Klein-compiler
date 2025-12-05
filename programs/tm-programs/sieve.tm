@@ -21,8 +21,8 @@
 20 : ADD  5, 4, 0 ;  Update pointer
 21 : LDA 7, 200(0) ;  Call sieveAt
 22 : LD 1, 3(5) ;  Load callee return value into R1
-23 : LDC  4_original, 4(0) ;  Load frame size
-24 : SUB  5, 5, 4_original ;  Restore pointer
+23 : LDC  4, 4(0) ;  Load frame size
+24 : SUB  5, 5, 4 ;  Restore pointer
 25 : ST 1, 2(5) ;  Store result into current frame's return slot
 26 : LD   1, 2(5) ;  Load return value into register 1
 27 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -55,8 +55,8 @@
 54 : ADD  5, 4, 0 ;  Update pointer
 55 : LDA 7, 29(0) ;  Call rem
 56 : LD 1, 3(5) ;  Load callee return value into R1
-57 : LDC  4_original, 4(0) ;  Load frame size
-58 : SUB  5, 5, 4_original ;  Restore pointer
+57 : LDC  4, 4(0) ;  Load frame size
+58 : SUB  5, 5, 4 ;  Restore pointer
 59 : ST   1, 3(5) ;  Store function result into stack frame
 60 : LD   6, 0(5) ;  Load return address
 61 : LDA  7, 0(6) ;  Return to caller
@@ -72,8 +72,8 @@
 71 : ADD  5, 4, 0 ;  Update pointer
 72 : LDA 7, 29(0) ;  Call rem
 73 : LD 1, 3(5) ;  Load callee return value into R1
-74 : LDC  4_original, 4(0) ;  Load frame size
-75 : SUB  5, 5, 4_original ;  Restore pointer
+74 : LDC  4, 4(0) ;  Load frame size
+75 : SUB  5, 5, 4 ;  Restore pointer
 76 : LDC  3, 1(0) ;  Store left operand into temporary register
 77 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 78 : LDC  2, 3(0) ;  Restore left operand
@@ -107,8 +107,8 @@
 106 : ADD  5, 4, 0 ;  Update pointer
 107 : LDA 7, 62(0) ;  Call divides
 108 : LD 1, 3(5) ;  Load callee return value into R1
-109 : LDC  4_original, 4(0) ;  Load frame size
-110 : SUB  5, 5, 4_original ;  Restore pointer
+109 : LDC  4, 4(0) ;  Load frame size
+110 : SUB  5, 5, 4 ;  Restore pointer
 111 : LDC  3, 1(0) ;  Store left operand into temporary register
 112 : LD   1, 1(5) ;  Load parameter 'i' into R1
 113 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -126,8 +126,8 @@
 125 : ADD  5, 4, 0 ;  Update pointer
 126 : LDA 7, 87(0) ;  Call hasDivisorFrom
 127 : LD 1, 3(5) ;  Load callee return value into R1
-128 : LDC  4_original, 4(0) ;  Load frame size
-129 : SUB  5, 5, 4_original ;  Restore pointer
+128 : LDC  4, 4(0) ;  Load frame size
+129 : SUB  5, 5, 4 ;  Restore pointer
 130 : LDC  2, 3(0) ;  Restore left operand
 131 : ADD  1, 2, 1 ;  R1 = left OR right
 132 : LDA  7, 134(0) ;  Skip ELSE block
@@ -147,8 +147,8 @@
 146 : ADD  5, 4, 0 ;  Update pointer
 147 : LDA 7, 87(0) ;  Call hasDivisorFrom
 148 : LD 1, 3(5) ;  Load callee return value into R1
-149 : LDC  4_original, 4(0) ;  Load frame size
-150 : SUB  5, 5, 4_original ;  Restore pointer
+149 : LDC  4, 4(0) ;  Load frame size
+150 : SUB  5, 5, 4 ;  Restore pointer
 151 : LDC  2, 1(0) ;  Load 1 into R2
 152 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
 153 : ST   1, 2(5) ;  Store function result into stack frame
@@ -163,8 +163,8 @@
 162 : ADD  5, 4, 0 ;  Update pointer
 163 : LDA 7, 137(0) ;  Call isPrime
 164 : LD 1, 2(5) ;  Load callee return value into R1
-165 : LDC  4_original, 3(0) ;  Load frame size
-166 : SUB  5, 5, 4_original ;  Restore pointer
+165 : LDC  4, 3(0) ;  Load frame size
+166 : SUB  5, 5, 4 ;  Restore pointer
 167 : JEQ  1, 170(0) ;  If condition is false, jump to ELSE
 168 : LD   1, 1(5) ;  Load parameter 'current' into R1
 169 : LDA  7, 171(0) ;  Skip ELSE block
@@ -174,8 +174,8 @@
 173 : ST   6, 0(4) ;  Store return address
 174 : ADD  5, 4, 0 ;  Updated Pointer
 175 : LDA  7, 8(0) ; Call print
-176 : LDC  4_original, 3(0) ;  Load frame size
-177 : SUB  5, 5, 4_original ;  Restore pointer
+176 : LDC  4, 3(0) ;  Load frame size
+177 : SUB  5, 5, 4 ;  Restore pointer
 178 : ST   1, 3(5) ;  Store function result into stack frame
 179 : LD   1, 1(5) ;  Load parameter 'current' into R1
 180 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -193,8 +193,8 @@
 192 : ADD  5, 4, 0 ;  Update pointer
 193 : LDA 7, 200(0) ;  Call sieveAt
 194 : LD 1, 3(5) ;  Load callee return value into R1
-195 : LDC  4_original, 4(0) ;  Load frame size
-196 : SUB  5, 5, 4_original ;  Restore pointer
+195 : LDC  4, 4(0) ;  Load frame size
+196 : SUB  5, 5, 4 ;  Restore pointer
 197 : ST   1, 3(5) ;  Store function result into stack frame
 198 : LD   6, 0(5) ;  Load return address
 199 : LDA  7, 0(6) ;  Return to caller
@@ -222,8 +222,8 @@
 221 : ADD  5, 4, 0 ;  Update pointer
 222 : LDA 7, 156(0) ;  Call doSieveAt
 223 : LD 1, 3(5) ;  Load callee return value into R1
-224 : LDC  4_original, 4(0) ;  Load frame size
-225 : SUB  5, 5, 4_original ;  Restore pointer
+224 : LDC  4, 4(0) ;  Load frame size
+225 : SUB  5, 5, 4 ;  Restore pointer
 226 : ST   1, 3(5) ;  Store function result into stack frame
 227 : LD   6, 0(5) ;  Load return address
 228 : LDA  7, 0(6) ;  Return to caller

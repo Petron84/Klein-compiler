@@ -13,8 +13,8 @@
 12 : ST   6, 0(4) ;  Store return address
 13 : ADD  5, 4, 0 ;  Updated Pointer
 14 : LDA  7, 6(0) ; Call print
-15 : LDC  4_original, 3(0) ;  Load frame size
-16 : SUB  5, 5, 4_original ;  Restore pointer
+15 : LDC  4, 3(0) ;  Load frame size
+16 : SUB  5, 5, 4 ;  Restore pointer
 17 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 18 : ST 1, 1(5) ;  Store result into current frame's return slot
 19 : LD   1, 1(5) ;  Load return value into register 1

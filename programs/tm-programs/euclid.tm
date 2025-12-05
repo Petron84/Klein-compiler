@@ -23,8 +23,8 @@
 22 : ADD  5, 4, 0 ;  Update pointer
 23 : LDA 7, 31(0) ;  Call gcd
 24 : LD 1, 3(5) ;  Load callee return value into R1
-25 : LDC  4_original, 4(0) ;  Load frame size
-26 : SUB  5, 5, 4_original ;  Restore pointer
+25 : LDC  4, 4(0) ;  Load frame size
+26 : SUB  5, 5, 4 ;  Restore pointer
 27 : ST 1, 3(5) ;  Store result into current frame's return slot
 28 : LD   1, 3(5) ;  Load return value into register 1
 29 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -56,8 +56,8 @@
 55 : ADD  5, 4, 0 ;  Update pointer
 56 : LDA 7, 73(0) ;  Call remainder
 57 : LD 1, 3(5) ;  Load callee return value into R1
-58 : LDC  4_original, 4(0) ;  Load frame size
-59 : SUB  5, 5, 4_original ;  Restore pointer
+58 : LDC  4, 4(0) ;  Load frame size
+59 : SUB  5, 5, 4 ;  Restore pointer
 60 : LDA  4, 4(5) ; Restore Callee frame base
 61 : ST 1, 2(4) ;  Store argument 1 into callee frame
 62 : LDA  4, 4(5) ; Restore Call frame base
@@ -66,8 +66,8 @@
 65 : ADD  5, 4, 0 ;  Update pointer
 66 : LDA 7, 31(0) ;  Call gcd
 67 : LD 1, 3(5) ;  Load callee return value into R1
-68 : LDC  4_original, 4(0) ;  Load frame size
-69 : SUB  5, 5, 4_original ;  Restore pointer
+68 : LDC  4, 4(0) ;  Load frame size
+69 : SUB  5, 5, 4 ;  Restore pointer
 70 : ST   1, 3(5) ;  Store function result into stack frame
 71 : LD   6, 0(5) ;  Load return address
 72 : LDA  7, 0(6) ;  Return to caller
@@ -99,8 +99,8 @@
 98 : ADD  5, 4, 0 ;  Update pointer
 99 : LDA 7, 73(0) ;  Call remainder
 100 : LD 1, 3(5) ;  Load callee return value into R1
-101 : LDC  4_original, 4(0) ;  Load frame size
-102 : SUB  5, 5, 4_original ;  Restore pointer
+101 : LDC  4, 4(0) ;  Load frame size
+102 : SUB  5, 5, 4 ;  Restore pointer
 103 : ST   1, 3(5) ;  Store function result into stack frame
 104 : LD   6, 0(5) ;  Load return address
 105 : LDA  7, 0(6) ;  Return to caller

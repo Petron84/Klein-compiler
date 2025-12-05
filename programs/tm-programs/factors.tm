@@ -21,8 +21,8 @@
 20 : ADD  5, 4, 0 ;  Update pointer
 21 : LDA 7, 168(0) ;  Call loopToN
 22 : LD 1, 3(5) ;  Load callee return value into R1
-23 : LDC  4_original, 4(0) ;  Load frame size
-24 : SUB  5, 5, 4_original ;  Restore pointer
+23 : LDC  4, 4(0) ;  Load frame size
+24 : SUB  5, 5, 4 ;  Restore pointer
 25 : ST 1, 2(5) ;  Store result into current frame's return slot
 26 : LD   1, 2(5) ;  Load return value into register 1
 27 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -55,8 +55,8 @@
 54 : ADD  5, 4, 0 ;  Update pointer
 55 : LDA 7, 29(0) ;  Call remainder
 56 : LD 1, 3(5) ;  Load callee return value into R1
-57 : LDC  4_original, 4(0) ;  Load frame size
-58 : SUB  5, 5, 4_original ;  Restore pointer
+57 : LDC  4, 4(0) ;  Load frame size
+58 : SUB  5, 5, 4 ;  Restore pointer
 59 : ST   1, 3(5) ;  Store function result into stack frame
 60 : LD   6, 0(5) ;  Load return address
 61 : LDA  7, 0(6) ;  Return to caller
@@ -72,8 +72,8 @@
 71 : ADD  5, 4, 0 ;  Update pointer
 72 : LDA 7, 29(0) ;  Call remainder
 73 : LD 1, 3(5) ;  Load callee return value into R1
-74 : LDC  4_original, 4(0) ;  Load frame size
-75 : SUB  5, 5, 4_original ;  Restore pointer
+74 : LDC  4, 4(0) ;  Load frame size
+75 : SUB  5, 5, 4 ;  Restore pointer
 76 : LDC  3, 1(0) ;  Store left operand into temporary register
 77 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 78 : LDC  2, 3(0) ;  Restore left operand
@@ -91,8 +91,8 @@
 90 : ST   6, 0(4) ;  Store return address
 91 : ADD  5, 4, 0 ;  Updated Pointer
 92 : LDA  7, 8(0) ; Call print
-93 : LDC  4_original, 3(0) ;  Load frame size
-94 : SUB  5, 5, 4_original ;  Restore pointer
+93 : LDC  4, 3(0) ;  Load frame size
+94 : SUB  5, 5, 4 ;  Restore pointer
 95 : ST   1, 3(5) ;  Store function result into stack frame
 96 : LD   1, 1(5) ;  Load parameter 'n' into R1
 97 : LDA  4, 4(5) ; Restore Callee frame base
@@ -110,8 +110,8 @@
 109 : ADD  5, 4, 0 ;  Update pointer
 110 : LDA 7, 168(0) ;  Call loopToN
 111 : LD 1, 3(5) ;  Load callee return value into R1
-112 : LDC  4_original, 4(0) ;  Load frame size
-113 : SUB  5, 5, 4_original ;  Restore pointer
+112 : LDC  4, 4(0) ;  Load frame size
+113 : SUB  5, 5, 4 ;  Restore pointer
 114 : ST   1, 3(5) ;  Store function result into stack frame
 115 : LD   6, 0(5) ;  Load return address
 116 : LDA  7, 0(6) ;  Return to caller
@@ -127,8 +127,8 @@
 126 : ADD  5, 4, 0 ;  Update pointer
 127 : LDA 7, 62(0) ;  Call divides
 128 : LD 1, 3(5) ;  Load callee return value into R1
-129 : LDC  4_original, 4(0) ;  Load frame size
-130 : SUB  5, 5, 4_original ;  Restore pointer
+129 : LDC  4, 4(0) ;  Load frame size
+130 : SUB  5, 5, 4 ;  Restore pointer
 131 : JEQ  1, 147(0) ;  If condition is false, jump to ELSE
 132 : LD   1, 1(5) ;  Load parameter 'n' into R1
 133 : LDA  4, 4(5) ; Restore Callee frame base
@@ -142,8 +142,8 @@
 141 : ADD  5, 4, 0 ;  Update pointer
 142 : LDA 7, 87(0) ;  Call printAndLoop
 143 : LD 1, 3(5) ;  Load callee return value into R1
-144 : LDC  4_original, 4(0) ;  Load frame size
-145 : SUB  5, 5, 4_original ;  Restore pointer
+144 : LDC  4, 4(0) ;  Load frame size
+145 : SUB  5, 5, 4 ;  Restore pointer
 146 : LDA  7, 165(0) ;  Skip ELSE block
 147 : LD   1, 1(5) ;  Load parameter 'n' into R1
 148 : LDA  4, 4(5) ; Restore Callee frame base
@@ -161,8 +161,8 @@
 160 : ADD  5, 4, 0 ;  Update pointer
 161 : LDA 7, 168(0) ;  Call loopToN
 162 : LD 1, 3(5) ;  Load callee return value into R1
-163 : LDC  4_original, 4(0) ;  Load frame size
-164 : SUB  5, 5, 4_original ;  Restore pointer
+163 : LDC  4, 4(0) ;  Load frame size
+164 : SUB  5, 5, 4 ;  Restore pointer
 165 : ST   1, 3(5) ;  Store function result into stack frame
 166 : LD   6, 0(5) ;  Load return address
 167 : LDA  7, 0(6) ;  Return to caller
@@ -190,8 +190,8 @@
 189 : ADD  5, 4, 0 ;  Update pointer
 190 : LDA 7, 117(0) ;  Call testAndLoop
 191 : LD 1, 3(5) ;  Load callee return value into R1
-192 : LDC  4_original, 4(0) ;  Load frame size
-193 : SUB  5, 5, 4_original ;  Restore pointer
+192 : LDC  4, 4(0) ;  Load frame size
+193 : SUB  5, 5, 4 ;  Restore pointer
 194 : ST   1, 3(5) ;  Store function result into stack frame
 195 : LD   6, 0(5) ;  Load return address
 196 : LDA  7, 0(6) ;  Return to caller

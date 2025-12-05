@@ -28,8 +28,8 @@
 27 : ADD  5, 4, 0 ;  Update pointer
 28 : LDA 7, 46(0) ;  Call MOD
 29 : LD 1, 3(5) ;  Load callee return value into R1
-30 : LDC  4_original, 4(0) ;  Load frame size
-31 : SUB  5, 5, 4_original ;  Restore pointer
+30 : LDC  4, 4(0) ;  Load frame size
+31 : SUB  5, 5, 4 ;  Restore pointer
 32 : LDA  4, 4(5) ; Restore Callee frame base
 33 : ST 1, 2(4) ;  Store argument 1 into callee frame
 34 : LDA  4, 4(5) ; Restore Call frame base
@@ -38,8 +38,8 @@
 37 : ADD  5, 4, 0 ;  Update pointer
 38 : LDA 7, 138(0) ;  Call divisibleByParts
 39 : LD 1, 3(5) ;  Load callee return value into R1
-40 : LDC  4_original, 4(0) ;  Load frame size
-41 : SUB  5, 5, 4_original ;  Restore pointer
+40 : LDC  4, 4(0) ;  Load frame size
+41 : SUB  5, 5, 4 ;  Restore pointer
 42 : ST 1, 2(5) ;  Store result into current frame's return slot
 43 : LD   1, 2(5) ;  Load return value into register 1
 44 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -131,8 +131,8 @@
 130 : ADD  5, 4, 0 ;  Update pointer
 131 : LDA 7, 11(0) ;  Call main
 132 : LD 1, 2(5) ;  Load callee return value into R1
-133 : LDC  4_original, 3(0) ;  Load frame size
-134 : SUB  5, 5, 4_original ;  Restore pointer
+133 : LDC  4, 3(0) ;  Load frame size
+134 : SUB  5, 5, 4 ;  Restore pointer
 135 : ST   1, 2(5) ;  Store function result into stack frame
 136 : LD   6, 0(5) ;  Load return address
 137 : LDA  7, 0(6) ;  Return to caller
@@ -153,8 +153,8 @@
 152 : ADD  5, 4, 0 ;  Update pointer
 153 : LDA 7, 62(0) ;  Call divisibleByDifference
 154 : LD 1, 2(5) ;  Load callee return value into R1
-155 : LDC  4_original, 3(0) ;  Load frame size
-156 : SUB  5, 5, 4_original ;  Restore pointer
+155 : LDC  4, 3(0) ;  Load frame size
+156 : SUB  5, 5, 4 ;  Restore pointer
 157 : ST   1, 3(5) ;  Store function result into stack frame
 158 : LD   6, 0(5) ;  Load return address
 159 : LDA  7, 0(6) ;  Return to caller

@@ -23,8 +23,8 @@
 22 : ADD  5, 4, 0 ;  Update pointer
 23 : LDA 7, 31(0) ;  Call eval_and_print
 24 : LD 1, 3(5) ;  Load callee return value into R1
-25 : LDC  4_original, 4(0) ;  Load frame size
-26 : SUB  5, 5, 4_original ;  Restore pointer
+25 : LDC  4, 4(0) ;  Load frame size
+26 : SUB  5, 5, 4 ;  Restore pointer
 27 : ST 1, 3(5) ;  Store result into current frame's return slot
 28 : LD   1, 3(5) ;  Load return value into register 1
 29 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -39,8 +39,8 @@
 38 : ST   6, 0(4) ;  Store return address
 39 : ADD  5, 4, 0 ;  Updated Pointer
 40 : LDA  7, 10(0) ; Call print
-41 : LDC  4_original, 3(0) ;  Load frame size
-42 : SUB  5, 5, 4_original ;  Restore pointer
+41 : LDC  4, 3(0) ;  Load frame size
+42 : SUB  5, 5, 4 ;  Restore pointer
 43 : ST   1, 3(5) ;  Store function result into stack frame
 44 : LD   1, 1(5) ;  Load parameter 'a' into R1
 45 : LDC  3, 1(0) ;  Store left operand into temporary register

@@ -17,8 +17,8 @@
 16 : ST   6, 0(4) ;  Store return address
 17 : ADD  5, 4, 0 ;  Updated Pointer
 18 : LDA  7, 10(0) ; Call print
-19 : LDC  4_original, 3(0) ;  Load frame size
-20 : SUB  5, 5, 4_original ;  Restore pointer
+19 : LDC  4, 3(0) ;  Load frame size
+20 : SUB  5, 5, 4 ;  Restore pointer
 21 : LD   1, 1(5) ;  Load parameter 'm' into R1
 22 : LDA  4, 4(5) ; Restore Callee frame base
 23 : ST 1, 1(4) ;  Store argument 0 into callee frame
@@ -31,8 +31,8 @@
 30 : ADD  5, 4, 0 ;  Update pointer
 31 : LDA 7, 39(0) ;  Call mult
 32 : LD 1, 3(5) ;  Load callee return value into R1
-33 : LDC  4_original, 4(0) ;  Load frame size
-34 : SUB  5, 5, 4_original ;  Restore pointer
+33 : LDC  4, 4(0) ;  Load frame size
+34 : SUB  5, 5, 4 ;  Restore pointer
 35 : ST 1, 3(5) ;  Store result into current frame's return slot
 36 : LD   1, 3(5) ;  Load return value into register 1
 37 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -52,8 +52,8 @@
 51 : ADD  5, 4, 0 ;  Update pointer
 52 : LDA 7, 59(0) ;  Call multWithAccum
 53 : LD 1, 4(5) ;  Load callee return value into R1
-54 : LDC  4_original, 5(0) ;  Load frame size
-55 : SUB  5, 5, 4_original ;  Restore pointer
+54 : LDC  4, 5(0) ;  Load frame size
+55 : SUB  5, 5, 4 ;  Restore pointer
 56 : ST   1, 3(5) ;  Store function result into stack frame
 57 : LD   6, 0(5) ;  Load return address
 58 : LDA  7, 0(6) ;  Return to caller
@@ -81,8 +81,8 @@
 80 : ADD  5, 4, 0 ;  Update pointer
 81 : LDA 7, 152(0) ;  Call MOD
 82 : LD 1, 3(5) ;  Load callee return value into R1
-83 : LDC  4_original, 4(0) ;  Load frame size
-84 : SUB  5, 5, 4_original ;  Restore pointer
+83 : LDC  4, 4(0) ;  Load frame size
+84 : SUB  5, 5, 4 ;  Restore pointer
 85 : LDC  3, 1(0) ;  Store left operand into temporary register
 86 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 87 : LDC  2, 3(0) ;  Restore left operand
@@ -119,8 +119,8 @@
 118 : ADD  5, 4, 0 ;  Update pointer
 119 : LDA 7, 59(0) ;  Call multWithAccum
 120 : LD 1, 4(5) ;  Load callee return value into R1
-121 : LDC  4_original, 5(0) ;  Load frame size
-122 : SUB  5, 5, 4_original ;  Restore pointer
+121 : LDC  4, 5(0) ;  Load frame size
+122 : SUB  5, 5, 4 ;  Restore pointer
 123 : LDA  7, 149(0) ;  Skip ELSE block
 124 : LD   1, 1(5) ;  Load parameter 'm' into R1
 125 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -145,8 +145,8 @@
 144 : ADD  5, 4, 0 ;  Update pointer
 145 : LDA 7, 59(0) ;  Call multWithAccum
 146 : LD 1, 4(5) ;  Load callee return value into R1
-147 : LDC  4_original, 5(0) ;  Load frame size
-148 : SUB  5, 5, 4_original ;  Restore pointer
+147 : LDC  4, 5(0) ;  Load frame size
+148 : SUB  5, 5, 4 ;  Restore pointer
 149 : ST   1, 4(5) ;  Store function result into stack frame
 150 : LD   6, 0(5) ;  Load return address
 151 : LDA  7, 0(6) ;  Return to caller

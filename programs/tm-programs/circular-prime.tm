@@ -18,8 +18,8 @@
 17 : ADD  5, 4, 0 ;  Update pointer
 18 : LDA 7, 524(0) ;  Call circularPrimesTo
 19 : LD 1, 2(5) ;  Load callee return value into R1
-20 : LDC  4_original, 3(0) ;  Load frame size
-21 : SUB  5, 5, 4_original ;  Restore pointer
+20 : LDC  4, 3(0) ;  Load frame size
+21 : SUB  5, 5, 4 ;  Restore pointer
 22 : ST 1, 2(5) ;  Store result into current frame's return slot
 23 : LD   1, 2(5) ;  Load return value into register 1
 24 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -52,8 +52,8 @@
 51 : ADD  5, 4, 0 ;  Update pointer
 52 : LDA 7, 26(0) ;  Call mod
 53 : LD 1, 3(5) ;  Load callee return value into R1
-54 : LDC  4_original, 4(0) ;  Load frame size
-55 : SUB  5, 5, 4_original ;  Restore pointer
+54 : LDC  4, 4(0) ;  Load frame size
+55 : SUB  5, 5, 4 ;  Restore pointer
 56 : ST   1, 3(5) ;  Store function result into stack frame
 57 : LD   6, 0(5) ;  Load return address
 58 : LDA  7, 0(6) ;  Return to caller
@@ -69,8 +69,8 @@
 68 : ADD  5, 4, 0 ;  Update pointer
 69 : LDA 7, 26(0) ;  Call mod
 70 : LD 1, 3(5) ;  Load callee return value into R1
-71 : LDC  4_original, 4(0) ;  Load frame size
-72 : SUB  5, 5, 4_original ;  Restore pointer
+71 : LDC  4, 4(0) ;  Load frame size
+72 : SUB  5, 5, 4 ;  Restore pointer
 73 : LDC  3, 1(0) ;  Store left operand into temporary register
 74 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 75 : LDC  2, 3(0) ;  Restore left operand
@@ -104,8 +104,8 @@
 103 : ADD  5, 4, 0 ;  Update pointer
 104 : LDA 7, 59(0) ;  Call divides
 105 : LD 1, 3(5) ;  Load callee return value into R1
-106 : LDC  4_original, 4(0) ;  Load frame size
-107 : SUB  5, 5, 4_original ;  Restore pointer
+106 : LDC  4, 4(0) ;  Load frame size
+107 : SUB  5, 5, 4 ;  Restore pointer
 108 : LDC  3, 1(0) ;  Store left operand into temporary register
 109 : LD   1, 1(5) ;  Load parameter 'i' into R1
 110 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -123,8 +123,8 @@
 122 : ADD  5, 4, 0 ;  Update pointer
 123 : LDA 7, 84(0) ;  Call hasDivisorFrom
 124 : LD 1, 3(5) ;  Load callee return value into R1
-125 : LDC  4_original, 4(0) ;  Load frame size
-126 : SUB  5, 5, 4_original ;  Restore pointer
+125 : LDC  4, 4(0) ;  Load frame size
+126 : SUB  5, 5, 4 ;  Restore pointer
 127 : LDC  2, 3(0) ;  Restore left operand
 128 : ADD  1, 2, 1 ;  R1 = left OR right
 129 : LDA  7, 131(0) ;  Skip ELSE block
@@ -144,8 +144,8 @@
 143 : ADD  5, 4, 0 ;  Update pointer
 144 : LDA 7, 84(0) ;  Call hasDivisorFrom
 145 : LD 1, 3(5) ;  Load callee return value into R1
-146 : LDC  4_original, 4(0) ;  Load frame size
-147 : SUB  5, 5, 4_original ;  Restore pointer
+146 : LDC  4, 4(0) ;  Load frame size
+147 : SUB  5, 5, 4 ;  Restore pointer
 148 : LDC  2, 1(0) ;  Load 1 into R2
 149 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
 150 : ST   1, 2(5) ;  Store function result into stack frame
@@ -187,8 +187,8 @@
 186 : ADD  5, 4, 0 ;  Update pointer
 187 : LDA 7, 153(0) ;  Call log10Helper
 188 : LD 1, 3(5) ;  Load callee return value into R1
-189 : LDC  4_original, 4(0) ;  Load frame size
-190 : SUB  5, 5, 4_original ;  Restore pointer
+189 : LDC  4, 4(0) ;  Load frame size
+190 : SUB  5, 5, 4 ;  Restore pointer
 191 : ST   1, 3(5) ;  Store function result into stack frame
 192 : LD   6, 0(5) ;  Load return address
 193 : LDA  7, 0(6) ;  Return to caller
@@ -204,8 +204,8 @@
 203 : ADD  5, 4, 0 ;  Update pointer
 204 : LDA 7, 153(0) ;  Call log10Helper
 205 : LD 1, 3(5) ;  Load callee return value into R1
-206 : LDC  4_original, 4(0) ;  Load frame size
-207 : SUB  5, 5, 4_original ;  Restore pointer
+206 : LDC  4, 4(0) ;  Load frame size
+207 : SUB  5, 5, 4 ;  Restore pointer
 208 : ST   1, 2(5) ;  Store function result into stack frame
 209 : LD   6, 0(5) ;  Load return address
 210 : LDA  7, 0(6) ;  Return to caller
@@ -256,8 +256,8 @@
 255 : ADD  5, 4, 0 ;  Update pointer
 256 : LDA 7, 211(0) ;  Call powHelper
 257 : LD 1, 4(5) ;  Load callee return value into R1
-258 : LDC  4_original, 5(0) ;  Load frame size
-259 : SUB  5, 5, 4_original ;  Restore pointer
+258 : LDC  4, 5(0) ;  Load frame size
+259 : SUB  5, 5, 4 ;  Restore pointer
 260 : ST   1, 4(5) ;  Store function result into stack frame
 261 : LD   6, 0(5) ;  Load return address
 262 : LDA  7, 0(6) ;  Return to caller
@@ -276,8 +276,8 @@
 275 : ADD  5, 4, 0 ;  Update pointer
 276 : LDA 7, 211(0) ;  Call powHelper
 277 : LD 1, 4(5) ;  Load callee return value into R1
-278 : LDC  4_original, 5(0) ;  Load frame size
-279 : SUB  5, 5, 4_original ;  Restore pointer
+278 : LDC  4, 5(0) ;  Load frame size
+279 : SUB  5, 5, 4 ;  Restore pointer
 280 : ST   1, 3(5) ;  Store function result into stack frame
 281 : LD   6, 0(5) ;  Load return address
 282 : LDA  7, 0(6) ;  Return to caller
@@ -299,8 +299,8 @@
 298 : ADD  5, 4, 0 ;  Update pointer
 299 : LDA 7, 26(0) ;  Call mod
 300 : LD 1, 3(5) ;  Load callee return value into R1
-301 : LDC  4_original, 4(0) ;  Load frame size
-302 : SUB  5, 5, 4_original ;  Restore pointer
+301 : LDC  4, 4(0) ;  Load frame size
+302 : SUB  5, 5, 4 ;  Restore pointer
 303 : LDC  3, 1(0) ;  Store left operand into temporary register
 304 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 305 : LDA  4, 4(5) ; Restore Callee frame base
@@ -314,8 +314,8 @@
 313 : ADD  5, 4, 0 ;  Update pointer
 314 : LDA 7, 194(0) ;  Call log10
 315 : LD 1, 2(5) ;  Load callee return value into R1
-316 : LDC  4_original, 3(0) ;  Load frame size
-317 : SUB  5, 5, 4_original ;  Restore pointer
+316 : LDC  4, 3(0) ;  Load frame size
+317 : SUB  5, 5, 4 ;  Restore pointer
 318 : LDA  4, 4(5) ; Restore Callee frame base
 319 : ST 1, 2(4) ;  Store argument 1 into callee frame
 320 : LDA  4, 4(5) ; Restore Call frame base
@@ -324,8 +324,8 @@
 323 : ADD  5, 4, 0 ;  Update pointer
 324 : LDA 7, 263(0) ;  Call pow
 325 : LD 1, 3(5) ;  Load callee return value into R1
-326 : LDC  4_original, 4(0) ;  Load frame size
-327 : SUB  5, 5, 4_original ;  Restore pointer
+326 : LDC  4, 4(0) ;  Load frame size
+327 : SUB  5, 5, 4 ;  Restore pointer
 328 : LDC  2, 3(0) ;  Restore left operand
 329 : MUL  1, 2, 1 ;  R1 = left * right
 330 : LDC  2, 3(0) ;  Restore left operand
@@ -339,8 +339,8 @@
 338 : ST   6, 0(4) ;  Store return address
 339 : ADD  5, 4, 0 ;  Updated Pointer
 340 : LDA  7, 8(0) ; Call print
-341 : LDC  4_original, 3(0) ;  Load frame size
-342 : SUB  5, 5, 4_original ;  Restore pointer
+341 : LDC  4, 3(0) ;  Load frame size
+342 : SUB  5, 5, 4 ;  Restore pointer
 343 : ST   1, 2(5) ;  Store function result into stack frame
 344 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 345 : ST   1, 2(5) ;  Store function result into stack frame
@@ -367,8 +367,8 @@
 366 : ADD  5, 4, 0 ;  Update pointer
 367 : LDA 7, 134(0) ;  Call isPrime
 368 : LD 1, 2(5) ;  Load callee return value into R1
-369 : LDC  4_original, 3(0) ;  Load frame size
-370 : SUB  5, 5, 4_original ;  Restore pointer
+369 : LDC  4, 3(0) ;  Load frame size
+370 : SUB  5, 5, 4 ;  Restore pointer
 371 : LDC  3, 1(0) ;  Store left operand into temporary register
 372 : LD   1, 1(5) ;  Load parameter 'x' into R1
 373 : LDA  4, 3(5) ; Restore Callee frame base
@@ -379,8 +379,8 @@
 378 : ADD  5, 4, 0 ;  Update pointer
 379 : LDA 7, 283(0) ;  Call rotate
 380 : LD 1, 2(5) ;  Load callee return value into R1
-381 : LDC  4_original, 3(0) ;  Load frame size
-382 : SUB  5, 5, 4_original ;  Restore pointer
+381 : LDC  4, 3(0) ;  Load frame size
+382 : SUB  5, 5, 4 ;  Restore pointer
 383 : LDA  4, 4(5) ; Restore Callee frame base
 384 : ST 1, 1(4) ;  Store argument 0 into callee frame
 385 : LD   1, 2(5) ;  Load parameter 'turns' into R1
@@ -396,8 +396,8 @@
 395 : ADD  5, 4, 0 ;  Update pointer
 396 : LDA 7, 348(0) ;  Call isCircularPrimeHelper
 397 : LD 1, 3(5) ;  Load callee return value into R1
-398 : LDC  4_original, 4(0) ;  Load frame size
-399 : SUB  5, 5, 4_original ;  Restore pointer
+398 : LDC  4, 4(0) ;  Load frame size
+399 : SUB  5, 5, 4 ;  Restore pointer
 400 : LDC  2, 3(0) ;  Restore left operand
 401 : MUL  1, 2, 1 ;  R1 = left AND right
 402 : ST   1, 3(5) ;  Store function result into stack frame
@@ -415,8 +415,8 @@
 414 : ADD  5, 4, 0 ;  Update pointer
 415 : LDA 7, 194(0) ;  Call log10
 416 : LD 1, 2(5) ;  Load callee return value into R1
-417 : LDC  4_original, 3(0) ;  Load frame size
-418 : SUB  5, 5, 4_original ;  Restore pointer
+417 : LDC  4, 3(0) ;  Load frame size
+418 : SUB  5, 5, 4 ;  Restore pointer
 419 : LDC  3, 1(0) ;  Store left operand into temporary register
 420 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 421 : LDC  2, 3(0) ;  Restore left operand
@@ -429,8 +429,8 @@
 428 : ADD  5, 4, 0 ;  Update pointer
 429 : LDA 7, 348(0) ;  Call isCircularPrimeHelper
 430 : LD 1, 3(5) ;  Load callee return value into R1
-431 : LDC  4_original, 4(0) ;  Load frame size
-432 : SUB  5, 5, 4_original ;  Restore pointer
+431 : LDC  4, 4(0) ;  Load frame size
+432 : SUB  5, 5, 4 ;  Restore pointer
 433 : JEQ  1, 446(0) ;  If condition is false, jump to ELSE
 434 : LD   1, 1(5) ;  Load parameter 'x' into R1
 435 : LDA  4, 3(5) ; Restore Callee frame base
@@ -441,8 +441,8 @@
 440 : ADD  5, 4, 0 ;  Update pointer
 441 : LDA 7, 335(0) ;  Call report
 442 : LD 1, 2(5) ;  Load callee return value into R1
-443 : LDC  4_original, 3(0) ;  Load frame size
-444 : SUB  5, 5, 4_original ;  Restore pointer
+443 : LDC  4, 3(0) ;  Load frame size
+444 : SUB  5, 5, 4 ;  Restore pointer
 445 : LDA  7, 447(0) ;  Skip ELSE block
 446 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 447 : ST   1, 2(5) ;  Store function result into stack frame
@@ -467,8 +467,8 @@
 466 : ADD  5, 4, 0 ;  Update pointer
 467 : LDA 7, 405(0) ;  Call isCircularPrime
 468 : LD 1, 2(5) ;  Load callee return value into R1
-469 : LDC  4_original, 3(0) ;  Load frame size
-470 : SUB  5, 5, 4_original ;  Restore pointer
+469 : LDC  4, 3(0) ;  Load frame size
+470 : SUB  5, 5, 4 ;  Restore pointer
 471 : JEQ  1, 498(0) ;  If condition is false, jump to ELSE
 472 : LD   1, 1(5) ;  Load parameter 'top' into R1
 473 : LDA  4, 5(5) ; Restore Callee frame base
@@ -493,8 +493,8 @@
 492 : ADD  5, 4, 0 ;  Update pointer
 493 : LDA 7, 450(0) ;  Call circularPrimesToHelper
 494 : LD 1, 4(5) ;  Load callee return value into R1
-495 : LDC  4_original, 5(0) ;  Load frame size
-496 : SUB  5, 5, 4_original ;  Restore pointer
+495 : LDC  4, 5(0) ;  Load frame size
+496 : SUB  5, 5, 4 ;  Restore pointer
 497 : LDA  7, 519(0) ;  Skip ELSE block
 498 : LD   1, 1(5) ;  Load parameter 'top' into R1
 499 : LDA  4, 5(5) ; Restore Callee frame base
@@ -515,8 +515,8 @@
 514 : ADD  5, 4, 0 ;  Update pointer
 515 : LDA 7, 450(0) ;  Call circularPrimesToHelper
 516 : LD 1, 4(5) ;  Load callee return value into R1
-517 : LDC  4_original, 5(0) ;  Load frame size
-518 : SUB  5, 5, 4_original ;  Restore pointer
+517 : LDC  4, 5(0) ;  Load frame size
+518 : SUB  5, 5, 4 ;  Restore pointer
 519 : LDA  7, 521(0) ;  Skip ELSE block
 520 : LD   1, 3(5) ;  Load parameter 'count' into R1
 521 : ST   1, 4(5) ;  Store function result into stack frame
@@ -541,8 +541,8 @@
 540 : ADD  5, 4, 0 ;  Update pointer
 541 : LDA 7, 450(0) ;  Call circularPrimesToHelper
 542 : LD 1, 4(5) ;  Load callee return value into R1
-543 : LDC  4_original, 5(0) ;  Load frame size
-544 : SUB  5, 5, 4_original ;  Restore pointer
+543 : LDC  4, 5(0) ;  Load frame size
+544 : SUB  5, 5, 4 ;  Restore pointer
 545 : ST   1, 2(5) ;  Store function result into stack frame
 546 : LD   6, 0(5) ;  Load return address
 547 : LDA  7, 0(6) ;  Return to caller

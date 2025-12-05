@@ -36,8 +36,8 @@
 35 : ADD  5, 4, 0 ;  Update pointer
 36 : LDA 7, 85(0) ;  Call MOD
 37 : LD 1, 3(5) ;  Load callee return value into R1
-38 : LDC  4_original, 4(0) ;  Load frame size
-39 : SUB  5, 5, 4_original ;  Restore pointer
+38 : LDC  4, 4(0) ;  Load frame size
+39 : SUB  5, 5, 4 ;  Restore pointer
 40 : LDC  3, 1(0) ;  Store left operand into temporary register
 41 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 42 : LDC  2, 3(0) ;  Restore left operand
@@ -77,8 +77,8 @@
 76 : ADD  5, 4, 0 ;  Update pointer
 77 : LDA 7, 101(0) ;  Call print_and_continue
 78 : LD 1, 4(5) ;  Load callee return value into R1
-79 : LDC  4_original, 5(0) ;  Load frame size
-80 : SUB  5, 5, 4_original ;  Restore pointer
+79 : LDC  4, 5(0) ;  Load frame size
+80 : SUB  5, 5, 4 ;  Restore pointer
 81 : ST 1, 3(5) ;  Store result into current frame's return slot
 82 : LD   1, 3(5) ;  Load return value into register 1
 83 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -105,8 +105,8 @@
 104 : ST   6, 0(4) ;  Store return address
 105 : ADD  5, 4, 0 ;  Updated Pointer
 106 : LDA  7, 10(0) ; Call print
-107 : LDC  4_original, 3(0) ;  Load frame size
-108 : SUB  5, 5, 4_original ;  Restore pointer
+107 : LDC  4, 3(0) ;  Load frame size
+108 : SUB  5, 5, 4 ;  Restore pointer
 109 : ST   1, 4(5) ;  Store function result into stack frame
 110 : LD   1, 3(5) ;  Load parameter 'unit' into R1
 111 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -132,8 +132,8 @@
 131 : ADD  5, 4, 0 ;  Update pointer
 132 : LDA 7, 13(0) ;  Call main
 133 : LD 1, 3(5) ;  Load callee return value into R1
-134 : LDC  4_original, 4(0) ;  Load frame size
-135 : SUB  5, 5, 4_original ;  Restore pointer
+134 : LDC  4, 4(0) ;  Load frame size
+135 : SUB  5, 5, 4 ;  Restore pointer
 136 : ST   1, 4(5) ;  Store function result into stack frame
 137 : LD   6, 0(5) ;  Load return address
 138 : LDA  7, 0(6) ;  Return to caller

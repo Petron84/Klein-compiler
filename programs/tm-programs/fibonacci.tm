@@ -40,8 +40,8 @@
 39 : ADD  5, 4, 0 ;  Update pointer
 40 : LDA 7, 48(0) ;  Call addNext
 41 : LD 1, 5(5) ;  Load callee return value into R1
-42 : LDC  4_original, 6(0) ;  Load frame size
-43 : SUB  5, 5, 4_original ;  Restore pointer
+42 : LDC  4, 6(0) ;  Load frame size
+43 : SUB  5, 5, 4 ;  Restore pointer
 44 : ST 1, 2(5) ;  Store result into current frame's return slot
 45 : LD   1, 2(5) ;  Load return value into register 1
 46 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -84,8 +84,8 @@
 83 : ADD  5, 4, 0 ;  Update pointer
 84 : LDA 7, 48(0) ;  Call addNext
 85 : LD 1, 5(5) ;  Load callee return value into R1
-86 : LDC  4_original, 6(0) ;  Load frame size
-87 : SUB  5, 5, 4_original ;  Restore pointer
+86 : LDC  4, 6(0) ;  Load frame size
+87 : SUB  5, 5, 4 ;  Restore pointer
 88 : ST   1, 5(5) ;  Store function result into stack frame
 89 : LD   6, 0(5) ;  Load return address
 90 : LDA  7, 0(6) ;  Return to caller

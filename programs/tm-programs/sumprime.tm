@@ -19,8 +19,8 @@
 18 : ADD  5, 4, 0 ;  Update pointer
 19 : LDA 7, 27(0) ;  Call sumPrimes
 20 : LD 1, 3(5) ;  Load callee return value into R1
-21 : LDC  4_original, 4(0) ;  Load frame size
-22 : SUB  5, 5, 4_original ;  Restore pointer
+21 : LDC  4, 4(0) ;  Load frame size
+22 : SUB  5, 5, 4 ;  Restore pointer
 23 : ST 1, 1(5) ;  Store result into current frame's return slot
 24 : LD   1, 1(5) ;  Load return value into register 1
 25 : LD  6, 0(5) ;  Load return address for main function into register 6
@@ -46,8 +46,8 @@
 45 : ADD  5, 4, 0 ;  Update pointer
 46 : LDA 7, 95(0) ;  Call isPrime
 47 : LD 1, 2(5) ;  Load callee return value into R1
-48 : LDC  4_original, 3(0) ;  Load frame size
-49 : SUB  5, 5, 4_original ;  Restore pointer
+48 : LDC  4, 3(0) ;  Load frame size
+49 : SUB  5, 5, 4 ;  Restore pointer
 50 : JEQ  1, 74(0) ;  If condition is false, jump to ELSE
 51 : LD   1, 1(5) ;  Load parameter 'a' into R1
 52 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -67,8 +67,8 @@
 66 : ADD  5, 4, 0 ;  Update pointer
 67 : LDA 7, 27(0) ;  Call sumPrimes
 68 : LD 1, 3(5) ;  Load callee return value into R1
-69 : LDC  4_original, 4(0) ;  Load frame size
-70 : SUB  5, 5, 4_original ;  Restore pointer
+69 : LDC  4, 4(0) ;  Load frame size
+70 : SUB  5, 5, 4 ;  Restore pointer
 71 : LDC  2, 3(0) ;  Restore left operand
 72 : ADD  1, 2, 1 ;  R1 = left + right
 73 : LDA  7, 92(0) ;  Skip ELSE block
@@ -88,8 +88,8 @@
 87 : ADD  5, 4, 0 ;  Update pointer
 88 : LDA 7, 27(0) ;  Call sumPrimes
 89 : LD 1, 3(5) ;  Load callee return value into R1
-90 : LDC  4_original, 4(0) ;  Load frame size
-91 : SUB  5, 5, 4_original ;  Restore pointer
+90 : LDC  4, 4(0) ;  Load frame size
+91 : SUB  5, 5, 4 ;  Restore pointer
 92 : ST   1, 3(5) ;  Store function result into stack frame
 93 : LD   6, 0(5) ;  Load return address
 94 : LDA  7, 0(6) ;  Return to caller
@@ -129,8 +129,8 @@
 128 : ADD  5, 4, 0 ;  Update pointer
 129 : LDA 7, 174(0) ;  Call divisible
 130 : LD 1, 3(5) ;  Load callee return value into R1
-131 : LDC  4_original, 4(0) ;  Load frame size
-132 : SUB  5, 5, 4_original ;  Restore pointer
+131 : LDC  4, 4(0) ;  Load frame size
+132 : SUB  5, 5, 4 ;  Restore pointer
 133 : LDC  3, 1(0) ;  Store left operand into temporary register
 134 : LD   1, 1(5) ;  Load parameter 'n' into R1
 135 : LDA  4, 4(5) ; Restore Callee frame base
@@ -144,8 +144,8 @@
 143 : ADD  5, 4, 0 ;  Update pointer
 144 : LDA 7, 174(0) ;  Call divisible
 145 : LD 1, 3(5) ;  Load callee return value into R1
-146 : LDC  4_original, 4(0) ;  Load frame size
-147 : SUB  5, 5, 4_original ;  Restore pointer
+146 : LDC  4, 4(0) ;  Load frame size
+147 : SUB  5, 5, 4 ;  Restore pointer
 148 : LDC  2, 3(0) ;  Restore left operand
 149 : ADD  1, 2, 1 ;  R1 = left OR right
 150 : LDC  3, 1(0) ;  Store left operand into temporary register
@@ -161,8 +161,8 @@
 160 : ADD  5, 4, 0 ;  Update pointer
 161 : LDA 7, 174(0) ;  Call divisible
 162 : LD 1, 3(5) ;  Load callee return value into R1
-163 : LDC  4_original, 4(0) ;  Load frame size
-164 : SUB  5, 5, 4_original ;  Restore pointer
+163 : LDC  4, 4(0) ;  Load frame size
+164 : SUB  5, 5, 4 ;  Restore pointer
 165 : LDC  2, 3(0) ;  Restore left operand
 166 : ADD  1, 2, 1 ;  R1 = left OR right
 167 : JEQ  1, 170(0) ;  If condition is false, jump to ELSE
