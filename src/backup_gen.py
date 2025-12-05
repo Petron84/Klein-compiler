@@ -1,440 +1,382 @@
+import sys
 
-from dataclasses import dataclass
-
-# Keep KleinError import style consistent with your draft
-from scanner import KleinError
-
-# ---------- Stack frame model ----------
-@dataclass
 class StackFrame:
-    address: int = 0       # base address for frame bookkeeping
-    num_parm: int = 0      # number of parameters
-    return_add: int = 0    # DMEM address where return address is stored
+    def __init__(self,name,top,num_params):
+        self.name = name # function name
+        self.top = top # Top of frame - return address
+        self.num_params = num_params
+        self.val_loc = self.top + self.num_params + 1 # memory location of return value
 
-# ---------- Code Generator ----------
 class Generator:
-    """
-    Rewrite of your 'backup.py' generator in the same style:
-      - IMEM lines with numbered addresses and inline notes
-      - DMEM grows downward from 1023
-      - Placeholders for labels resolved at the end
-      - Registers:
-          R0 : constant 0
-          R1 : value/return register
-          R2 : temp value
-          R3 : target memory address
-          R4 : memory offsets / small immediates
-          R5 : current memory address (stack top)
-          R6 : current return address
-          R7 : program counter
-    """
-    # Register aliases (match your comments)
-    R0, R1, R2, R3, R4, R5, R6, R7 = 0, 1, 2, 3, 4, 5, 6, 7
-
-    def __init__(self, tree, table):
-        # From your draft: reach the list of function definitions
-        # PROGRAM -> DEFINITION-LIST -> [DEFINITION...]
-        self.AST = tree[-1].children[-1].children   # list of DEFINITION nodes
+    def __init__(self,tree,table):
+        self.AST = tree[-1].children[-1].children
         self.symbol_table = table
 
-        # IMEM, line numbering, and placeholders
-        self.IMEM = []
-        self.line_counter = 0
-        self.placeholders = {}   # token -> absolute IMEM line
+        # Unique temporary label counter
         self.label_id = 0
 
-        # DMEM top pointer (stack grows downward)
-        self.DMEM = 1023
-        self.stack_frames = {}
+        # placeholders for unknown addresses
+        self.placeholders = {}
+        self.line_counter = 0
+        
+        # Instruction Memory
+        self.IMEM = []
 
-    # ---------- top-level API ----------
+        # reference to determine tops of stack frames in DMEM
+        self.DMEM = 1
+        self.stack_frames = []
+
+        # Register convention:
+            # Register 0 : Value 0
+            # Register 1 : Return value
+            # Register 2 : Temporary value
+            # Register 3 : Temporary variable
+            # Register 4 : Target Location
+            # Register 5 : DMEM pointer
+            # Register 6 : Temporary return address
+            # Register 7 : program counter
+
+        # Stack frame structure:
+            # Return address
+            # Parameters 1 - N (expressions)
+            # Return value
+
+        # DMEM structure:
+            # Three components:
+                # Return address
+                # Array of "parameters", i.e., every function "jump" to IMEM blocks
+                # Store return value
+            # Stack frames expand upward from DMEM[1] to DMEM[1023].
+            # DMEM[0] is the integer 1023
+            # DMEM [1:N] stores main command-line arguments
+            # DMEM [N+1] stores return address at bottom of main stack frame
+            # DMEM [N+2] stores parameters for second stack frame
+                      
     def generate(self):
         self.initialize()
         functions = self.load_functions()
         self.generate_imem(functions)
         self.fill_placeholders()
         return self.IMEM
-
-    # ---------- emitter ----------
-    def write(self, instruction, note, header=False):
-        """
-        Exactly match your output style: numbered lines except headers.
-        """
-        if header:
-            self.IMEM.append(f"{instruction} | {note}")
-        else:
-            self.IMEM.append(f"{self.line_counter} : {instruction} | {note}")
-            self.line_counter += 1
-
-    def new_label(self, prefix="!temp_"):
-        tok = f"{prefix}{self.label_id}"
-        self.label_id += 1
-        return tok
-
-    # ---------- runtime bootstrap ----------
+    
     def initialize(self):
-        self.write("-----INITIALIZE RUNTIME SYSTEM-----", "#", header=True)
+            self.write("-----INITIALIZE RUNTIME SYSTEM-----",header=True)
+            num_params = self.symbol_table['main'].parameters[0]
+            self.DMEM = num_params + 1 # Set DMEM to top of main stack frame
 
-        # Start runtime system: capture a 'return address' into R6
-        self.write(" LDA 6, 5(7)", "# Start runtime system. Load return address into register 6")
-        # DMEM[0] holds 1023; read it into R5
-        self.write(" LD 5, 0(0)", "# Load DMEM[0] (contains the value 1023) into register 5.")
-        # Save runtime return address at DMEM[1023]
-        self.write(" ST 6, 0(5)", "# Store runtime return address at DMEM[1023].")
+            self.create_frame('main') # Create stack frame for initial main function call
+            main_frame = self.stack_frames[-1]
 
-        # Pre-create the MAIN frame bookkeeping and reserve its return value slot
-        self.create_frame(self.DMEM, "main")
-        self.write(" LDC 4, 1(0)", "# Store value 1 in temporary register 4")
-        self.write(" SUB 5, 5, 4", "# Decrement memory offset")
-        self.DMEM -= 1
+            self.write(f"LDC  5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
 
-        # Jump into LOAD-ARGS section (filled later)
-        self.write(" LDA 7, 4(7)", "# Load address of load-arguments into register 7.")
-        # End of runtime section; HALT is reachable via the return path
-        self.write(" HALT 0, 0, 0", "# Terminate runtime system.")
+            for i in range(1, num_params + 1):
+                self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
+                self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
 
-        # Built-in print (kept identical to your draft)
-        self.write("------PRINT------", "#", header=True)
-        self.placeholders["@print"] = self.line_counter
-        self.write(" OUT 1, 0, 0", "# Hardcoded print function")
-        self.write(" LD 6, 0(5)", "# Load return addess from previous function call/stack frame.")
-        self.write(" LDA 7, 0(6)", "# Load address of previous function call into register 7.")
+            self.write("LDA  6, 2(7)", " Calculate return address")
+            self.write("ST   6, 0(5)", " Store return address in main stack frame")
+            
+            self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
 
-    # ---------- function table and frames ----------
-    def create_frame(self, address, fname):
-        """
-        Compute bookkeeping addresses for a function's frame.
-        Return address is at:
-            DMEM[address - num_params - 1]
-        """
-        num_params = self.symbol_table[fname].parameters[0]
-        return_address = address - num_params - 1
-        self.stack_frames[fname] = StackFrame(address=return_address,
-                                              num_parm=num_params,
-                                              return_add=return_address)
+            self.write(f"LDA  7, @main(0)", ' Load address of main IMEM block - branch to function')
+            self.write(f"OUT  1, 0, 0", " Return result")
+            self.write("HALT 0, 0, 0", ' Terminate program execution if no main function found.')
+            self.write("------PRINT------",header=True)
+            self.placeholders["@print"] = self.line_counter
+            self.write("OUT  1, 0, 0", ' Hardcoded print function')
+            self.write("LD   6, 0(5)", ' Load return addess from stack frame.')
+            self.write("LDA  7, 0(6)",  ' Jump to return address.')
+    
+    def create_frame(self,f_name):
+        num_params = self.symbol_table[f_name].parameters[0]
+        self.stack_frames.append(StackFrame(f_name, self.DMEM, num_params))
 
+    def write(self, instruction, note=None, header=False):
+        if header:
+            self.IMEM.append(f"{instruction}")
+        else:
+            self.IMEM.append(f"{self.line_counter} : {instruction} ; {note}")
+            self.line_counter += 1
+    
     def load_functions(self):
-        """
-        Map function name -> expression-list (body),
-        and seed placeholders for labels '@fname'.
-        """
         f_list = {}
+
+        # Create a mapping of function names to function body. All other information is stored in symbol table.
         for f in self.AST:
             f_name = f.children[0].value
-            f_body = f.children[3].children  # EXPRESSION-LIST
+            f_body = f.children[3].children
             f_list[f_name] = f_body
-
-            # Allocate a placeholder for '@f_name' label
-            self.placeholders["@" + f_name] = -1
-
+            f_name = "@" + f_name
+            self.placeholders[f_name] = -1
         return f_list
+    
+    def generate_imem(self,functions):
 
-    # ---------- IMEM generation ----------
-    def generate_imem(self, functions):
-        # 1) LOAD ARGS
-        self.write("----LOAD-ARGS----", "#", header=True)
-        self.load_cli()
+        main_body = functions['main']
+        self.write("------MAIN-------",header=True)
+        self.placeholders['@main'] = self.line_counter
 
-        # 2) MAIN first
-        self.write("------MAIN------", "#", header=True)
-        self.placeholders["@main"] = self.line_counter
-        for exp in functions["main"]:
-            self.instruction_rules(exp, "main")
+        for exp in main_body:
+            self.temp_sp = 0
+            self.instruction_rules(exp,"main")
 
-        # Save MAIN’s return value to its reserved DMEM slot
-        mem_loc = self.stack_frames["main"].return_add
-        self.write(f" LDC 5, {mem_loc}(0)", "# Store the memory location of main return value")
-        self.write(" ST 1, 0(5)", "# Store return value of into DMEM")
+        frame = self.stack_frames.pop()
+        main_params = self.symbol_table['main'].parameters[0]
+        offset = main_params + 1
 
-        # Print the final result and return to runtime
-        self.write(" LD 1, 0(5)", "# Load Return Value from DMEM")
-        self.write(" OUT 1, 0, 0", "# Output value from register 1.")
-        self.write(" LD 5, 0(0)", "# Reset memory pointer")
-        self.write(" LD 6, 0(5)", "# Load root return address into register 6")
-        self.write(" LDA 7, 0(6)", "# Load return address back into register 7")
+        self.write(f"LD   1, {offset}(5)"," Load return value into register 1")
+        self.write(f"LD  6, 0(5)", f" Load return address for main function into register 6")
+        self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
-        # Remove main from function set
-        del functions["main"]
+        del functions['main']
 
-        # 3) Other function bodies
-        for f in functions:
-            self.write(f"-----{f.upper()}-----", "#", header=True)
-            self.placeholders[f"@{f}"] = self.line_counter
+        for f, body in functions.items():
+            self.write(f"------{f.upper()}------", header=True)
+            self.placeholders[f'@{f}'] = self.line_counter
+            num_params = self.symbol_table[f].parameters[0]
+            offset = num_params + 1
 
-            body = functions[f]
-            self.create_frame(self.DMEM, f)
-
+            self.create_frame(f)
             for exp in body:
-                self.instruction_rules(exp, f)
+                self.temp_sp = 0
+                self.instruction_rules(exp, f, callee=True)       
+                self.write(f"ST   1, {offset}(5)", " Store function result into stack frame")
+            self.write("LD   6, 0(5)", " Load return address")
+            self.write("LDA  7, 0(6)", " Return to caller")
+            self.stack_frames.pop()
 
-            # Store function's final result in its reserved slot
-            mem_loc = self.stack_frames[f].return_add
-            self.write(f" LDC 5, {mem_loc}(0)", f"# Store the memory location of {f} return value")
-            self.write(" ST 1, 0(5)", f"# Store return value of into DMEM")
-
-            # Epilogue: compute and load return address (same as your draft)
-            ret_add = mem_loc + self.stack_frames[f].num_parm + 1
-            self.write(f" LDC 3, {ret_add}(0)", f"# Load return address for function {f} into register 3")
-            self.write(" LD 6, 0(3)", f"# Load return address into register 6")
-            self.write(" LDA 7, 0(6)", f"# Load return address back into register 7")
-
-    # ---------- CLI args loader ----------
-    def load_cli(self):
-        """
-        Load 'main' parameters from DMEM[1..N] into MAIN frame,
-        reserve one extra slot for MAIN's return value.
-        """
-        cli_params = self.symbol_table['main'].parameters
-        if cli_params[0] != 0:
-            cli_params = cli_params[1]
-        num_params = len(cli_params)
-
-        for i, p in enumerate(cli_params):
-            index = i + 1
-            self.write(f" LDC 3, {index}(0)", f"# Load target memory location for command line argument {index}")
-            self.write(f" LD 1, 0(3)", f"# Load command line argument {index} into register 1")
-            self.write(f" ST 0, 0(3)", f"# Replace DMEM[{index}] with 0")
-
-            # Push into MAIN frame
-            self.write(" ST 1, 0(5)", "# Store command line argument into MAIN stack frame")
-
-            # Move stack down; skip one extra cell for return value after last arg
-            if i + 1 == num_params:
-                self.write(" LDC 4, 2(0)", "# Load value 2 in temp register 4")
-                self.DMEM -= 2
-            else:
-                self.write(" LDC 4, 1(0)", "# Load value 1 in temp register 4")
-                self.DMEM -= 1
-
-            self.write(" SUB 5, 5, 4", "# Decrement memory offset")
-
-    # ---------- placeholder resolution ----------
     def fill_placeholders(self):
-        """
-        Replace all tokens like '@fname' or '!temp_#' with their final IMEM line indices.
-        """
         for i in range(len(self.IMEM)):
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
-    # ---------- expression compiler ----------
-    def instruction_rules(self, node, curr_function):
-        exp_type = node.type
-        exp_value = node.value
-        exp_children = node.children
+    def subtree_check(self,node):
+        stack = [node]
+        while stack:
+            n = stack.pop()
+            if getattr(n, "type", None) == "FUNCTION-CALL":
+                return True
+            stack.extend(getattr(n, "children", []))
+        return False
+    
+    def temp_spill(self, value, curr_function):
+        if not hasattr(self, 'temp_sp'):
+            self.temp_sp = 0
+
+        curr_params = self.symbol_table[curr_function].parameters[0]
+        offset = curr_params + 2 + self.temp_sp
+        self.write(f"ST   {value}, {offset}(5)", " Spill Temporary")
+        self.temp_sp += 1
+    
+    def temp_restore(self, value, curr_function):
+        self.temp_sp -= 1
+        curr_params = self.symbol_table[curr_function].parameters[0]
+        offset = curr_params + 2 + self.temp_sp
+        self.write(f"LD   {value}, {offset}(5)", " Restore Temporary")
+    
+    def instruction_rules(self,body,curr_function,callee=False):
+        exp_type = body.type
+        exp_value = body.value
+        exp_children = body.children
 
         match exp_type:
-            # -------- function call --------
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
 
-                # Save a return point (placeholder label in R6, store to memory)
-                ret_lbl = self.new_label()
-                self.write(f" LDA 6, {ret_lbl}(0)", "# Load return address into R6")
-                self.write(" ST 6, 0(5)", "# Store current return address into DMEM")
+                callee_params = self.symbol_table[f_name].parameters[0]
+                callee_size = callee_params + 2
 
-                if f_name == "print":
-                    # Arg is child[1]
-                    self.instruction_rules(exp_children[1], curr_function)
-                    self.write(" LDA 7, @print(0)", "# Branch to builtin print")
-                    self.placeholders[ret_lbl] = self.line_counter
+                caller_params = self.symbol_table[curr_function].parameters[0]
+                caller_size = caller_params + 2
+            
+                if f_name== "print":
+                    self.instruction_rules(exp_children[1], curr_function,callee=True)
+
+                    self.write(f"LDA  4, {callee_size}(5)", " Update DMEM pointer")
+
+                    temp_label = f"!return_{self.label_id}"
+                    self.label_id += 1
+
+                    self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
+
+                    self.write("ST   6, 0(4)", " Store return address")
+                    self.write("ADD  5, 4, 0", " Updated Pointer")
+                    self.write("LDA  7, @print(0)", "Call print")
+                    self.placeholders[temp_label] = self.line_counter
+                    self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
+                    self.write("SUB  5, 5, 4", " Restore pointer")
+                    
                 else:
-                    # User-defined: push args, reserve return slot, branch
-                    num_params = self.symbol_table[f_name].parameters[0]
-                    self.create_frame(self.DMEM, f_name)
+                    
+                    args = exp_children[1].children
 
-                    # Reserve one cell for callee bookkeeping (like in your draft)
-                    self.write(" LDC 4, 1(0)", "# Load value 1 in temporary register 4")
-                    self.DMEM -= 1
-                    self.write(" SUB 5, 5, 4", "# Decrement memory offset")
+                    for i, arg in enumerate(args):
+                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.write(f"LDA  4, {callee_size}(5)", "Restore Callee frame base")
+                        self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
 
-                    args = exp_children[1].children if len(exp_children) > 1 else []
+                    temp_label = f"!return_{self.label_id}"
+                    self.label_id += 1
 
-                    # Push all arguments (left-to-right)
-                    for a in args:
-                        self.instruction_rules(a, curr_function)
-                        self.write(" ST 1, 0(5)", "# Store parameter into memory")
-                        self.write(" LDC 4, 1(0)", "# Load value 1 into temporary register 4")
-                        self.DMEM -= 1
-                        self.write(" SUB 5, 5, 4", "# Decrement memory offset")
+                    self.write(f"LDA  4, {callee_size}(5)", "Restore Call frame base")
+                    self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
+                    self.write("ST 6, 0(4)", " Store return address in callee frame")
 
-                    # Reserve 1 cell for the callee's return value
-                    self.write(" LDC 4, 1(0)", "# Reserve return value cell")
-                    self.write(" SUB 5, 5, 4", "# Decrement memory offset")
-                    self.DMEM -= 1
+                    self.write("ADD  5, 4, 0", " Update pointer")
 
-                    # Jump to function body
-                    self.write(f" LDA 7, @{f_name}(0)", f"# Branch to {f_name}")
-                    self.placeholders[ret_lbl] = self.line_counter
+                    self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
-                    # On return: load the return value from top (callee left it)
-                    self.write(" LD 1, 0(5)", "# Load return value from DMEM into R1")
+                    self.placeholders[temp_label] = self.line_counter
 
-                    # Pop args + return + extra bookkeeping (num_params + 2)
-                    offset = num_params + 2
-                    self.write(f" LDC 4, {offset}(0)", "# Pop args+ret bookkeeping")
-                    self.write(" ADD 5, 5, 4", "# Increment memory offset")
-                    self.DMEM += offset
+                    call_offset = callee_params + 1
 
-            # -------- literals --------
+                    self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
+
+                    self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
+                    self.write("SUB  5, 5, 4", " Restore pointer")
+
+                    if not callee: # Only store as return value if it is a function return
+                        offset = caller_params + 1
+                        self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
             case "INTEGER-LITERAL":
-                value = int(node.value)
-                self.write(f" LDC 1, {value}(0)", "# Load integer-literal value into R1")
+                value = body.value
+                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "BOOLEAN-LITERAL":
-                value = 1 if str(node.value).lower() == "true" else 0
-                self.write(f" LDC 1, {value}(0)", "# Load boolean-literal value into R1")
+                value = body.value
+                if value == "true":
+                    value = 1
+                else:
+                    value = 0
+                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
 
-            # -------- identifiers (parameters) --------
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
-                num_params = params[0]
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        # Parameter at (frame.address + (num_params - i))
-                        offset = num_params - i
-                        mem_loc = self.stack_frames[curr_function].address + offset
-                        self.write(f" LDC 3, {mem_loc}(0)", f"# Param {exp_value} location -> R3")
-                        self.write(" LD 1, 0(3)", f"# Load param {exp_value} into R1")
+                        offset = i + 1
+                        self.write(f"LD   1, {offset}(5)", f" Load parameter '{exp_value}' into R1")
                         break
 
-            # -------- unary --------
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
             case "UNARY-EXPRESSION":
-                inner = exp_children[0]
-                self.instruction_rules(inner, curr_function)
+                inner_exp = exp_children[0]
+                self.instruction_rules(inner_exp, curr_function, callee=True)
+
                 if exp_value == "-":
-                    self.write(" SUB 1, 0, 1", "# Negate (0 - R1)")
+                    self.write("SUB  1, 0, 1", " Negate value in R1")
+
                 elif exp_value == "not":
-                    self.write(" LDC 2, 1(0)", "# Load 1 into R2")
-                    self.write(" SUB 1, 2, 1", "# Flip boolean (1 - R1)")
-                else:
-                    raise KleinError(f"Unknown unary operator: {exp_value}")
+                    self.write("LDC  2, 1(0)", " Load 1 into R2")
+                    self.write("SUB  1, 2, 1", " Logical NOT: 1 - R1")
 
-            # -------- binary --------
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
             case "BINARY-EXPRESSION":
-                left = exp_children[0]
-                right = exp_children[1]
+                def combine(op):
+                    match op:
+                        case "+":
+                            self.write("ADD  1, 2, 1", " R1 = left + right")
+                        case "-":
+                            self.write("SUB  1, 2, 1", " R1 = left - right")
+                        case "*":
+                            self.write("MUL  1, 2, 1", " R1 = left * right")
+                        case "/":
+                            self.write("DIV  1, 2, 1", " R1 = left / right")
+                        case "and":
+                            self.write("MUL  1, 2, 1", " R1 = left AND right")
+                        case "or":
+                            self.write("ADD  1, 2, 1", " R1 = left OR right")
+                        case "=":
+                            self.write("SUB  1, 2, 1", " left - right for equality check")
+                            self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
+                            self.write("LDC  1, 0(0)", " false")
+                            self.write("LDA  7, 1(7)", " skip setting true")
+                            self.write("LDC  1, 1(0)", " true")
+                        case "<":
+                            self.write("SUB  1, 2, 1", " left - right for less-than check")
+                            self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
+                            self.write("LDC  1, 0(0)", " false")
+                            self.write("LDA  7, 1(7)", " skip setting true")
+                            self.write("LDC  1, 1(0)", " true")
 
-                # Evaluate left -> store -> eval right -> load left back
-                self.instruction_rules(left, curr_function)
-                self.write(" LDC 4, 1(0)", "# temp 4 = 1")
-                self.DMEM -= 1
-                self.write(" SUB 5, 5, 4", "# stack down")
-                self.write(" ST 1, 0(5)", "# save left in DMEM")
+                left_exp = exp_children[0]
+                right_exp = exp_children[1]
+                curr_params = self.symbol_table[curr_function].parameters[0]
 
-                self.instruction_rules(right, curr_function)
-                self.write(" LD 2, 0(5)", "# R2 = left")
-                self.write(" ADD 5, 5, 4", "# stack up")
-                self.DMEM += 1
+                right_calls = self.subtree_check(right_exp)
+                left_calls = self.subtree_check(left_exp)
 
-                # Arithmetic / boolean (non-short-circuit) operators
-                match exp_value:
-                    case "+":
-                        self.write(" ADD 1, 2, 1", "# R1 = left + right")
-                    case "-":
-                        self.write(" SUB 1, 2, 1", "# R1 = left - right")
-                    case "*":
-                        self.write(" MUL 1, 2, 1", "# R1 = left * right")
-                    case "/":
-                        self.write(" DIV 1, 2, 1", "# R1 = left / right")
-                    case "and":
-                        self.write(" MUL 1, 2, 1", "# boolean AND via multiply")
-                    case "or":
-                        self.write(" ADD 1, 2, 1", "# boolean OR via add (0/1 inputs)")
+                if right_calls and not left_calls:
+                    self.instruction_rules(left_exp, curr_function, callee=True)
+                    self.temp_spill(1, curr_function)
+                    self.instruction_rules(right_exp, curr_function, callee=True)
+                    self.temp_restore(2, curr_function)
+                    combine(exp_value)
 
-                    # Relational ops: set R1 to 0/1 using labels (consistent pattern)
-                    case "=":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JEQ 1, {t_lbl}(0)", "# if == 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
+                elif left_calls and not right_calls:
+                    self.instruction_rules(right_exp, curr_function, callee=True)
+                    self.write("ADD  3, 1, 0", " Save right operand")
+                    self.instruction_rules(left_exp, curr_function, callee=True)
+                    self.write("ADD  2, 3, 0", " Restore right operand")
+                    combine(exp_value)
 
-                    case "<":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JLT 1, {t_lbl}(0)", "# if < 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
+                else:
+                    if not left_calls and not right_calls:
+                        self.instruction_rules(left_exp, curr_function, callee=True)
+                        self.write("ADD  3, 1, 0", " Save left operand")
+                        self.instruction_rules(right_exp, curr_function, callee=True)
+                        self.write("ADD  2, 3, 0", " restore left operand")
+                        combine(exp_value)
 
-                    case "<=":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JLE 1, {t_lbl}(0)", "# if <= 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
+                    else:
+                        self.instruction_rules(left_exp, curr_function, callee=True)
+                        self.temp_spill(1, curr_function)
+                        self.instruction_rules(right_exp, curr_function, callee=True)
+                        self.temp_restore(2, curr_function)
+                        combine(exp_value)
 
-                    case ">":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JGT 1, {t_lbl}(0)", "# if > 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
+                if not callee: # Only store as return value if it is a function return
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
-                    case ">=":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JGE 1, {t_lbl}(0)", "# if >= 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
-
-                    case "!=":
-                        t_lbl = self.new_label()
-                        e_lbl = self.new_label()
-                        self.write(" SUB 1, 2, 1", "# temp = left - right")
-                        self.write(f" JNE 1, {t_lbl}(0)", "# if != 0 -> true")
-                        self.write(" LDC 1, 0(0)", "# false")
-                        self.write(f" LDA 7, {e_lbl}(0)", "# jump end")
-                        self.placeholders[t_lbl] = self.line_counter
-                        self.write(" LDC 1, 1(0)", "# true")
-                        self.placeholders[e_lbl] = self.line_counter
-
-                    case _:
-                        raise KleinError(f"Unknown binary operator: {exp_value}")
-
-            # -------- if-expression --------
             case "IF-EXPRESSION":
-                self.write("-----IF-BLOCK-----", "#", header=True)
+                self.write("-----IF-BLOCK-----", header=True)
+                condition_exp = exp_children[0]
 
-                cond = exp_children[0]
-                self.instruction_rules(cond, curr_function)
+                self.instruction_rules(condition_exp, curr_function, callee=True)
 
-                l_else = self.new_label()
-                self.write(f" JEQ 1, {l_else}(0)", "# if condition false -> ELSE")
+                temp_label_else = "!temp_" + str(self.label_id); self.label_id += 1
+                self.write(f"JEQ  1, {temp_label_else}(0)", " If condition is false, jump to ELSE")
 
-                # THEN
-                self.write("-----THEN-BLOCK-----", "#", header=True)
+                self.write("-----THEN-BLOCK-----", header=True)
                 then_exp = exp_children[1]
-                self.instruction_rules(then_exp, curr_function)
+                self.instruction_rules(then_exp, curr_function, callee=callee)
 
-                l_end = self.new_label()
-                self.write(f" LDA 7, {l_end}(0)", "# skip ELSE")
-                # ELSE
-                self.write("-----ELSE-BLOCK-----", "#", header=True)
-                self.placeholders[l_else] = self.line_counter
+                temp_label_endif = "!temp_" + str(self.label_id); self.label_id += 1
+                self.write(f"LDA  7, {temp_label_endif}(0)", " Skip ELSE block")
+
+                self.write("-----ELSE-BLOCK-----", header=True)
+                self.placeholders[temp_label_else] = self.line_counter
                 else_exp = exp_children[2]
-                self.instruction_rules(else_exp, curr_function)
-                self.placeholders[l_end] = self.line_counter
+                self.instruction_rules(else_exp, curr_function, callee=callee)
 
-            case _:
-                raise KleinError(f"Unhandled node type: {exp_type}")
+                self.placeholders[temp_label_endif] = self.line_counter

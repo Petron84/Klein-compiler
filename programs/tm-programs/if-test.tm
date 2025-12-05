@@ -18,9 +18,9 @@
 17 : LDC  4, 3(0) ;  Load frame size
 18 : SUB  5, 5, 4 ;  Restore pointer
 19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-20 : ADD  3, 1, 0 ;  Save left operand
+20 : LDC  3, 1(0) ;  Store left operand into temporary register
 21 : LD   1, 1(5) ;  Load parameter 'n' into R1
-22 : ADD  2, 3, 0 ;  restore left operand
+22 : LDC  2, 3(0) ;  Restore left operand
 23 : SUB  1, 2, 1 ;  left - right for less-than check
 24 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 25 : LDC  1, 0(0) ;  false
@@ -28,9 +28,9 @@
 27 : LDC  1, 1(0) ;  true
 28 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
 29 : LD   1, 1(5) ;  Load parameter 'n' into R1
-30 : ADD  3, 1, 0 ;  Save left operand
+30 : LDC  3, 1(0) ;  Store left operand into temporary register
 31 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-32 : ADD  2, 3, 0 ;  restore left operand
+32 : LDC  2, 3(0) ;  Restore left operand
 33 : MUL  1, 2, 1 ;  R1 = left * right
 34 : ST 1, 2(5) ;  Store result into current frame's return slot
 35 : LDA  7, 38(0) ;  Skip ELSE block

@@ -14,9 +14,9 @@
 13 : LD   6, 0(5) ;  Load return addess from stack frame.
 14 : LDA  7, 0(6) ;  Jump to return address.
 15 : LD   1, 3(5) ;  Load parameter 'n' into R1
-16 : ADD  3, 1, 0 ;  Save left operand
+16 : LDC  3, 1(0) ;  Store left operand into temporary register
 17 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-18 : ADD  2, 3, 0 ;  restore left operand
+18 : LDC  2, 3(0) ;  Restore left operand
 19 : SUB  1, 2, 1 ;  left - right for equality check
 20 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 21 : LDC  1, 0(0) ;  false
@@ -48,29 +48,29 @@
 47 : LD  6, 0(5) ;  Load return address for main function into register 6
 48 : LDA  7, 0(6) ;  Jump to return address of main function
 49 : LD   1, 1(5) ;  Load parameter 'm' into R1
-50 : ADD  3, 1, 0 ;  Save left operand
+50 : LDC  3, 1(0) ;  Store left operand into temporary register
 51 : LD   1, 1(5) ;  Load parameter 'm' into R1
-52 : ADD  3, 1, 0 ;  Save left operand
+52 : LDC  3, 1(0) ;  Store left operand into temporary register
 53 : LD   1, 2(5) ;  Load parameter 'n' into R1
-54 : ADD  2, 3, 0 ;  restore left operand
+54 : LDC  2, 3(0) ;  Restore left operand
 55 : DIV  1, 2, 1 ;  R1 = left / right
-56 : ADD  3, 1, 0 ;  Save left operand
+56 : LDC  3, 1(0) ;  Store left operand into temporary register
 57 : LD   1, 2(5) ;  Load parameter 'n' into R1
-58 : ADD  2, 3, 0 ;  restore left operand
+58 : LDC  2, 3(0) ;  Restore left operand
 59 : MUL  1, 2, 1 ;  R1 = left * right
-60 : ADD  2, 3, 0 ;  restore left operand
+60 : LDC  2, 3(0) ;  Restore left operand
 61 : SUB  1, 2, 1 ;  R1 = left - right
 62 : ST   1, 3(5) ;  Store function result into stack frame
 63 : LD   6, 0(5) ;  Load return address
 64 : LDA  7, 0(6) ;  Return to caller
 65 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-66 : ADD  3, 1, 0 ;  Save left operand
+66 : LDC  3, 1(0) ;  Store left operand into temporary register
 67 : LD   1, 1(5) ;  Load parameter 'a' into R1
-68 : ADD  2, 3, 0 ;  restore left operand
+68 : LDC  2, 3(0) ;  Restore left operand
 69 : MUL  1, 2, 1 ;  R1 = left * right
-70 : ADD  3, 1, 0 ;  Save left operand
+70 : LDC  3, 1(0) ;  Store left operand into temporary register
 71 : LD   1, 2(5) ;  Load parameter 'b' into R1
-72 : ADD  2, 3, 0 ;  restore left operand
+72 : LDC  2, 3(0) ;  Restore left operand
 73 : DIV  1, 2, 1 ;  R1 = left / right
 74 : LDA  4, 3(5) ;  Update DMEM pointer
 75 : LDA 6, 79(0) ;  Compute return address
@@ -81,9 +81,9 @@
 80 : SUB  5, 5, 4 ;  Restore pointer
 81 : ST   1, 4(5) ;  Store function result into stack frame
 82 : LD   1, 1(5) ;  Load parameter 'a' into R1
-83 : ADD  3, 1, 0 ;  Save left operand
+83 : LDC  3, 1(0) ;  Store left operand into temporary register
 84 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-85 : ADD  2, 3, 0 ;  restore left operand
+85 : LDC  2, 3(0) ;  Restore left operand
 86 : MUL  1, 2, 1 ;  R1 = left * right
 87 : LDA  4, 4(5) ; Restore Callee frame base
 88 : ST 1, 1(4) ;  Store argument 0 into callee frame
@@ -104,9 +104,9 @@
 103 : LDA  4, 5(5) ; Restore Callee frame base
 104 : ST 1, 2(4) ;  Store argument 1 into callee frame
 105 : LD   1, 3(5) ;  Load parameter 'n' into R1
-106 : ADD  3, 1, 0 ;  Save left operand
+106 : LDC  3, 1(0) ;  Store left operand into temporary register
 107 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-108 : ADD  2, 3, 0 ;  restore left operand
+108 : LDC  2, 3(0) ;  Restore left operand
 109 : SUB  1, 2, 1 ;  R1 = left - right
 110 : LDA  4, 5(5) ; Restore Callee frame base
 111 : ST 1, 3(4) ;  Store argument 2 into callee frame
