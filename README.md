@@ -1,207 +1,311 @@
-# **Klein Compiler - Module 5: A Run-Time System for Klein**
 
-## **Team Name: Kleithon** 
-Members: Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Koura, Dylan Bock  
-
----
-
-## **Overview**
-Module 5 extends the Klein compiler by adding:
-1. A **Run-Time System** that initializes memory, executes Klein programs, and manages function calls.
-2. A **Code Generator** that produces TM programs from the AST and symbol table of semantically-correct Klein programs.
-3. A `kleinc` command-line tool, which compiles Klein source programs into TM programs automatically.
-4. Four diagrams details our run-time environment layout
-
-This stage completes the execution phase of the compiler, allowing Klein programs to run on the **Tiny Machine (TM) Virtual Machine**.
+# **Klein Compiler - Module 6: Code Generator & Complete Run-Time System**
+## **Team Name:** *Kleithon*  
+**Members:** Phat Nguyen, Efrata Tesfaye, Ziad Ouro-Koura, Dylan Bock  
 
 ---
 
-## **Core Features**
-- **Run-Time Environment** for executing Klein programs on TM.
-- **Code Generator** converts AST and symbol table into executable TM instructions.
-- Correctly handles the abstract syntax tree of `print-one.kln`.
-- Implements primitive `print()` function in TM.
-- Manages stack frames, including parameters, local variables, return addresses, and temporaries.
-- Uses eight TM registers consistently for frame and stack management.
-- Fully integrated with the `kleinc` command-line tool for automated compilation.
+# **1. Overview**
 
-## **Implemented Optional Features**
-| Feature | Status |
+Module 6 implements the final stage of the Klein compiler:  
+a **complete code generator** that produces executable **TM assembly** for semantically-valid Klein programs.
+
+This module brings together all prior components-scanner, parser, AST creation, semantic analysis, and now code generation-into one toolchain driven by the `kleinc` command.
+
+### **Module 6 Goals**
+1. Generate TM assembly for general Klein programs  
+2. Provide a functioning runtime system supporting function calls, parameters, returns, and stack frames  
+3. Update the `kleinc` driver to compile `.kln` files into `.tm` files  
+4. Create at least **one substantial new Klein program**  
+5. Document design decisions, limitations, and any unsupported features  
+
+This README explains the final system architecture, generator logic, tests, limitations, and known issues.
+
+---
+
+# **2. Architecture Summary**
+
+## **2.1 Project Files**
+| File | Purpose |
+|------|---------|
+| `code_generator.py` | Walks AST + symbol table to generate TM assembly |
+| `semantic_analyzer.py` | Validates AST and enriches it with type information |
+| `parser.py` | Constructs AST from token stream |
+| `scanner.py` | Tokenizes input Klein program |
+| `tableloader.py` | Loads symbol information for variables and functions |
+| `kleinc` | Runs full compilation pipeline and emits `.tm` output |
+| `tm-vm/` | Tiny Machine VM used to execute generated programs |
+
+---
+
+# **3. Code Generation**
+
+The code generator converts the AST into TM instructions and handles:
+
+- Integer literals  
+- Variable reads/writes  
+- Binary expressions  
+- If-statements  
+- Return statements  
+- Function calls  
+- Built-in `print()`  
+- Runtime initialization + call to `main()`  
+
+Output is a `.tm` file executable using the TM simulator.
+
+---
+
+# **4. Run-Time System**
+
+The runtime system manages stack frames, registers, and function call conventions.  
+Much of the structure extends our Module 5 implementation.
+
+## **4.1 Register Conventions**
+| Register | Meaning |
 |----------|---------|
-| `kleinc` accepts files with missing `.kln` extension (extra credit) | Implemented |
+| **R0** | Constant 0 |
+| **R1** | Return value / print output |
+| **R2** | Temporary for binary ops |
+| **R3** | General temporary |
+| **R4** | Offset computation |
+| **R5** | Stack pointer (DMEM pointer) |
+| **R6** | Return address |
+| **R7** | Program counter |
 
-## **Core Components**
-| File | Description |
-|------|--------------|
-| `code_generator.py` | Generates TM code from AST and symbol table. |
-| `kleinc` | Command-line tool that compiles Klein source to TM programs. |
-| `AST_Creator.py` | Defines AST structure used by code generator. |
-| `semantic_analyzer.py` | Provides validated AST and symbol table as input for code generation. |
+---
 
-Generated TM programs (e.g., `print-one.tm`) are executed using the Tiny Machine VM located in `tm-vm/`.
+## **4.2 Stack Frame Layout**
 
-## **Run-Time System**
+Each function call pushes the following onto DMEM:
 
-The run-time system sets up memory, executes `main()`, prints values, and halts the TM program.
-
-### **Key Responsibilities**
-- Initialize **stack pointer** and **frame pointer**.
-- Push return addresses and control links for function calls.
-- Allocate memory for parameters, local variables, and temporaries.
-- Execute `main()` and built-in `print()`.
-- Properly teardown stack frames after function returns.
-
-## **Memory Layout**
-### **DMEM (Data Memory)**
-- DMEM contains three main components for each function call:
-    1. Return address
-    2. Array of parameters (each function call jumps to an IMEM block)
-    3. Return value storage
-- Stack frames expand downward from `DMEM[1023]` toward `DMEM[1023 - N]`.
-- `DMEM[0]` contains the integer `1023` (highest legal address).
-
-### **IMEM (Instruction Memory)**
-- Stores TM instructions for:
-    - Run-time system initialization
-    - `print()` primitive
-    - User-defined functions (`main()`)
-
-### **Registers**
-| Register | Purpose |
-| R0 | Stores the value 0 |
-| R1 | Stores value to be output or returned |
-| R2 | Stores a temporary value for any operations that require two values (such as binary expressions). |
-| R3 | Stores a temporary value for general purpose (free register)|
-| R4 | Stores a temporary value for offset calculations |
-| R5 | Stores DMEM pointer |
-| R6 | Stores current return address |
-| R7 | Program counter |
-
-### **Stack Frame Layout**
-Each stack frame contains:
+```
 -------------------------
 | Return Address (R6)   |
 | Parameters 1 ... N    |
 | Return Value (R1)     |
 -------------------------
-- Return Address is stored in register `R6`.
-- Parameters are stored sequentially for each function call.
-- Return Value is stored in register `R1`.
-- Stack frames grow downward from `DMEM[1023]`.
+```
 
-## **Code Generator (`code_generator.py`)**
+- Stack grows **upward** from DMEM address 1  
+- `DMEM[0]` stores the constant 1023, allowing stack reset  
+- The runtime initializes the stack, calls `main()`, and halts once `main` returns  
 
-### **Responsibilities**
-- Walks AST and symbol table through producing TM instructions.
-- Generates as output an equivalent TM program.
-#### **Example Input (`print-one.kln`)**
-``` 
+---
+
+# **5. Test Programs & Status Check**
+
+## **5.1 Status Check Programs**
+
+By the status check deadline, our code generator and runtime system successfully compiled and executed the following programs **without errors and with correct output**:
+
+- `alwaystrue.tm`
+- `negatebool.tm`
+- `negateint.tm`
+- `nested-boolean.tm`
+- `nested-unary.tm`
+
+Among these:
+
+- **`nested-boolean.tm`**  
+- **`nested-unary.tm`**
+
+were used as our **more complex status check programs**, exercising:
+
+- Nested unary and boolean expressions  
+- Chained operations  
+- Correct evaluation order and temporary value handling  
+
+These programs demonstrate that, for a significant subset of Klein (especially unary and simple boolean/int expressions), the code generator and runtime behave as expected.
+
+---
+
+## **5.2 Additional Test Programs**
+
+Beyond the status-check set, we used additional Klein programs to test:
+
+- Arithmetic  
+- Function calls with multiple parameters  
+- Nested expressions  
+- If-statements  
+- Return-chain correctness  
+
+Some of these programs compile and run correctly; others expose limitations described in Section 7.
+
+---
+
+## **5.3 Example: Euclid's Algorithm**
+
+```kln
+function gcd(a : integer, b : integer) : integer
+    if b < 1 then
+        a
+    else
+        gcd(b, a - (a / b) * b)
+    end
+
 function main() : integer
-    print(1)
-    1
-```
-#### **Example TM Output**
-```plaintext
------INITIALIZE RUNTIME SYSTEM-----
-0 : LDA  6, 5(7) # Start runtime system. Load return address into register 6
-1 : LD   5, 0(0) # Load DMEM[0] (contains the value 1023) into register 5.
-2 : ST   6, 0(5) # Store runtime return address at DMEM[1023 + 0].
-3 : LDC  4, 1(0) # Store value 1 in temporary register 4
-4 : SUB  5, 5, 4 # Decrement memory offset
-5 : LDA  7, 4(7) # Load return address of main into register 7.
-6 : HALT 0, 0, 0 # Terminate runtime system.
------PRINT-----
-7 : OUT  1, 0, 0 # Hardcoded print function
-8 : LD   6, 0(5) # Load return addess from previous function call/stack frame.
-9 : LDA  7, 0(6) # Load address of previous function call into register 7.
------MAIN-----
-10 : LDA  6, 3(7) # Load return address into R6
-11 : ST   6, 0(5) # Store current return address in memory location 1022
-12 : LDC  1, 1(0) # Load print's value into register 1
-13 : LDA  7, 7(0) # Load address of print IMEM block
-14 : LDC  4, 1(0) # Store value 1 in temporary register 4
-15 : SUB  5, 5, 4 # Decrement memory offset
-16 : LDC  1, 1(0) # Load integer-literal value into register 1
-17 : ST   1, 0(5) # Store return value into memory location 1021
-18 : LD   1, 0(5) # Load Return Value from memory location 1021
-19 : OUT  1, 0, 0 # Output value from register 1.
-20 : LD   5, 0(0) # Reset memory pointer
-21 : LD   6, 0(5) # Load root return address into register 6
-22 : LDA  7, 0(6) # Load return address back into register 7
+    print(gcd(48, 18))
+    0
 ```
 
-## **Running the `kleinc` Command**
-To compile a Klein source file into a TM program, run:
+This tests:
+- Recursion  
+- Multiple parameters  
+- Arithmetic inside return  
+- Nested calls  
 
+It is representative of the kinds of programs we aimed to support with the full generator, even though (as documented later) our implementation still struggles with more complex call patterns.
+
+---
+
+# **6. `kleinc` Command**
+
+The `kleinc` script runs:
+
+1. Scanner  
+2. Parser  
+3. Semantic analyzer  
+4. Code generator  
+
+### **Usage**
 ```bash
-./kleinc <source-file>
+$ kleinc file.kln
 ```
 
-For example, to compile print-one.kln:
-
+Produces:
 ```bash
-./kleinc print-one.kln
+file.tm
 ```
 
-**Extra Credit**: accepts filenames without .kln extension:
-```bash
-./kleinc programs/print-one
-```
+### **Error Handling**
+- If scanner, parser, or semantic analyzer reports **errors**, compilation aborts  
+- If only warnings are present, `.tm` output is still produced  
 
-This produces a TM output file with the same base name `print-one.tm`.
-Then you can run the generated TM program using the Tiny Machine VM:
-```bash
-./tm-vm/tm-cli print-one.tm
-```
+### **Extra Credit (Previously Implemented)**
+`kleinc file` correctly resolves `file.kln` (missing extension).
 
-### **Expected Output**
-1. TM program file (print-one.tm)
-2. Correct execution on TM Virtual Machine (tm-vm/tm-cli):
-```plaintext
-1
-```
-3. Proper memory and stack management (verified with the generated diagrams: Stack Frame Layout, DMEM Layout, IMEM Layout, and Register Usage).
+---
 
-## **Project Structure**
+# **7. Design Choices, Limitations, and Known Issues**
 
-```
-kleinc
-code_generator.py
-semantic_analyzer.py
-AST_Creator.py
-parser.py
-scanner.py
-tableloader.py
-token_lister.py
-validate_semanticparser.py
+This section documents problems encountered during implementation-required for the project.
 
-programs/legal-programs/
-  print-one.kln
+---
 
-tm-vm/
-  tm-cli
-  tm-cli-go-timed-ext.c
-  tm-cli-go-timed.c
-  tm-cli-go.c
-  tm-cli.c
-  tm.c
+## **7.1 Function Call Handling Issues**
 
-doc/
-  GraphOutputs/
-  readme-versions
-  code_generation_diagrams_part1.png
-  code_generation_diagrams_part2.png
-```
+While many programs (such as our status check programs) run correctly, **complex function interactions do not**.  
+Primary causes:
 
-## **Deliverables**
-- `code_generator.py`
-- `kleinc` script
-- `doc/code_generation_diagrams_part1.png` and `doc/code_generation_diagrams_part2.png` (stack, DMEM, IMEM, registers)
+- **R1, R2, and R3** overwritten by nested calls  
+- **R6 (return address)** sometimes overwritten  
+- No full register preservation across calls  
+- Parameter offsets occasionally miscomputed  
 
-## **Final Status**
-- Minimal run-time system implemented
-- Code generator produces TM output for `print-one.kln`
-- Stack frame and memory diagrams documented
-- `print()` and `main()` fully functional
-- `kleinc` automates compilation pipeline
-- TM execution verified using `tm-vm/tm-cli`
+**Result:**  
+Programs often **execute without TM runtime errors**, but produce **incorrect results** when:
+
+- Functions are nested  
+- There are many parameters  
+- Recursion is deep  
+- Expression trees are complex and evaluated across function boundaries  
+
+---
+
+## **7.2 Memory-Management Attempts**
+
+We attempted a workaround:
+
+- Moving temporary values and some intermediates from registers to DMEM  
+
+But this caused:
+
+- Rapid DMEM consumption  
+- Programs running **out of memory**  
+- An unusable runtime for larger examples  
+
+We reverted to a more register-based design to avoid memory exhaustion, at the cost of correctness in complex call scenarios.
+
+---
+
+## **7.3 Unsupported or Partially Working Constructs**
+
+| Feature | Status |
+|---------|--------|
+| Nested function calls | Often incorrect |
+| Multi-parameter functions | Sometimes incorrect |
+| Recursion | Works inconsistently |
+| Deep expression trees | Temporaries overwritten |
+| Complex arithmetic inside return | Incorrect results |
+
+The generator emits **warnings** when the AST contains patterns known to be problematic.
+
+---
+
+# **8. What Works Reliably**
+
+| Feature | Status |
+|---------|--------|
+| Integer literals | Always correct |
+| Simple arithmetic (no nested calls) | Correct |
+| Single-function programs | Correct |
+| Runtime initialization | Correct |
+| `print()` built-in | Always correct |
+| Simple returns (e.g., literal or simple expression) | Correct |
+| Basic if-statements | Correct |
+| Status-check programs (`alwaystrue`, `negatebool`, `negateint`, `nested-boolean`, `nested-unary`) | Correct behavior |
+
+These stable features ensure that many straightforward and moderately complex Klein programs compile and run successfully.
+
+---
+
+# **9. Debugging Tools Used**
+
+To diagnose issues, we used:
+
+- TM instruction tracing  
+- DMEM snapshots  
+- Manual stack-frame diagrams  
+
+These informed several fixes such as:
+
+- Consistent DMEM pointer updates  
+- Correct runtime initialization  
+- More disciplined use of registers for temporaries  
+
+---
+
+# **10. Final Project Status**
+
+### **Delivered**
+- Fully integrated compiler (`kleinc`)  
+- Code generator capable of producing TM for all input programs  
+- Runtime system with stack management  
+- Status check programs that run correctly, including more complex nested-unary and nested-boolean tests  
+- New test programs (e.g., Euclid and others)  
+- Warnings for unsupported or fragile features  
+
+### **Not Fully Correct**
+- Nested calls and deep recursion  
+- Multi-parameter functions in complex expression contexts  
+- Complex return expressions  
+- Robust register preservation across arbitrary call patterns  
+
+### **Summary**
+The compiler:
+
+- Accepts and compiles any valid Klein source  
+- Executes many simple and moderate programs correctly (including all status check programs listed above)  
+- Fails gracefully with warnings when encountering unsupported constructs  
+- Produces TM assembly without causing simulator crashes  
+
+This meets the project's requirements for a complete compiler supporting a stable, well-defined subset of Klein, with clearly documented limitations.
+
+---
+
+# **11. Appendix: Example Output**
+
+`print-one.kln` TM output is available in our Module 5 documentation.  
+The architecture and conventions used here are consistent with that earlier example.
+
+---
