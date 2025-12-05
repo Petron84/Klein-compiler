@@ -19,7 +19,7 @@
 18 : LDC  1, 1(0) ;  true
 19 : JEQ  1, 23(0) ;  If condition is false, jump to ELSE
 20 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-21 : ST   1, 4(0) ;  Store value into return value in stack frame
+21 : ST 1, 2(5) ;  Store result into current frame's return slot
 22 : LDA  7, 44(0) ;  Skip ELSE block
 23 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 24 : LDA  3, 3(5) ; Restore Callee frame base
@@ -34,16 +34,16 @@
 33 : LDA  3, 3(5) ; Restore Callee frame base
 34 : ST 1, 4(3) ;  Store argument 3 into callee frame
 35 : LDA  3, 3(5) ; Restore Call frame base
-36 : LDA 6, 40(0)) ;  Compute return address
+36 : LDA 6, 40(0) ;  Compute return address
 37 : ST 6, 0(3) ;  Store return address in callee frame
 38 : ADD  5, 3, 0 ;  Update pointer
 39 : LDA 7, 47(0) ;  Call addNext
 40 : LD 1, 5(5) ;  Load callee return value into R1
 41 : LDC  4, 3(0) ;  Load frame size
 42 : SUB  5, 5, 4 ;  Restore pointer
-43 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-44 : LD   1, 4(0) ;  Load return value into register 1
-45 : LD  6, 2(0) ;  Load return address for main function into register 6
+43 : ST 1, 2(5) ;  Store result into current frame's return slot
+44 : LD   1, 2(5) ;  Load return value into register 1
+45 : LD  6, 0(5) ;  Load return address for main function into register 6
 46 : LDA  7, 0(6) ;  Jump to return address of main function
 47 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
 48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -75,7 +75,7 @@
 74 : LDA  3, 6(5) ; Restore Callee frame base
 75 : ST 1, 4(3) ;  Store argument 3 into callee frame
 76 : LDA  3, 6(5) ; Restore Call frame base
-77 : LDA 6, 81(0)) ;  Compute return address
+77 : LDA 6, 81(0) ;  Compute return address
 78 : ST 6, 0(3) ;  Store return address in callee frame
 79 : ADD  5, 3, 0 ;  Update pointer
 80 : LDA 7, 47(0) ;  Call addNext

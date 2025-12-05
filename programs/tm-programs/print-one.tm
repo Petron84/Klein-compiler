@@ -16,7 +16,7 @@
 15 : LDC  4, 2(0) ;  Load frame size
 16 : SUB  5, 5, 4 ;  Restore pointer
 17 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-18 : ST   1, 2(0) ;  Store value into return value in stack frame
-19 : LD   1, 2(0) ;  Load return value into register 1
-20 : LD  6, 1(0) ;  Load return address for main function into register 6
+18 : ST 1, 1(5) ;  Store result into current frame's return slot
+19 : LD   1, 1(5) ;  Load return value into register 1
+20 : LD  6, 0(5) ;  Load return address for main function into register 6
 21 : LDA  7, 0(6) ;  Jump to return address of main function

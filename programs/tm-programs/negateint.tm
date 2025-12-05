@@ -11,7 +11,7 @@
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
 12 : SUB  1, 0, 1 ;  Negate value in R1
-13 : ST   1, 4(0) ;  Store unary result into return slot
-14 : LD   1, 4(0) ;  Load return value into register 1
-15 : LD  6, 2(0) ;  Load return address for main function into register 6
+13 : ST 1, 2(5) ;  Store result into current frame's return slot
+14 : LD   1, 2(5) ;  Load return value into register 1
+15 : LD  6, 0(5) ;  Load return address for main function into register 6
 16 : LDA  7, 0(6) ;  Jump to return address of main function

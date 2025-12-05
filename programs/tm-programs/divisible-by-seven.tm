@@ -22,7 +22,7 @@
 21 : LDA  3, 3(5) ; Restore Callee frame base
 22 : ST 1, 2(3) ;  Store argument 1 into callee frame
 23 : LDA  3, 3(5) ; Restore Call frame base
-24 : LDA 6, 28(0)) ;  Compute return address
+24 : LDA 6, 28(0) ;  Compute return address
 25 : ST 6, 0(3) ;  Store return address in callee frame
 26 : ADD  5, 3, 0 ;  Update pointer
 27 : LDA 7, 45(0) ;  Call MOD
@@ -32,16 +32,16 @@
 31 : LDA  3, 3(5) ; Restore Callee frame base
 32 : ST 1, 2(3) ;  Store argument 1 into callee frame
 33 : LDA  3, 3(5) ; Restore Call frame base
-34 : LDA 6, 38(0)) ;  Compute return address
+34 : LDA 6, 38(0) ;  Compute return address
 35 : ST 6, 0(3) ;  Store return address in callee frame
 36 : ADD  5, 3, 0 ;  Update pointer
 37 : LDA 7, 126(0) ;  Call divisibleByParts
 38 : LD 1, 3(5) ;  Load callee return value into R1
 39 : LDC  4, 3(0) ;  Load frame size
 40 : SUB  5, 5, 4 ;  Restore pointer
-41 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-42 : LD   1, 4(0) ;  Load return value into register 1
-43 : LD  6, 2(0) ;  Load return address for main function into register 6
+41 : ST 1, 2(5) ;  Store result into current frame's return slot
+42 : LD   1, 2(5) ;  Load return value into register 1
+43 : LD  6, 0(5) ;  Load return address for main function into register 6
 44 : LDA  7, 0(6) ;  Jump to return address of main function
 45 : LD   1, 1(5) ;  Load parameter 'm' into R1
 46 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -114,7 +114,7 @@
 113 : LDA  3, 3(5) ; Restore Callee frame base
 114 : ST 1, 1(3) ;  Store argument 0 into callee frame
 115 : LDA  3, 3(5) ; Restore Call frame base
-116 : LDA 6, 120(0)) ;  Compute return address
+116 : LDA 6, 120(0) ;  Compute return address
 117 : ST 6, 0(3) ;  Store return address in callee frame
 118 : ADD  5, 3, 0 ;  Update pointer
 119 : LDA 7, 11(0) ;  Call main
@@ -134,7 +134,7 @@
 133 : LDA  3, 4(5) ; Restore Callee frame base
 134 : ST 1, 1(3) ;  Store argument 0 into callee frame
 135 : LDA  3, 4(5) ; Restore Call frame base
-136 : LDA 6, 140(0)) ;  Compute return address
+136 : LDA 6, 140(0) ;  Compute return address
 137 : ST 6, 0(3) ;  Store return address in callee frame
 138 : ADD  5, 3, 0 ;  Update pointer
 139 : LDA 7, 58(0) ;  Call divisibleByDifference

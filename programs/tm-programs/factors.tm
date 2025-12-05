@@ -16,16 +16,16 @@
 15 : LDA  3, 3(5) ; Restore Callee frame base
 16 : ST 1, 2(3) ;  Store argument 1 into callee frame
 17 : LDA  3, 3(5) ; Restore Call frame base
-18 : LDA 6, 22(0)) ;  Compute return address
+18 : LDA 6, 22(0) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 163(0) ;  Call loopToN
 22 : LD 1, 3(5) ;  Load callee return value into R1
 23 : LDC  4, 3(0) ;  Load frame size
 24 : SUB  5, 5, 4 ;  Restore pointer
-25 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-26 : LD   1, 4(0) ;  Load return value into register 1
-27 : LD  6, 2(0) ;  Load return address for main function into register 6
+25 : ST 1, 2(5) ;  Store result into current frame's return slot
+26 : LD   1, 2(5) ;  Load return value into register 1
+27 : LD  6, 0(5) ;  Load return address for main function into register 6
 28 : LDA  7, 0(6) ;  Jump to return address of main function
 29 : LD   1, 1(5) ;  Load parameter 'num' into R1
 30 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -48,7 +48,7 @@
 47 : LDA  3, 4(5) ; Restore Callee frame base
 48 : ST 1, 2(3) ;  Store argument 1 into callee frame
 49 : LDA  3, 4(5) ; Restore Call frame base
-50 : LDA 6, 54(0)) ;  Compute return address
+50 : LDA 6, 54(0) ;  Compute return address
 51 : ST 6, 0(3) ;  Store return address in callee frame
 52 : ADD  5, 3, 0 ;  Update pointer
 53 : LDA 7, 29(0) ;  Call remainder
@@ -65,7 +65,7 @@
 64 : LDA  3, 4(5) ; Restore Callee frame base
 65 : ST 1, 2(3) ;  Store argument 1 into callee frame
 66 : LDA  3, 4(5) ; Restore Call frame base
-67 : LDA 6, 71(0)) ;  Compute return address
+67 : LDA 6, 71(0) ;  Compute return address
 68 : ST 6, 0(3) ;  Store return address in callee frame
 69 : ADD  5, 3, 0 ;  Update pointer
 70 : LDA 7, 29(0) ;  Call remainder
@@ -101,7 +101,7 @@
 100 : LDA  3, 4(5) ; Restore Callee frame base
 101 : ST 1, 2(3) ;  Store argument 1 into callee frame
 102 : LDA  3, 4(5) ; Restore Call frame base
-103 : LDA 6, 107(0)) ;  Compute return address
+103 : LDA 6, 107(0) ;  Compute return address
 104 : ST 6, 0(3) ;  Store return address in callee frame
 105 : ADD  5, 3, 0 ;  Update pointer
 106 : LDA 7, 163(0) ;  Call loopToN
@@ -118,7 +118,7 @@
 117 : LDA  3, 4(5) ; Restore Callee frame base
 118 : ST 1, 2(3) ;  Store argument 1 into callee frame
 119 : LDA  3, 4(5) ; Restore Call frame base
-120 : LDA 6, 124(0)) ;  Compute return address
+120 : LDA 6, 124(0) ;  Compute return address
 121 : ST 6, 0(3) ;  Store return address in callee frame
 122 : ADD  5, 3, 0 ;  Update pointer
 123 : LDA 7, 60(0) ;  Call divides
@@ -133,7 +133,7 @@
 132 : LDA  3, 4(5) ; Restore Callee frame base
 133 : ST 1, 2(3) ;  Store argument 1 into callee frame
 134 : LDA  3, 4(5) ; Restore Call frame base
-135 : LDA 6, 139(0)) ;  Compute return address
+135 : LDA 6, 139(0) ;  Compute return address
 136 : ST 6, 0(3) ;  Store return address in callee frame
 137 : ADD  5, 3, 0 ;  Update pointer
 138 : LDA 7, 84(0) ;  Call printAndLoop
@@ -151,7 +151,7 @@
 150 : LDA  3, 4(5) ; Restore Callee frame base
 151 : ST 1, 2(3) ;  Store argument 1 into callee frame
 152 : LDA  3, 4(5) ; Restore Call frame base
-153 : LDA 6, 157(0)) ;  Compute return address
+153 : LDA 6, 157(0) ;  Compute return address
 154 : ST 6, 0(3) ;  Store return address in callee frame
 155 : ADD  5, 3, 0 ;  Update pointer
 156 : LDA 7, 163(0) ;  Call loopToN
@@ -179,7 +179,7 @@
 178 : LDA  3, 4(5) ; Restore Callee frame base
 179 : ST 1, 2(3) ;  Store argument 1 into callee frame
 180 : LDA  3, 4(5) ; Restore Call frame base
-181 : LDA 6, 185(0)) ;  Compute return address
+181 : LDA 6, 185(0) ;  Compute return address
 182 : ST 6, 0(3) ;  Store return address in callee frame
 183 : ADD  5, 3, 0 ;  Update pointer
 184 : LDA 7, 113(0) ;  Call testAndLoop

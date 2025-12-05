@@ -21,7 +21,7 @@
 20 : LDC  1, 1(0) ;  true
 21 : JEQ  1, 25(0) ;  If condition is false, jump to ELSE
 22 : LD   1, 2(5) ;  Load parameter 'n' into R1
-23 : ST   1, 6(0) ;  Store identifier value into current frame's return slot
+23 : ST 1, 3(5) ;  Store result into current frame's return slot
 24 : LDA  7, 77(0) ;  Skip ELSE block
 25 : LD   1, 2(5) ;  Load parameter 'n' into R1
 26 : LDA  3, 4(5) ; Restore Callee frame base
@@ -30,7 +30,7 @@
 29 : LDA  3, 4(5) ; Restore Callee frame base
 30 : ST 1, 2(3) ;  Store argument 1 into callee frame
 31 : LDA  3, 4(5) ; Restore Call frame base
-32 : LDA 6, 36(0)) ;  Compute return address
+32 : LDA 6, 36(0) ;  Compute return address
 33 : ST 6, 0(3) ;  Store return address in callee frame
 34 : ADD  5, 3, 0 ;  Update pointer
 35 : LDA 7, 80(0) ;  Call MOD
@@ -49,7 +49,7 @@
 48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 49 : LD   1, 1(5) ;  Load parameter 'm' into R1
 50 : DIV  1, 2, 1 ;  R1 = left / right
-51 : ST   1, 6(0) ;  Store binary result into return slot
+51 : ST 1, 3(5) ;  Store result into current frame's return slot
 52 : LDA  7, 77(0) ;  Skip ELSE block
 53 : LD   1, 1(5) ;  Load parameter 'm' into R1
 54 : LDA  3, 4(5) ; Restore Callee frame base
@@ -67,16 +67,16 @@
 66 : LDA  3, 4(5) ; Restore Callee frame base
 67 : ST 1, 3(3) ;  Store argument 2 into callee frame
 68 : LDA  3, 4(5) ; Restore Call frame base
-69 : LDA 6, 73(0)) ;  Compute return address
+69 : LDA 6, 73(0) ;  Compute return address
 70 : ST 6, 0(3) ;  Store return address in callee frame
 71 : ADD  5, 3, 0 ;  Update pointer
 72 : LDA 7, 93(0) ;  Call print_and_continue
 73 : LD 1, 4(5) ;  Load callee return value into R1
 74 : LDC  4, 4(0) ;  Load frame size
 75 : SUB  5, 5, 4 ;  Restore pointer
-76 : ST 1, 6(0) ;  Store function-call result into caller's return slot
-77 : LD   1, 6(0) ;  Load return value into register 1
-78 : LD  6, 3(0) ;  Load return address for main function into register 6
+76 : ST 1, 3(5) ;  Store result into current frame's return slot
+77 : LD   1, 3(5) ;  Load return value into register 1
+78 : LD  6, 0(5) ;  Load return address for main function into register 6
 79 : LDA  7, 0(6) ;  Jump to return address of main function
 80 : LD   1, 1(5) ;  Load parameter 'm' into R1
 81 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -116,7 +116,7 @@
 115 : LDA  3, 5(5) ; Restore Callee frame base
 116 : ST 1, 2(3) ;  Store argument 1 into callee frame
 117 : LDA  3, 5(5) ; Restore Call frame base
-118 : LDA 6, 122(0)) ;  Compute return address
+118 : LDA 6, 122(0) ;  Compute return address
 119 : ST 6, 0(3) ;  Store return address in callee frame
 120 : ADD  5, 3, 0 ;  Update pointer
 121 : LDA 7, 13(0) ;  Call main

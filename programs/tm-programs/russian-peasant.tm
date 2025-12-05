@@ -26,16 +26,16 @@
 25 : LDA  3, 4(5) ; Restore Callee frame base
 26 : ST 1, 2(3) ;  Store argument 1 into callee frame
 27 : LDA  3, 4(5) ; Restore Call frame base
-28 : LDA 6, 32(0)) ;  Compute return address
+28 : LDA 6, 32(0) ;  Compute return address
 29 : ST 6, 0(3) ;  Store return address in callee frame
 30 : ADD  5, 3, 0 ;  Update pointer
 31 : LDA 7, 39(0) ;  Call mult
 32 : LD 1, 3(5) ;  Load callee return value into R1
 33 : LDC  4, 4(0) ;  Load frame size
 34 : SUB  5, 5, 4 ;  Restore pointer
-35 : ST 1, 6(0) ;  Store function-call result into caller's return slot
-36 : LD   1, 6(0) ;  Load return value into register 1
-37 : LD  6, 3(0) ;  Load return address for main function into register 6
+35 : ST 1, 3(5) ;  Store result into current frame's return slot
+36 : LD   1, 3(5) ;  Load return value into register 1
+37 : LD  6, 0(5) ;  Load return address for main function into register 6
 38 : LDA  7, 0(6) ;  Jump to return address of main function
 39 : LD   1, 1(5) ;  Load parameter 'm' into R1
 40 : LDA  3, 4(5) ; Restore Callee frame base
@@ -47,7 +47,7 @@
 46 : LDA  3, 4(5) ; Restore Callee frame base
 47 : ST 1, 3(3) ;  Store argument 2 into callee frame
 48 : LDA  3, 4(5) ; Restore Call frame base
-49 : LDA 6, 53(0)) ;  Compute return address
+49 : LDA 6, 53(0) ;  Compute return address
 50 : ST 6, 0(3) ;  Store return address in callee frame
 51 : ADD  5, 3, 0 ;  Update pointer
 52 : LDA 7, 59(0) ;  Call multWithAccum
@@ -75,7 +75,7 @@
 74 : LDA  3, 5(5) ; Restore Callee frame base
 75 : ST 1, 2(3) ;  Store argument 1 into callee frame
 76 : LDA  3, 5(5) ; Restore Call frame base
-77 : LDA 6, 81(0)) ;  Compute return address
+77 : LDA 6, 81(0) ;  Compute return address
 78 : ST 6, 0(3) ;  Store return address in callee frame
 79 : ADD  5, 3, 0 ;  Update pointer
 80 : LDA 7, 145(0) ;  Call MOD
@@ -109,7 +109,7 @@
 108 : LDA  3, 5(5) ; Restore Callee frame base
 109 : ST 1, 3(3) ;  Store argument 2 into callee frame
 110 : LDA  3, 5(5) ; Restore Call frame base
-111 : LDA 6, 115(0)) ;  Compute return address
+111 : LDA 6, 115(0) ;  Compute return address
 112 : ST 6, 0(3) ;  Store return address in callee frame
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 59(0) ;  Call multWithAccum
@@ -133,7 +133,7 @@
 132 : LDA  3, 5(5) ; Restore Callee frame base
 133 : ST 1, 3(3) ;  Store argument 2 into callee frame
 134 : LDA  3, 5(5) ; Restore Call frame base
-135 : LDA 6, 139(0)) ;  Compute return address
+135 : LDA 6, 139(0) ;  Compute return address
 136 : ST 6, 0(3) ;  Store return address in callee frame
 137 : ADD  5, 3, 0 ;  Update pointer
 138 : LDA 7, 59(0) ;  Call multWithAccum

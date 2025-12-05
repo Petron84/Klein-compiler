@@ -16,16 +16,16 @@
 15 : LDA  3, 3(5) ; Restore Callee frame base
 16 : ST 1, 2(3) ;  Store argument 1 into callee frame
 17 : LDA  3, 3(5) ; Restore Call frame base
-18 : LDA 6, 22(0)) ;  Compute return address
+18 : LDA 6, 22(0) ;  Compute return address
 19 : ST 6, 0(3) ;  Store return address in callee frame
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 193(0) ;  Call sieveAt
 22 : LD 1, 3(5) ;  Load callee return value into R1
 23 : LDC  4, 3(0) ;  Load frame size
 24 : SUB  5, 5, 4 ;  Restore pointer
-25 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-26 : LD   1, 4(0) ;  Load return value into register 1
-27 : LD  6, 2(0) ;  Load return address for main function into register 6
+25 : ST 1, 2(5) ;  Store result into current frame's return slot
+26 : LD   1, 2(5) ;  Load return value into register 1
+27 : LD  6, 0(5) ;  Load return address for main function into register 6
 28 : LDA  7, 0(6) ;  Jump to return address of main function
 29 : LD   1, 1(5) ;  Load parameter 'num' into R1
 30 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -48,7 +48,7 @@
 47 : LDA  3, 4(5) ; Restore Callee frame base
 48 : ST 1, 2(3) ;  Store argument 1 into callee frame
 49 : LDA  3, 4(5) ; Restore Call frame base
-50 : LDA 6, 54(0)) ;  Compute return address
+50 : LDA 6, 54(0) ;  Compute return address
 51 : ST 6, 0(3) ;  Store return address in callee frame
 52 : ADD  5, 3, 0 ;  Update pointer
 53 : LDA 7, 29(0) ;  Call rem
@@ -65,7 +65,7 @@
 64 : LDA  3, 4(5) ; Restore Callee frame base
 65 : ST 1, 2(3) ;  Store argument 1 into callee frame
 66 : LDA  3, 4(5) ; Restore Call frame base
-67 : LDA 6, 71(0)) ;  Compute return address
+67 : LDA 6, 71(0) ;  Compute return address
 68 : ST 6, 0(3) ;  Store return address in callee frame
 69 : ADD  5, 3, 0 ;  Update pointer
 70 : LDA 7, 29(0) ;  Call rem
@@ -98,7 +98,7 @@
 97 : LDA  3, 4(5) ; Restore Callee frame base
 98 : ST 1, 2(3) ;  Store argument 1 into callee frame
 99 : LDA  3, 4(5) ; Restore Call frame base
-100 : LDA 6, 104(0)) ;  Compute return address
+100 : LDA 6, 104(0) ;  Compute return address
 101 : ST 6, 0(3) ;  Store return address in callee frame
 102 : ADD  5, 3, 0 ;  Update pointer
 103 : LDA 7, 60(0) ;  Call divides
@@ -116,7 +116,7 @@
 115 : LDA  3, 4(5) ; Restore Callee frame base
 116 : ST 1, 2(3) ;  Store argument 1 into callee frame
 117 : LDA  3, 4(5) ; Restore Call frame base
-118 : LDA 6, 122(0)) ;  Compute return address
+118 : LDA 6, 122(0) ;  Compute return address
 119 : ST 6, 0(3) ;  Store return address in callee frame
 120 : ADD  5, 3, 0 ;  Update pointer
 121 : LDA 7, 84(0) ;  Call hasDivisorFrom
@@ -136,7 +136,7 @@
 135 : LDA  3, 3(5) ; Restore Callee frame base
 136 : ST 1, 2(3) ;  Store argument 1 into callee frame
 137 : LDA  3, 3(5) ; Restore Call frame base
-138 : LDA 6, 142(0)) ;  Compute return address
+138 : LDA 6, 142(0) ;  Compute return address
 139 : ST 6, 0(3) ;  Store return address in callee frame
 140 : ADD  5, 3, 0 ;  Update pointer
 141 : LDA 7, 84(0) ;  Call hasDivisorFrom
@@ -152,7 +152,7 @@
 151 : LDA  3, 4(5) ; Restore Callee frame base
 152 : ST 1, 1(3) ;  Store argument 0 into callee frame
 153 : LDA  3, 4(5) ; Restore Call frame base
-154 : LDA 6, 158(0)) ;  Compute return address
+154 : LDA 6, 158(0) ;  Compute return address
 155 : ST 6, 0(3) ;  Store return address in callee frame
 156 : ADD  5, 3, 0 ;  Update pointer
 157 : LDA 7, 131(0) ;  Call isPrime
@@ -181,7 +181,7 @@
 180 : LDA  3, 4(5) ; Restore Callee frame base
 181 : ST 1, 2(3) ;  Store argument 1 into callee frame
 182 : LDA  3, 4(5) ; Restore Call frame base
-183 : LDA 6, 187(0)) ;  Compute return address
+183 : LDA 6, 187(0) ;  Compute return address
 184 : ST 6, 0(3) ;  Store return address in callee frame
 185 : ADD  5, 3, 0 ;  Update pointer
 186 : LDA 7, 193(0) ;  Call sieveAt
@@ -209,7 +209,7 @@
 208 : LDA  3, 4(5) ; Restore Callee frame base
 209 : ST 1, 2(3) ;  Store argument 1 into callee frame
 210 : LDA  3, 4(5) ; Restore Call frame base
-211 : LDA 6, 215(0)) ;  Compute return address
+211 : LDA 6, 215(0) ;  Compute return address
 212 : ST 6, 0(3) ;  Store return address in callee frame
 213 : ADD  5, 3, 0 ;  Update pointer
 214 : LDA 7, 150(0) ;  Call doSieveAt

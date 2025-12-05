@@ -30,10 +30,10 @@
 29 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 30 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 31 : MUL  1, 2, 1 ;  R1 = left * right
-32 : ST   1, 4(0) ;  Store binary result into return slot
+32 : ST 1, 2(5) ;  Store result into current frame's return slot
 33 : LDA  7, 36(0) ;  Skip ELSE block
 34 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-35 : ST   1, 4(0) ;  Store value into return value in stack frame
-36 : LD   1, 4(0) ;  Load return value into register 1
-37 : LD  6, 2(0) ;  Load return address for main function into register 6
+35 : ST 1, 2(5) ;  Store result into current frame's return slot
+36 : LD   1, 2(5) ;  Load return value into register 1
+37 : LD  6, 0(5) ;  Load return address for main function into register 6
 38 : LDA  7, 0(6) ;  Jump to return address of main function

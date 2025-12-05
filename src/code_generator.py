@@ -120,11 +120,11 @@ class Generator:
             self.instruction_rules(exp,"main")
 
         frame = self.stack_frames.pop()
-        mem_loc = frame.top
-        val_loc = frame.val_loc
+        main_params = self.symbol_table['main'].parameters[0]
+        offset = main_params + 1
 
-        self.write(f"LD   1, {val_loc}(0)"," Load return value into register 1")
-        self.write(f"LD  6, {mem_loc}(0)", f" Load return address for main function into register 6")
+        self.write(f"LD   1, {offset}(5)"," Load return value into register 1")
+        self.write(f"LD  6, 0(5)", f" Load return address for main function into register 6")
         self.write("LDA  7, 0(6)", f" Jump to return address of main function")
 
         del functions['main']
@@ -190,7 +190,7 @@ class Generator:
                     self.label_id += 1
 
                     self.write(f"LDA  3, {call_size}(5)", "Restore Call frame base")
-                    self.write(f"LDA 6, {temp_label}(0))", " Compute return address")
+                    self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
                     self.write("ST 6, 0(3)", " Store return address in callee frame")
 
                     self.write("ADD  5, 3, 0", " Update pointer")
@@ -207,18 +207,20 @@ class Generator:
                     self.write(f"LDC  4, {call_size}(0)", " Load frame size")
                     self.write("SUB  5, 5, 4", " Restore pointer")
 
-                    if not callee:
-                        caller_val_loc = self.stack_frames[-1].val_loc
-                        self.write(f"ST 1, {caller_val_loc}(0)", " Store function-call result into caller's return slot")
+                    if not callee: # Only store as return value if it is a function return
+                        curr_params = self.symbol_table[curr_function].parameters[0]
+                        offset = curr_params + 1
+                        self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "INTEGER-LITERAL":
                 value = body.value
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
 
                 if not callee: # Only store as return value if it is a function return
-                    val_loc = self.stack_frames[-1].val_loc
-                    self.write(f"ST   1, {val_loc}(0)"," Store value into return value in stack frame")
-            
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
             case "BOOLEAN-LITERAL":
                 value = body.value
                 if value == "true":
@@ -228,8 +230,9 @@ class Generator:
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
 
                 if not callee: # Only store as return value if it is a function return
-                    val_loc = self.stack_frames[-1].val_loc
-                    self.write(f"ST   1, {val_loc}(0)"," Store value into return value in stack frame")
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "IDENTIFIER":
                 params = self.symbol_table[curr_function].parameters
@@ -239,9 +242,10 @@ class Generator:
                         self.write(f"LD   1, {offset}(5)", f" Load parameter '{exp_value}' into R1")
                         break
 
-                if not callee:
-                    val_loc = self.stack_frames[-1].val_loc
-                    self.write(f"ST   1, {val_loc}(0)", " Store identifier value into current frame's return slot")
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
@@ -254,9 +258,10 @@ class Generator:
                     self.write("LDC  2, 1(0)", " Load 1 into R2")
                     self.write("SUB  1, 2, 1", " Logical NOT: 1 - R1")
 
-                if not callee:
-                    val_loc = self.stack_frames[-1].val_loc
-                    self.write(f"ST   1, {val_loc}(0)", " Store unary result into return slot")
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "BINARY-EXPRESSION":
                 left_exp = exp_children[0]
@@ -293,9 +298,10 @@ class Generator:
                         self.write("LDA  7, 1(7)", " skip setting true")
                         self.write("LDC  1, 1(0)", " true")
 
-                if not callee:
-                    val_loc = self.stack_frames[-1].val_loc
-                    self.write(f"ST   1, {val_loc}(0)", " Store binary result into return slot")
+                if not callee: # Only store as return value if it is a function return
+                    curr_params = self.symbol_table[curr_function].parameters[0]
+                    offset = curr_params + 1
+                    self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
             case "IF-EXPRESSION":
                 self.write("-----IF-BLOCK-----", header=True)

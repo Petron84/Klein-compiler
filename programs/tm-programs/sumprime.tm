@@ -14,16 +14,16 @@
 13 : LDA  3, 2(5) ; Restore Callee frame base
 14 : ST 1, 2(3) ;  Store argument 1 into callee frame
 15 : LDA  3, 2(5) ; Restore Call frame base
-16 : LDA 6, 20(0)) ;  Compute return address
+16 : LDA 6, 20(0) ;  Compute return address
 17 : ST 6, 0(3) ;  Store return address in callee frame
 18 : ADD  5, 3, 0 ;  Update pointer
 19 : LDA 7, 27(0) ;  Call sumPrimes
 20 : LD 1, 3(5) ;  Load callee return value into R1
 21 : LDC  4, 2(0) ;  Load frame size
 22 : SUB  5, 5, 4 ;  Restore pointer
-23 : ST 1, 2(0) ;  Store function-call result into caller's return slot
-24 : LD   1, 2(0) ;  Load return value into register 1
-25 : LD  6, 1(0) ;  Load return address for main function into register 6
+23 : ST 1, 1(5) ;  Store result into current frame's return slot
+24 : LD   1, 1(5) ;  Load return value into register 1
+25 : LD  6, 0(5) ;  Load return address for main function into register 6
 26 : LDA  7, 0(6) ;  Jump to return address of main function
 27 : LD   1, 2(5) ;  Load parameter 'b' into R1
 28 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -40,7 +40,7 @@
 39 : LDA  3, 4(5) ; Restore Callee frame base
 40 : ST 1, 1(3) ;  Store argument 0 into callee frame
 41 : LDA  3, 4(5) ; Restore Call frame base
-42 : LDA 6, 46(0)) ;  Compute return address
+42 : LDA 6, 46(0) ;  Compute return address
 43 : ST 6, 0(3) ;  Store return address in callee frame
 44 : ADD  5, 3, 0 ;  Update pointer
 45 : LDA 7, 91(0) ;  Call isPrime
@@ -60,7 +60,7 @@
 59 : LDA  3, 4(5) ; Restore Callee frame base
 60 : ST 1, 2(3) ;  Store argument 1 into callee frame
 61 : LDA  3, 4(5) ; Restore Call frame base
-62 : LDA 6, 66(0)) ;  Compute return address
+62 : LDA 6, 66(0) ;  Compute return address
 63 : ST 6, 0(3) ;  Store return address in callee frame
 64 : ADD  5, 3, 0 ;  Update pointer
 65 : LDA 7, 27(0) ;  Call sumPrimes
@@ -79,7 +79,7 @@
 78 : LDA  3, 4(5) ; Restore Callee frame base
 79 : ST 1, 2(3) ;  Store argument 1 into callee frame
 80 : LDA  3, 4(5) ; Restore Call frame base
-81 : LDA 6, 85(0)) ;  Compute return address
+81 : LDA 6, 85(0) ;  Compute return address
 82 : ST 6, 0(3) ;  Store return address in callee frame
 83 : ADD  5, 3, 0 ;  Update pointer
 84 : LDA 7, 27(0) ;  Call sumPrimes
@@ -118,7 +118,7 @@
 117 : LDA  3, 3(5) ; Restore Callee frame base
 118 : ST 1, 2(3) ;  Store argument 1 into callee frame
 119 : LDA  3, 3(5) ; Restore Call frame base
-120 : LDA 6, 124(0)) ;  Compute return address
+120 : LDA 6, 124(0) ;  Compute return address
 121 : ST 6, 0(3) ;  Store return address in callee frame
 122 : ADD  5, 3, 0 ;  Update pointer
 123 : LDA 7, 166(0) ;  Call divisible
@@ -133,7 +133,7 @@
 132 : LDA  3, 3(5) ; Restore Callee frame base
 133 : ST 1, 2(3) ;  Store argument 1 into callee frame
 134 : LDA  3, 3(5) ; Restore Call frame base
-135 : LDA 6, 139(0)) ;  Compute return address
+135 : LDA 6, 139(0) ;  Compute return address
 136 : ST 6, 0(3) ;  Store return address in callee frame
 137 : ADD  5, 3, 0 ;  Update pointer
 138 : LDA 7, 166(0) ;  Call divisible
@@ -149,7 +149,7 @@
 148 : LDA  3, 3(5) ; Restore Callee frame base
 149 : ST 1, 2(3) ;  Store argument 1 into callee frame
 150 : LDA  3, 3(5) ; Restore Call frame base
-151 : LDA 6, 155(0)) ;  Compute return address
+151 : LDA 6, 155(0) ;  Compute return address
 152 : ST 6, 0(3) ;  Store return address in callee frame
 153 : ADD  5, 3, 0 ;  Update pointer
 154 : LDA 7, 166(0) ;  Call divisible

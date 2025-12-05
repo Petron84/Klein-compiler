@@ -18,16 +18,16 @@
 17 : LDA  3, 4(5) ; Restore Callee frame base
 18 : ST 1, 2(3) ;  Store argument 1 into callee frame
 19 : LDA  3, 4(5) ; Restore Call frame base
-20 : LDA 6, 24(0)) ;  Compute return address
+20 : LDA 6, 24(0) ;  Compute return address
 21 : ST 6, 0(3) ;  Store return address in callee frame
 22 : ADD  5, 3, 0 ;  Update pointer
 23 : LDA 7, 31(0) ;  Call gcd
 24 : LD 1, 3(5) ;  Load callee return value into R1
 25 : LDC  4, 4(0) ;  Load frame size
 26 : SUB  5, 5, 4 ;  Restore pointer
-27 : ST 1, 6(0) ;  Store function-call result into caller's return slot
-28 : LD   1, 6(0) ;  Load return value into register 1
-29 : LD  6, 3(0) ;  Load return address for main function into register 6
+27 : ST 1, 3(5) ;  Store result into current frame's return slot
+28 : LD   1, 3(5) ;  Load return value into register 1
+29 : LD  6, 0(5) ;  Load return address for main function into register 6
 30 : LDA  7, 0(6) ;  Jump to return address of main function
 31 : LD   1, 2(5) ;  Load parameter 'b' into R1
 32 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
@@ -50,7 +50,7 @@
 49 : LDA  3, 4(5) ; Restore Callee frame base
 50 : ST 1, 2(3) ;  Store argument 1 into callee frame
 51 : LDA  3, 4(5) ; Restore Call frame base
-52 : LDA 6, 56(0)) ;  Compute return address
+52 : LDA 6, 56(0) ;  Compute return address
 53 : ST 6, 0(3) ;  Store return address in callee frame
 54 : ADD  5, 3, 0 ;  Update pointer
 55 : LDA 7, 72(0) ;  Call remainder
@@ -60,7 +60,7 @@
 59 : LDA  3, 4(5) ; Restore Callee frame base
 60 : ST 1, 2(3) ;  Store argument 1 into callee frame
 61 : LDA  3, 4(5) ; Restore Call frame base
-62 : LDA 6, 66(0)) ;  Compute return address
+62 : LDA 6, 66(0) ;  Compute return address
 63 : ST 6, 0(3) ;  Store return address in callee frame
 64 : ADD  5, 3, 0 ;  Update pointer
 65 : LDA 7, 31(0) ;  Call gcd
@@ -91,7 +91,7 @@
 90 : LDA  3, 4(5) ; Restore Callee frame base
 91 : ST 1, 2(3) ;  Store argument 1 into callee frame
 92 : LDA  3, 4(5) ; Restore Call frame base
-93 : LDA 6, 97(0)) ;  Compute return address
+93 : LDA 6, 97(0) ;  Compute return address
 94 : ST 6, 0(3) ;  Store return address in callee frame
 95 : ADD  5, 3, 0 ;  Update pointer
 96 : LDA 7, 72(0) ;  Call remainder
