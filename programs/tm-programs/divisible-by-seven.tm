@@ -10,137 +10,151 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+12 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
 13 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-14 : DIV  1, 2, 1 ;  R1 = left / right
-15 : LDA  3, 3(5) ; Restore Callee frame base
-16 : ST 1, 1(3) ;  Store argument 0 into callee frame
-17 : LD   1, 1(5) ;  Load parameter 'n' into R1
-18 : LDA  3, 3(5) ; Restore Callee frame base
-19 : ST 1, 1(3) ;  Store argument 0 into callee frame
-20 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-21 : LDA  3, 3(5) ; Restore Callee frame base
-22 : ST 1, 2(3) ;  Store argument 1 into callee frame
-23 : LDA  3, 3(5) ; Restore Call frame base
-24 : LDA 6, 28(0) ;  Compute return address
-25 : ST 6, 0(3) ;  Store return address in callee frame
-26 : ADD  5, 3, 0 ;  Update pointer
-27 : LDA 7, 45(0) ;  Call MOD
-28 : LD 1, 3(5) ;  Load callee return value into R1
-29 : LDC  4, 3(0) ;  Load frame size
-30 : SUB  5, 5, 4 ;  Restore pointer
-31 : LDA  3, 3(5) ; Restore Callee frame base
-32 : ST 1, 2(3) ;  Store argument 1 into callee frame
-33 : LDA  3, 3(5) ; Restore Call frame base
-34 : LDA 6, 38(0) ;  Compute return address
-35 : ST 6, 0(3) ;  Store return address in callee frame
-36 : ADD  5, 3, 0 ;  Update pointer
-37 : LDA 7, 126(0) ;  Call divisibleByParts
-38 : LD 1, 3(5) ;  Load callee return value into R1
-39 : LDC  4, 3(0) ;  Load frame size
-40 : SUB  5, 5, 4 ;  Restore pointer
-41 : ST 1, 2(5) ;  Store result into current frame's return slot
-42 : LD   1, 2(5) ;  Load return value into register 1
-43 : LD  6, 0(5) ;  Load return address for main function into register 6
-44 : LDA  7, 0(6) ;  Jump to return address of main function
-45 : LD   1, 1(5) ;  Load parameter 'm' into R1
-46 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-47 : LD   1, 1(5) ;  Load parameter 'm' into R1
-48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-49 : LD   1, 2(5) ;  Load parameter 'n' into R1
-50 : DIV  1, 2, 1 ;  R1 = left / right
-51 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-52 : LD   1, 2(5) ;  Load parameter 'n' into R1
-53 : MUL  1, 2, 1 ;  R1 = left * right
-54 : SUB  1, 2, 1 ;  R1 = left - right
-55 : ST   1, 3(5) ;  Store function result into stack frame
-56 : LD   6, 0(5) ;  Load return address
-57 : LDA  7, 0(6) ;  Return to caller
-58 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-59 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-60 : LDC  1, 7(0) ;  Load boolean-literal value into register 1
-61 : SUB  1, 2, 1 ;  left - right for equality check
-62 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-63 : LDC  1, 0(0) ;  false
-64 : LDA  7, 1(7) ;  skip setting true
-65 : LDC  1, 1(0) ;  true
-66 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-67 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-68 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-69 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-70 : SUB  1, 2, 1 ;  left - right for equality check
-71 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-72 : LDC  1, 0(0) ;  false
-73 : LDA  7, 1(7) ;  skip setting true
-74 : LDC  1, 1(0) ;  true
-75 : ADD  1, 2, 1 ;  R1 = left OR right
-76 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-77 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-78 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-79 : LDC  1, 7(0) ;  Load boolean-literal value into register 1
-80 : SUB  1, 0, 1 ;  Negate value in R1
-81 : SUB  1, 2, 1 ;  left - right for equality check
-82 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-83 : LDC  1, 0(0) ;  false
-84 : LDA  7, 1(7) ;  skip setting true
-85 : LDC  1, 1(0) ;  true
-86 : ADD  1, 2, 1 ;  R1 = left OR right
-87 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-88 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-89 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-90 : LDC  1, 14(0) ;  Load boolean-literal value into register 1
-91 : SUB  1, 0, 1 ;  Negate value in R1
-92 : SUB  1, 2, 1 ;  left - right for equality check
-93 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-94 : LDC  1, 0(0) ;  false
-95 : LDA  7, 1(7) ;  skip setting true
-96 : LDC  1, 1(0) ;  true
-97 : ADD  1, 2, 1 ;  R1 = left OR right
-98 : JEQ  1, 101(0) ;  If condition is false, jump to ELSE
-99 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-100 : LDA  7, 123(0) ;  Skip ELSE block
-101 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-102 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-103 : LDC  1, 14(0) ;  Load boolean-literal value into register 1
-104 : SUB  1, 2, 1 ;  left - right for less-than check
-105 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-106 : LDC  1, 0(0) ;  false
-107 : LDA  7, 1(7) ;  skip setting true
-108 : LDC  1, 1(0) ;  true
+14 : LD  2, 2(5) ;  Restore left operand
+15 : DIV  1, 2, 1 ;  R1 = left / right
+16 : LDA  3, 3(5) ; Restore Callee frame base
+17 : ST 1, 1(3) ;  Store argument 0 into callee frame
+18 : LD   1, 1(5) ;  Load parameter 'n' into R1
+19 : LDA  3, 3(5) ; Restore Callee frame base
+20 : ST 1, 1(3) ;  Store argument 0 into callee frame
+21 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+22 : LDA  3, 3(5) ; Restore Callee frame base
+23 : ST 1, 2(3) ;  Store argument 1 into callee frame
+24 : LDA  3, 3(5) ; Restore Call frame base
+25 : LDA 6, 29(0) ;  Compute return address
+26 : ST 6, 0(3) ;  Store return address in callee frame
+27 : ADD  5, 3, 0 ;  Update pointer
+28 : LDA 7, 46(0) ;  Call MOD
+29 : LD 1, 3(5) ;  Load callee return value into R1
+30 : LDC  4, 3(0) ;  Load frame size
+31 : SUB  5, 5, 4 ;  Restore pointer
+32 : LDA  3, 3(5) ; Restore Callee frame base
+33 : ST 1, 2(3) ;  Store argument 1 into callee frame
+34 : LDA  3, 3(5) ; Restore Call frame base
+35 : LDA 6, 39(0) ;  Compute return address
+36 : ST 6, 0(3) ;  Store return address in callee frame
+37 : ADD  5, 3, 0 ;  Update pointer
+38 : LDA 7, 138(0) ;  Call divisibleByParts
+39 : LD 1, 3(5) ;  Load callee return value into R1
+40 : LDC  4, 3(0) ;  Load frame size
+41 : SUB  5, 5, 4 ;  Restore pointer
+42 : ST 1, 2(5) ;  Store result into current frame's return slot
+43 : LD   1, 2(5) ;  Load return value into register 1
+44 : LD  6, 0(5) ;  Load return address for main function into register 6
+45 : LDA  7, 0(6) ;  Jump to return address of main function
+46 : LD   1, 1(5) ;  Load parameter 'm' into R1
+47 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+48 : LD   1, 1(5) ;  Load parameter 'm' into R1
+49 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+50 : LD   1, 2(5) ;  Load parameter 'n' into R1
+51 : LD  2, 3(5) ;  Restore left operand
+52 : DIV  1, 2, 1 ;  R1 = left / right
+53 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+54 : LD   1, 2(5) ;  Load parameter 'n' into R1
+55 : LD  2, 3(5) ;  Restore left operand
+56 : MUL  1, 2, 1 ;  R1 = left * right
+57 : LD  2, 3(5) ;  Restore left operand
+58 : SUB  1, 2, 1 ;  R1 = left - right
+59 : ST   1, 3(5) ;  Store function result into stack frame
+60 : LD   6, 0(5) ;  Load return address
+61 : LDA  7, 0(6) ;  Return to caller
+62 : LD   1, 1(5) ;  Load parameter 'diff' into R1
+63 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+64 : LDC  1, 7(0) ;  Load boolean-literal value into register 1
+65 : LD  2, 2(5) ;  Restore left operand
+66 : SUB  1, 2, 1 ;  left - right for equality check
+67 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+68 : LDC  1, 0(0) ;  false
+69 : LDA  7, 1(7) ;  skip setting true
+70 : LDC  1, 1(0) ;  true
+71 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+72 : LD   1, 1(5) ;  Load parameter 'diff' into R1
+73 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+74 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+75 : LD  2, 2(5) ;  Restore left operand
+76 : SUB  1, 2, 1 ;  left - right for equality check
+77 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+78 : LDC  1, 0(0) ;  false
+79 : LDA  7, 1(7) ;  skip setting true
+80 : LDC  1, 1(0) ;  true
+81 : LD  2, 2(5) ;  Restore left operand
+82 : ADD  1, 2, 1 ;  R1 = left OR right
+83 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+84 : LD   1, 1(5) ;  Load parameter 'diff' into R1
+85 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+86 : LDC  1, 7(0) ;  Load boolean-literal value into register 1
+87 : SUB  1, 0, 1 ;  Negate value in R1
+88 : LD  2, 2(5) ;  Restore left operand
+89 : SUB  1, 2, 1 ;  left - right for equality check
+90 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+91 : LDC  1, 0(0) ;  false
+92 : LDA  7, 1(7) ;  skip setting true
+93 : LDC  1, 1(0) ;  true
+94 : LD  2, 2(5) ;  Restore left operand
+95 : ADD  1, 2, 1 ;  R1 = left OR right
+96 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+97 : LD   1, 1(5) ;  Load parameter 'diff' into R1
+98 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+99 : LDC  1, 14(0) ;  Load boolean-literal value into register 1
+100 : SUB  1, 0, 1 ;  Negate value in R1
+101 : LD  2, 2(5) ;  Restore left operand
+102 : SUB  1, 2, 1 ;  left - right for equality check
+103 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+104 : LDC  1, 0(0) ;  false
+105 : LDA  7, 1(7) ;  skip setting true
+106 : LDC  1, 1(0) ;  true
+107 : LD  2, 2(5) ;  Restore left operand
+108 : ADD  1, 2, 1 ;  R1 = left OR right
 109 : JEQ  1, 112(0) ;  If condition is false, jump to ELSE
-110 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-111 : LDA  7, 123(0) ;  Skip ELSE block
+110 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+111 : LDA  7, 135(0) ;  Skip ELSE block
 112 : LD   1, 1(5) ;  Load parameter 'diff' into R1
-113 : LDA  3, 3(5) ; Restore Callee frame base
-114 : ST 1, 1(3) ;  Store argument 0 into callee frame
-115 : LDA  3, 3(5) ; Restore Call frame base
-116 : LDA 6, 120(0) ;  Compute return address
-117 : ST 6, 0(3) ;  Store return address in callee frame
-118 : ADD  5, 3, 0 ;  Update pointer
-119 : LDA 7, 11(0) ;  Call main
-120 : LD 1, 2(5) ;  Load callee return value into R1
-121 : LDC  4, 3(0) ;  Load frame size
-122 : SUB  5, 5, 4 ;  Restore pointer
-123 : ST   1, 2(5) ;  Store function result into stack frame
-124 : LD   6, 0(5) ;  Load return address
-125 : LDA  7, 0(6) ;  Return to caller
-126 : LD   1, 1(5) ;  Load parameter 'left' into R1
-127 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-128 : LD   1, 2(5) ;  Load parameter 'right' into R1
-129 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-130 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-131 : MUL  1, 2, 1 ;  R1 = left * right
-132 : SUB  1, 2, 1 ;  R1 = left - right
-133 : LDA  3, 4(5) ; Restore Callee frame base
-134 : ST 1, 1(3) ;  Store argument 0 into callee frame
-135 : LDA  3, 4(5) ; Restore Call frame base
-136 : LDA 6, 140(0) ;  Compute return address
-137 : ST 6, 0(3) ;  Store return address in callee frame
-138 : ADD  5, 3, 0 ;  Update pointer
-139 : LDA 7, 58(0) ;  Call divisibleByDifference
-140 : LD 1, 2(5) ;  Load callee return value into R1
-141 : LDC  4, 4(0) ;  Load frame size
-142 : SUB  5, 5, 4 ;  Restore pointer
-143 : ST   1, 3(5) ;  Store function result into stack frame
-144 : LD   6, 0(5) ;  Load return address
-145 : LDA  7, 0(6) ;  Return to caller
+113 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+114 : LDC  1, 14(0) ;  Load boolean-literal value into register 1
+115 : LD  2, 2(5) ;  Restore left operand
+116 : SUB  1, 2, 1 ;  left - right for less-than check
+117 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+118 : LDC  1, 0(0) ;  false
+119 : LDA  7, 1(7) ;  skip setting true
+120 : LDC  1, 1(0) ;  true
+121 : JEQ  1, 124(0) ;  If condition is false, jump to ELSE
+122 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+123 : LDA  7, 135(0) ;  Skip ELSE block
+124 : LD   1, 1(5) ;  Load parameter 'diff' into R1
+125 : LDA  3, 3(5) ; Restore Callee frame base
+126 : ST 1, 1(3) ;  Store argument 0 into callee frame
+127 : LDA  3, 3(5) ; Restore Call frame base
+128 : LDA 6, 132(0) ;  Compute return address
+129 : ST 6, 0(3) ;  Store return address in callee frame
+130 : ADD  5, 3, 0 ;  Update pointer
+131 : LDA 7, 11(0) ;  Call main
+132 : LD 1, 2(5) ;  Load callee return value into R1
+133 : LDC  4, 3(0) ;  Load frame size
+134 : SUB  5, 5, 4 ;  Restore pointer
+135 : ST   1, 2(5) ;  Store function result into stack frame
+136 : LD   6, 0(5) ;  Load return address
+137 : LDA  7, 0(6) ;  Return to caller
+138 : LD   1, 1(5) ;  Load parameter 'left' into R1
+139 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+140 : LD   1, 2(5) ;  Load parameter 'right' into R1
+141 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+142 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+143 : LD  2, 3(5) ;  Restore left operand
+144 : MUL  1, 2, 1 ;  R1 = left * right
+145 : LD  2, 3(5) ;  Restore left operand
+146 : SUB  1, 2, 1 ;  R1 = left - right
+147 : LDA  3, 4(5) ; Restore Callee frame base
+148 : ST 1, 1(3) ;  Store argument 0 into callee frame
+149 : LDA  3, 4(5) ; Restore Call frame base
+150 : LDA 6, 154(0) ;  Compute return address
+151 : ST 6, 0(3) ;  Store return address in callee frame
+152 : ADD  5, 3, 0 ;  Update pointer
+153 : LDA 7, 62(0) ;  Call divisibleByDifference
+154 : LD 1, 2(5) ;  Load callee return value into R1
+155 : LDC  4, 4(0) ;  Load frame size
+156 : SUB  5, 5, 4 ;  Restore pointer
+157 : ST   1, 3(5) ;  Store function result into stack frame
+158 : LD   6, 0(5) ;  Load return address
+159 : LDA  7, 0(6) ;  Return to caller

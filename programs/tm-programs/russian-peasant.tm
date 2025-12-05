@@ -58,101 +58,111 @@
 57 : LD   6, 0(5) ;  Load return address
 58 : LDA  7, 0(6) ;  Return to caller
 59 : LD   1, 2(5) ;  Load parameter 'n' into R1
-60 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+60 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
 61 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-62 : SUB  1, 2, 1 ;  left - right for equality check
-63 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-64 : LDC  1, 0(0) ;  false
-65 : LDA  7, 1(7) ;  skip setting true
-66 : LDC  1, 1(0) ;  true
-67 : JEQ  1, 70(0) ;  If condition is false, jump to ELSE
-68 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-69 : LDA  7, 142(0) ;  Skip ELSE block
-70 : LD   1, 2(5) ;  Load parameter 'n' into R1
-71 : LDA  3, 5(5) ; Restore Callee frame base
-72 : ST 1, 1(3) ;  Store argument 0 into callee frame
-73 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-74 : LDA  3, 5(5) ; Restore Callee frame base
-75 : ST 1, 2(3) ;  Store argument 1 into callee frame
-76 : LDA  3, 5(5) ; Restore Call frame base
-77 : LDA 6, 81(0) ;  Compute return address
-78 : ST 6, 0(3) ;  Store return address in callee frame
-79 : ADD  5, 3, 0 ;  Update pointer
-80 : LDA 7, 145(0) ;  Call MOD
-81 : LD 1, 3(5) ;  Load callee return value into R1
-82 : LDC  4, 5(0) ;  Load frame size
-83 : SUB  5, 5, 4 ;  Restore pointer
-84 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-85 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-86 : SUB  1, 2, 1 ;  left - right for equality check
-87 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-88 : LDC  1, 0(0) ;  false
-89 : LDA  7, 1(7) ;  skip setting true
-90 : LDC  1, 1(0) ;  true
-91 : JEQ  1, 119(0) ;  If condition is false, jump to ELSE
-92 : LD   1, 1(5) ;  Load parameter 'm' into R1
-93 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-94 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-95 : MUL  1, 2, 1 ;  R1 = left * right
-96 : LDA  3, 5(5) ; Restore Callee frame base
-97 : ST 1, 1(3) ;  Store argument 0 into callee frame
-98 : LD   1, 2(5) ;  Load parameter 'n' into R1
-99 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-100 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-101 : DIV  1, 2, 1 ;  R1 = left / right
-102 : LDA  3, 5(5) ; Restore Callee frame base
-103 : ST 1, 2(3) ;  Store argument 1 into callee frame
-104 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-105 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-106 : LD   1, 1(5) ;  Load parameter 'm' into R1
-107 : ADD  1, 2, 1 ;  R1 = left + right
-108 : LDA  3, 5(5) ; Restore Callee frame base
-109 : ST 1, 3(3) ;  Store argument 2 into callee frame
-110 : LDA  3, 5(5) ; Restore Call frame base
-111 : LDA 6, 115(0) ;  Compute return address
-112 : ST 6, 0(3) ;  Store return address in callee frame
-113 : ADD  5, 3, 0 ;  Update pointer
-114 : LDA 7, 59(0) ;  Call multWithAccum
-115 : LD 1, 4(5) ;  Load callee return value into R1
-116 : LDC  4, 5(0) ;  Load frame size
-117 : SUB  5, 5, 4 ;  Restore pointer
-118 : LDA  7, 142(0) ;  Skip ELSE block
-119 : LD   1, 1(5) ;  Load parameter 'm' into R1
-120 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-121 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-122 : MUL  1, 2, 1 ;  R1 = left * right
-123 : LDA  3, 5(5) ; Restore Callee frame base
-124 : ST 1, 1(3) ;  Store argument 0 into callee frame
-125 : LD   1, 2(5) ;  Load parameter 'n' into R1
-126 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-127 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-128 : DIV  1, 2, 1 ;  R1 = left / right
+62 : LD  2, 4(5) ;  Restore left operand
+63 : SUB  1, 2, 1 ;  left - right for equality check
+64 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+65 : LDC  1, 0(0) ;  false
+66 : LDA  7, 1(7) ;  skip setting true
+67 : LDC  1, 1(0) ;  true
+68 : JEQ  1, 71(0) ;  If condition is false, jump to ELSE
+69 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+70 : LDA  7, 149(0) ;  Skip ELSE block
+71 : LD   1, 2(5) ;  Load parameter 'n' into R1
+72 : LDA  3, 5(5) ; Restore Callee frame base
+73 : ST 1, 1(3) ;  Store argument 0 into callee frame
+74 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+75 : LDA  3, 5(5) ; Restore Callee frame base
+76 : ST 1, 2(3) ;  Store argument 1 into callee frame
+77 : LDA  3, 5(5) ; Restore Call frame base
+78 : LDA 6, 82(0) ;  Compute return address
+79 : ST 6, 0(3) ;  Store return address in callee frame
+80 : ADD  5, 3, 0 ;  Update pointer
+81 : LDA 7, 152(0) ;  Call MOD
+82 : LD 1, 3(5) ;  Load callee return value into R1
+83 : LDC  4, 5(0) ;  Load frame size
+84 : SUB  5, 5, 4 ;  Restore pointer
+85 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+86 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+87 : LD  2, 4(5) ;  Restore left operand
+88 : SUB  1, 2, 1 ;  left - right for equality check
+89 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+90 : LDC  1, 0(0) ;  false
+91 : LDA  7, 1(7) ;  skip setting true
+92 : LDC  1, 1(0) ;  true
+93 : JEQ  1, 124(0) ;  If condition is false, jump to ELSE
+94 : LD   1, 1(5) ;  Load parameter 'm' into R1
+95 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+96 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+97 : LD  2, 4(5) ;  Restore left operand
+98 : MUL  1, 2, 1 ;  R1 = left * right
+99 : LDA  3, 5(5) ; Restore Callee frame base
+100 : ST 1, 1(3) ;  Store argument 0 into callee frame
+101 : LD   1, 2(5) ;  Load parameter 'n' into R1
+102 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+103 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+104 : LD  2, 4(5) ;  Restore left operand
+105 : DIV  1, 2, 1 ;  R1 = left / right
+106 : LDA  3, 5(5) ; Restore Callee frame base
+107 : ST 1, 2(3) ;  Store argument 1 into callee frame
+108 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+109 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+110 : LD   1, 1(5) ;  Load parameter 'm' into R1
+111 : LD  2, 4(5) ;  Restore left operand
+112 : ADD  1, 2, 1 ;  R1 = left + right
+113 : LDA  3, 5(5) ; Restore Callee frame base
+114 : ST 1, 3(3) ;  Store argument 2 into callee frame
+115 : LDA  3, 5(5) ; Restore Call frame base
+116 : LDA 6, 120(0) ;  Compute return address
+117 : ST 6, 0(3) ;  Store return address in callee frame
+118 : ADD  5, 3, 0 ;  Update pointer
+119 : LDA 7, 59(0) ;  Call multWithAccum
+120 : LD 1, 4(5) ;  Load callee return value into R1
+121 : LDC  4, 5(0) ;  Load frame size
+122 : SUB  5, 5, 4 ;  Restore pointer
+123 : LDA  7, 149(0) ;  Skip ELSE block
+124 : LD   1, 1(5) ;  Load parameter 'm' into R1
+125 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+126 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+127 : LD  2, 4(5) ;  Restore left operand
+128 : MUL  1, 2, 1 ;  R1 = left * right
 129 : LDA  3, 5(5) ; Restore Callee frame base
-130 : ST 1, 2(3) ;  Store argument 1 into callee frame
-131 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-132 : LDA  3, 5(5) ; Restore Callee frame base
-133 : ST 1, 3(3) ;  Store argument 2 into callee frame
-134 : LDA  3, 5(5) ; Restore Call frame base
-135 : LDA 6, 139(0) ;  Compute return address
-136 : ST 6, 0(3) ;  Store return address in callee frame
-137 : ADD  5, 3, 0 ;  Update pointer
-138 : LDA 7, 59(0) ;  Call multWithAccum
-139 : LD 1, 4(5) ;  Load callee return value into R1
-140 : LDC  4, 5(0) ;  Load frame size
-141 : SUB  5, 5, 4 ;  Restore pointer
-142 : ST   1, 4(5) ;  Store function result into stack frame
-143 : LD   6, 0(5) ;  Load return address
-144 : LDA  7, 0(6) ;  Return to caller
-145 : LD   1, 1(5) ;  Load parameter 'm' into R1
-146 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-147 : LD   1, 1(5) ;  Load parameter 'm' into R1
-148 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-149 : LD   1, 2(5) ;  Load parameter 'n' into R1
-150 : DIV  1, 2, 1 ;  R1 = left / right
-151 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-152 : LD   1, 2(5) ;  Load parameter 'n' into R1
-153 : MUL  1, 2, 1 ;  R1 = left * right
-154 : SUB  1, 2, 1 ;  R1 = left - right
-155 : ST   1, 3(5) ;  Store function result into stack frame
-156 : LD   6, 0(5) ;  Load return address
-157 : LDA  7, 0(6) ;  Return to caller
+130 : ST 1, 1(3) ;  Store argument 0 into callee frame
+131 : LD   1, 2(5) ;  Load parameter 'n' into R1
+132 : ST  1, 4(5) ;  Store left operand into return slot. Safeguard for recursion
+133 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+134 : LD  2, 4(5) ;  Restore left operand
+135 : DIV  1, 2, 1 ;  R1 = left / right
+136 : LDA  3, 5(5) ; Restore Callee frame base
+137 : ST 1, 2(3) ;  Store argument 1 into callee frame
+138 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+139 : LDA  3, 5(5) ; Restore Callee frame base
+140 : ST 1, 3(3) ;  Store argument 2 into callee frame
+141 : LDA  3, 5(5) ; Restore Call frame base
+142 : LDA 6, 146(0) ;  Compute return address
+143 : ST 6, 0(3) ;  Store return address in callee frame
+144 : ADD  5, 3, 0 ;  Update pointer
+145 : LDA 7, 59(0) ;  Call multWithAccum
+146 : LD 1, 4(5) ;  Load callee return value into R1
+147 : LDC  4, 5(0) ;  Load frame size
+148 : SUB  5, 5, 4 ;  Restore pointer
+149 : ST   1, 4(5) ;  Store function result into stack frame
+150 : LD   6, 0(5) ;  Load return address
+151 : LDA  7, 0(6) ;  Return to caller
+152 : LD   1, 1(5) ;  Load parameter 'm' into R1
+153 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+154 : LD   1, 1(5) ;  Load parameter 'm' into R1
+155 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+156 : LD   1, 2(5) ;  Load parameter 'n' into R1
+157 : LD  2, 3(5) ;  Restore left operand
+158 : DIV  1, 2, 1 ;  R1 = left / right
+159 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+160 : LD   1, 2(5) ;  Load parameter 'n' into R1
+161 : LD  2, 3(5) ;  Restore left operand
+162 : MUL  1, 2, 1 ;  R1 = left * right
+163 : LD  2, 3(5) ;  Restore left operand
+164 : SUB  1, 2, 1 ;  R1 = left - right
+165 : ST   1, 3(5) ;  Store function result into stack frame
+166 : LD   6, 0(5) ;  Load return address
+167 : LDA  7, 0(6) ;  Return to caller

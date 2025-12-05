@@ -10,10 +10,11 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+12 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
 13 : LD   1, 1(5) ;  Load parameter 'n' into R1
-14 : MUL  1, 2, 1 ;  R1 = left * right
-15 : ST 1, 2(5) ;  Store result into current frame's return slot
-16 : LD   1, 2(5) ;  Load return value into register 1
-17 : LD  6, 0(5) ;  Load return address for main function into register 6
-18 : LDA  7, 0(6) ;  Jump to return address of main function
+14 : LD  2, 2(5) ;  Restore left operand
+15 : MUL  1, 2, 1 ;  R1 = left * right
+16 : ST 1, 2(5) ;  Store result into current frame's return slot
+17 : LD   1, 2(5) ;  Load return value into register 1
+18 : LD  6, 0(5) ;  Load return address for main function into register 6
+19 : LDA  7, 0(6) ;  Jump to return address of main function

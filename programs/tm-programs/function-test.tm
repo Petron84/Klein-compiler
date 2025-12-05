@@ -30,21 +30,23 @@
 29 : LD  6, 0(5) ;  Load return address for main function into register 6
 30 : LDA  7, 0(6) ;  Jump to return address of main function
 31 : LD   1, 1(5) ;  Load parameter 'a' into R1
-32 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+32 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
 33 : LD   1, 2(5) ;  Load parameter 'b' into R1
-34 : MUL  1, 2, 1 ;  R1 = left * right
-35 : LDA  3, 4(5) ;  Update DMEM pointer
-36 : LDA 6, 40(0) ;  Compute return address
-37 : ST   6, 0(3) ;  Store return address
-38 : ADD  5, 3, 0 ;  Updated Pointer
-39 : LDA  7, 10(0) ; Call print
-40 : LDC  4, 4(0) ;  Load frame size
-41 : SUB  5, 5, 4 ;  Restore pointer
-42 : ST   1, 3(5) ;  Store function result into stack frame
-43 : LD   1, 1(5) ;  Load parameter 'a' into R1
-44 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-45 : LD   1, 2(5) ;  Load parameter 'b' into R1
-46 : MUL  1, 2, 1 ;  R1 = left * right
-47 : ST   1, 3(5) ;  Store function result into stack frame
-48 : LD   6, 0(5) ;  Load return address
-49 : LDA  7, 0(6) ;  Return to caller
+34 : LD  2, 3(5) ;  Restore left operand
+35 : MUL  1, 2, 1 ;  R1 = left * right
+36 : LDA  3, 4(5) ;  Update DMEM pointer
+37 : LDA 6, 41(0) ;  Compute return address
+38 : ST   6, 0(3) ;  Store return address
+39 : ADD  5, 3, 0 ;  Updated Pointer
+40 : LDA  7, 10(0) ; Call print
+41 : LDC  4, 4(0) ;  Load frame size
+42 : SUB  5, 5, 4 ;  Restore pointer
+43 : ST   1, 3(5) ;  Store function result into stack frame
+44 : LD   1, 1(5) ;  Load parameter 'a' into R1
+45 : ST  1, 3(5) ;  Store left operand into return slot. Safeguard for recursion
+46 : LD   1, 2(5) ;  Load parameter 'b' into R1
+47 : LD  2, 3(5) ;  Restore left operand
+48 : MUL  1, 2, 1 ;  R1 = left * right
+49 : ST   1, 3(5) ;  Store function result into stack frame
+50 : LD   6, 0(5) ;  Load return address
+51 : LDA  7, 0(6) ;  Return to caller

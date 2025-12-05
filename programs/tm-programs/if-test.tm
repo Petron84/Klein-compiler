@@ -18,22 +18,24 @@
 17 : LDC  4, 3(0) ;  Load frame size
 18 : SUB  5, 5, 4 ;  Restore pointer
 19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-20 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+20 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
 21 : LD   1, 1(5) ;  Load parameter 'n' into R1
-22 : SUB  1, 2, 1 ;  left - right for less-than check
-23 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-24 : LDC  1, 0(0) ;  false
-25 : LDA  7, 1(7) ;  skip setting true
-26 : LDC  1, 1(0) ;  true
-27 : JEQ  1, 34(0) ;  If condition is false, jump to ELSE
-28 : LD   1, 1(5) ;  Load parameter 'n' into R1
-29 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-30 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-31 : MUL  1, 2, 1 ;  R1 = left * right
-32 : ST 1, 2(5) ;  Store result into current frame's return slot
-33 : LDA  7, 36(0) ;  Skip ELSE block
-34 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-35 : ST 1, 2(5) ;  Store result into current frame's return slot
-36 : LD   1, 2(5) ;  Load return value into register 1
-37 : LD  6, 0(5) ;  Load return address for main function into register 6
-38 : LDA  7, 0(6) ;  Jump to return address of main function
+22 : LD  2, 2(5) ;  Restore left operand
+23 : SUB  1, 2, 1 ;  left - right for less-than check
+24 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+25 : LDC  1, 0(0) ;  false
+26 : LDA  7, 1(7) ;  skip setting true
+27 : LDC  1, 1(0) ;  true
+28 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
+29 : LD   1, 1(5) ;  Load parameter 'n' into R1
+30 : ST  1, 2(5) ;  Store left operand into return slot. Safeguard for recursion
+31 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+32 : LD  2, 2(5) ;  Restore left operand
+33 : MUL  1, 2, 1 ;  R1 = left * right
+34 : ST 1, 2(5) ;  Store result into current frame's return slot
+35 : LDA  7, 38(0) ;  Skip ELSE block
+36 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+37 : ST 1, 2(5) ;  Store result into current frame's return slot
+38 : LD   1, 2(5) ;  Load return value into register 1
+39 : LD  6, 0(5) ;  Load return address for main function into register 6
+40 : LDA  7, 0(6) ;  Jump to return address of main function

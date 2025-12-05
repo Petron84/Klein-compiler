@@ -268,9 +268,12 @@ class Generator:
                 right_exp = exp_children[1]
 
                 self.instruction_rules(left_exp, curr_function, callee=True)
-                self.write("ADD  2, 1, 0", " Move left operand from R1 to R2")
+                curr_params = self.symbol_table[curr_function].parameters[0]
+                temp_offset = curr_params + 1
+                self.write(f"ST  1, {temp_offset}(5)"," Store left operand into return slot. Safeguard for recursion")
 
                 self.instruction_rules(right_exp, curr_function, callee=True)
+                self.write(f"LD  2, {temp_offset}(5)", " Restore left operand")
 
                 match exp_value:
                     case "+":
@@ -299,7 +302,6 @@ class Generator:
                         self.write("LDC  1, 1(0)", " true")
 
                 if not callee: # Only store as return value if it is a function return
-                    curr_params = self.symbol_table[curr_function].parameters[0]
                     offset = curr_params + 1
                     self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
 
