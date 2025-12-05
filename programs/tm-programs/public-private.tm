@@ -12,9 +12,9 @@
 11 : LD   6, 0(5) ;  Load return addess from stack frame.
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-14 : ADD  3, 1, 0 ;  Store left operand into temporary register
+14 : LDC  3, 0(1) ; Store left operand into temporary register
 15 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-16 : ADD  2, 3, 0 ;  Restore left operand
+16 : LDC  2, 0(3) ;  Restore left operand
 17 : SUB  1, 2, 1 ;  left - right for equality check
 18 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 19 : LDC  1, 0(0) ;  false
@@ -56,9 +56,9 @@
 55 : LD  6, 0(5) ;  Load return address for main function into register 6
 56 : LDA  7, 0(6) ;  Jump to return address of main function
 57 : LD   1, 1(5) ;  Load parameter 'a' into R1
-58 : ADD  3, 1, 0 ;  Store left operand into temporary register
+58 : LDC  3, 0(1) ; Store left operand into temporary register
 59 : LD   1, 2(5) ;  Load parameter 'b' into R1
-60 : ADD  2, 3, 0 ;  Restore left operand
+60 : LDC  2, 0(3) ;  Restore left operand
 61 : SUB  1, 2, 1 ;  left - right for less-than check
 62 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 63 : LDC  1, 0(0) ;  false
@@ -68,9 +68,9 @@
 67 : LD   1, 1(5) ;  Load parameter 'a' into R1
 68 : LDA  7, 87(0) ;  Skip ELSE block
 69 : LD   1, 1(5) ;  Load parameter 'a' into R1
-70 : ADD  3, 1, 0 ;  Store left operand into temporary register
+70 : LDC  3, 0(1) ; Store left operand into temporary register
 71 : LD   1, 2(5) ;  Load parameter 'b' into R1
-72 : ADD  2, 3, 0 ;  Restore left operand
+72 : LDC  2, 0(3) ;  Restore left operand
 73 : SUB  1, 2, 1 ;  R1 = left - right
 74 : LDA  4, 4(5) ; Restore Callee frame base
 75 : ST 1, 1(4) ;  Store argument 0 into callee frame
@@ -89,9 +89,9 @@
 88 : LD   6, 0(5) ;  Load return address
 89 : LDA  7, 0(6) ;  Return to caller
 90 : LD   1, 2(5) ;  Load parameter 'b' into R1
-91 : ADD  3, 1, 0 ;  Store left operand into temporary register
+91 : LDC  3, 0(1) ; Store left operand into temporary register
 92 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-93 : ADD  2, 3, 0 ;  Restore left operand
+93 : LDC  2, 0(3) ;  Restore left operand
 94 : SUB  1, 2, 1 ;  left - right for equality check
 95 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 96 : LDC  1, 0(0) ;  false
@@ -131,9 +131,9 @@
 130 : LD   6, 0(5) ;  Load return address
 131 : LDA  7, 0(6) ;  Return to caller
 132 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-133 : ADD  3, 1, 0 ;  Store left operand into temporary register
+133 : LDC  3, 0(1) ; Store left operand into temporary register
 134 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
-135 : ADD  2, 3, 0 ;  Restore left operand
+135 : LDC  2, 0(3) ;  Restore left operand
 136 : DIV  1, 2, 1 ;  R1 = left / right
 137 : LDA  4, 3(5) ;  Update DMEM pointer
 138 : LDA 6, 142(0) ;  Compute return address
@@ -144,9 +144,9 @@
 143 : SUB  5, 5, 4 ;  Restore pointer
 144 : ST   1, 4(5) ;  Store function result into stack frame
 145 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
-146 : ADD  3, 1, 0 ;  Store left operand into temporary register
+146 : LDC  3, 0(1) ; Store left operand into temporary register
 147 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
-148 : ADD  2, 3, 0 ;  Restore left operand
+148 : LDC  2, 0(3) ;  Restore left operand
 149 : DIV  1, 2, 1 ;  R1 = left / right
 150 : LDA  4, 3(5) ;  Update DMEM pointer
 151 : LDA 6, 155(0) ;  Compute return address

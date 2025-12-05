@@ -270,10 +270,10 @@ class Generator:
                 curr_params = self.symbol_table[curr_function].parameters[0]
 
                 self.instruction_rules(left_exp, curr_function, callee=True)
-                self.write("ADD  3, 1, 0"," Store left operand into temporary register")
+                self.write("LDC  3, 0(1)", "Store left operand into temporary register")
 
                 self.instruction_rules(right_exp, curr_function, callee=True)
-                self.write(f"ADD  2, 3, 0", " Restore left operand")
+                self.write(f"LDC  2, 0(3)", " Restore left operand")
 
                 match exp_value:
                     case "+":
