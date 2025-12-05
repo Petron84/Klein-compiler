@@ -30,9 +30,9 @@
 29 : LD  6, 0(5) ;  Load return address for main function into register 6
 30 : LDA  7, 0(6) ;  Jump to return address of main function
 31 : LD   1, 1(5) ;  Load parameter 'a' into R1
-32 : ST   1, 3(5) ;  Store left operand into temporary register
+32 : ADD  3, 1, 0 ;  Save left operand
 33 : LD   1, 2(5) ;  Load parameter 'b' into R1
-34 : LD   2, 3(5) ; Restore left operand
+34 : ADD  2, 3, 0 ;  restore left operand
 35 : MUL  1, 2, 1 ;  R1 = left * right
 36 : LDA  4, 3(5) ;  Update DMEM pointer
 37 : LDA 6, 41(0) ;  Compute return address
@@ -43,9 +43,9 @@
 42 : SUB  5, 5, 4 ;  Restore pointer
 43 : ST   1, 3(5) ;  Store function result into stack frame
 44 : LD   1, 1(5) ;  Load parameter 'a' into R1
-45 : ST   1, 3(5) ;  Store left operand into temporary register
+45 : ADD  3, 1, 0 ;  Save left operand
 46 : LD   1, 2(5) ;  Load parameter 'b' into R1
-47 : LD   2, 3(5) ; Restore left operand
+47 : ADD  2, 3, 0 ;  restore left operand
 48 : MUL  1, 2, 1 ;  R1 = left * right
 49 : ST   1, 3(5) ;  Store function result into stack frame
 50 : LD   6, 0(5) ;  Load return address

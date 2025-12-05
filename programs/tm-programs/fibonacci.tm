@@ -10,9 +10,9 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'elementWanted' into R1
-12 : ST   1, 2(5) ;  Store left operand into temporary register
+12 : ADD  3, 1, 0 ;  Save left operand
 13 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-14 : LD   2, 2(5) ; Restore left operand
+14 : ADD  2, 3, 0 ;  restore left operand
 15 : SUB  1, 2, 1 ;  left - right for less-than check
 16 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 17 : LDC  1, 0(0) ;  false
@@ -47,9 +47,9 @@
 46 : LD  6, 0(5) ;  Load return address for main function into register 6
 47 : LDA  7, 0(6) ;  Jump to return address of main function
 48 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
-49 : ST   1, 5(5) ;  Store left operand into temporary register
+49 : ADD  3, 1, 0 ;  Save left operand
 50 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
-51 : LD   2, 5(5) ; Restore left operand
+51 : ADD  2, 3, 0 ;  restore left operand
 52 : SUB  1, 2, 1 ;  left - right for equality check
 53 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 54 : LDC  1, 0(0) ;  false
@@ -59,9 +59,9 @@
 58 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
 59 : LDA  7, 88(0) ;  Skip ELSE block
 60 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
-61 : ST   1, 5(5) ;  Store left operand into temporary register
+61 : ADD  3, 1, 0 ;  Save left operand
 62 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-63 : LD   2, 5(5) ; Restore left operand
+63 : ADD  2, 3, 0 ;  restore left operand
 64 : ADD  1, 2, 1 ;  R1 = left + right
 65 : LDA  4, 6(5) ; Restore Callee frame base
 66 : ST 1, 1(4) ;  Store argument 0 into callee frame
@@ -72,9 +72,9 @@
 71 : LDA  4, 6(5) ; Restore Callee frame base
 72 : ST 1, 3(4) ;  Store argument 2 into callee frame
 73 : LD   1, 3(5) ;  Load parameter 'previousSum' into R1
-74 : ST   1, 5(5) ;  Store left operand into temporary register
+74 : ADD  3, 1, 0 ;  Save left operand
 75 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
-76 : LD   2, 5(5) ; Restore left operand
+76 : ADD  2, 3, 0 ;  restore left operand
 77 : ADD  1, 2, 1 ;  R1 = left + right
 78 : LDA  4, 6(5) ; Restore Callee frame base
 79 : ST 1, 4(4) ;  Store argument 3 into callee frame
