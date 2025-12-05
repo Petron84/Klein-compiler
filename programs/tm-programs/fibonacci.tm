@@ -20,60 +20,68 @@
 19 : JEQ  1, 23(0) ;  If condition is false, jump to ELSE
 20 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 21 : ST   1, 4(0) ;  Store value into return value in stack frame
-22 : LDA  7, 40(0) ;  Skip ELSE block
-23 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'addNext'
-24 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+22 : LDA  7, 44(0) ;  Skip ELSE block
+23 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+24 : LDA  3, 3(5) ; Restore Callee frame base
 25 : ST 1, 1(3) ;  Store argument 0 into callee frame
 26 : LD   1, 1(5) ;  Load parameter 'elementWanted' into R1
-27 : ST 1, 2(3) ;  Store argument 1 into callee frame
-28 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-29 : ST 1, 3(3) ;  Store argument 2 into callee frame
-30 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-31 : ST 1, 4(3) ;  Store argument 3 into callee frame
-32 : LDA 6, 36(0)) ;  Compute return address
-33 : ST 6, 0(3) ;  Store return address in callee frame
-34 : ADD  5, 3, 0 ;  Update pointer
-35 : LDA 7, 43(0) ;  Call addNext
-36 : LD 1, 5(5) ;  Load callee return value into R1
-37 : LDC  4, 6(0) ;  Load frame size
-38 : SUB  5, 5, 4 ;  Restore pointer
-39 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-40 : LD   1, 4(0) ;  Load return value into register 1
-41 : LD  6, 2(0) ;  Load return address for main function into register 6
-42 : LDA  7, 0(6) ;  Jump to return address of main function
-43 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
-44 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-45 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
-46 : SUB  1, 2, 1 ;  left - right for equality check
-47 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-48 : LDC  1, 0(0) ;  false
-49 : LDA  7, 1(7) ;  skip setting true
-50 : LDC  1, 1(0) ;  true
-51 : JEQ  1, 54(0) ;  If condition is false, jump to ELSE
-52 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
-53 : LDA  7, 76(0) ;  Skip ELSE block
-54 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'addNext'
-55 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
-56 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-57 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-58 : ADD  1, 2, 1 ;  R1 = left + right
-59 : ST 1, 1(3) ;  Store argument 0 into callee frame
-60 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
-61 : ST 1, 2(3) ;  Store argument 1 into callee frame
-62 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
-63 : ST 1, 3(3) ;  Store argument 2 into callee frame
-64 : LD   1, 3(5) ;  Load parameter 'previousSum' into R1
-65 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-66 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
-67 : ADD  1, 2, 1 ;  R1 = left + right
-68 : ST 1, 4(3) ;  Store argument 3 into callee frame
-69 : LDA 6, 73(0)) ;  Compute return address
-70 : ST 6, 0(3) ;  Store return address in callee frame
-71 : ADD  5, 3, 0 ;  Update pointer
-72 : LDA 7, 43(0) ;  Call addNext
-73 : LD 1, 5(5) ;  Load callee return value into R1
-74 : LDC  4, 6(0) ;  Load frame size
-75 : SUB  5, 5, 4 ;  Restore pointer
-76 : ST   1, 5(5) ;  Store function result into stack frame
-77 : LD   6, 0(5) ;  Load return address
-78 : LDA  7, 0(6) ;  Return to caller
+27 : LDA  3, 3(5) ; Restore Callee frame base
+28 : ST 1, 2(3) ;  Store argument 1 into callee frame
+29 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+30 : LDA  3, 3(5) ; Restore Callee frame base
+31 : ST 1, 3(3) ;  Store argument 2 into callee frame
+32 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+33 : LDA  3, 3(5) ; Restore Callee frame base
+34 : ST 1, 4(3) ;  Store argument 3 into callee frame
+35 : LDA  3, 3(5) ; Restore Call frame base
+36 : LDA 6, 40(0)) ;  Compute return address
+37 : ST 6, 0(3) ;  Store return address in callee frame
+38 : ADD  5, 3, 0 ;  Update pointer
+39 : LDA 7, 47(0) ;  Call addNext
+40 : LD 1, 5(5) ;  Load callee return value into R1
+41 : LDC  4, 3(0) ;  Load frame size
+42 : SUB  5, 5, 4 ;  Restore pointer
+43 : ST 1, 4(0) ;  Store function-call result into caller's return slot
+44 : LD   1, 4(0) ;  Load return value into register 1
+45 : LD  6, 2(0) ;  Load return address for main function into register 6
+46 : LDA  7, 0(6) ;  Jump to return address of main function
+47 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
+48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+49 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
+50 : SUB  1, 2, 1 ;  left - right for equality check
+51 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+52 : LDC  1, 0(0) ;  false
+53 : LDA  7, 1(7) ;  skip setting true
+54 : LDC  1, 1(0) ;  true
+55 : JEQ  1, 58(0) ;  If condition is false, jump to ELSE
+56 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
+57 : LDA  7, 84(0) ;  Skip ELSE block
+58 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
+59 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+60 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+61 : ADD  1, 2, 1 ;  R1 = left + right
+62 : LDA  3, 6(5) ; Restore Callee frame base
+63 : ST 1, 1(3) ;  Store argument 0 into callee frame
+64 : LD   1, 2(5) ;  Load parameter 'elementWanted' into R1
+65 : LDA  3, 6(5) ; Restore Callee frame base
+66 : ST 1, 2(3) ;  Store argument 1 into callee frame
+67 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
+68 : LDA  3, 6(5) ; Restore Callee frame base
+69 : ST 1, 3(3) ;  Store argument 2 into callee frame
+70 : LD   1, 3(5) ;  Load parameter 'previousSum' into R1
+71 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+72 : LD   1, 4(5) ;  Load parameter 'currentSum' into R1
+73 : ADD  1, 2, 1 ;  R1 = left + right
+74 : LDA  3, 6(5) ; Restore Callee frame base
+75 : ST 1, 4(3) ;  Store argument 3 into callee frame
+76 : LDA  3, 6(5) ; Restore Call frame base
+77 : LDA 6, 81(0)) ;  Compute return address
+78 : ST 6, 0(3) ;  Store return address in callee frame
+79 : ADD  5, 3, 0 ;  Update pointer
+80 : LDA 7, 47(0) ;  Call addNext
+81 : LD 1, 5(5) ;  Load callee return value into R1
+82 : LDC  4, 6(0) ;  Load frame size
+83 : SUB  5, 5, 4 ;  Restore pointer
+84 : ST   1, 5(5) ;  Store function result into stack frame
+85 : LD   6, 0(5) ;  Load return address
+86 : LDA  7, 0(6) ;  Return to caller

@@ -9,470 +9,514 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'circularPrimesTo'
-12 : LD   1, 1(5) ;  Load parameter 'x' into R1
+11 : LD   1, 1(5) ;  Load parameter 'x' into R1
+12 : LDA  3, 3(5) ; Restore Callee frame base
 13 : ST 1, 1(3) ;  Store argument 0 into callee frame
-14 : LDA 6, 18(0)) ;  Compute return address
-15 : ST 6, 0(3) ;  Store return address in callee frame
-16 : ADD  5, 3, 0 ;  Update pointer
-17 : LDA 7, 458(0) ;  Call circularPrimesTo
-18 : LD 1, 2(5) ;  Load callee return value into R1
-19 : LDC  4, 3(0) ;  Load frame size
-20 : SUB  5, 5, 4 ;  Restore pointer
-21 : ST 1, 4(0) ;  Store function-call result into caller's return slot
-22 : LD   1, 4(0) ;  Load return value into register 1
-23 : LD  6, 2(0) ;  Load return address for main function into register 6
-24 : LDA  7, 0(6) ;  Jump to return address of main function
-25 : LD   1, 1(5) ;  Load parameter 'num' into R1
-26 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-27 : LD   1, 2(5) ;  Load parameter 'den' into R1
-28 : SUB  1, 2, 1 ;  left - right for less-than check
-29 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-30 : LDC  1, 0(0) ;  false
-31 : LDA  7, 1(7) ;  skip setting true
-32 : LDC  1, 1(0) ;  true
-33 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
-34 : LD   1, 1(5) ;  Load parameter 'num' into R1
-35 : LDA  7, 51(0) ;  Skip ELSE block
-36 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mod'
+14 : LDA  3, 3(5) ; Restore Call frame base
+15 : LDA 6, 19(0)) ;  Compute return address
+16 : ST 6, 0(3) ;  Store return address in callee frame
+17 : ADD  5, 3, 0 ;  Update pointer
+18 : LDA 7, 499(0) ;  Call circularPrimesTo
+19 : LD 1, 2(5) ;  Load callee return value into R1
+20 : LDC  4, 3(0) ;  Load frame size
+21 : SUB  5, 5, 4 ;  Restore pointer
+22 : ST 1, 4(0) ;  Store function-call result into caller's return slot
+23 : LD   1, 4(0) ;  Load return value into register 1
+24 : LD  6, 2(0) ;  Load return address for main function into register 6
+25 : LDA  7, 0(6) ;  Jump to return address of main function
+26 : LD   1, 1(5) ;  Load parameter 'num' into R1
+27 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+28 : LD   1, 2(5) ;  Load parameter 'den' into R1
+29 : SUB  1, 2, 1 ;  left - right for less-than check
+30 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+31 : LDC  1, 0(0) ;  false
+32 : LDA  7, 1(7) ;  skip setting true
+33 : LDC  1, 1(0) ;  true
+34 : JEQ  1, 37(0) ;  If condition is false, jump to ELSE
+35 : LD   1, 1(5) ;  Load parameter 'num' into R1
+36 : LDA  7, 54(0) ;  Skip ELSE block
 37 : LD   1, 1(5) ;  Load parameter 'num' into R1
 38 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 39 : LD   1, 2(5) ;  Load parameter 'den' into R1
 40 : SUB  1, 2, 1 ;  R1 = left - right
-41 : ST 1, 1(3) ;  Store argument 0 into callee frame
-42 : LD   1, 2(5) ;  Load parameter 'den' into R1
-43 : ST 1, 2(3) ;  Store argument 1 into callee frame
-44 : LDA 6, 48(0)) ;  Compute return address
-45 : ST 6, 0(3) ;  Store return address in callee frame
-46 : ADD  5, 3, 0 ;  Update pointer
-47 : LDA 7, 25(0) ;  Call mod
-48 : LD 1, 3(5) ;  Load callee return value into R1
-49 : LDC  4, 4(0) ;  Load frame size
-50 : SUB  5, 5, 4 ;  Restore pointer
-51 : ST   1, 3(5) ;  Store function result into stack frame
-52 : LD   6, 0(5) ;  Load return address
-53 : LDA  7, 0(6) ;  Return to caller
-54 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mod'
-55 : LD   1, 2(5) ;  Load parameter 'b' into R1
-56 : ST 1, 1(3) ;  Store argument 0 into callee frame
-57 : LD   1, 1(5) ;  Load parameter 'a' into R1
-58 : ST 1, 2(3) ;  Store argument 1 into callee frame
-59 : LDA 6, 63(0)) ;  Compute return address
-60 : ST 6, 0(3) ;  Store return address in callee frame
-61 : ADD  5, 3, 0 ;  Update pointer
-62 : LDA 7, 25(0) ;  Call mod
-63 : LD 1, 3(5) ;  Load callee return value into R1
-64 : LDC  4, 4(0) ;  Load frame size
-65 : SUB  5, 5, 4 ;  Restore pointer
-66 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-67 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-68 : SUB  1, 2, 1 ;  left - right for equality check
-69 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-70 : LDC  1, 0(0) ;  false
-71 : LDA  7, 1(7) ;  skip setting true
-72 : LDC  1, 1(0) ;  true
-73 : ST   1, 3(5) ;  Store function result into stack frame
-74 : LD   6, 0(5) ;  Load return address
-75 : LDA  7, 0(6) ;  Return to caller
-76 : LD   1, 1(5) ;  Load parameter 'i' into R1
-77 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-78 : LD   1, 2(5) ;  Load parameter 'n' into R1
-79 : SUB  1, 2, 1 ;  left - right for less-than check
-80 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-81 : LDC  1, 0(0) ;  false
-82 : LDA  7, 1(7) ;  skip setting true
-83 : LDC  1, 1(0) ;  true
-84 : JEQ  1, 115(0) ;  If condition is false, jump to ELSE
-85 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divides'
-86 : LD   1, 1(5) ;  Load parameter 'i' into R1
-87 : ST 1, 1(3) ;  Store argument 0 into callee frame
-88 : LD   1, 2(5) ;  Load parameter 'n' into R1
-89 : ST 1, 2(3) ;  Store argument 1 into callee frame
-90 : LDA 6, 94(0)) ;  Compute return address
-91 : ST 6, 0(3) ;  Store return address in callee frame
-92 : ADD  5, 3, 0 ;  Update pointer
-93 : LDA 7, 54(0) ;  Call divides
-94 : LD 1, 3(5) ;  Load callee return value into R1
-95 : LDC  4, 4(0) ;  Load frame size
-96 : SUB  5, 5, 4 ;  Restore pointer
-97 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-98 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
-99 : LD   1, 1(5) ;  Load parameter 'i' into R1
-100 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-101 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-102 : ADD  1, 2, 1 ;  R1 = left + right
-103 : ST 1, 1(3) ;  Store argument 0 into callee frame
-104 : LD   1, 2(5) ;  Load parameter 'n' into R1
-105 : ST 1, 2(3) ;  Store argument 1 into callee frame
-106 : LDA 6, 110(0)) ;  Compute return address
-107 : ST 6, 0(3) ;  Store return address in callee frame
-108 : ADD  5, 3, 0 ;  Update pointer
-109 : LDA 7, 76(0) ;  Call hasDivisorFrom
-110 : LD 1, 3(5) ;  Load callee return value into R1
-111 : LDC  4, 4(0) ;  Load frame size
-112 : SUB  5, 5, 4 ;  Restore pointer
-113 : ADD  1, 2, 1 ;  R1 = left OR right
-114 : LDA  7, 116(0) ;  Skip ELSE block
-115 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-116 : ST   1, 3(5) ;  Store function result into stack frame
-117 : LD   6, 0(5) ;  Load return address
-118 : LDA  7, 0(6) ;  Return to caller
-119 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
-120 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-121 : ST 1, 1(3) ;  Store argument 0 into callee frame
-122 : LD   1, 1(5) ;  Load parameter 'n' into R1
-123 : ST 1, 2(3) ;  Store argument 1 into callee frame
-124 : LDA 6, 128(0)) ;  Compute return address
-125 : ST 6, 0(3) ;  Store return address in callee frame
-126 : ADD  5, 3, 0 ;  Update pointer
-127 : LDA 7, 76(0) ;  Call hasDivisorFrom
-128 : LD 1, 3(5) ;  Load callee return value into R1
-129 : LDC  4, 4(0) ;  Load frame size
-130 : SUB  5, 5, 4 ;  Restore pointer
-131 : LDC  2, 1(0) ;  Load 1 into R2
-132 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
-133 : ST   1, 2(5) ;  Store function result into stack frame
-134 : LD   6, 0(5) ;  Load return address
-135 : LDA  7, 0(6) ;  Return to caller
-136 : LD   1, 1(5) ;  Load parameter 'x' into R1
-137 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-138 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-139 : DIV  1, 2, 1 ;  R1 = left / right
-140 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-141 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-142 : SUB  1, 2, 1 ;  left - right for equality check
-143 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-144 : LDC  1, 0(0) ;  false
-145 : LDA  7, 1(7) ;  skip setting true
-146 : LDC  1, 1(0) ;  true
-147 : JEQ  1, 150(0) ;  If condition is false, jump to ELSE
-148 : LD   1, 2(5) ;  Load parameter 'y' into R1
-149 : LDA  7, 168(0) ;  Skip ELSE block
-150 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'log10Helper'
-151 : LD   1, 1(5) ;  Load parameter 'x' into R1
-152 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-153 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-154 : DIV  1, 2, 1 ;  R1 = left / right
-155 : ST 1, 1(3) ;  Store argument 0 into callee frame
-156 : LD   1, 2(5) ;  Load parameter 'y' into R1
-157 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-158 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-159 : ADD  1, 2, 1 ;  R1 = left + right
-160 : ST 1, 2(3) ;  Store argument 1 into callee frame
-161 : LDA 6, 165(0)) ;  Compute return address
-162 : ST 6, 0(3) ;  Store return address in callee frame
-163 : ADD  5, 3, 0 ;  Update pointer
-164 : LDA 7, 136(0) ;  Call log10Helper
-165 : LD 1, 3(5) ;  Load callee return value into R1
-166 : LDC  4, 4(0) ;  Load frame size
-167 : SUB  5, 5, 4 ;  Restore pointer
-168 : ST   1, 3(5) ;  Store function result into stack frame
-169 : LD   6, 0(5) ;  Load return address
-170 : LDA  7, 0(6) ;  Return to caller
-171 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'log10Helper'
-172 : LD   1, 1(5) ;  Load parameter 'x' into R1
-173 : ST 1, 1(3) ;  Store argument 0 into callee frame
-174 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-175 : ST 1, 2(3) ;  Store argument 1 into callee frame
-176 : LDA 6, 180(0)) ;  Compute return address
-177 : ST 6, 0(3) ;  Store return address in callee frame
-178 : ADD  5, 3, 0 ;  Update pointer
-179 : LDA 7, 136(0) ;  Call log10Helper
-180 : LD 1, 3(5) ;  Load callee return value into R1
-181 : LDC  4, 4(0) ;  Load frame size
-182 : SUB  5, 5, 4 ;  Restore pointer
-183 : ST   1, 2(5) ;  Store function result into stack frame
-184 : LD   6, 0(5) ;  Load return address
-185 : LDA  7, 0(6) ;  Return to caller
-186 : LD   1, 2(5) ;  Load parameter 'power' into R1
-187 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-188 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-189 : SUB  1, 2, 1 ;  left - right for equality check
-190 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-191 : LDC  1, 0(0) ;  false
-192 : LDA  7, 1(7) ;  skip setting true
-193 : LDC  1, 1(0) ;  true
-194 : JEQ  1, 197(0) ;  If condition is false, jump to ELSE
-195 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-196 : LDA  7, 228(0) ;  Skip ELSE block
-197 : LD   1, 2(5) ;  Load parameter 'power' into R1
-198 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-199 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-200 : SUB  1, 2, 1 ;  left - right for equality check
-201 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-202 : LDC  1, 0(0) ;  false
-203 : LDA  7, 1(7) ;  skip setting true
-204 : LDC  1, 1(0) ;  true
-205 : JEQ  1, 208(0) ;  If condition is false, jump to ELSE
-206 : LD   1, 3(5) ;  Load parameter 'total' into R1
-207 : LDA  7, 228(0) ;  Skip ELSE block
-208 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'powHelper'
-209 : LD   1, 1(5) ;  Load parameter 'base' into R1
-210 : ST 1, 1(3) ;  Store argument 0 into callee frame
-211 : LD   1, 2(5) ;  Load parameter 'power' into R1
-212 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-213 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-214 : SUB  1, 2, 1 ;  R1 = left - right
-215 : ST 1, 2(3) ;  Store argument 1 into callee frame
-216 : LD   1, 1(5) ;  Load parameter 'base' into R1
-217 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-218 : LD   1, 3(5) ;  Load parameter 'total' into R1
-219 : MUL  1, 2, 1 ;  R1 = left * right
-220 : ST 1, 3(3) ;  Store argument 2 into callee frame
-221 : LDA 6, 225(0)) ;  Compute return address
-222 : ST 6, 0(3) ;  Store return address in callee frame
-223 : ADD  5, 3, 0 ;  Update pointer
-224 : LDA 7, 186(0) ;  Call powHelper
-225 : LD 1, 4(5) ;  Load callee return value into R1
-226 : LDC  4, 5(0) ;  Load frame size
-227 : SUB  5, 5, 4 ;  Restore pointer
-228 : ST   1, 4(5) ;  Store function result into stack frame
-229 : LD   6, 0(5) ;  Load return address
-230 : LDA  7, 0(6) ;  Return to caller
-231 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'powHelper'
-232 : LD   1, 1(5) ;  Load parameter 'x' into R1
-233 : ST 1, 1(3) ;  Store argument 0 into callee frame
-234 : LD   1, 2(5) ;  Load parameter 'y' into R1
-235 : ST 1, 2(3) ;  Store argument 1 into callee frame
-236 : LD   1, 1(5) ;  Load parameter 'x' into R1
+41 : LDA  3, 4(5) ; Restore Callee frame base
+42 : ST 1, 1(3) ;  Store argument 0 into callee frame
+43 : LD   1, 2(5) ;  Load parameter 'den' into R1
+44 : LDA  3, 4(5) ; Restore Callee frame base
+45 : ST 1, 2(3) ;  Store argument 1 into callee frame
+46 : LDA  3, 4(5) ; Restore Call frame base
+47 : LDA 6, 51(0)) ;  Compute return address
+48 : ST 6, 0(3) ;  Store return address in callee frame
+49 : ADD  5, 3, 0 ;  Update pointer
+50 : LDA 7, 26(0) ;  Call mod
+51 : LD 1, 3(5) ;  Load callee return value into R1
+52 : LDC  4, 4(0) ;  Load frame size
+53 : SUB  5, 5, 4 ;  Restore pointer
+54 : ST   1, 3(5) ;  Store function result into stack frame
+55 : LD   6, 0(5) ;  Load return address
+56 : LDA  7, 0(6) ;  Return to caller
+57 : LD   1, 2(5) ;  Load parameter 'b' into R1
+58 : LDA  3, 4(5) ; Restore Callee frame base
+59 : ST 1, 1(3) ;  Store argument 0 into callee frame
+60 : LD   1, 1(5) ;  Load parameter 'a' into R1
+61 : LDA  3, 4(5) ; Restore Callee frame base
+62 : ST 1, 2(3) ;  Store argument 1 into callee frame
+63 : LDA  3, 4(5) ; Restore Call frame base
+64 : LDA 6, 68(0)) ;  Compute return address
+65 : ST 6, 0(3) ;  Store return address in callee frame
+66 : ADD  5, 3, 0 ;  Update pointer
+67 : LDA 7, 26(0) ;  Call mod
+68 : LD 1, 3(5) ;  Load callee return value into R1
+69 : LDC  4, 4(0) ;  Load frame size
+70 : SUB  5, 5, 4 ;  Restore pointer
+71 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+72 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+73 : SUB  1, 2, 1 ;  left - right for equality check
+74 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+75 : LDC  1, 0(0) ;  false
+76 : LDA  7, 1(7) ;  skip setting true
+77 : LDC  1, 1(0) ;  true
+78 : ST   1, 3(5) ;  Store function result into stack frame
+79 : LD   6, 0(5) ;  Load return address
+80 : LDA  7, 0(6) ;  Return to caller
+81 : LD   1, 1(5) ;  Load parameter 'i' into R1
+82 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+83 : LD   1, 2(5) ;  Load parameter 'n' into R1
+84 : SUB  1, 2, 1 ;  left - right for less-than check
+85 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+86 : LDC  1, 0(0) ;  false
+87 : LDA  7, 1(7) ;  skip setting true
+88 : LDC  1, 1(0) ;  true
+89 : JEQ  1, 124(0) ;  If condition is false, jump to ELSE
+90 : LD   1, 1(5) ;  Load parameter 'i' into R1
+91 : LDA  3, 4(5) ; Restore Callee frame base
+92 : ST 1, 1(3) ;  Store argument 0 into callee frame
+93 : LD   1, 2(5) ;  Load parameter 'n' into R1
+94 : LDA  3, 4(5) ; Restore Callee frame base
+95 : ST 1, 2(3) ;  Store argument 1 into callee frame
+96 : LDA  3, 4(5) ; Restore Call frame base
+97 : LDA 6, 101(0)) ;  Compute return address
+98 : ST 6, 0(3) ;  Store return address in callee frame
+99 : ADD  5, 3, 0 ;  Update pointer
+100 : LDA 7, 57(0) ;  Call divides
+101 : LD 1, 3(5) ;  Load callee return value into R1
+102 : LDC  4, 4(0) ;  Load frame size
+103 : SUB  5, 5, 4 ;  Restore pointer
+104 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+105 : LD   1, 1(5) ;  Load parameter 'i' into R1
+106 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+107 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+108 : ADD  1, 2, 1 ;  R1 = left + right
+109 : LDA  3, 4(5) ; Restore Callee frame base
+110 : ST 1, 1(3) ;  Store argument 0 into callee frame
+111 : LD   1, 2(5) ;  Load parameter 'n' into R1
+112 : LDA  3, 4(5) ; Restore Callee frame base
+113 : ST 1, 2(3) ;  Store argument 1 into callee frame
+114 : LDA  3, 4(5) ; Restore Call frame base
+115 : LDA 6, 119(0)) ;  Compute return address
+116 : ST 6, 0(3) ;  Store return address in callee frame
+117 : ADD  5, 3, 0 ;  Update pointer
+118 : LDA 7, 81(0) ;  Call hasDivisorFrom
+119 : LD 1, 3(5) ;  Load callee return value into R1
+120 : LDC  4, 4(0) ;  Load frame size
+121 : SUB  5, 5, 4 ;  Restore pointer
+122 : ADD  1, 2, 1 ;  R1 = left OR right
+123 : LDA  7, 125(0) ;  Skip ELSE block
+124 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+125 : ST   1, 3(5) ;  Store function result into stack frame
+126 : LD   6, 0(5) ;  Load return address
+127 : LDA  7, 0(6) ;  Return to caller
+128 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+129 : LDA  3, 3(5) ; Restore Callee frame base
+130 : ST 1, 1(3) ;  Store argument 0 into callee frame
+131 : LD   1, 1(5) ;  Load parameter 'n' into R1
+132 : LDA  3, 3(5) ; Restore Callee frame base
+133 : ST 1, 2(3) ;  Store argument 1 into callee frame
+134 : LDA  3, 3(5) ; Restore Call frame base
+135 : LDA 6, 139(0)) ;  Compute return address
+136 : ST 6, 0(3) ;  Store return address in callee frame
+137 : ADD  5, 3, 0 ;  Update pointer
+138 : LDA 7, 81(0) ;  Call hasDivisorFrom
+139 : LD 1, 3(5) ;  Load callee return value into R1
+140 : LDC  4, 3(0) ;  Load frame size
+141 : SUB  5, 5, 4 ;  Restore pointer
+142 : LDC  2, 1(0) ;  Load 1 into R2
+143 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
+144 : ST   1, 2(5) ;  Store function result into stack frame
+145 : LD   6, 0(5) ;  Load return address
+146 : LDA  7, 0(6) ;  Return to caller
+147 : LD   1, 1(5) ;  Load parameter 'x' into R1
+148 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+149 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+150 : DIV  1, 2, 1 ;  R1 = left / right
+151 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+152 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+153 : SUB  1, 2, 1 ;  left - right for equality check
+154 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+155 : LDC  1, 0(0) ;  false
+156 : LDA  7, 1(7) ;  skip setting true
+157 : LDC  1, 1(0) ;  true
+158 : JEQ  1, 161(0) ;  If condition is false, jump to ELSE
+159 : LD   1, 2(5) ;  Load parameter 'y' into R1
+160 : LDA  7, 181(0) ;  Skip ELSE block
+161 : LD   1, 1(5) ;  Load parameter 'x' into R1
+162 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+163 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+164 : DIV  1, 2, 1 ;  R1 = left / right
+165 : LDA  3, 4(5) ; Restore Callee frame base
+166 : ST 1, 1(3) ;  Store argument 0 into callee frame
+167 : LD   1, 2(5) ;  Load parameter 'y' into R1
+168 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+169 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+170 : ADD  1, 2, 1 ;  R1 = left + right
+171 : LDA  3, 4(5) ; Restore Callee frame base
+172 : ST 1, 2(3) ;  Store argument 1 into callee frame
+173 : LDA  3, 4(5) ; Restore Call frame base
+174 : LDA 6, 178(0)) ;  Compute return address
+175 : ST 6, 0(3) ;  Store return address in callee frame
+176 : ADD  5, 3, 0 ;  Update pointer
+177 : LDA 7, 147(0) ;  Call log10Helper
+178 : LD 1, 3(5) ;  Load callee return value into R1
+179 : LDC  4, 4(0) ;  Load frame size
+180 : SUB  5, 5, 4 ;  Restore pointer
+181 : ST   1, 3(5) ;  Store function result into stack frame
+182 : LD   6, 0(5) ;  Load return address
+183 : LDA  7, 0(6) ;  Return to caller
+184 : LD   1, 1(5) ;  Load parameter 'x' into R1
+185 : LDA  3, 3(5) ; Restore Callee frame base
+186 : ST 1, 1(3) ;  Store argument 0 into callee frame
+187 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+188 : LDA  3, 3(5) ; Restore Callee frame base
+189 : ST 1, 2(3) ;  Store argument 1 into callee frame
+190 : LDA  3, 3(5) ; Restore Call frame base
+191 : LDA 6, 195(0)) ;  Compute return address
+192 : ST 6, 0(3) ;  Store return address in callee frame
+193 : ADD  5, 3, 0 ;  Update pointer
+194 : LDA 7, 147(0) ;  Call log10Helper
+195 : LD 1, 3(5) ;  Load callee return value into R1
+196 : LDC  4, 3(0) ;  Load frame size
+197 : SUB  5, 5, 4 ;  Restore pointer
+198 : ST   1, 2(5) ;  Store function result into stack frame
+199 : LD   6, 0(5) ;  Load return address
+200 : LDA  7, 0(6) ;  Return to caller
+201 : LD   1, 2(5) ;  Load parameter 'power' into R1
+202 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+203 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+204 : SUB  1, 2, 1 ;  left - right for equality check
+205 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+206 : LDC  1, 0(0) ;  false
+207 : LDA  7, 1(7) ;  skip setting true
+208 : LDC  1, 1(0) ;  true
+209 : JEQ  1, 212(0) ;  If condition is false, jump to ELSE
+210 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+211 : LDA  7, 246(0) ;  Skip ELSE block
+212 : LD   1, 2(5) ;  Load parameter 'power' into R1
+213 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+214 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+215 : SUB  1, 2, 1 ;  left - right for equality check
+216 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+217 : LDC  1, 0(0) ;  false
+218 : LDA  7, 1(7) ;  skip setting true
+219 : LDC  1, 1(0) ;  true
+220 : JEQ  1, 223(0) ;  If condition is false, jump to ELSE
+221 : LD   1, 3(5) ;  Load parameter 'total' into R1
+222 : LDA  7, 246(0) ;  Skip ELSE block
+223 : LD   1, 1(5) ;  Load parameter 'base' into R1
+224 : LDA  3, 5(5) ; Restore Callee frame base
+225 : ST 1, 1(3) ;  Store argument 0 into callee frame
+226 : LD   1, 2(5) ;  Load parameter 'power' into R1
+227 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+228 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+229 : SUB  1, 2, 1 ;  R1 = left - right
+230 : LDA  3, 5(5) ; Restore Callee frame base
+231 : ST 1, 2(3) ;  Store argument 1 into callee frame
+232 : LD   1, 1(5) ;  Load parameter 'base' into R1
+233 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+234 : LD   1, 3(5) ;  Load parameter 'total' into R1
+235 : MUL  1, 2, 1 ;  R1 = left * right
+236 : LDA  3, 5(5) ; Restore Callee frame base
 237 : ST 1, 3(3) ;  Store argument 2 into callee frame
-238 : LDA 6, 242(0)) ;  Compute return address
-239 : ST 6, 0(3) ;  Store return address in callee frame
-240 : ADD  5, 3, 0 ;  Update pointer
-241 : LDA 7, 186(0) ;  Call powHelper
-242 : LD 1, 4(5) ;  Load callee return value into R1
-243 : LDC  4, 5(0) ;  Load frame size
-244 : SUB  5, 5, 4 ;  Restore pointer
-245 : ST   1, 3(5) ;  Store function result into stack frame
-246 : LD   6, 0(5) ;  Load return address
-247 : LDA  7, 0(6) ;  Return to caller
-248 : LD   1, 1(5) ;  Load parameter 'x' into R1
-249 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-250 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-251 : DIV  1, 2, 1 ;  R1 = left / right
-252 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-253 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mod'
-254 : LD   1, 1(5) ;  Load parameter 'x' into R1
-255 : ST 1, 1(3) ;  Store argument 0 into callee frame
-256 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-257 : ST 1, 2(3) ;  Store argument 1 into callee frame
-258 : LDA 6, 262(0)) ;  Compute return address
-259 : ST 6, 0(3) ;  Store return address in callee frame
-260 : ADD  5, 3, 0 ;  Update pointer
-261 : LDA 7, 25(0) ;  Call mod
-262 : LD 1, 3(5) ;  Load callee return value into R1
-263 : LDC  4, 4(0) ;  Load frame size
-264 : SUB  5, 5, 4 ;  Restore pointer
-265 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-266 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'pow'
-267 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-268 : ST 1, 1(3) ;  Store argument 0 into callee frame
-269 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'log10'
-270 : LD   1, 1(5) ;  Load parameter 'x' into R1
-271 : ST 1, 1(3) ;  Store argument 0 into callee frame
-272 : LDA 6, 276(0)) ;  Compute return address
-273 : ST 6, 0(3) ;  Store return address in callee frame
-274 : ADD  5, 3, 0 ;  Update pointer
-275 : LDA 7, 171(0) ;  Call log10
-276 : LD 1, 2(5) ;  Load callee return value into R1
-277 : LDC  4, 3(0) ;  Load frame size
-278 : SUB  5, 5, 4 ;  Restore pointer
+238 : LDA  3, 5(5) ; Restore Call frame base
+239 : LDA 6, 243(0)) ;  Compute return address
+240 : ST 6, 0(3) ;  Store return address in callee frame
+241 : ADD  5, 3, 0 ;  Update pointer
+242 : LDA 7, 201(0) ;  Call powHelper
+243 : LD 1, 4(5) ;  Load callee return value into R1
+244 : LDC  4, 5(0) ;  Load frame size
+245 : SUB  5, 5, 4 ;  Restore pointer
+246 : ST   1, 4(5) ;  Store function result into stack frame
+247 : LD   6, 0(5) ;  Load return address
+248 : LDA  7, 0(6) ;  Return to caller
+249 : LD   1, 1(5) ;  Load parameter 'x' into R1
+250 : LDA  3, 4(5) ; Restore Callee frame base
+251 : ST 1, 1(3) ;  Store argument 0 into callee frame
+252 : LD   1, 2(5) ;  Load parameter 'y' into R1
+253 : LDA  3, 4(5) ; Restore Callee frame base
+254 : ST 1, 2(3) ;  Store argument 1 into callee frame
+255 : LD   1, 1(5) ;  Load parameter 'x' into R1
+256 : LDA  3, 4(5) ; Restore Callee frame base
+257 : ST 1, 3(3) ;  Store argument 2 into callee frame
+258 : LDA  3, 4(5) ; Restore Call frame base
+259 : LDA 6, 263(0)) ;  Compute return address
+260 : ST 6, 0(3) ;  Store return address in callee frame
+261 : ADD  5, 3, 0 ;  Update pointer
+262 : LDA 7, 201(0) ;  Call powHelper
+263 : LD 1, 4(5) ;  Load callee return value into R1
+264 : LDC  4, 4(0) ;  Load frame size
+265 : SUB  5, 5, 4 ;  Restore pointer
+266 : ST   1, 3(5) ;  Store function result into stack frame
+267 : LD   6, 0(5) ;  Load return address
+268 : LDA  7, 0(6) ;  Return to caller
+269 : LD   1, 1(5) ;  Load parameter 'x' into R1
+270 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+271 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+272 : DIV  1, 2, 1 ;  R1 = left / right
+273 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+274 : LD   1, 1(5) ;  Load parameter 'x' into R1
+275 : LDA  3, 3(5) ; Restore Callee frame base
+276 : ST 1, 1(3) ;  Store argument 0 into callee frame
+277 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+278 : LDA  3, 3(5) ; Restore Callee frame base
 279 : ST 1, 2(3) ;  Store argument 1 into callee frame
-280 : LDA 6, 284(0)) ;  Compute return address
-281 : ST 6, 0(3) ;  Store return address in callee frame
-282 : ADD  5, 3, 0 ;  Update pointer
-283 : LDA 7, 231(0) ;  Call pow
-284 : LD 1, 3(5) ;  Load callee return value into R1
-285 : LDC  4, 4(0) ;  Load frame size
-286 : SUB  5, 5, 4 ;  Restore pointer
-287 : MUL  1, 2, 1 ;  R1 = left * right
-288 : ADD  1, 2, 1 ;  R1 = left + right
-289 : ST   1, 2(5) ;  Store function result into stack frame
-290 : LD   6, 0(5) ;  Load return address
-291 : LDA  7, 0(6) ;  Return to caller
+280 : LDA  3, 3(5) ; Restore Call frame base
+281 : LDA 6, 285(0)) ;  Compute return address
+282 : ST 6, 0(3) ;  Store return address in callee frame
+283 : ADD  5, 3, 0 ;  Update pointer
+284 : LDA 7, 26(0) ;  Call mod
+285 : LD 1, 3(5) ;  Load callee return value into R1
+286 : LDC  4, 3(0) ;  Load frame size
+287 : SUB  5, 5, 4 ;  Restore pointer
+288 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+289 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+290 : LDA  3, 3(5) ; Restore Callee frame base
+291 : ST 1, 1(3) ;  Store argument 0 into callee frame
 292 : LD   1, 1(5) ;  Load parameter 'x' into R1
-293 : LDA  3, 3(5) ;  Update DMEM pointer
-294 : LDA 6, 298(0) ;  Compute return address
-295 : ST   6, 0(3) ;  Store return address
-296 : ADD  5, 3, 0 ;  Updated Pointer
-297 : LDA  7, 8(0) ; Call print
-298 : LDC  4, 3(0) ;  Load frame size
-299 : SUB  5, 5, 4 ;  Restore pointer
-300 : ST   1, 2(5) ;  Store function result into stack frame
-301 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-302 : ST   1, 2(5) ;  Store function result into stack frame
-303 : LD   6, 0(5) ;  Load return address
-304 : LDA  7, 0(6) ;  Return to caller
-305 : LD   1, 2(5) ;  Load parameter 'turns' into R1
-306 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-307 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-308 : SUB  1, 2, 1 ;  left - right for equality check
-309 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-310 : LDC  1, 0(0) ;  false
-311 : LDA  7, 1(7) ;  skip setting true
-312 : LDC  1, 1(0) ;  true
-313 : JEQ  1, 316(0) ;  If condition is false, jump to ELSE
-314 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-315 : LDA  7, 352(0) ;  Skip ELSE block
-316 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isPrime'
-317 : LD   1, 1(5) ;  Load parameter 'x' into R1
-318 : ST 1, 1(3) ;  Store argument 0 into callee frame
-319 : LDA 6, 323(0)) ;  Compute return address
-320 : ST 6, 0(3) ;  Store return address in callee frame
-321 : ADD  5, 3, 0 ;  Update pointer
-322 : LDA 7, 119(0) ;  Call isPrime
-323 : LD 1, 2(5) ;  Load callee return value into R1
+293 : LDA  3, 3(5) ; Restore Callee frame base
+294 : ST 1, 1(3) ;  Store argument 0 into callee frame
+295 : LDA  3, 3(5) ; Restore Call frame base
+296 : LDA 6, 300(0)) ;  Compute return address
+297 : ST 6, 0(3) ;  Store return address in callee frame
+298 : ADD  5, 3, 0 ;  Update pointer
+299 : LDA 7, 184(0) ;  Call log10
+300 : LD 1, 2(5) ;  Load callee return value into R1
+301 : LDC  4, 3(0) ;  Load frame size
+302 : SUB  5, 5, 4 ;  Restore pointer
+303 : LDA  3, 3(5) ; Restore Callee frame base
+304 : ST 1, 2(3) ;  Store argument 1 into callee frame
+305 : LDA  3, 3(5) ; Restore Call frame base
+306 : LDA 6, 310(0)) ;  Compute return address
+307 : ST 6, 0(3) ;  Store return address in callee frame
+308 : ADD  5, 3, 0 ;  Update pointer
+309 : LDA 7, 249(0) ;  Call pow
+310 : LD 1, 3(5) ;  Load callee return value into R1
+311 : LDC  4, 3(0) ;  Load frame size
+312 : SUB  5, 5, 4 ;  Restore pointer
+313 : MUL  1, 2, 1 ;  R1 = left * right
+314 : ADD  1, 2, 1 ;  R1 = left + right
+315 : ST   1, 2(5) ;  Store function result into stack frame
+316 : LD   6, 0(5) ;  Load return address
+317 : LDA  7, 0(6) ;  Return to caller
+318 : LD   1, 1(5) ;  Load parameter 'x' into R1
+319 : LDA  3, 3(5) ;  Update DMEM pointer
+320 : LDA 6, 324(0) ;  Compute return address
+321 : ST   6, 0(3) ;  Store return address
+322 : ADD  5, 3, 0 ;  Updated Pointer
+323 : LDA  7, 8(0) ; Call print
 324 : LDC  4, 3(0) ;  Load frame size
 325 : SUB  5, 5, 4 ;  Restore pointer
-326 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-327 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isCircularPrimeHelper'
-328 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'rotate'
-329 : LD   1, 1(5) ;  Load parameter 'x' into R1
-330 : ST 1, 1(3) ;  Store argument 0 into callee frame
-331 : LDA 6, 335(0)) ;  Compute return address
-332 : ST 6, 0(3) ;  Store return address in callee frame
-333 : ADD  5, 3, 0 ;  Update pointer
-334 : LDA 7, 248(0) ;  Call rotate
-335 : LD 1, 2(5) ;  Load callee return value into R1
-336 : LDC  4, 3(0) ;  Load frame size
-337 : SUB  5, 5, 4 ;  Restore pointer
-338 : ST 1, 1(3) ;  Store argument 0 into callee frame
-339 : LD   1, 2(5) ;  Load parameter 'turns' into R1
-340 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-341 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-342 : SUB  1, 2, 1 ;  R1 = left - right
-343 : ST 1, 2(3) ;  Store argument 1 into callee frame
-344 : LDA 6, 348(0)) ;  Compute return address
-345 : ST 6, 0(3) ;  Store return address in callee frame
-346 : ADD  5, 3, 0 ;  Update pointer
-347 : LDA 7, 305(0) ;  Call isCircularPrimeHelper
-348 : LD 1, 3(5) ;  Load callee return value into R1
-349 : LDC  4, 4(0) ;  Load frame size
-350 : SUB  5, 5, 4 ;  Restore pointer
-351 : MUL  1, 2, 1 ;  R1 = left AND right
-352 : ST   1, 3(5) ;  Store function result into stack frame
-353 : LD   6, 0(5) ;  Load return address
-354 : LDA  7, 0(6) ;  Return to caller
-355 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isCircularPrimeHelper'
-356 : LD   1, 1(5) ;  Load parameter 'x' into R1
-357 : ST 1, 1(3) ;  Store argument 0 into callee frame
-358 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'log10'
-359 : LD   1, 1(5) ;  Load parameter 'x' into R1
-360 : ST 1, 1(3) ;  Store argument 0 into callee frame
-361 : LDA 6, 365(0)) ;  Compute return address
-362 : ST 6, 0(3) ;  Store return address in callee frame
-363 : ADD  5, 3, 0 ;  Update pointer
-364 : LDA 7, 171(0) ;  Call log10
-365 : LD 1, 2(5) ;  Load callee return value into R1
-366 : LDC  4, 3(0) ;  Load frame size
-367 : SUB  5, 5, 4 ;  Restore pointer
+326 : ST   1, 2(5) ;  Store function result into stack frame
+327 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+328 : ST   1, 2(5) ;  Store function result into stack frame
+329 : LD   6, 0(5) ;  Load return address
+330 : LDA  7, 0(6) ;  Return to caller
+331 : LD   1, 2(5) ;  Load parameter 'turns' into R1
+332 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+333 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+334 : SUB  1, 2, 1 ;  left - right for equality check
+335 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+336 : LDC  1, 0(0) ;  false
+337 : LDA  7, 1(7) ;  skip setting true
+338 : LDC  1, 1(0) ;  true
+339 : JEQ  1, 342(0) ;  If condition is false, jump to ELSE
+340 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+341 : LDA  7, 382(0) ;  Skip ELSE block
+342 : LD   1, 1(5) ;  Load parameter 'x' into R1
+343 : LDA  3, 4(5) ; Restore Callee frame base
+344 : ST 1, 1(3) ;  Store argument 0 into callee frame
+345 : LDA  3, 4(5) ; Restore Call frame base
+346 : LDA 6, 350(0)) ;  Compute return address
+347 : ST 6, 0(3) ;  Store return address in callee frame
+348 : ADD  5, 3, 0 ;  Update pointer
+349 : LDA 7, 128(0) ;  Call isPrime
+350 : LD 1, 2(5) ;  Load callee return value into R1
+351 : LDC  4, 4(0) ;  Load frame size
+352 : SUB  5, 5, 4 ;  Restore pointer
+353 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+354 : LD   1, 1(5) ;  Load parameter 'x' into R1
+355 : LDA  3, 4(5) ; Restore Callee frame base
+356 : ST 1, 1(3) ;  Store argument 0 into callee frame
+357 : LDA  3, 4(5) ; Restore Call frame base
+358 : LDA 6, 362(0)) ;  Compute return address
+359 : ST 6, 0(3) ;  Store return address in callee frame
+360 : ADD  5, 3, 0 ;  Update pointer
+361 : LDA 7, 269(0) ;  Call rotate
+362 : LD 1, 2(5) ;  Load callee return value into R1
+363 : LDC  4, 4(0) ;  Load frame size
+364 : SUB  5, 5, 4 ;  Restore pointer
+365 : LDA  3, 4(5) ; Restore Callee frame base
+366 : ST 1, 1(3) ;  Store argument 0 into callee frame
+367 : LD   1, 2(5) ;  Load parameter 'turns' into R1
 368 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 369 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-370 : ADD  1, 2, 1 ;  R1 = left + right
-371 : ST 1, 2(3) ;  Store argument 1 into callee frame
-372 : LDA 6, 376(0)) ;  Compute return address
-373 : ST 6, 0(3) ;  Store return address in callee frame
-374 : ADD  5, 3, 0 ;  Update pointer
-375 : LDA 7, 305(0) ;  Call isCircularPrimeHelper
-376 : LD 1, 3(5) ;  Load callee return value into R1
-377 : LDC  4, 4(0) ;  Load frame size
-378 : SUB  5, 5, 4 ;  Restore pointer
-379 : JEQ  1, 391(0) ;  If condition is false, jump to ELSE
-380 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'report'
-381 : LD   1, 1(5) ;  Load parameter 'x' into R1
-382 : ST 1, 1(3) ;  Store argument 0 into callee frame
-383 : LDA 6, 387(0)) ;  Compute return address
-384 : ST 6, 0(3) ;  Store return address in callee frame
-385 : ADD  5, 3, 0 ;  Update pointer
-386 : LDA 7, 292(0) ;  Call report
-387 : LD 1, 2(5) ;  Load callee return value into R1
-388 : LDC  4, 3(0) ;  Load frame size
-389 : SUB  5, 5, 4 ;  Restore pointer
-390 : LDA  7, 392(0) ;  Skip ELSE block
-391 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-392 : ST   1, 2(5) ;  Store function result into stack frame
-393 : LD   6, 0(5) ;  Load return address
-394 : LDA  7, 0(6) ;  Return to caller
-395 : LD   1, 2(5) ;  Load parameter 'x' into R1
-396 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-397 : LD   1, 1(5) ;  Load parameter 'top' into R1
-398 : SUB  1, 2, 1 ;  left - right for less-than check
-399 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-400 : LDC  1, 0(0) ;  false
-401 : LDA  7, 1(7) ;  skip setting true
-402 : LDC  1, 1(0) ;  true
-403 : JEQ  1, 454(0) ;  If condition is false, jump to ELSE
-404 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isCircularPrime'
-405 : LD   1, 2(5) ;  Load parameter 'x' into R1
-406 : ST 1, 1(3) ;  Store argument 0 into callee frame
-407 : LDA 6, 411(0)) ;  Compute return address
-408 : ST 6, 0(3) ;  Store return address in callee frame
-409 : ADD  5, 3, 0 ;  Update pointer
-410 : LDA 7, 355(0) ;  Call isCircularPrime
-411 : LD 1, 2(5) ;  Load callee return value into R1
-412 : LDC  4, 3(0) ;  Load frame size
-413 : SUB  5, 5, 4 ;  Restore pointer
-414 : JEQ  1, 436(0) ;  If condition is false, jump to ELSE
-415 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
-416 : LD   1, 1(5) ;  Load parameter 'top' into R1
-417 : ST 1, 1(3) ;  Store argument 0 into callee frame
-418 : LD   1, 2(5) ;  Load parameter 'x' into R1
-419 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-420 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-421 : ADD  1, 2, 1 ;  R1 = left + right
-422 : ST 1, 2(3) ;  Store argument 1 into callee frame
-423 : LD   1, 3(5) ;  Load parameter 'count' into R1
-424 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-425 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-426 : ADD  1, 2, 1 ;  R1 = left + right
-427 : ST 1, 3(3) ;  Store argument 2 into callee frame
-428 : LDA 6, 432(0)) ;  Compute return address
-429 : ST 6, 0(3) ;  Store return address in callee frame
-430 : ADD  5, 3, 0 ;  Update pointer
-431 : LDA 7, 395(0) ;  Call circularPrimesToHelper
-432 : LD 1, 4(5) ;  Load callee return value into R1
-433 : LDC  4, 5(0) ;  Load frame size
-434 : SUB  5, 5, 4 ;  Restore pointer
-435 : LDA  7, 453(0) ;  Skip ELSE block
-436 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
-437 : LD   1, 1(5) ;  Load parameter 'top' into R1
-438 : ST 1, 1(3) ;  Store argument 0 into callee frame
-439 : LD   1, 2(5) ;  Load parameter 'x' into R1
-440 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-441 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-442 : ADD  1, 2, 1 ;  R1 = left + right
-443 : ST 1, 2(3) ;  Store argument 1 into callee frame
-444 : LD   1, 3(5) ;  Load parameter 'count' into R1
-445 : ST 1, 3(3) ;  Store argument 2 into callee frame
-446 : LDA 6, 450(0)) ;  Compute return address
-447 : ST 6, 0(3) ;  Store return address in callee frame
-448 : ADD  5, 3, 0 ;  Update pointer
-449 : LDA 7, 395(0) ;  Call circularPrimesToHelper
-450 : LD 1, 4(5) ;  Load callee return value into R1
-451 : LDC  4, 5(0) ;  Load frame size
-452 : SUB  5, 5, 4 ;  Restore pointer
-453 : LDA  7, 455(0) ;  Skip ELSE block
-454 : LD   1, 3(5) ;  Load parameter 'count' into R1
-455 : ST   1, 4(5) ;  Store function result into stack frame
-456 : LD   6, 0(5) ;  Load return address
-457 : LDA  7, 0(6) ;  Return to caller
-458 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
-459 : LD   1, 1(5) ;  Load parameter 'x' into R1
+370 : SUB  1, 2, 1 ;  R1 = left - right
+371 : LDA  3, 4(5) ; Restore Callee frame base
+372 : ST 1, 2(3) ;  Store argument 1 into callee frame
+373 : LDA  3, 4(5) ; Restore Call frame base
+374 : LDA 6, 378(0)) ;  Compute return address
+375 : ST 6, 0(3) ;  Store return address in callee frame
+376 : ADD  5, 3, 0 ;  Update pointer
+377 : LDA 7, 331(0) ;  Call isCircularPrimeHelper
+378 : LD 1, 3(5) ;  Load callee return value into R1
+379 : LDC  4, 4(0) ;  Load frame size
+380 : SUB  5, 5, 4 ;  Restore pointer
+381 : MUL  1, 2, 1 ;  R1 = left AND right
+382 : ST   1, 3(5) ;  Store function result into stack frame
+383 : LD   6, 0(5) ;  Load return address
+384 : LDA  7, 0(6) ;  Return to caller
+385 : LD   1, 1(5) ;  Load parameter 'x' into R1
+386 : LDA  3, 3(5) ; Restore Callee frame base
+387 : ST 1, 1(3) ;  Store argument 0 into callee frame
+388 : LD   1, 1(5) ;  Load parameter 'x' into R1
+389 : LDA  3, 3(5) ; Restore Callee frame base
+390 : ST 1, 1(3) ;  Store argument 0 into callee frame
+391 : LDA  3, 3(5) ; Restore Call frame base
+392 : LDA 6, 396(0)) ;  Compute return address
+393 : ST 6, 0(3) ;  Store return address in callee frame
+394 : ADD  5, 3, 0 ;  Update pointer
+395 : LDA 7, 184(0) ;  Call log10
+396 : LD 1, 2(5) ;  Load callee return value into R1
+397 : LDC  4, 3(0) ;  Load frame size
+398 : SUB  5, 5, 4 ;  Restore pointer
+399 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+400 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+401 : ADD  1, 2, 1 ;  R1 = left + right
+402 : LDA  3, 3(5) ; Restore Callee frame base
+403 : ST 1, 2(3) ;  Store argument 1 into callee frame
+404 : LDA  3, 3(5) ; Restore Call frame base
+405 : LDA 6, 409(0)) ;  Compute return address
+406 : ST 6, 0(3) ;  Store return address in callee frame
+407 : ADD  5, 3, 0 ;  Update pointer
+408 : LDA 7, 331(0) ;  Call isCircularPrimeHelper
+409 : LD 1, 3(5) ;  Load callee return value into R1
+410 : LDC  4, 3(0) ;  Load frame size
+411 : SUB  5, 5, 4 ;  Restore pointer
+412 : JEQ  1, 425(0) ;  If condition is false, jump to ELSE
+413 : LD   1, 1(5) ;  Load parameter 'x' into R1
+414 : LDA  3, 3(5) ; Restore Callee frame base
+415 : ST 1, 1(3) ;  Store argument 0 into callee frame
+416 : LDA  3, 3(5) ; Restore Call frame base
+417 : LDA 6, 421(0)) ;  Compute return address
+418 : ST 6, 0(3) ;  Store return address in callee frame
+419 : ADD  5, 3, 0 ;  Update pointer
+420 : LDA 7, 318(0) ;  Call report
+421 : LD 1, 2(5) ;  Load callee return value into R1
+422 : LDC  4, 3(0) ;  Load frame size
+423 : SUB  5, 5, 4 ;  Restore pointer
+424 : LDA  7, 426(0) ;  Skip ELSE block
+425 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+426 : ST   1, 2(5) ;  Store function result into stack frame
+427 : LD   6, 0(5) ;  Load return address
+428 : LDA  7, 0(6) ;  Return to caller
+429 : LD   1, 2(5) ;  Load parameter 'x' into R1
+430 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+431 : LD   1, 1(5) ;  Load parameter 'top' into R1
+432 : SUB  1, 2, 1 ;  left - right for less-than check
+433 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+434 : LDC  1, 0(0) ;  false
+435 : LDA  7, 1(7) ;  skip setting true
+436 : LDC  1, 1(0) ;  true
+437 : JEQ  1, 495(0) ;  If condition is false, jump to ELSE
+438 : LD   1, 2(5) ;  Load parameter 'x' into R1
+439 : LDA  3, 5(5) ; Restore Callee frame base
+440 : ST 1, 1(3) ;  Store argument 0 into callee frame
+441 : LDA  3, 5(5) ; Restore Call frame base
+442 : LDA 6, 446(0)) ;  Compute return address
+443 : ST 6, 0(3) ;  Store return address in callee frame
+444 : ADD  5, 3, 0 ;  Update pointer
+445 : LDA 7, 385(0) ;  Call isCircularPrime
+446 : LD 1, 2(5) ;  Load callee return value into R1
+447 : LDC  4, 5(0) ;  Load frame size
+448 : SUB  5, 5, 4 ;  Restore pointer
+449 : JEQ  1, 474(0) ;  If condition is false, jump to ELSE
+450 : LD   1, 1(5) ;  Load parameter 'top' into R1
+451 : LDA  3, 5(5) ; Restore Callee frame base
+452 : ST 1, 1(3) ;  Store argument 0 into callee frame
+453 : LD   1, 2(5) ;  Load parameter 'x' into R1
+454 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+455 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+456 : ADD  1, 2, 1 ;  R1 = left + right
+457 : LDA  3, 5(5) ; Restore Callee frame base
+458 : ST 1, 2(3) ;  Store argument 1 into callee frame
+459 : LD   1, 3(5) ;  Load parameter 'count' into R1
 460 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 461 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 462 : ADD  1, 2, 1 ;  R1 = left + right
-463 : ST 1, 1(3) ;  Store argument 0 into callee frame
-464 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-465 : ST 1, 2(3) ;  Store argument 1 into callee frame
-466 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-467 : ST 1, 3(3) ;  Store argument 2 into callee frame
-468 : LDA 6, 472(0)) ;  Compute return address
-469 : ST 6, 0(3) ;  Store return address in callee frame
-470 : ADD  5, 3, 0 ;  Update pointer
-471 : LDA 7, 395(0) ;  Call circularPrimesToHelper
-472 : LD 1, 4(5) ;  Load callee return value into R1
-473 : LDC  4, 5(0) ;  Load frame size
-474 : SUB  5, 5, 4 ;  Restore pointer
-475 : ST   1, 2(5) ;  Store function result into stack frame
-476 : LD   6, 0(5) ;  Load return address
-477 : LDA  7, 0(6) ;  Return to caller
+463 : LDA  3, 5(5) ; Restore Callee frame base
+464 : ST 1, 3(3) ;  Store argument 2 into callee frame
+465 : LDA  3, 5(5) ; Restore Call frame base
+466 : LDA 6, 470(0)) ;  Compute return address
+467 : ST 6, 0(3) ;  Store return address in callee frame
+468 : ADD  5, 3, 0 ;  Update pointer
+469 : LDA 7, 429(0) ;  Call circularPrimesToHelper
+470 : LD 1, 4(5) ;  Load callee return value into R1
+471 : LDC  4, 5(0) ;  Load frame size
+472 : SUB  5, 5, 4 ;  Restore pointer
+473 : LDA  7, 494(0) ;  Skip ELSE block
+474 : LD   1, 1(5) ;  Load parameter 'top' into R1
+475 : LDA  3, 5(5) ; Restore Callee frame base
+476 : ST 1, 1(3) ;  Store argument 0 into callee frame
+477 : LD   1, 2(5) ;  Load parameter 'x' into R1
+478 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+479 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+480 : ADD  1, 2, 1 ;  R1 = left + right
+481 : LDA  3, 5(5) ; Restore Callee frame base
+482 : ST 1, 2(3) ;  Store argument 1 into callee frame
+483 : LD   1, 3(5) ;  Load parameter 'count' into R1
+484 : LDA  3, 5(5) ; Restore Callee frame base
+485 : ST 1, 3(3) ;  Store argument 2 into callee frame
+486 : LDA  3, 5(5) ; Restore Call frame base
+487 : LDA 6, 491(0)) ;  Compute return address
+488 : ST 6, 0(3) ;  Store return address in callee frame
+489 : ADD  5, 3, 0 ;  Update pointer
+490 : LDA 7, 429(0) ;  Call circularPrimesToHelper
+491 : LD 1, 4(5) ;  Load callee return value into R1
+492 : LDC  4, 5(0) ;  Load frame size
+493 : SUB  5, 5, 4 ;  Restore pointer
+494 : LDA  7, 496(0) ;  Skip ELSE block
+495 : LD   1, 3(5) ;  Load parameter 'count' into R1
+496 : ST   1, 4(5) ;  Store function result into stack frame
+497 : LD   6, 0(5) ;  Load return address
+498 : LDA  7, 0(6) ;  Return to caller
+499 : LD   1, 1(5) ;  Load parameter 'x' into R1
+500 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+501 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+502 : ADD  1, 2, 1 ;  R1 = left + right
+503 : LDA  3, 3(5) ; Restore Callee frame base
+504 : ST 1, 1(3) ;  Store argument 0 into callee frame
+505 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+506 : LDA  3, 3(5) ; Restore Callee frame base
+507 : ST 1, 2(3) ;  Store argument 1 into callee frame
+508 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+509 : LDA  3, 3(5) ; Restore Callee frame base
+510 : ST 1, 3(3) ;  Store argument 2 into callee frame
+511 : LDA  3, 3(5) ; Restore Call frame base
+512 : LDA 6, 516(0)) ;  Compute return address
+513 : ST 6, 0(3) ;  Store return address in callee frame
+514 : ADD  5, 3, 0 ;  Update pointer
+515 : LDA 7, 429(0) ;  Call circularPrimesToHelper
+516 : LD 1, 4(5) ;  Load callee return value into R1
+517 : LDC  4, 3(0) ;  Load frame size
+518 : SUB  5, 5, 4 ;  Restore pointer
+519 : ST   1, 2(5) ;  Store function result into stack frame
+520 : LD   6, 0(5) ;  Load return address
+521 : LDA  7, 0(6) ;  Return to caller

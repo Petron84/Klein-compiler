@@ -8,12 +8,12 @@
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
 9 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-10 : LDA  3, 3(5) ;  Update DMEM pointer
+10 : LDA  3, 2(5) ;  Update DMEM pointer
 11 : LDA 6, 15(0) ;  Compute return address
 12 : ST   6, 0(3) ;  Store return address
 13 : ADD  5, 3, 0 ;  Updated Pointer
 14 : LDA  7, 6(0) ; Call print
-15 : LDC  4, 3(0) ;  Load frame size
+15 : LDC  4, 2(0) ;  Load frame size
 16 : SUB  5, 5, 4 ;  Restore pointer
 17 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 18 : ST   1, 2(0) ;  Store value into return value in stack frame

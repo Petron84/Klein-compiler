@@ -156,10 +156,12 @@ class Generator:
         match exp_type:
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
+
+                call_params = self.symbol_table[curr_function].parameters[0]
+                call_size = call_params + 2
             
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
-                    call_size = 3 # print always has 1 parameter, so allocate 1 + 2 frame slots
 
                     self.write(f"LDA  3, {call_size}(5)", " Update DMEM pointer")
 
@@ -178,18 +180,16 @@ class Generator:
                 else:
                     
                     args = exp_children[1].children
-                    call_params = self.symbol_table[f_name].parameters[0]
-                    call_size = call_params + 2
-
-                    self.write(f"LDA 3, {call_size}(5)", f" Advance DMEM pointer to callee frame '{f_name}'")
 
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
+                        self.write(f"LDA  3, {call_size}(5)", "Restore Callee frame base")
                         self.write(f"ST 1, {i+1}(3)", f" Store argument {i} into callee frame")
 
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1
 
+                    self.write(f"LDA  3, {call_size}(5)", "Restore Call frame base")
                     self.write(f"LDA 6, {temp_label}(0))", " Compute return address")
                     self.write("ST 6, 0(3)", " Store return address in callee frame")
 
@@ -199,7 +199,8 @@ class Generator:
 
                     self.placeholders[temp_label] = self.line_counter
 
-                    call_offset = call_params + 1
+                    callee_params = self.symbol_table[f_name].parameters[0]
+                    call_offset = callee_params + 1
 
                     self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
 

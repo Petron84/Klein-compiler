@@ -24,84 +24,92 @@
 23 : JEQ  1, 27(0) ;  If condition is false, jump to ELSE
 24 : LD   1, 1(5) ;  Load parameter 'a' into R1
 25 : ST   1, 8(0) ;  Store identifier value into current frame's return slot
-26 : LDA  7, 42(0) ;  Skip ELSE block
-27 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'printAndDivide'
-28 : LD   1, 1(5) ;  Load parameter 'a' into R1
+26 : LDA  7, 45(0) ;  Skip ELSE block
+27 : LD   1, 1(5) ;  Load parameter 'a' into R1
+28 : LDA  3, 5(5) ; Restore Callee frame base
 29 : ST 1, 1(3) ;  Store argument 0 into callee frame
 30 : LD   1, 2(5) ;  Load parameter 'b' into R1
-31 : ST 1, 2(3) ;  Store argument 1 into callee frame
-32 : LD   1, 3(5) ;  Load parameter 'n' into R1
-33 : ST 1, 3(3) ;  Store argument 2 into callee frame
-34 : LDA 6, 38(0)) ;  Compute return address
-35 : ST 6, 0(3) ;  Store return address in callee frame
-36 : ADD  5, 3, 0 ;  Update pointer
-37 : LDA 7, 58(0) ;  Call printAndDivide
-38 : LD 1, 4(5) ;  Load callee return value into R1
-39 : LDC  4, 5(0) ;  Load frame size
-40 : SUB  5, 5, 4 ;  Restore pointer
-41 : ST 1, 8(0) ;  Store function-call result into caller's return slot
-42 : LD   1, 8(0) ;  Load return value into register 1
-43 : LD  6, 4(0) ;  Load return address for main function into register 6
-44 : LDA  7, 0(6) ;  Jump to return address of main function
-45 : LD   1, 1(5) ;  Load parameter 'm' into R1
-46 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-47 : LD   1, 1(5) ;  Load parameter 'm' into R1
-48 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-49 : LD   1, 2(5) ;  Load parameter 'n' into R1
-50 : DIV  1, 2, 1 ;  R1 = left / right
+31 : LDA  3, 5(5) ; Restore Callee frame base
+32 : ST 1, 2(3) ;  Store argument 1 into callee frame
+33 : LD   1, 3(5) ;  Load parameter 'n' into R1
+34 : LDA  3, 5(5) ; Restore Callee frame base
+35 : ST 1, 3(3) ;  Store argument 2 into callee frame
+36 : LDA  3, 5(5) ; Restore Call frame base
+37 : LDA 6, 41(0)) ;  Compute return address
+38 : ST 6, 0(3) ;  Store return address in callee frame
+39 : ADD  5, 3, 0 ;  Update pointer
+40 : LDA 7, 61(0) ;  Call printAndDivide
+41 : LD 1, 4(5) ;  Load callee return value into R1
+42 : LDC  4, 5(0) ;  Load frame size
+43 : SUB  5, 5, 4 ;  Restore pointer
+44 : ST 1, 8(0) ;  Store function-call result into caller's return slot
+45 : LD   1, 8(0) ;  Load return value into register 1
+46 : LD  6, 4(0) ;  Load return address for main function into register 6
+47 : LDA  7, 0(6) ;  Jump to return address of main function
+48 : LD   1, 1(5) ;  Load parameter 'm' into R1
+49 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+50 : LD   1, 1(5) ;  Load parameter 'm' into R1
 51 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 52 : LD   1, 2(5) ;  Load parameter 'n' into R1
-53 : MUL  1, 2, 1 ;  R1 = left * right
-54 : SUB  1, 2, 1 ;  R1 = left - right
-55 : ST   1, 3(5) ;  Store function result into stack frame
-56 : LD   6, 0(5) ;  Load return address
-57 : LDA  7, 0(6) ;  Return to caller
-58 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-59 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-60 : LD   1, 1(5) ;  Load parameter 'a' into R1
-61 : MUL  1, 2, 1 ;  R1 = left * right
+53 : DIV  1, 2, 1 ;  R1 = left / right
+54 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+55 : LD   1, 2(5) ;  Load parameter 'n' into R1
+56 : MUL  1, 2, 1 ;  R1 = left * right
+57 : SUB  1, 2, 1 ;  R1 = left - right
+58 : ST   1, 3(5) ;  Store function result into stack frame
+59 : LD   6, 0(5) ;  Load return address
+60 : LDA  7, 0(6) ;  Return to caller
+61 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 62 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-63 : LD   1, 2(5) ;  Load parameter 'b' into R1
-64 : DIV  1, 2, 1 ;  R1 = left / right
-65 : LDA  3, 3(5) ;  Update DMEM pointer
-66 : LDA 6, 70(0) ;  Compute return address
-67 : ST   6, 0(3) ;  Store return address
-68 : ADD  5, 3, 0 ;  Updated Pointer
-69 : LDA  7, 12(0) ; Call print
-70 : LDC  4, 3(0) ;  Load frame size
-71 : SUB  5, 5, 4 ;  Restore pointer
-72 : ST   1, 4(5) ;  Store function result into stack frame
-73 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'main'
-74 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
-75 : LD   1, 1(5) ;  Load parameter 'a' into R1
-76 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-77 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-78 : MUL  1, 2, 1 ;  R1 = left * right
-79 : ST 1, 1(3) ;  Store argument 0 into callee frame
-80 : LD   1, 2(5) ;  Load parameter 'b' into R1
-81 : ST 1, 2(3) ;  Store argument 1 into callee frame
-82 : LDA 6, 86(0)) ;  Compute return address
-83 : ST 6, 0(3) ;  Store return address in callee frame
-84 : ADD  5, 3, 0 ;  Update pointer
-85 : LDA 7, 45(0) ;  Call MOD
-86 : LD 1, 3(5) ;  Load callee return value into R1
-87 : LDC  4, 4(0) ;  Load frame size
-88 : SUB  5, 5, 4 ;  Restore pointer
-89 : ST 1, 1(3) ;  Store argument 0 into callee frame
-90 : LD   1, 2(5) ;  Load parameter 'b' into R1
-91 : ST 1, 2(3) ;  Store argument 1 into callee frame
-92 : LD   1, 3(5) ;  Load parameter 'n' into R1
-93 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-94 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-95 : SUB  1, 2, 1 ;  R1 = left - right
-96 : ST 1, 3(3) ;  Store argument 2 into callee frame
-97 : LDA 6, 101(0)) ;  Compute return address
-98 : ST 6, 0(3) ;  Store return address in callee frame
-99 : ADD  5, 3, 0 ;  Update pointer
-100 : LDA 7, 15(0) ;  Call main
-101 : LD 1, 4(5) ;  Load callee return value into R1
-102 : LDC  4, 5(0) ;  Load frame size
-103 : SUB  5, 5, 4 ;  Restore pointer
-104 : ST   1, 4(5) ;  Store function result into stack frame
-105 : LD   6, 0(5) ;  Load return address
-106 : LDA  7, 0(6) ;  Return to caller
+63 : LD   1, 1(5) ;  Load parameter 'a' into R1
+64 : MUL  1, 2, 1 ;  R1 = left * right
+65 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+66 : LD   1, 2(5) ;  Load parameter 'b' into R1
+67 : DIV  1, 2, 1 ;  R1 = left / right
+68 : LDA  3, 5(5) ;  Update DMEM pointer
+69 : LDA 6, 73(0) ;  Compute return address
+70 : ST   6, 0(3) ;  Store return address
+71 : ADD  5, 3, 0 ;  Updated Pointer
+72 : LDA  7, 12(0) ; Call print
+73 : LDC  4, 5(0) ;  Load frame size
+74 : SUB  5, 5, 4 ;  Restore pointer
+75 : ST   1, 4(5) ;  Store function result into stack frame
+76 : LD   1, 1(5) ;  Load parameter 'a' into R1
+77 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+78 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
+79 : MUL  1, 2, 1 ;  R1 = left * right
+80 : LDA  3, 5(5) ; Restore Callee frame base
+81 : ST 1, 1(3) ;  Store argument 0 into callee frame
+82 : LD   1, 2(5) ;  Load parameter 'b' into R1
+83 : LDA  3, 5(5) ; Restore Callee frame base
+84 : ST 1, 2(3) ;  Store argument 1 into callee frame
+85 : LDA  3, 5(5) ; Restore Call frame base
+86 : LDA 6, 90(0)) ;  Compute return address
+87 : ST 6, 0(3) ;  Store return address in callee frame
+88 : ADD  5, 3, 0 ;  Update pointer
+89 : LDA 7, 48(0) ;  Call MOD
+90 : LD 1, 3(5) ;  Load callee return value into R1
+91 : LDC  4, 5(0) ;  Load frame size
+92 : SUB  5, 5, 4 ;  Restore pointer
+93 : LDA  3, 5(5) ; Restore Callee frame base
+94 : ST 1, 1(3) ;  Store argument 0 into callee frame
+95 : LD   1, 2(5) ;  Load parameter 'b' into R1
+96 : LDA  3, 5(5) ; Restore Callee frame base
+97 : ST 1, 2(3) ;  Store argument 1 into callee frame
+98 : LD   1, 3(5) ;  Load parameter 'n' into R1
+99 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
+100 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+101 : SUB  1, 2, 1 ;  R1 = left - right
+102 : LDA  3, 5(5) ; Restore Callee frame base
+103 : ST 1, 3(3) ;  Store argument 2 into callee frame
+104 : LDA  3, 5(5) ; Restore Call frame base
+105 : LDA 6, 109(0)) ;  Compute return address
+106 : ST 6, 0(3) ;  Store return address in callee frame
+107 : ADD  5, 3, 0 ;  Update pointer
+108 : LDA 7, 15(0) ;  Call main
+109 : LD 1, 4(5) ;  Load callee return value into R1
+110 : LDC  4, 5(0) ;  Load frame size
+111 : SUB  5, 5, 4 ;  Restore pointer
+112 : ST   1, 4(5) ;  Store function result into stack frame
+113 : LD   6, 0(5) ;  Load return address
+114 : LDA  7, 0(6) ;  Return to caller
