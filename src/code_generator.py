@@ -269,11 +269,13 @@ class Generator:
                 right_exp = exp_children[1]
                 curr_params = self.symbol_table[curr_function].parameters[0]
 
+                temp_offset = curr_params + 1
+
                 self.instruction_rules(left_exp, curr_function, callee=True)
-                self.write("ADD  3, 1, 0"," Store left operand into temporary register")
+                self.write(f"ST   1, {temp_offset}(5)"," Store left operand into temporary register")
 
                 self.instruction_rules(right_exp, curr_function, callee=True)
-                self.write(f"ADD  2, 3, 0", " Restore left operand")
+                self.write(f"LD   2, {temp_offset}(5)", "Restore left operand")
 
                 match exp_value:
                     case "+":
