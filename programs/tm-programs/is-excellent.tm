@@ -23,7 +23,7 @@
 22 : LD   1, 4(0) ;  Load return value into register 1
 23 : LD  6, 2(0) ;  Load return address for main function into register 6
 24 : LDA  7, 0(6) ;  Jump to return address of main function
-25 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isExcellentSwitch'
+25 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isExcellentSwitch'
 26 : LD   1, 1(5) ;  Load parameter 'n' into R1
 27 : ST 1, 1(3) ;  Store argument 0 into callee frame
 28 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'length'
@@ -42,12 +42,12 @@
 41 : ADD  5, 3, 0 ;  Update pointer
 42 : LDA 7, 49(0) ;  Call isExcellentSwitch
 43 : LD 1, 3(5) ;  Load callee return value into R1
-44 : LDC  4, 3(0) ;  Load frame size
+44 : LDC  4, 4(0) ;  Load frame size
 45 : SUB  5, 5, 4 ;  Restore pointer
 46 : ST   1, 2(5) ;  Store function result into stack frame
 47 : LD   6, 0(5) ;  Load return address
 48 : LDA  7, 0(6) ;  Return to caller
-49 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'ODD'
+49 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'ODD'
 50 : LD   1, 2(5) ;  Load parameter 'length' into R1
 51 : ST 1, 1(3) ;  Store argument 0 into callee frame
 52 : LDA 6, 56(0)) ;  Compute return address
@@ -55,7 +55,7 @@
 54 : ADD  5, 3, 0 ;  Update pointer
 55 : LDA 7, 213(0) ;  Call ODD
 56 : LD 1, 2(5) ;  Load callee return value into R1
-57 : LDC  4, 4(0) ;  Load frame size
+57 : LDC  4, 3(0) ;  Load frame size
 58 : SUB  5, 5, 4 ;  Restore pointer
 59 : JEQ  1, 62(0) ;  If condition is false, jump to ELSE
 60 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
@@ -63,7 +63,7 @@
 62 : LD   1, 1(5) ;  Load parameter 'n' into R1
 63 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 64 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'excellentDiff'
-65 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'a'
+65 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'a'
 66 : LD   1, 1(5) ;  Load parameter 'n' into R1
 67 : ST 1, 1(3) ;  Store argument 0 into callee frame
 68 : LDA 6, 72(0)) ;  Compute return address
@@ -71,10 +71,10 @@
 70 : ADD  5, 3, 0 ;  Update pointer
 71 : LDA 7, 153(0) ;  Call a
 72 : LD 1, 2(5) ;  Load callee return value into R1
-73 : LDC  4, 4(0) ;  Load frame size
+73 : LDC  4, 3(0) ;  Load frame size
 74 : SUB  5, 5, 4 ;  Restore pointer
 75 : ST 1, 1(3) ;  Store argument 0 into callee frame
-76 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'b'
+76 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'b'
 77 : LD   1, 1(5) ;  Load parameter 'n' into R1
 78 : ST 1, 1(3) ;  Store argument 0 into callee frame
 79 : LDA 6, 83(0)) ;  Compute return address
@@ -82,7 +82,7 @@
 81 : ADD  5, 3, 0 ;  Update pointer
 82 : LDA 7, 115(0) ;  Call b
 83 : LD 1, 2(5) ;  Load callee return value into R1
-84 : LDC  4, 4(0) ;  Load frame size
+84 : LDC  4, 3(0) ;  Load frame size
 85 : SUB  5, 5, 4 ;  Restore pointer
 86 : ST 1, 2(3) ;  Store argument 1 into callee frame
 87 : LDA 6, 91(0)) ;  Compute return address
@@ -113,10 +113,10 @@
 112 : ST   1, 3(5) ;  Store function result into stack frame
 113 : LD   6, 0(5) ;  Load return address
 114 : LDA  7, 0(6) ;  Return to caller
-115 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'MOD'
+115 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
 116 : LD   1, 1(5) ;  Load parameter 'n' into R1
 117 : ST 1, 1(3) ;  Store argument 0 into callee frame
-118 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'EXP'
+118 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'EXP'
 119 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 120 : ST 1, 1(3) ;  Store argument 0 into callee frame
 121 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'length'
@@ -138,7 +138,7 @@
 137 : ADD  5, 3, 0 ;  Update pointer
 138 : LDA 7, 251(0) ;  Call EXP
 139 : LD 1, 3(5) ;  Load callee return value into R1
-140 : LDC  4, 3(0) ;  Load frame size
+140 : LDC  4, 4(0) ;  Load frame size
 141 : SUB  5, 5, 4 ;  Restore pointer
 142 : ST 1, 2(3) ;  Store argument 1 into callee frame
 143 : LDA 6, 147(0)) ;  Compute return address
@@ -146,14 +146,14 @@
 145 : ADD  5, 3, 0 ;  Update pointer
 146 : LDA 7, 283(0) ;  Call MOD
 147 : LD 1, 3(5) ;  Load callee return value into R1
-148 : LDC  4, 3(0) ;  Load frame size
+148 : LDC  4, 4(0) ;  Load frame size
 149 : SUB  5, 5, 4 ;  Restore pointer
 150 : ST   1, 2(5) ;  Store function result into stack frame
 151 : LD   6, 0(5) ;  Load return address
 152 : LDA  7, 0(6) ;  Return to caller
 153 : LD   1, 1(5) ;  Load parameter 'n' into R1
 154 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-155 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'EXP'
+155 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'EXP'
 156 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 157 : ST 1, 1(3) ;  Store argument 0 into callee frame
 158 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'length'
@@ -175,7 +175,7 @@
 174 : ADD  5, 3, 0 ;  Update pointer
 175 : LDA 7, 251(0) ;  Call EXP
 176 : LD 1, 3(5) ;  Load callee return value into R1
-177 : LDC  4, 3(0) ;  Load frame size
+177 : LDC  4, 4(0) ;  Load frame size
 178 : SUB  5, 5, 4 ;  Restore pointer
 179 : DIV  1, 2, 1 ;  R1 = left / right
 180 : ST   1, 2(5) ;  Store function result into stack frame

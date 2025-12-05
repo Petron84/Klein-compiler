@@ -120,31 +120,31 @@
 119 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 120 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 121 : DIV  1, 2, 1 ;  R1 = left / right
-122 : LDA  3, 5(5) ;  Update DMEM pointer
+122 : LDA  3, 3(5) ;  Update DMEM pointer
 123 : LDA 6, 127(0) ;  Compute return address
 124 : ST   6, 0(3) ;  Store return address
 125 : ADD  5, 3, 0 ;  Updated Pointer
 126 : LDA  7, 10(0) ; Call print
-127 : LDC  4, 5(0) ;  Load frame size
+127 : LDC  4, 3(0) ;  Load frame size
 128 : SUB  5, 5, 4 ;  Restore pointer
 129 : ST   1, 4(5) ;  Store function result into stack frame
 130 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
 131 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 132 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 133 : DIV  1, 2, 1 ;  R1 = left / right
-134 : LDA  3, 5(5) ;  Update DMEM pointer
+134 : LDA  3, 3(5) ;  Update DMEM pointer
 135 : LDA 6, 139(0) ;  Compute return address
 136 : ST   6, 0(3) ;  Store return address
 137 : ADD  5, 3, 0 ;  Updated Pointer
 138 : LDA  7, 10(0) ; Call print
-139 : LDC  4, 5(0) ;  Load frame size
+139 : LDC  4, 3(0) ;  Load frame size
 140 : SUB  5, 5, 4 ;  Restore pointer
 141 : ST   1, 4(5) ;  Store function result into stack frame
 142 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 143 : ST   1, 4(5) ;  Store function result into stack frame
 144 : LD   6, 0(5) ;  Load return address
 145 : LDA  7, 0(6) ;  Return to caller
-146 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'displayAndPrint'
+146 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'displayAndPrint'
 147 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
 148 : ST 1, 1(3) ;  Store argument 0 into callee frame
 149 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
@@ -167,7 +167,7 @@
 166 : ADD  5, 3, 0 ;  Update pointer
 167 : LDA 7, 118(0) ;  Call displayAndPrint
 168 : LD 1, 4(5) ;  Load callee return value into R1
-169 : LDC  4, 4(0) ;  Load frame size
+169 : LDC  4, 5(0) ;  Load frame size
 170 : SUB  5, 5, 4 ;  Restore pointer
 171 : ST   1, 3(5) ;  Store function result into stack frame
 172 : LD   6, 0(5) ;  Load return address

@@ -9,13 +9,13 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisibleByParts'
+11 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divisibleByParts'
 12 : LD   1, 1(5) ;  Load parameter 'n' into R1
 13 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 14 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 15 : DIV  1, 2, 1 ;  R1 = left / right
 16 : ST 1, 1(3) ;  Store argument 0 into callee frame
-17 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'MOD'
+17 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
 18 : LD   1, 1(5) ;  Load parameter 'n' into R1
 19 : ST 1, 1(3) ;  Store argument 0 into callee frame
 20 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
@@ -25,7 +25,7 @@
 24 : ADD  5, 3, 0 ;  Update pointer
 25 : LDA 7, 41(0) ;  Call MOD
 26 : LD 1, 3(5) ;  Load callee return value into R1
-27 : LDC  4, 3(0) ;  Load frame size
+27 : LDC  4, 4(0) ;  Load frame size
 28 : SUB  5, 5, 4 ;  Restore pointer
 29 : ST 1, 2(3) ;  Store argument 1 into callee frame
 30 : LDA 6, 34(0)) ;  Compute return address
@@ -33,7 +33,7 @@
 32 : ADD  5, 3, 0 ;  Update pointer
 33 : LDA 7, 121(0) ;  Call divisibleByParts
 34 : LD 1, 3(5) ;  Load callee return value into R1
-35 : LDC  4, 3(0) ;  Load frame size
+35 : LDC  4, 4(0) ;  Load frame size
 36 : SUB  5, 5, 4 ;  Restore pointer
 37 : ST 1, 4(0) ;  Store function-call result into caller's return slot
 38 : LD   1, 4(0) ;  Load return value into register 1
@@ -119,7 +119,7 @@
 118 : ST   1, 2(5) ;  Store function result into stack frame
 119 : LD   6, 0(5) ;  Load return address
 120 : LDA  7, 0(6) ;  Return to caller
-121 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divisibleByDifference'
+121 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisibleByDifference'
 122 : LD   1, 1(5) ;  Load parameter 'left' into R1
 123 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 124 : LD   1, 2(5) ;  Load parameter 'right' into R1
@@ -133,7 +133,7 @@
 132 : ADD  5, 3, 0 ;  Update pointer
 133 : LDA 7, 54(0) ;  Call divisibleByDifference
 134 : LD 1, 2(5) ;  Load callee return value into R1
-135 : LDC  4, 4(0) ;  Load frame size
+135 : LDC  4, 3(0) ;  Load frame size
 136 : SUB  5, 5, 4 ;  Restore pointer
 137 : ST   1, 3(5) ;  Store function result into stack frame
 138 : LD   6, 0(5) ;  Load return address

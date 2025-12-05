@@ -9,7 +9,7 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'sieveAt'
+11 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'sieveAt'
 12 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -19,7 +19,7 @@
 18 : ADD  5, 3, 0 ;  Update pointer
 19 : LDA 7, 178(0) ;  Call sieveAt
 20 : LD 1, 3(5) ;  Load callee return value into R1
-21 : LDC  4, 3(0) ;  Load frame size
+21 : LDC  4, 4(0) ;  Load frame size
 22 : SUB  5, 5, 4 ;  Restore pointer
 23 : ST 1, 4(0) ;  Store function-call result into caller's return slot
 24 : LD   1, 4(0) ;  Load return value into register 1
@@ -119,7 +119,7 @@
 118 : ST   1, 3(5) ;  Store function result into stack frame
 119 : LD   6, 0(5) ;  Load return address
 120 : LDA  7, 0(6) ;  Return to caller
-121 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
+121 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
 122 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 123 : ST 1, 1(3) ;  Store argument 0 into callee frame
 124 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -129,14 +129,14 @@
 128 : ADD  5, 3, 0 ;  Update pointer
 129 : LDA 7, 78(0) ;  Call hasDivisorFrom
 130 : LD 1, 3(5) ;  Load callee return value into R1
-131 : LDC  4, 3(0) ;  Load frame size
+131 : LDC  4, 4(0) ;  Load frame size
 132 : SUB  5, 5, 4 ;  Restore pointer
 133 : LDC  2, 1(0) ;  Load 1 into R2
 134 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
 135 : ST   1, 2(5) ;  Store function result into stack frame
 136 : LD   6, 0(5) ;  Load return address
 137 : LDA  7, 0(6) ;  Return to caller
-138 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
+138 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 139 : LD   1, 1(5) ;  Load parameter 'current' into R1
 140 : ST 1, 1(3) ;  Store argument 0 into callee frame
 141 : LDA 6, 145(0)) ;  Compute return address
@@ -144,18 +144,18 @@
 143 : ADD  5, 3, 0 ;  Update pointer
 144 : LDA 7, 121(0) ;  Call isPrime
 145 : LD 1, 2(5) ;  Load callee return value into R1
-146 : LDC  4, 4(0) ;  Load frame size
+146 : LDC  4, 3(0) ;  Load frame size
 147 : SUB  5, 5, 4 ;  Restore pointer
 148 : JEQ  1, 151(0) ;  If condition is false, jump to ELSE
 149 : LD   1, 1(5) ;  Load parameter 'current' into R1
 150 : LDA  7, 152(0) ;  Skip ELSE block
 151 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-152 : LDA  3, 4(5) ;  Update DMEM pointer
+152 : LDA  3, 3(5) ;  Update DMEM pointer
 153 : LDA 6, 157(0) ;  Compute return address
 154 : ST   6, 0(3) ;  Store return address
 155 : ADD  5, 3, 0 ;  Updated Pointer
 156 : LDA  7, 8(0) ; Call print
-157 : LDC  4, 4(0) ;  Load frame size
+157 : LDC  4, 3(0) ;  Load frame size
 158 : SUB  5, 5, 4 ;  Restore pointer
 159 : ST   1, 3(5) ;  Store function result into stack frame
 160 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'sieveAt'

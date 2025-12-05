@@ -21,7 +21,7 @@
 20 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 21 : ST   1, 4(0) ;  Store value into return value in stack frame
 22 : LDA  7, 40(0) ;  Skip ELSE block
-23 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'addNext'
+23 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'addNext'
 24 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 25 : ST 1, 1(3) ;  Store argument 0 into callee frame
 26 : LD   1, 1(5) ;  Load parameter 'elementWanted' into R1
@@ -35,7 +35,7 @@
 34 : ADD  5, 3, 0 ;  Update pointer
 35 : LDA 7, 43(0) ;  Call addNext
 36 : LD 1, 5(5) ;  Load callee return value into R1
-37 : LDC  4, 3(0) ;  Load frame size
+37 : LDC  4, 6(0) ;  Load frame size
 38 : SUB  5, 5, 4 ;  Restore pointer
 39 : ST 1, 4(0) ;  Store function-call result into caller's return slot
 40 : LD   1, 4(0) ;  Load return value into register 1

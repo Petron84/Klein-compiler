@@ -7,7 +7,7 @@
 6 : OUT  1, 0, 0 ;  Hardcoded print function
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
-9 : LDA 3, 2(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
+9 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'sumPrimes'
 10 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 11 : ST 1, 1(3) ;  Store argument 0 into callee frame
 12 : LDC  1, 20(0) ;  Load boolean-literal value into register 1
@@ -17,7 +17,7 @@
 16 : ADD  5, 3, 0 ;  Update pointer
 17 : LDA 7, 25(0) ;  Call sumPrimes
 18 : LD 1, 3(5) ;  Load callee return value into R1
-19 : LDC  4, 2(0) ;  Load frame size
+19 : LDC  4, 4(0) ;  Load frame size
 20 : SUB  5, 5, 4 ;  Restore pointer
 21 : ST 1, 2(0) ;  Store function-call result into caller's return slot
 22 : LD   1, 2(0) ;  Load return value into register 1
@@ -34,7 +34,7 @@
 33 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
 34 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 35 : LDA  7, 81(0) ;  Skip ELSE block
-36 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
+36 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 37 : LD   1, 1(5) ;  Load parameter 'a' into R1
 38 : ST 1, 1(3) ;  Store argument 0 into callee frame
 39 : LDA 6, 43(0)) ;  Compute return address
@@ -42,7 +42,7 @@
 41 : ADD  5, 3, 0 ;  Update pointer
 42 : LDA 7, 84(0) ;  Call isPrime
 43 : LD 1, 2(5) ;  Load callee return value into R1
-44 : LDC  4, 4(0) ;  Load frame size
+44 : LDC  4, 3(0) ;  Load frame size
 45 : SUB  5, 5, 4 ;  Restore pointer
 46 : JEQ  1, 66(0) ;  If condition is false, jump to ELSE
 47 : LD   1, 1(5) ;  Load parameter 'a' into R1
@@ -104,7 +104,7 @@
 103 : JEQ  1, 106(0) ;  If condition is false, jump to ELSE
 104 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 105 : LDA  7, 150(0) ;  Skip ELSE block
-106 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+106 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divisible'
 107 : LD   1, 1(5) ;  Load parameter 'n' into R1
 108 : ST 1, 1(3) ;  Store argument 0 into callee frame
 109 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
@@ -114,10 +114,10 @@
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 153(0) ;  Call divisible
 115 : LD 1, 3(5) ;  Load callee return value into R1
-116 : LDC  4, 3(0) ;  Load frame size
+116 : LDC  4, 4(0) ;  Load frame size
 117 : SUB  5, 5, 4 ;  Restore pointer
 118 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-119 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+119 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divisible'
 120 : LD   1, 1(5) ;  Load parameter 'n' into R1
 121 : ST 1, 1(3) ;  Store argument 0 into callee frame
 122 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
@@ -127,11 +127,11 @@
 126 : ADD  5, 3, 0 ;  Update pointer
 127 : LDA 7, 153(0) ;  Call divisible
 128 : LD 1, 3(5) ;  Load callee return value into R1
-129 : LDC  4, 3(0) ;  Load frame size
+129 : LDC  4, 4(0) ;  Load frame size
 130 : SUB  5, 5, 4 ;  Restore pointer
 131 : ADD  1, 2, 1 ;  R1 = left OR right
 132 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-133 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'divisible'
+133 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'divisible'
 134 : LD   1, 1(5) ;  Load parameter 'n' into R1
 135 : ST 1, 1(3) ;  Store argument 0 into callee frame
 136 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
@@ -141,7 +141,7 @@
 140 : ADD  5, 3, 0 ;  Update pointer
 141 : LDA 7, 153(0) ;  Call divisible
 142 : LD 1, 3(5) ;  Load callee return value into R1
-143 : LDC  4, 3(0) ;  Load frame size
+143 : LDC  4, 4(0) ;  Load frame size
 144 : SUB  5, 5, 4 ;  Restore pointer
 145 : ADD  1, 2, 1 ;  R1 = left OR right
 146 : JEQ  1, 149(0) ;  If condition is false, jump to ELSE

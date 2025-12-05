@@ -9,7 +9,7 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'loopToN'
+11 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'loopToN'
 12 : LD   1, 1(5) ;  Load parameter 'n' into R1
 13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
@@ -19,7 +19,7 @@
 18 : ADD  5, 3, 0 ;  Update pointer
 19 : LDA 7, 149(0) ;  Call loopToN
 20 : LD 1, 3(5) ;  Load callee return value into R1
-21 : LDC  4, 3(0) ;  Load frame size
+21 : LDC  4, 4(0) ;  Load frame size
 22 : SUB  5, 5, 4 ;  Restore pointer
 23 : ST 1, 4(0) ;  Store function-call result into caller's return slot
 24 : LD   1, 4(0) ;  Load return value into register 1
@@ -77,12 +77,12 @@
 76 : LD   6, 0(5) ;  Load return address
 77 : LDA  7, 0(6) ;  Return to caller
 78 : LD   1, 2(5) ;  Load parameter 'current' into R1
-79 : LDA  3, 4(5) ;  Update DMEM pointer
+79 : LDA  3, 3(5) ;  Update DMEM pointer
 80 : LDA 6, 84(0) ;  Compute return address
 81 : ST   6, 0(3) ;  Store return address
 82 : ADD  5, 3, 0 ;  Updated Pointer
 83 : LDA  7, 8(0) ; Call print
-84 : LDC  4, 4(0) ;  Load frame size
+84 : LDC  4, 3(0) ;  Load frame size
 85 : SUB  5, 5, 4 ;  Restore pointer
 86 : ST   1, 3(5) ;  Store function result into stack frame
 87 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'loopToN'

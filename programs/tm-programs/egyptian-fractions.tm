@@ -49,7 +49,7 @@
 48 : DIV  1, 2, 1 ;  R1 = left / right
 49 : ST   1, 6(0) ;  Store binary result into return slot
 50 : LDA  7, 72(0) ;  Skip ELSE block
-51 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'print_and_continue'
+51 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'print_and_continue'
 52 : LD   1, 1(5) ;  Load parameter 'm' into R1
 53 : ST 1, 1(3) ;  Store argument 0 into callee frame
 54 : LD   1, 2(5) ;  Load parameter 'n' into R1
@@ -67,7 +67,7 @@
 66 : ADD  5, 3, 0 ;  Update pointer
 67 : LDA 7, 88(0) ;  Call print_and_continue
 68 : LD 1, 4(5) ;  Load callee return value into R1
-69 : LDC  4, 4(0) ;  Load frame size
+69 : LDC  4, 5(0) ;  Load frame size
 70 : SUB  5, 5, 4 ;  Restore pointer
 71 : ST 1, 6(0) ;  Store function-call result into caller's return slot
 72 : LD   1, 6(0) ;  Load return value into register 1
@@ -87,15 +87,15 @@
 86 : LD   6, 0(5) ;  Load return address
 87 : LDA  7, 0(6) ;  Return to caller
 88 : LD   1, 3(5) ;  Load parameter 'unit' into R1
-89 : LDA  3, 5(5) ;  Update DMEM pointer
+89 : LDA  3, 3(5) ;  Update DMEM pointer
 90 : LDA 6, 94(0) ;  Compute return address
 91 : ST   6, 0(3) ;  Store return address
 92 : ADD  5, 3, 0 ;  Updated Pointer
 93 : LDA  7, 10(0) ; Call print
-94 : LDC  4, 5(0) ;  Load frame size
+94 : LDC  4, 3(0) ;  Load frame size
 95 : SUB  5, 5, 4 ;  Restore pointer
 96 : ST   1, 4(5) ;  Store function result into stack frame
-97 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'main'
+97 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'main'
 98 : LD   1, 3(5) ;  Load parameter 'unit' into R1
 99 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 100 : LD   1, 1(5) ;  Load parameter 'm' into R1
@@ -114,7 +114,7 @@
 113 : ADD  5, 3, 0 ;  Update pointer
 114 : LDA 7, 13(0) ;  Call main
 115 : LD 1, 3(5) ;  Load callee return value into R1
-116 : LDC  4, 5(0) ;  Load frame size
+116 : LDC  4, 4(0) ;  Load frame size
 117 : SUB  5, 5, 4 ;  Restore pointer
 118 : ST   1, 4(5) ;  Store function result into stack frame
 119 : LD   6, 0(5) ;  Load return address

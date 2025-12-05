@@ -20,7 +20,7 @@
 19 : LDA  7, 1(7) ;  skip setting true
 20 : LDC  1, 1(0) ;  true
 21 : JEQ  1, 34(0) ;  If condition is false, jump to ELSE
-22 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'emirp'
+22 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'emirp'
 23 : LD   1, 1(5) ;  Load parameter 'n' into R1
 24 : ST 1, 1(3) ;  Store argument 0 into callee frame
 25 : LDA 6, 29(0)) ;  Compute return address
@@ -28,7 +28,7 @@
 27 : ADD  5, 3, 0 ;  Update pointer
 28 : LDA 7, 307(0) ;  Call emirp
 29 : LD 1, 2(5) ;  Load callee return value into R1
-30 : LDC  4, 4(0) ;  Load frame size
+30 : LDC  4, 3(0) ;  Load frame size
 31 : SUB  5, 5, 4 ;  Restore pointer
 32 : ST 1, 6(0) ;  Store function-call result into caller's return slot
 33 : LDA  7, 78(0) ;  Skip ELSE block
@@ -41,7 +41,7 @@
 40 : LDA  7, 1(7) ;  skip setting true
 41 : LDC  1, 1(0) ;  true
 42 : JEQ  1, 55(0) ;  If condition is false, jump to ELSE
-43 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'snowball'
+43 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'snowball'
 44 : LD   1, 1(5) ;  Load parameter 'n' into R1
 45 : ST 1, 1(3) ;  Store argument 0 into callee frame
 46 : LDA 6, 50(0)) ;  Compute return address
@@ -49,7 +49,7 @@
 48 : ADD  5, 3, 0 ;  Update pointer
 49 : LDA 7, 268(0) ;  Call snowball
 50 : LD 1, 2(5) ;  Load callee return value into R1
-51 : LDC  4, 4(0) ;  Load frame size
+51 : LDC  4, 3(0) ;  Load frame size
 52 : SUB  5, 5, 4 ;  Restore pointer
 53 : ST 1, 6(0) ;  Store function-call result into caller's return slot
 54 : LDA  7, 78(0) ;  Skip ELSE block
@@ -62,7 +62,7 @@
 61 : LDA  7, 1(7) ;  skip setting true
 62 : LDC  1, 1(0) ;  true
 63 : JEQ  1, 76(0) ;  If condition is false, jump to ELSE
-64 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'doBoth'
+64 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'doBoth'
 65 : LD   1, 1(5) ;  Load parameter 'n' into R1
 66 : ST 1, 1(3) ;  Store argument 0 into callee frame
 67 : LDA 6, 71(0)) ;  Compute return address
@@ -70,7 +70,7 @@
 69 : ADD  5, 3, 0 ;  Update pointer
 70 : LDA 7, 237(0) ;  Call doBoth
 71 : LD 1, 2(5) ;  Load callee return value into R1
-72 : LDC  4, 4(0) ;  Load frame size
+72 : LDC  4, 3(0) ;  Load frame size
 73 : SUB  5, 5, 4 ;  Restore pointer
 74 : ST 1, 6(0) ;  Store function-call result into caller's return slot
 75 : LDA  7, 78(0) ;  Skip ELSE block
@@ -138,7 +138,7 @@
 137 : ST   1, 3(5) ;  Store function result into stack frame
 138 : LD   6, 0(5) ;  Load return address
 139 : LDA  7, 0(6) ;  Return to caller
-140 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'reverseL'
+140 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'reverseL'
 141 : LD   1, 1(5) ;  Load parameter 'n' into R1
 142 : ST 1, 1(3) ;  Store argument 0 into callee frame
 143 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
@@ -148,7 +148,7 @@
 147 : ADD  5, 3, 0 ;  Update pointer
 148 : LDA 7, 94(0) ;  Call reverseL
 149 : LD 1, 3(5) ;  Load callee return value into R1
-150 : LDC  4, 3(0) ;  Load frame size
+150 : LDC  4, 4(0) ;  Load frame size
 151 : SUB  5, 5, 4 ;  Restore pointer
 152 : ST   1, 2(5) ;  Store function result into stack frame
 153 : LD   6, 0(5) ;  Load return address
@@ -218,7 +218,7 @@
 217 : ST   1, 3(5) ;  Store function result into stack frame
 218 : LD   6, 0(5) ;  Load return address
 219 : LDA  7, 0(6) ;  Return to caller
-220 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
+220 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
 221 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 222 : ST 1, 1(3) ;  Store argument 0 into callee frame
 223 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -228,7 +228,7 @@
 227 : ADD  5, 3, 0 ;  Update pointer
 228 : LDA 7, 177(0) ;  Call hasDivisorFrom
 229 : LD 1, 3(5) ;  Load callee return value into R1
-230 : LDC  4, 3(0) ;  Load frame size
+230 : LDC  4, 4(0) ;  Load frame size
 231 : SUB  5, 5, 4 ;  Restore pointer
 232 : LDC  2, 1(0) ;  Load 1 into R2
 233 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1

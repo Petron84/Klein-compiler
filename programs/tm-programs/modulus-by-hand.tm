@@ -15,12 +15,12 @@
 14 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 15 : LD   1, 2(5) ;  Load parameter 'n' into R1
 16 : DIV  1, 2, 1 ;  R1 = left / right
-17 : LDA  3, 4(5) ;  Update DMEM pointer
+17 : LDA  3, 3(5) ;  Update DMEM pointer
 18 : LDA 6, 22(0) ;  Compute return address
 19 : ST   6, 0(3) ;  Store return address
 20 : ADD  5, 3, 0 ;  Updated Pointer
 21 : LDA  7, 10(0) ; Call print
-22 : LDC  4, 4(0) ;  Load frame size
+22 : LDC  4, 3(0) ;  Load frame size
 23 : SUB  5, 5, 4 ;  Restore pointer
 24 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mod'
 25 : LD   1, 1(5) ;  Load parameter 'm' into R1

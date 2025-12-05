@@ -9,7 +9,7 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'average_digit'
+11 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'average_digit'
 12 : LD   1, 1(5) ;  Load parameter 'n' into R1
 13 : ST 1, 1(3) ;  Store argument 0 into callee frame
 14 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
@@ -21,7 +21,7 @@
 20 : ADD  5, 3, 0 ;  Update pointer
 21 : LDA 7, 78(0) ;  Call average_digit
 22 : LD 1, 4(5) ;  Load callee return value into R1
-23 : LDC  4, 3(0) ;  Load frame size
+23 : LDC  4, 5(0) ;  Load frame size
 24 : SUB  5, 5, 4 ;  Restore pointer
 25 : ST 1, 4(0) ;  Store function-call result into caller's return slot
 26 : LD   1, 4(0) ;  Load return value into register 1
@@ -44,12 +44,12 @@
 43 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 44 : LD   1, 2(5) ;  Load parameter 'n' into R1
 45 : DIV  1, 2, 1 ;  R1 = left / right
-46 : LDA  3, 4(5) ;  Update DMEM pointer
+46 : LDA  3, 3(5) ;  Update DMEM pointer
 47 : LDA 6, 51(0) ;  Compute return address
 48 : ST   6, 0(3) ;  Store return address
 49 : ADD  5, 3, 0 ;  Updated Pointer
 50 : LDA  7, 8(0) ; Call print
-51 : LDC  4, 4(0) ;  Load frame size
+51 : LDC  4, 3(0) ;  Load frame size
 52 : SUB  5, 5, 4 ;  Restore pointer
 53 : ST   1, 3(5) ;  Store function result into stack frame
 54 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
@@ -64,12 +64,12 @@
 63 : LD 1, 3(5) ;  Load callee return value into R1
 64 : LDC  4, 4(0) ;  Load frame size
 65 : SUB  5, 5, 4 ;  Restore pointer
-66 : LDA  3, 4(5) ;  Update DMEM pointer
+66 : LDA  3, 3(5) ;  Update DMEM pointer
 67 : LDA 6, 71(0) ;  Compute return address
 68 : ST   6, 0(3) ;  Store return address
 69 : ADD  5, 3, 0 ;  Updated Pointer
 70 : LDA  7, 8(0) ; Call print
-71 : LDC  4, 4(0) ;  Load frame size
+71 : LDC  4, 3(0) ;  Load frame size
 72 : SUB  5, 5, 4 ;  Restore pointer
 73 : ST   1, 3(5) ;  Store function result into stack frame
 74 : LD   1, 2(5) ;  Load parameter 'n' into R1
@@ -85,7 +85,7 @@
 84 : LDA  7, 1(7) ;  skip setting true
 85 : LDC  1, 1(0) ;  true
 86 : JEQ  1, 106(0) ;  If condition is false, jump to ELSE
-87 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'print_and_return'
+87 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'print_and_return'
 88 : LD   1, 2(5) ;  Load parameter 'sum' into R1
 89 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 90 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -101,7 +101,7 @@
 100 : ADD  5, 3, 0 ;  Update pointer
 101 : LDA 7, 42(0) ;  Call print_and_return
 102 : LD 1, 3(5) ;  Load callee return value into R1
-103 : LDC  4, 5(0) ;  Load frame size
+103 : LDC  4, 4(0) ;  Load frame size
 104 : SUB  5, 5, 4 ;  Restore pointer
 105 : LDA  7, 140(0) ;  Skip ELSE block
 106 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'average_digit'
@@ -112,7 +112,7 @@
 111 : ST 1, 1(3) ;  Store argument 0 into callee frame
 112 : LD   1, 2(5) ;  Load parameter 'sum' into R1
 113 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-114 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'MOD'
+114 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
 115 : LD   1, 1(5) ;  Load parameter 'n' into R1
 116 : ST 1, 1(3) ;  Store argument 0 into callee frame
 117 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
@@ -122,7 +122,7 @@
 121 : ADD  5, 3, 0 ;  Update pointer
 122 : LDA 7, 29(0) ;  Call MOD
 123 : LD 1, 3(5) ;  Load callee return value into R1
-124 : LDC  4, 5(0) ;  Load frame size
+124 : LDC  4, 4(0) ;  Load frame size
 125 : SUB  5, 5, 4 ;  Restore pointer
 126 : ADD  1, 2, 1 ;  R1 = left + right
 127 : ST 1, 2(3) ;  Store argument 1 into callee frame

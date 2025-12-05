@@ -12,12 +12,12 @@
 11 : LD   6, 0(5) ;  Load return addess from stack frame.
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'm' into R1
-14 : LDA  3, 4(5) ;  Update DMEM pointer
+14 : LDA  3, 3(5) ;  Update DMEM pointer
 15 : LDA 6, 19(0) ;  Compute return address
 16 : ST   6, 0(3) ;  Store return address
 17 : ADD  5, 3, 0 ;  Updated Pointer
 18 : LDA  7, 10(0) ; Call print
-19 : LDC  4, 4(0) ;  Load frame size
+19 : LDC  4, 3(0) ;  Load frame size
 20 : SUB  5, 5, 4 ;  Restore pointer
 21 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mult'
 22 : LD   1, 1(5) ;  Load parameter 'm' into R1
@@ -35,7 +35,7 @@
 34 : LD   1, 6(0) ;  Load return value into register 1
 35 : LD  6, 3(0) ;  Load return address for main function into register 6
 36 : LDA  7, 0(6) ;  Jump to return address of main function
-37 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
+37 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'multWithAccum'
 38 : LD   1, 1(5) ;  Load parameter 'm' into R1
 39 : ST 1, 1(3) ;  Store argument 0 into callee frame
 40 : LD   1, 2(5) ;  Load parameter 'n' into R1
@@ -47,7 +47,7 @@
 46 : ADD  5, 3, 0 ;  Update pointer
 47 : LDA 7, 54(0) ;  Call multWithAccum
 48 : LD 1, 4(5) ;  Load callee return value into R1
-49 : LDC  4, 4(0) ;  Load frame size
+49 : LDC  4, 5(0) ;  Load frame size
 50 : SUB  5, 5, 4 ;  Restore pointer
 51 : ST   1, 3(5) ;  Store function result into stack frame
 52 : LD   6, 0(5) ;  Load return address
@@ -63,7 +63,7 @@
 62 : JEQ  1, 65(0) ;  If condition is false, jump to ELSE
 63 : LD   1, 3(5) ;  Load parameter 'accum' into R1
 64 : LDA  7, 129(0) ;  Skip ELSE block
-65 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'MOD'
+65 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
 66 : LD   1, 2(5) ;  Load parameter 'n' into R1
 67 : ST 1, 1(3) ;  Store argument 0 into callee frame
 68 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
@@ -73,7 +73,7 @@
 72 : ADD  5, 3, 0 ;  Update pointer
 73 : LDA 7, 132(0) ;  Call MOD
 74 : LD 1, 3(5) ;  Load callee return value into R1
-75 : LDC  4, 5(0) ;  Load frame size
+75 : LDC  4, 4(0) ;  Load frame size
 76 : SUB  5, 5, 4 ;  Restore pointer
 77 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 78 : LDC  1, 1(0) ;  Load boolean-literal value into register 1

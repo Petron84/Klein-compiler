@@ -27,12 +27,12 @@
 26 : LD 1, 4(5) ;  Load callee return value into R1
 27 : LDC  4, 5(0) ;  Load frame size
 28 : SUB  5, 5, 4 ;  Restore pointer
-29 : LDA  3, 5(5) ;  Update DMEM pointer
+29 : LDA  3, 3(5) ;  Update DMEM pointer
 30 : LDA 6, 34(0) ;  Compute return address
 31 : ST   6, 0(3) ;  Store return address
 32 : ADD  5, 3, 0 ;  Updated Pointer
 33 : LDA  7, 12(0) ; Call print
-34 : LDC  4, 5(0) ;  Load frame size
+34 : LDC  4, 3(0) ;  Load frame size
 35 : SUB  5, 5, 4 ;  Restore pointer
 36 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'fareyDen'
 37 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -75,7 +75,7 @@
 74 : ST   1, 3(5) ;  Store function result into stack frame
 75 : LD   6, 0(5) ;  Load return address
 76 : LDA  7, 0(6) ;  Return to caller
-77 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'greater'
+77 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'greater'
 78 : LD   1, 1(5) ;  Load parameter 'x' into R1
 79 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 80 : LD   1, 4(5) ;  Load parameter 'yd' into R1
@@ -91,7 +91,7 @@
 90 : ADD  5, 3, 0 ;  Update pointer
 91 : LDA 7, 54(0) ;  Call greater
 92 : LD 1, 3(5) ;  Load callee return value into R1
-93 : LDC  4, 6(0) ;  Load frame size
+93 : LDC  4, 4(0) ;  Load frame size
 94 : SUB  5, 5, 4 ;  Restore pointer
 95 : ST   1, 5(5) ;  Store function result into stack frame
 96 : LD   6, 0(5) ;  Load return address
@@ -113,7 +113,7 @@
 112 : ST   1, 5(5) ;  Store function result into stack frame
 113 : LD   6, 0(5) ;  Load return address
 114 : LDA  7, 0(6) ;  Return to caller
-115 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'greater'
+115 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'greater'
 116 : LD   1, 6(5) ;  Load parameter 'b' into R1
 117 : ST 1, 1(3) ;  Store argument 0 into callee frame
 118 : LD   1, 4(5) ;  Load parameter 'N' into R1
@@ -123,10 +123,10 @@
 122 : ADD  5, 3, 0 ;  Update pointer
 123 : LDA 7, 54(0) ;  Call greater
 124 : LD 1, 3(5) ;  Load callee return value into R1
-125 : LDC  4, 10(0) ;  Load frame size
+125 : LDC  4, 4(0) ;  Load frame size
 126 : SUB  5, 5, 4 ;  Restore pointer
 127 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-128 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'greater'
+128 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'greater'
 129 : LD   1, 8(5) ;  Load parameter 'd' into R1
 130 : ST 1, 1(3) ;  Store argument 0 into callee frame
 131 : LD   1, 4(5) ;  Load parameter 'N' into R1
@@ -136,7 +136,7 @@
 135 : ADD  5, 3, 0 ;  Update pointer
 136 : LDA 7, 54(0) ;  Call greater
 137 : LD 1, 3(5) ;  Load callee return value into R1
-138 : LDC  4, 10(0) ;  Load frame size
+138 : LDC  4, 4(0) ;  Load frame size
 139 : SUB  5, 5, 4 ;  Restore pointer
 140 : ADD  1, 2, 1 ;  R1 = left OR right
 141 : JEQ  1, 177(0) ;  If condition is false, jump to ELSE
@@ -175,7 +175,7 @@
 174 : LDA  7, 176(0) ;  Skip ELSE block
 175 : LD   1, 8(5) ;  Load parameter 'd' into R1
 176 : LDA  7, 331(0) ;  Skip ELSE block
-177 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'fractionEqual'
+177 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'fractionEqual'
 178 : LD   1, 2(5) ;  Load parameter 'xNum' into R1
 179 : ST 1, 1(3) ;  Store argument 0 into callee frame
 180 : LD   1, 3(5) ;  Load parameter 'xDen' into R1
@@ -195,7 +195,7 @@
 194 : ADD  5, 3, 0 ;  Update pointer
 195 : LDA 7, 98(0) ;  Call fractionEqual
 196 : LD 1, 5(5) ;  Load callee return value into R1
-197 : LDC  4, 10(0) ;  Load frame size
+197 : LDC  4, 6(0) ;  Load frame size
 198 : SUB  5, 5, 4 ;  Restore pointer
 199 : JEQ  1, 247(0) ;  If condition is false, jump to ELSE
 200 : LD   1, 1(5) ;  Load parameter 'selector' into R1
@@ -245,7 +245,7 @@
 244 : LD   1, 8(5) ;  Load parameter 'd' into R1
 245 : ADD  1, 2, 1 ;  R1 = left + right
 246 : LDA  7, 331(0) ;  Skip ELSE block
-247 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'fractionGreater'
+247 : LDA 3, 6(5) ;  Advance DMEM pointer to callee frame 'fractionGreater'
 248 : LD   1, 2(5) ;  Load parameter 'xNum' into R1
 249 : ST 1, 1(3) ;  Store argument 0 into callee frame
 250 : LD   1, 3(5) ;  Load parameter 'xDen' into R1
@@ -265,7 +265,7 @@
 264 : ADD  5, 3, 0 ;  Update pointer
 265 : LDA 7, 77(0) ;  Call fractionGreater
 266 : LD 1, 5(5) ;  Load callee return value into R1
-267 : LDC  4, 10(0) ;  Load frame size
+267 : LDC  4, 6(0) ;  Load frame size
 268 : SUB  5, 5, 4 ;  Restore pointer
 269 : JEQ  1, 301(0) ;  If condition is false, jump to ELSE
 270 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
@@ -332,7 +332,7 @@
 331 : ST   1, 9(5) ;  Store function result into stack frame
 332 : LD   6, 0(5) ;  Load return address
 333 : LDA  7, 0(6) ;  Return to caller
-334 : LDA 3, 7(5) ;  Advance DMEM pointer to callee frame 'greater'
+334 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'greater'
 335 : LD   1, 3(5) ;  Load parameter 'b' into R1
 336 : ST 1, 1(3) ;  Store argument 0 into callee frame
 337 : LD   1, 1(5) ;  Load parameter 'N' into R1
@@ -342,7 +342,7 @@
 341 : ADD  5, 3, 0 ;  Update pointer
 342 : LDA 7, 54(0) ;  Call greater
 343 : LD 1, 3(5) ;  Load callee return value into R1
-344 : LDC  4, 7(0) ;  Load frame size
+344 : LDC  4, 4(0) ;  Load frame size
 345 : SUB  5, 5, 4 ;  Restore pointer
 346 : JEQ  1, 349(0) ;  If condition is false, jump to ELSE
 347 : LD   1, 5(5) ;  Load parameter 'd' into R1
@@ -351,7 +351,7 @@
 350 : ST   1, 6(5) ;  Store function result into stack frame
 351 : LD   6, 0(5) ;  Load return address
 352 : LDA  7, 0(6) ;  Return to caller
-353 : LDA 3, 7(5) ;  Advance DMEM pointer to callee frame 'greater'
+353 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'greater'
 354 : LD   1, 3(5) ;  Load parameter 'b' into R1
 355 : ST 1, 1(3) ;  Store argument 0 into callee frame
 356 : LD   1, 1(5) ;  Load parameter 'N' into R1
@@ -361,7 +361,7 @@
 360 : ADD  5, 3, 0 ;  Update pointer
 361 : LDA 7, 54(0) ;  Call greater
 362 : LD 1, 3(5) ;  Load callee return value into R1
-363 : LDC  4, 7(0) ;  Load frame size
+363 : LDC  4, 4(0) ;  Load frame size
 364 : SUB  5, 5, 4 ;  Restore pointer
 365 : JEQ  1, 368(0) ;  If condition is false, jump to ELSE
 366 : LD   1, 4(5) ;  Load parameter 'c' into R1
@@ -370,10 +370,10 @@
 369 : ST   1, 6(5) ;  Store function result into stack frame
 370 : LD   6, 0(5) ;  Load return address
 371 : LDA  7, 0(6) ;  Return to caller
-372 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'fareySelectDen'
+372 : LDA 3, 7(5) ;  Advance DMEM pointer to callee frame 'fareySelectDen'
 373 : LD   1, 3(5) ;  Load parameter 'N' into R1
 374 : ST 1, 1(3) ;  Store argument 0 into callee frame
-375 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+375 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 376 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 377 : ST 1, 1(3) ;  Store argument 0 into callee frame
 378 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -395,10 +395,10 @@
 394 : ADD  5, 3, 0 ;  Update pointer
 395 : LDA 7, 115(0) ;  Call whileLoopFor
 396 : LD 1, 9(5) ;  Load callee return value into R1
-397 : LDC  4, 5(0) ;  Load frame size
+397 : LDC  4, 10(0) ;  Load frame size
 398 : SUB  5, 5, 4 ;  Restore pointer
 399 : ST 1, 2(3) ;  Store argument 1 into callee frame
-400 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+400 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 401 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 402 : ST 1, 1(3) ;  Store argument 0 into callee frame
 403 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -420,10 +420,10 @@
 419 : ADD  5, 3, 0 ;  Update pointer
 420 : LDA 7, 115(0) ;  Call whileLoopFor
 421 : LD 1, 9(5) ;  Load callee return value into R1
-422 : LDC  4, 5(0) ;  Load frame size
+422 : LDC  4, 10(0) ;  Load frame size
 423 : SUB  5, 5, 4 ;  Restore pointer
 424 : ST 1, 3(3) ;  Store argument 2 into callee frame
-425 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+425 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 426 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
 427 : ST 1, 1(3) ;  Store argument 0 into callee frame
 428 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -445,10 +445,10 @@
 444 : ADD  5, 3, 0 ;  Update pointer
 445 : LDA 7, 115(0) ;  Call whileLoopFor
 446 : LD 1, 9(5) ;  Load callee return value into R1
-447 : LDC  4, 5(0) ;  Load frame size
+447 : LDC  4, 10(0) ;  Load frame size
 448 : SUB  5, 5, 4 ;  Restore pointer
 449 : ST 1, 4(3) ;  Store argument 3 into callee frame
-450 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+450 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 451 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
 452 : ST 1, 1(3) ;  Store argument 0 into callee frame
 453 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -470,7 +470,7 @@
 469 : ADD  5, 3, 0 ;  Update pointer
 470 : LDA 7, 115(0) ;  Call whileLoopFor
 471 : LD 1, 9(5) ;  Load callee return value into R1
-472 : LDC  4, 5(0) ;  Load frame size
+472 : LDC  4, 10(0) ;  Load frame size
 473 : SUB  5, 5, 4 ;  Restore pointer
 474 : ST 1, 5(3) ;  Store argument 4 into callee frame
 475 : LDA 6, 479(0)) ;  Compute return address
@@ -478,15 +478,15 @@
 477 : ADD  5, 3, 0 ;  Update pointer
 478 : LDA 7, 334(0) ;  Call fareySelectDen
 479 : LD 1, 6(5) ;  Load callee return value into R1
-480 : LDC  4, 5(0) ;  Load frame size
+480 : LDC  4, 7(0) ;  Load frame size
 481 : SUB  5, 5, 4 ;  Restore pointer
 482 : ST   1, 4(5) ;  Store function result into stack frame
 483 : LD   6, 0(5) ;  Load return address
 484 : LDA  7, 0(6) ;  Return to caller
-485 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'fareySelectNum'
+485 : LDA 3, 7(5) ;  Advance DMEM pointer to callee frame 'fareySelectNum'
 486 : LD   1, 3(5) ;  Load parameter 'N' into R1
 487 : ST 1, 1(3) ;  Store argument 0 into callee frame
-488 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+488 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 489 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 490 : ST 1, 1(3) ;  Store argument 0 into callee frame
 491 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -508,10 +508,10 @@
 507 : ADD  5, 3, 0 ;  Update pointer
 508 : LDA 7, 115(0) ;  Call whileLoopFor
 509 : LD 1, 9(5) ;  Load callee return value into R1
-510 : LDC  4, 5(0) ;  Load frame size
+510 : LDC  4, 10(0) ;  Load frame size
 511 : SUB  5, 5, 4 ;  Restore pointer
 512 : ST 1, 2(3) ;  Store argument 1 into callee frame
-513 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+513 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 514 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 515 : ST 1, 1(3) ;  Store argument 0 into callee frame
 516 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -533,10 +533,10 @@
 532 : ADD  5, 3, 0 ;  Update pointer
 533 : LDA 7, 115(0) ;  Call whileLoopFor
 534 : LD 1, 9(5) ;  Load callee return value into R1
-535 : LDC  4, 5(0) ;  Load frame size
+535 : LDC  4, 10(0) ;  Load frame size
 536 : SUB  5, 5, 4 ;  Restore pointer
 537 : ST 1, 3(3) ;  Store argument 2 into callee frame
-538 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+538 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 539 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
 540 : ST 1, 1(3) ;  Store argument 0 into callee frame
 541 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -558,10 +558,10 @@
 557 : ADD  5, 3, 0 ;  Update pointer
 558 : LDA 7, 115(0) ;  Call whileLoopFor
 559 : LD 1, 9(5) ;  Load callee return value into R1
-560 : LDC  4, 5(0) ;  Load frame size
+560 : LDC  4, 10(0) ;  Load frame size
 561 : SUB  5, 5, 4 ;  Restore pointer
 562 : ST 1, 4(3) ;  Store argument 3 into callee frame
-563 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
+563 : LDA 3, 10(5) ;  Advance DMEM pointer to callee frame 'whileLoopFor'
 564 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
 565 : ST 1, 1(3) ;  Store argument 0 into callee frame
 566 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
@@ -583,7 +583,7 @@
 582 : ADD  5, 3, 0 ;  Update pointer
 583 : LDA 7, 115(0) ;  Call whileLoopFor
 584 : LD 1, 9(5) ;  Load callee return value into R1
-585 : LDC  4, 5(0) ;  Load frame size
+585 : LDC  4, 10(0) ;  Load frame size
 586 : SUB  5, 5, 4 ;  Restore pointer
 587 : ST 1, 5(3) ;  Store argument 4 into callee frame
 588 : LDA 6, 592(0)) ;  Compute return address
@@ -591,7 +591,7 @@
 590 : ADD  5, 3, 0 ;  Update pointer
 591 : LDA 7, 353(0) ;  Call fareySelectNum
 592 : LD 1, 6(5) ;  Load callee return value into R1
-593 : LDC  4, 5(0) ;  Load frame size
+593 : LDC  4, 7(0) ;  Load frame size
 594 : SUB  5, 5, 4 ;  Restore pointer
 595 : ST   1, 4(5) ;  Store function result into stack frame
 596 : LD   6, 0(5) ;  Load return address

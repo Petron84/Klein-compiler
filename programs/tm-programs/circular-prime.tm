@@ -117,7 +117,7 @@
 116 : ST   1, 3(5) ;  Store function result into stack frame
 117 : LD   6, 0(5) ;  Load return address
 118 : LDA  7, 0(6) ;  Return to caller
-119 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
+119 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'hasDivisorFrom'
 120 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 121 : ST 1, 1(3) ;  Store argument 0 into callee frame
 122 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -127,7 +127,7 @@
 126 : ADD  5, 3, 0 ;  Update pointer
 127 : LDA 7, 76(0) ;  Call hasDivisorFrom
 128 : LD 1, 3(5) ;  Load callee return value into R1
-129 : LDC  4, 3(0) ;  Load frame size
+129 : LDC  4, 4(0) ;  Load frame size
 130 : SUB  5, 5, 4 ;  Restore pointer
 131 : LDC  2, 1(0) ;  Load 1 into R2
 132 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
@@ -169,7 +169,7 @@
 168 : ST   1, 3(5) ;  Store function result into stack frame
 169 : LD   6, 0(5) ;  Load return address
 170 : LDA  7, 0(6) ;  Return to caller
-171 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'log10Helper'
+171 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'log10Helper'
 172 : LD   1, 1(5) ;  Load parameter 'x' into R1
 173 : ST 1, 1(3) ;  Store argument 0 into callee frame
 174 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
@@ -179,7 +179,7 @@
 178 : ADD  5, 3, 0 ;  Update pointer
 179 : LDA 7, 136(0) ;  Call log10Helper
 180 : LD 1, 3(5) ;  Load callee return value into R1
-181 : LDC  4, 3(0) ;  Load frame size
+181 : LDC  4, 4(0) ;  Load frame size
 182 : SUB  5, 5, 4 ;  Restore pointer
 183 : ST   1, 2(5) ;  Store function result into stack frame
 184 : LD   6, 0(5) ;  Load return address
@@ -229,7 +229,7 @@
 228 : ST   1, 4(5) ;  Store function result into stack frame
 229 : LD   6, 0(5) ;  Load return address
 230 : LDA  7, 0(6) ;  Return to caller
-231 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'powHelper'
+231 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'powHelper'
 232 : LD   1, 1(5) ;  Load parameter 'x' into R1
 233 : ST 1, 1(3) ;  Store argument 0 into callee frame
 234 : LD   1, 2(5) ;  Load parameter 'y' into R1
@@ -241,7 +241,7 @@
 240 : ADD  5, 3, 0 ;  Update pointer
 241 : LDA 7, 186(0) ;  Call powHelper
 242 : LD 1, 4(5) ;  Load callee return value into R1
-243 : LDC  4, 4(0) ;  Load frame size
+243 : LDC  4, 5(0) ;  Load frame size
 244 : SUB  5, 5, 4 ;  Restore pointer
 245 : ST   1, 3(5) ;  Store function result into stack frame
 246 : LD   6, 0(5) ;  Load return address
@@ -251,7 +251,7 @@
 250 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 251 : DIV  1, 2, 1 ;  R1 = left / right
 252 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-253 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'mod'
+253 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'mod'
 254 : LD   1, 1(5) ;  Load parameter 'x' into R1
 255 : ST 1, 1(3) ;  Store argument 0 into callee frame
 256 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
@@ -261,10 +261,10 @@
 260 : ADD  5, 3, 0 ;  Update pointer
 261 : LDA 7, 25(0) ;  Call mod
 262 : LD 1, 3(5) ;  Load callee return value into R1
-263 : LDC  4, 3(0) ;  Load frame size
+263 : LDC  4, 4(0) ;  Load frame size
 264 : SUB  5, 5, 4 ;  Restore pointer
 265 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
-266 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'pow'
+266 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'pow'
 267 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 268 : ST 1, 1(3) ;  Store argument 0 into callee frame
 269 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'log10'
@@ -283,7 +283,7 @@
 282 : ADD  5, 3, 0 ;  Update pointer
 283 : LDA 7, 231(0) ;  Call pow
 284 : LD 1, 3(5) ;  Load callee return value into R1
-285 : LDC  4, 3(0) ;  Load frame size
+285 : LDC  4, 4(0) ;  Load frame size
 286 : SUB  5, 5, 4 ;  Restore pointer
 287 : MUL  1, 2, 1 ;  R1 = left * right
 288 : ADD  1, 2, 1 ;  R1 = left + right
@@ -314,7 +314,7 @@
 313 : JEQ  1, 316(0) ;  If condition is false, jump to ELSE
 314 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 315 : LDA  7, 352(0) ;  Skip ELSE block
-316 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isPrime'
+316 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isPrime'
 317 : LD   1, 1(5) ;  Load parameter 'x' into R1
 318 : ST 1, 1(3) ;  Store argument 0 into callee frame
 319 : LDA 6, 323(0)) ;  Compute return address
@@ -322,11 +322,11 @@
 321 : ADD  5, 3, 0 ;  Update pointer
 322 : LDA 7, 119(0) ;  Call isPrime
 323 : LD 1, 2(5) ;  Load callee return value into R1
-324 : LDC  4, 4(0) ;  Load frame size
+324 : LDC  4, 3(0) ;  Load frame size
 325 : SUB  5, 5, 4 ;  Restore pointer
 326 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 327 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isCircularPrimeHelper'
-328 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'rotate'
+328 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'rotate'
 329 : LD   1, 1(5) ;  Load parameter 'x' into R1
 330 : ST 1, 1(3) ;  Store argument 0 into callee frame
 331 : LDA 6, 335(0)) ;  Compute return address
@@ -334,7 +334,7 @@
 333 : ADD  5, 3, 0 ;  Update pointer
 334 : LDA 7, 248(0) ;  Call rotate
 335 : LD 1, 2(5) ;  Load callee return value into R1
-336 : LDC  4, 4(0) ;  Load frame size
+336 : LDC  4, 3(0) ;  Load frame size
 337 : SUB  5, 5, 4 ;  Restore pointer
 338 : ST 1, 1(3) ;  Store argument 0 into callee frame
 339 : LD   1, 2(5) ;  Load parameter 'turns' into R1
@@ -353,7 +353,7 @@
 352 : ST   1, 3(5) ;  Store function result into stack frame
 353 : LD   6, 0(5) ;  Load return address
 354 : LDA  7, 0(6) ;  Return to caller
-355 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isCircularPrimeHelper'
+355 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'isCircularPrimeHelper'
 356 : LD   1, 1(5) ;  Load parameter 'x' into R1
 357 : ST 1, 1(3) ;  Store argument 0 into callee frame
 358 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'log10'
@@ -375,7 +375,7 @@
 374 : ADD  5, 3, 0 ;  Update pointer
 375 : LDA 7, 305(0) ;  Call isCircularPrimeHelper
 376 : LD 1, 3(5) ;  Load callee return value into R1
-377 : LDC  4, 3(0) ;  Load frame size
+377 : LDC  4, 4(0) ;  Load frame size
 378 : SUB  5, 5, 4 ;  Restore pointer
 379 : JEQ  1, 391(0) ;  If condition is false, jump to ELSE
 380 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'report'
@@ -402,7 +402,7 @@
 401 : LDA  7, 1(7) ;  skip setting true
 402 : LDC  1, 1(0) ;  true
 403 : JEQ  1, 454(0) ;  If condition is false, jump to ELSE
-404 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'isCircularPrime'
+404 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'isCircularPrime'
 405 : LD   1, 2(5) ;  Load parameter 'x' into R1
 406 : ST 1, 1(3) ;  Store argument 0 into callee frame
 407 : LDA 6, 411(0)) ;  Compute return address
@@ -410,7 +410,7 @@
 409 : ADD  5, 3, 0 ;  Update pointer
 410 : LDA 7, 355(0) ;  Call isCircularPrime
 411 : LD 1, 2(5) ;  Load callee return value into R1
-412 : LDC  4, 5(0) ;  Load frame size
+412 : LDC  4, 3(0) ;  Load frame size
 413 : SUB  5, 5, 4 ;  Restore pointer
 414 : JEQ  1, 436(0) ;  If condition is false, jump to ELSE
 415 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
@@ -456,7 +456,7 @@
 455 : ST   1, 4(5) ;  Store function result into stack frame
 456 : LD   6, 0(5) ;  Load return address
 457 : LDA  7, 0(6) ;  Return to caller
-458 : LDA 3, 3(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
+458 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'circularPrimesToHelper'
 459 : LD   1, 1(5) ;  Load parameter 'x' into R1
 460 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 461 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
@@ -471,7 +471,7 @@
 470 : ADD  5, 3, 0 ;  Update pointer
 471 : LDA 7, 395(0) ;  Call circularPrimesToHelper
 472 : LD 1, 4(5) ;  Load callee return value into R1
-473 : LDC  4, 3(0) ;  Load frame size
+473 : LDC  4, 5(0) ;  Load frame size
 474 : SUB  5, 5, 4 ;  Restore pointer
 475 : ST   1, 2(5) ;  Store function result into stack frame
 476 : LD   6, 0(5) ;  Load return address

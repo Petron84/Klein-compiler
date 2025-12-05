@@ -63,16 +63,16 @@
 62 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 63 : LD   1, 2(5) ;  Load parameter 'b' into R1
 64 : DIV  1, 2, 1 ;  R1 = left / right
-65 : LDA  3, 5(5) ;  Update DMEM pointer
+65 : LDA  3, 3(5) ;  Update DMEM pointer
 66 : LDA 6, 70(0) ;  Compute return address
 67 : ST   6, 0(3) ;  Store return address
 68 : ADD  5, 3, 0 ;  Updated Pointer
 69 : LDA  7, 12(0) ; Call print
-70 : LDC  4, 5(0) ;  Load frame size
+70 : LDC  4, 3(0) ;  Load frame size
 71 : SUB  5, 5, 4 ;  Restore pointer
 72 : ST   1, 4(5) ;  Store function result into stack frame
 73 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'main'
-74 : LDA 3, 5(5) ;  Advance DMEM pointer to callee frame 'MOD'
+74 : LDA 3, 4(5) ;  Advance DMEM pointer to callee frame 'MOD'
 75 : LD   1, 1(5) ;  Load parameter 'a' into R1
 76 : ADD  2, 1, 0 ;  Move left operand from R1 to R2
 77 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
@@ -85,7 +85,7 @@
 84 : ADD  5, 3, 0 ;  Update pointer
 85 : LDA 7, 45(0) ;  Call MOD
 86 : LD 1, 3(5) ;  Load callee return value into R1
-87 : LDC  4, 5(0) ;  Load frame size
+87 : LDC  4, 4(0) ;  Load frame size
 88 : SUB  5, 5, 4 ;  Restore pointer
 89 : ST 1, 1(3) ;  Store argument 0 into callee frame
 90 : LD   1, 2(5) ;  Load parameter 'b' into R1
