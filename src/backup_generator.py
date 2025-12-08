@@ -161,6 +161,7 @@ class Generator:
                 callee_size = callee_params + 2
 
                 caller_params = self.symbol_table[curr_function].parameters[0]
+                caller_size = caller_params + 2
             
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
