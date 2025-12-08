@@ -1,2 +1,0 @@
-function main (a: boolean, b:boolean): boolean
-	a and b

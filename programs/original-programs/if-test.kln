@@ -1,6 +1,0 @@
-function main(n: integer): integer
-	print(n)
-	if (10 < n) then
-	n * 2
-	else
-	1
