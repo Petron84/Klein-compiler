@@ -46,28 +46,28 @@
 45 : LD   6, 0(5) ;  Load return address
 46 : LDA  7, 0(6) ;  Return to caller
 47 : LD   1, 1(5) ;  Load parameter 'a' into R1
-48 : LDA  4, 3(5) ; Restore Callee frame base
+48 : LDA  4, 4(5) ; Restore Callee frame base
 49 : ST 1, 1(4) ;  Store argument 0 into callee frame
-50 : LDA  4, 3(5) ; Restore Call frame base
+50 : LDA  4, 4(5) ; Restore Call frame base
 51 : LDA 6, 55(0) ;  Compute return address
 52 : ST 6, 0(4) ;  Store return address in callee frame
 53 : ADD  5, 4, 0 ;  Update pointer
 54 : LDA 7, 31(0) ;  Call square
 55 : LD 1, 2(5) ;  Load callee return value into R1
-56 : LDC  4, 3(0) ;  Load frame size
+56 : LDC  4, 4(0) ;  Load frame size
 57 : SUB  5, 5, 4 ;  Restore pointer
 58 : LDA  4, 4(5) ; Restore Callee frame base
 59 : ST 1, 1(4) ;  Store argument 0 into callee frame
 60 : LD   1, 2(5) ;  Load parameter 'b' into R1
-61 : LDA  4, 3(5) ; Restore Callee frame base
+61 : LDA  4, 4(5) ; Restore Callee frame base
 62 : ST 1, 1(4) ;  Store argument 0 into callee frame
-63 : LDA  4, 3(5) ; Restore Call frame base
+63 : LDA  4, 4(5) ; Restore Call frame base
 64 : LDA 6, 68(0) ;  Compute return address
 65 : ST 6, 0(4) ;  Store return address in callee frame
 66 : ADD  5, 4, 0 ;  Update pointer
 67 : LDA 7, 31(0) ;  Call square
 68 : LD 1, 2(5) ;  Load callee return value into R1
-69 : LDC  4, 3(0) ;  Load frame size
+69 : LDC  4, 4(0) ;  Load frame size
 70 : SUB  5, 5, 4 ;  Restore pointer
 71 : LDA  4, 4(5) ; Restore Callee frame base
 72 : ST 1, 2(4) ;  Store argument 1 into callee frame

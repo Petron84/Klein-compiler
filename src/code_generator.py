@@ -158,9 +158,9 @@ class Generator:
                 f_name = exp_children[0].value
 
                 callee_params = self.symbol_table[f_name].parameters[0]
-                callee_size = callee_params + 2
 
                 caller_params = self.symbol_table[curr_function].parameters[0]
+                callee_size = caller_params + 2
             
                 if f_name== "print":
                     self.instruction_rules(exp_children[1], curr_function,callee=True)
