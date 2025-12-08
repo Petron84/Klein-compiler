@@ -1,6 +1,12 @@
 function main(a:integer, b:integer): integer
-	eval_and_print(a,b)
+	multiply_and_square(a,b)
 
-function eval_and_print(a: integer, b:integer): integer
-	print(a * b)
-	(a * b)
+function multiply_and_square(a: integer, b:integer): integer
+	multiply(square(a),square(b))
+
+function multiply(a: integer, b: integer): integer
+	a*b
+
+function square(a: integer): integer
+	a*a
+	
