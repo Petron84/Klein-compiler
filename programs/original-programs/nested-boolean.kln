@@ -1,0 +1,2 @@
+function main (n: boolean) : boolean
+	not (not (not n))
