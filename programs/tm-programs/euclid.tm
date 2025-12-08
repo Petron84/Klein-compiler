@@ -13,10 +13,10 @@
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LD   1, 1(5) ;  Load parameter 'a' into R1
 14 : LDA  4, 4(5) ; Restore Callee frame base
-15 : ST 1, 1(4) ;  Store argument 0 into callee frame
+15 : ST 1, 1(5) ;  Store argument 0 into callee frame
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
 17 : LDA  4, 4(5) ; Restore Callee frame base
-18 : ST 1, 2(4) ;  Store argument 1 into callee frame
+18 : ST 1, 2(5) ;  Store argument 1 into callee frame
 19 : LDA  4, 4(5) ; Restore Call frame base
 20 : LDA 6, 24(0) ;  Compute return address
 21 : ST 6, 0(4) ;  Store return address in callee frame
@@ -43,13 +43,13 @@
 42 : LDA  7, 70(0) ;  Skip ELSE block
 43 : LD   1, 2(5) ;  Load parameter 'b' into R1
 44 : LDA  4, 4(5) ; Restore Callee frame base
-45 : ST 1, 1(4) ;  Store argument 0 into callee frame
+45 : ST 1, 1(5) ;  Store argument 0 into callee frame
 46 : LD   1, 1(5) ;  Load parameter 'a' into R1
 47 : LDA  4, 4(5) ; Restore Callee frame base
-48 : ST 1, 1(4) ;  Store argument 0 into callee frame
+48 : ST 1, 1(5) ;  Store argument 0 into callee frame
 49 : LD   1, 2(5) ;  Load parameter 'b' into R1
 50 : LDA  4, 4(5) ; Restore Callee frame base
-51 : ST 1, 2(4) ;  Store argument 1 into callee frame
+51 : ST 1, 2(5) ;  Store argument 1 into callee frame
 52 : LDA  4, 4(5) ; Restore Call frame base
 53 : LDA 6, 57(0) ;  Compute return address
 54 : ST 6, 0(4) ;  Store return address in callee frame
@@ -59,7 +59,7 @@
 58 : LDC  4, 4(0) ;  Load frame size
 59 : SUB  5, 5, 4 ;  Restore pointer
 60 : LDA  4, 4(5) ; Restore Callee frame base
-61 : ST 1, 2(4) ;  Store argument 1 into callee frame
+61 : ST 1, 2(5) ;  Store argument 1 into callee frame
 62 : LDA  4, 4(5) ; Restore Call frame base
 63 : LDA 6, 67(0) ;  Compute return address
 64 : ST 6, 0(4) ;  Store return address in callee frame
@@ -89,10 +89,10 @@
 88 : ADD  2, 3, 0 ;  Restore left operand
 89 : SUB  1, 2, 1 ;  R1 = left - right
 90 : LDA  4, 4(5) ; Restore Callee frame base
-91 : ST 1, 1(4) ;  Store argument 0 into callee frame
+91 : ST 1, 1(5) ;  Store argument 0 into callee frame
 92 : LD   1, 2(5) ;  Load parameter 'b' into R1
 93 : LDA  4, 4(5) ; Restore Callee frame base
-94 : ST 1, 2(4) ;  Store argument 1 into callee frame
+94 : ST 1, 2(5) ;  Store argument 1 into callee frame
 95 : LDA  4, 4(5) ; Restore Call frame base
 96 : LDA 6, 100(0) ;  Compute return address
 97 : ST 6, 0(4) ;  Store return address in callee frame

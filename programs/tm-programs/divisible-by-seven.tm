@@ -14,31 +14,31 @@
 13 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 14 : ADD  2, 3, 0 ;  Restore left operand
 15 : DIV  1, 2, 1 ;  R1 = left / right
-16 : LDA  4, 4(5) ; Restore Callee frame base
-17 : ST 1, 1(4) ;  Store argument 0 into callee frame
+16 : LDA  4, 3(5) ; Restore Callee frame base
+17 : ST 1, 1(5) ;  Store argument 0 into callee frame
 18 : LD   1, 1(5) ;  Load parameter 'n' into R1
-19 : LDA  4, 4(5) ; Restore Callee frame base
-20 : ST 1, 1(4) ;  Store argument 0 into callee frame
+19 : LDA  4, 3(5) ; Restore Callee frame base
+20 : ST 1, 1(5) ;  Store argument 0 into callee frame
 21 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-22 : LDA  4, 4(5) ; Restore Callee frame base
-23 : ST 1, 2(4) ;  Store argument 1 into callee frame
-24 : LDA  4, 4(5) ; Restore Call frame base
+22 : LDA  4, 3(5) ; Restore Callee frame base
+23 : ST 1, 2(5) ;  Store argument 1 into callee frame
+24 : LDA  4, 3(5) ; Restore Call frame base
 25 : LDA 6, 29(0) ;  Compute return address
 26 : ST 6, 0(4) ;  Store return address in callee frame
 27 : ADD  5, 4, 0 ;  Update pointer
 28 : LDA 7, 46(0) ;  Call MOD
 29 : LD 1, 3(5) ;  Load callee return value into R1
-30 : LDC  4, 4(0) ;  Load frame size
+30 : LDC  4, 3(0) ;  Load frame size
 31 : SUB  5, 5, 4 ;  Restore pointer
-32 : LDA  4, 4(5) ; Restore Callee frame base
-33 : ST 1, 2(4) ;  Store argument 1 into callee frame
-34 : LDA  4, 4(5) ; Restore Call frame base
+32 : LDA  4, 3(5) ; Restore Callee frame base
+33 : ST 1, 2(5) ;  Store argument 1 into callee frame
+34 : LDA  4, 3(5) ; Restore Call frame base
 35 : LDA 6, 39(0) ;  Compute return address
 36 : ST 6, 0(4) ;  Store return address in callee frame
 37 : ADD  5, 4, 0 ;  Update pointer
 38 : LDA 7, 138(0) ;  Call divisibleByParts
 39 : LD 1, 3(5) ;  Load callee return value into R1
-40 : LDC  4, 4(0) ;  Load frame size
+40 : LDC  4, 3(0) ;  Load frame size
 41 : SUB  5, 5, 4 ;  Restore pointer
 42 : ST 1, 2(5) ;  Store result into current frame's return slot
 43 : LD   1, 2(5) ;  Load return value into register 1
@@ -124,7 +124,7 @@
 123 : LDA  7, 135(0) ;  Skip ELSE block
 124 : LD   1, 1(5) ;  Load parameter 'diff' into R1
 125 : LDA  4, 3(5) ; Restore Callee frame base
-126 : ST 1, 1(4) ;  Store argument 0 into callee frame
+126 : ST 1, 1(5) ;  Store argument 0 into callee frame
 127 : LDA  4, 3(5) ; Restore Call frame base
 128 : LDA 6, 132(0) ;  Compute return address
 129 : ST 6, 0(4) ;  Store return address in callee frame
@@ -145,15 +145,15 @@
 144 : MUL  1, 2, 1 ;  R1 = left * right
 145 : ADD  2, 3, 0 ;  Restore left operand
 146 : SUB  1, 2, 1 ;  R1 = left - right
-147 : LDA  4, 3(5) ; Restore Callee frame base
-148 : ST 1, 1(4) ;  Store argument 0 into callee frame
-149 : LDA  4, 3(5) ; Restore Call frame base
+147 : LDA  4, 4(5) ; Restore Callee frame base
+148 : ST 1, 1(5) ;  Store argument 0 into callee frame
+149 : LDA  4, 4(5) ; Restore Call frame base
 150 : LDA 6, 154(0) ;  Compute return address
 151 : ST 6, 0(4) ;  Store return address in callee frame
 152 : ADD  5, 4, 0 ;  Update pointer
 153 : LDA 7, 62(0) ;  Call divisibleByDifference
 154 : LD 1, 2(5) ;  Load callee return value into R1
-155 : LDC  4, 3(0) ;  Load frame size
+155 : LDC  4, 4(0) ;  Load frame size
 156 : SUB  5, 5, 4 ;  Restore pointer
 157 : ST   1, 3(5) ;  Store function result into stack frame
 158 : LD   6, 0(5) ;  Load return address

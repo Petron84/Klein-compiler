@@ -22,15 +22,15 @@
 21 : LDC  1, 1(0) ;  true
 22 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
 23 : LD   1, 1(5) ;  Load parameter 'n' into R1
-24 : LDA  4, 3(5) ; Restore Callee frame base
-25 : ST 1, 1(4) ;  Store argument 0 into callee frame
-26 : LDA  4, 3(5) ; Restore Call frame base
+24 : LDA  4, 4(5) ; Restore Callee frame base
+25 : ST 1, 1(5) ;  Store argument 0 into callee frame
+26 : LDA  4, 4(5) ; Restore Call frame base
 27 : LDA 6, 31(0) ;  Compute return address
 28 : ST 6, 0(4) ;  Store return address in callee frame
 29 : ADD  5, 4, 0 ;  Update pointer
 30 : LDA 7, 345(0) ;  Call emirp
 31 : LD 1, 2(5) ;  Load callee return value into R1
-32 : LDC  4, 3(0) ;  Load frame size
+32 : LDC  4, 4(0) ;  Load frame size
 33 : SUB  5, 5, 4 ;  Restore pointer
 34 : ST 1, 3(5) ;  Store result into current frame's return slot
 35 : LDA  7, 84(0) ;  Skip ELSE block
@@ -45,15 +45,15 @@
 44 : LDC  1, 1(0) ;  true
 45 : JEQ  1, 59(0) ;  If condition is false, jump to ELSE
 46 : LD   1, 1(5) ;  Load parameter 'n' into R1
-47 : LDA  4, 3(5) ; Restore Callee frame base
-48 : ST 1, 1(4) ;  Store argument 0 into callee frame
-49 : LDA  4, 3(5) ; Restore Call frame base
+47 : LDA  4, 4(5) ; Restore Callee frame base
+48 : ST 1, 1(5) ;  Store argument 0 into callee frame
+49 : LDA  4, 4(5) ; Restore Call frame base
 50 : LDA 6, 54(0) ;  Compute return address
 51 : ST 6, 0(4) ;  Store return address in callee frame
 52 : ADD  5, 4, 0 ;  Update pointer
 53 : LDA 7, 301(0) ;  Call snowball
 54 : LD 1, 2(5) ;  Load callee return value into R1
-55 : LDC  4, 3(0) ;  Load frame size
+55 : LDC  4, 4(0) ;  Load frame size
 56 : SUB  5, 5, 4 ;  Restore pointer
 57 : ST 1, 3(5) ;  Store result into current frame's return slot
 58 : LDA  7, 84(0) ;  Skip ELSE block
@@ -68,15 +68,15 @@
 67 : LDC  1, 1(0) ;  true
 68 : JEQ  1, 82(0) ;  If condition is false, jump to ELSE
 69 : LD   1, 1(5) ;  Load parameter 'n' into R1
-70 : LDA  4, 3(5) ; Restore Callee frame base
-71 : ST 1, 1(4) ;  Store argument 0 into callee frame
-72 : LDA  4, 3(5) ; Restore Call frame base
+70 : LDA  4, 4(5) ; Restore Callee frame base
+71 : ST 1, 1(5) ;  Store argument 0 into callee frame
+72 : LDA  4, 4(5) ; Restore Call frame base
 73 : LDA 6, 77(0) ;  Compute return address
 74 : ST 6, 0(4) ;  Store return address in callee frame
 75 : ADD  5, 4, 0 ;  Update pointer
 76 : LDA 7, 268(0) ;  Call doBoth
 77 : LD 1, 2(5) ;  Load callee return value into R1
-78 : LDC  4, 3(0) ;  Load frame size
+78 : LDC  4, 4(0) ;  Load frame size
 79 : SUB  5, 5, 4 ;  Restore pointer
 80 : ST 1, 3(5) ;  Store result into current frame's return slot
 81 : LDA  7, 84(0) ;  Skip ELSE block
@@ -119,7 +119,7 @@
 118 : ADD  2, 3, 0 ;  Restore left operand
 119 : DIV  1, 2, 1 ;  R1 = left / right
 120 : LDA  4, 4(5) ; Restore Callee frame base
-121 : ST 1, 1(4) ;  Store argument 0 into callee frame
+121 : ST 1, 1(5) ;  Store argument 0 into callee frame
 122 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 123 : ADD  3, 1, 0 ;  Store left operand into temporary register
 124 : LD   1, 2(5) ;  Load parameter 'nR' into R1
@@ -128,10 +128,10 @@
 127 : ADD  3, 1, 0 ;  Store left operand into temporary register
 128 : LD   1, 1(5) ;  Load parameter 'n' into R1
 129 : LDA  4, 4(5) ; Restore Callee frame base
-130 : ST 1, 1(4) ;  Store argument 0 into callee frame
+130 : ST 1, 1(5) ;  Store argument 0 into callee frame
 131 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 132 : LDA  4, 4(5) ; Restore Callee frame base
-133 : ST 1, 2(4) ;  Store argument 1 into callee frame
+133 : ST 1, 2(5) ;  Store argument 1 into callee frame
 134 : LDA  4, 4(5) ; Restore Call frame base
 135 : LDA 6, 139(0) ;  Compute return address
 136 : ST 6, 0(4) ;  Store return address in callee frame
@@ -143,7 +143,7 @@
 142 : ADD  2, 3, 0 ;  Restore left operand
 143 : ADD  1, 2, 1 ;  R1 = left + right
 144 : LDA  4, 4(5) ; Restore Callee frame base
-145 : ST 1, 2(4) ;  Store argument 1 into callee frame
+145 : ST 1, 2(5) ;  Store argument 1 into callee frame
 146 : LDA  4, 4(5) ; Restore Call frame base
 147 : LDA 6, 151(0) ;  Compute return address
 148 : ST 6, 0(4) ;  Store return address in callee frame
@@ -156,28 +156,28 @@
 155 : LD   6, 0(5) ;  Load return address
 156 : LDA  7, 0(6) ;  Return to caller
 157 : LD   1, 1(5) ;  Load parameter 'n' into R1
-158 : LDA  4, 4(5) ; Restore Callee frame base
-159 : ST 1, 1(4) ;  Store argument 0 into callee frame
+158 : LDA  4, 3(5) ; Restore Callee frame base
+159 : ST 1, 1(5) ;  Store argument 0 into callee frame
 160 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-161 : LDA  4, 4(5) ; Restore Callee frame base
-162 : ST 1, 2(4) ;  Store argument 1 into callee frame
-163 : LDA  4, 4(5) ; Restore Call frame base
+161 : LDA  4, 3(5) ; Restore Callee frame base
+162 : ST 1, 2(5) ;  Store argument 1 into callee frame
+163 : LDA  4, 3(5) ; Restore Call frame base
 164 : LDA 6, 168(0) ;  Compute return address
 165 : ST 6, 0(4) ;  Store return address in callee frame
 166 : ADD  5, 4, 0 ;  Update pointer
 167 : LDA 7, 103(0) ;  Call reverseL
 168 : LD 1, 3(5) ;  Load callee return value into R1
-169 : LDC  4, 4(0) ;  Load frame size
+169 : LDC  4, 3(0) ;  Load frame size
 170 : SUB  5, 5, 4 ;  Restore pointer
 171 : ST   1, 2(5) ;  Store function result into stack frame
 172 : LD   6, 0(5) ;  Load return address
 173 : LDA  7, 0(6) ;  Return to caller
 174 : LD   1, 2(5) ;  Load parameter 'b' into R1
 175 : LDA  4, 4(5) ; Restore Callee frame base
-176 : ST 1, 1(4) ;  Store argument 0 into callee frame
+176 : ST 1, 1(5) ;  Store argument 0 into callee frame
 177 : LD   1, 1(5) ;  Load parameter 'a' into R1
 178 : LDA  4, 4(5) ; Restore Callee frame base
-179 : ST 1, 2(4) ;  Store argument 1 into callee frame
+179 : ST 1, 2(5) ;  Store argument 1 into callee frame
 180 : LDA  4, 4(5) ; Restore Call frame base
 181 : LDA 6, 185(0) ;  Compute return address
 182 : ST 6, 0(4) ;  Store return address in callee frame
@@ -209,10 +209,10 @@
 208 : JEQ  1, 245(0) ;  If condition is false, jump to ELSE
 209 : LD   1, 1(5) ;  Load parameter 'i' into R1
 210 : LDA  4, 4(5) ; Restore Callee frame base
-211 : ST 1, 1(4) ;  Store argument 0 into callee frame
+211 : ST 1, 1(5) ;  Store argument 0 into callee frame
 212 : LD   1, 2(5) ;  Load parameter 'n' into R1
 213 : LDA  4, 4(5) ; Restore Callee frame base
-214 : ST 1, 2(4) ;  Store argument 1 into callee frame
+214 : ST 1, 2(5) ;  Store argument 1 into callee frame
 215 : LDA  4, 4(5) ; Restore Call frame base
 216 : LDA 6, 220(0) ;  Compute return address
 217 : ST 6, 0(4) ;  Store return address in callee frame
@@ -228,10 +228,10 @@
 227 : ADD  2, 3, 0 ;  Restore left operand
 228 : ADD  1, 2, 1 ;  R1 = left + right
 229 : LDA  4, 4(5) ; Restore Callee frame base
-230 : ST 1, 1(4) ;  Store argument 0 into callee frame
+230 : ST 1, 1(5) ;  Store argument 0 into callee frame
 231 : LD   1, 2(5) ;  Load parameter 'n' into R1
 232 : LDA  4, 4(5) ; Restore Callee frame base
-233 : ST 1, 2(4) ;  Store argument 1 into callee frame
+233 : ST 1, 2(5) ;  Store argument 1 into callee frame
 234 : LDA  4, 4(5) ; Restore Call frame base
 235 : LDA 6, 239(0) ;  Compute return address
 236 : ST 6, 0(4) ;  Store return address in callee frame
@@ -248,18 +248,18 @@
 247 : LD   6, 0(5) ;  Load return address
 248 : LDA  7, 0(6) ;  Return to caller
 249 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-250 : LDA  4, 4(5) ; Restore Callee frame base
-251 : ST 1, 1(4) ;  Store argument 0 into callee frame
+250 : LDA  4, 3(5) ; Restore Callee frame base
+251 : ST 1, 1(5) ;  Store argument 0 into callee frame
 252 : LD   1, 1(5) ;  Load parameter 'n' into R1
-253 : LDA  4, 4(5) ; Restore Callee frame base
-254 : ST 1, 2(4) ;  Store argument 1 into callee frame
-255 : LDA  4, 4(5) ; Restore Call frame base
+253 : LDA  4, 3(5) ; Restore Callee frame base
+254 : ST 1, 2(5) ;  Store argument 1 into callee frame
+255 : LDA  4, 3(5) ; Restore Call frame base
 256 : LDA 6, 260(0) ;  Compute return address
 257 : ST 6, 0(4) ;  Store return address in callee frame
 258 : ADD  5, 4, 0 ;  Update pointer
 259 : LDA 7, 199(0) ;  Call hasDivisorFrom
 260 : LD 1, 3(5) ;  Load callee return value into R1
-261 : LDC  4, 4(0) ;  Load frame size
+261 : LDC  4, 3(0) ;  Load frame size
 262 : SUB  5, 5, 4 ;  Restore pointer
 263 : LDC  2, 1(0) ;  Load 1 into R2
 264 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
@@ -268,7 +268,7 @@
 267 : LDA  7, 0(6) ;  Return to caller
 268 : LD   1, 1(5) ;  Load parameter 'n' into R1
 269 : LDA  4, 3(5) ; Restore Callee frame base
-270 : ST 1, 1(4) ;  Store argument 0 into callee frame
+270 : ST 1, 1(5) ;  Store argument 0 into callee frame
 271 : LDA  4, 3(5) ; Restore Call frame base
 272 : LDA 6, 276(0) ;  Compute return address
 273 : ST 6, 0(4) ;  Store return address in callee frame
@@ -287,7 +287,7 @@
 286 : ST   1, 2(5) ;  Store function result into stack frame
 287 : LD   1, 1(5) ;  Load parameter 'n' into R1
 288 : LDA  4, 3(5) ; Restore Callee frame base
-289 : ST 1, 1(4) ;  Store argument 0 into callee frame
+289 : ST 1, 1(5) ;  Store argument 0 into callee frame
 290 : LDA  4, 3(5) ; Restore Call frame base
 291 : LDA 6, 295(0) ;  Compute return address
 292 : ST 6, 0(4) ;  Store return address in callee frame
@@ -301,7 +301,7 @@
 300 : LDA  7, 0(6) ;  Return to caller
 301 : LD   1, 1(5) ;  Load parameter 'n' into R1
 302 : LDA  4, 3(5) ; Restore Callee frame base
-303 : ST 1, 1(4) ;  Store argument 0 into callee frame
+303 : ST 1, 1(5) ;  Store argument 0 into callee frame
 304 : LDA  4, 3(5) ; Restore Call frame base
 305 : LDA 6, 309(0) ;  Compute return address
 306 : ST 6, 0(4) ;  Store return address in callee frame
@@ -329,7 +329,7 @@
 328 : ADD  2, 3, 0 ;  Restore left operand
 329 : DIV  1, 2, 1 ;  R1 = left / right
 330 : LDA  4, 3(5) ; Restore Callee frame base
-331 : ST 1, 1(4) ;  Store argument 0 into callee frame
+331 : ST 1, 1(5) ;  Store argument 0 into callee frame
 332 : LDA  4, 3(5) ; Restore Call frame base
 333 : LDA 6, 337(0) ;  Compute return address
 334 : ST 6, 0(4) ;  Store return address in callee frame
@@ -345,7 +345,7 @@
 344 : LDA  7, 0(6) ;  Return to caller
 345 : LD   1, 1(5) ;  Load parameter 'n' into R1
 346 : LDA  4, 3(5) ; Restore Callee frame base
-347 : ST 1, 1(4) ;  Store argument 0 into callee frame
+347 : ST 1, 1(5) ;  Store argument 0 into callee frame
 348 : LDA  4, 3(5) ; Restore Call frame base
 349 : LDA 6, 353(0) ;  Compute return address
 350 : ST 6, 0(4) ;  Store return address in callee frame
@@ -357,7 +357,7 @@
 356 : ADD  3, 1, 0 ;  Store left operand into temporary register
 357 : LD   1, 1(5) ;  Load parameter 'n' into R1
 358 : LDA  4, 3(5) ; Restore Callee frame base
-359 : ST 1, 1(4) ;  Store argument 0 into callee frame
+359 : ST 1, 1(5) ;  Store argument 0 into callee frame
 360 : LDA  4, 3(5) ; Restore Call frame base
 361 : LDA 6, 365(0) ;  Compute return address
 362 : ST 6, 0(4) ;  Store return address in callee frame
@@ -367,7 +367,7 @@
 366 : LDC  4, 3(0) ;  Load frame size
 367 : SUB  5, 5, 4 ;  Restore pointer
 368 : LDA  4, 3(5) ; Restore Callee frame base
-369 : ST 1, 1(4) ;  Store argument 0 into callee frame
+369 : ST 1, 1(5) ;  Store argument 0 into callee frame
 370 : LDA  4, 3(5) ; Restore Call frame base
 371 : LDA 6, 375(0) ;  Compute return address
 372 : ST 6, 0(4) ;  Store return address in callee frame

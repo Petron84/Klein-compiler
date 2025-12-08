@@ -186,7 +186,7 @@ class Generator:
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
                         self.write(f"LDA  4, {callee_size}(5)", "Restore Callee frame base")
-                        self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
+                        self.write(f"ST 1, {i+1}(5)", f" Store argument {i} into callee frame")
 
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1

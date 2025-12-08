@@ -16,19 +16,19 @@
 15 : LD   1, 2(5) ;  Load parameter 'n' into R1
 16 : ADD  2, 3, 0 ;  Restore left operand
 17 : DIV  1, 2, 1 ;  R1 = left / right
-18 : LDA  4, 3(5) ;  Update DMEM pointer
+18 : LDA  4, 4(5) ;  Update DMEM pointer
 19 : LDA 6, 23(0) ;  Compute return address
 20 : ST   6, 0(4) ;  Store return address
 21 : ADD  5, 4, 0 ;  Updated Pointer
 22 : LDA  7, 10(0) ; Call print
-23 : LDC  4, 3(0) ;  Load frame size
+23 : LDC  4, 4(0) ;  Load frame size
 24 : SUB  5, 5, 4 ;  Restore pointer
 25 : LD   1, 1(5) ;  Load parameter 'm' into R1
 26 : LDA  4, 4(5) ; Restore Callee frame base
-27 : ST 1, 1(4) ;  Store argument 0 into callee frame
+27 : ST 1, 1(5) ;  Store argument 0 into callee frame
 28 : LD   1, 2(5) ;  Load parameter 'n' into R1
 29 : LDA  4, 4(5) ; Restore Callee frame base
-30 : ST 1, 2(4) ;  Store argument 1 into callee frame
+30 : ST 1, 2(5) ;  Store argument 1 into callee frame
 31 : LDA  4, 4(5) ; Restore Call frame base
 32 : LDA 6, 36(0) ;  Compute return address
 33 : ST 6, 0(4) ;  Store return address in callee frame
@@ -59,10 +59,10 @@
 58 : ADD  2, 3, 0 ;  Restore left operand
 59 : SUB  1, 2, 1 ;  R1 = left - right
 60 : LDA  4, 4(5) ; Restore Callee frame base
-61 : ST 1, 1(4) ;  Store argument 0 into callee frame
+61 : ST 1, 1(5) ;  Store argument 0 into callee frame
 62 : LD   1, 2(5) ;  Load parameter 'n' into R1
 63 : LDA  4, 4(5) ; Restore Callee frame base
-64 : ST 1, 2(4) ;  Store argument 1 into callee frame
+64 : ST 1, 2(5) ;  Store argument 1 into callee frame
 65 : LDA  4, 4(5) ; Restore Call frame base
 66 : LDA 6, 70(0) ;  Compute return address
 67 : ST 6, 0(4) ;  Store return address in callee frame
