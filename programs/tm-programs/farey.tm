@@ -23,7 +23,7 @@
 22 : LDA 6, 26(0) ; Return address
 23 : ST 6, 0(4) ; Store return in callee frame
 24 : ADD 5, 4, 0 ; Push callee frame
-25 : LDA 7, 512(0) ; Call fareyNum
+25 : LDA 7, 516(0) ; Call fareyNum
 26 : LD 1, 4(5) ; Load function result
 27 : LDC 2, 5(0) ; Caller frame size
 28 : SUB 5, 5, 2 ; Pop back to caller
@@ -400,226 +400,234 @@
 399 : LDA 4, 5(5) ; Base of callee frame
 400 : LD   1, 3(5) ;  Load parameter 'N' into R1
 401 : ST 1, 1(4) ; Argument 0
-402 : LDA 4, 5(5) ; Base of callee frame
-403 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-404 : ST 1, 1(4) ; Argument 0
-405 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-406 : ST 1, 2(4) ; Argument 1
-407 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-408 : ST 1, 3(4) ; Argument 2
-409 : LD   1, 3(5) ;  Load parameter 'N' into R1
-410 : ST 1, 4(4) ; Argument 3
-411 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-412 : ST 1, 5(4) ; Argument 4
-413 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-414 : ST 1, 6(4) ; Argument 5
-415 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-416 : ST 1, 7(4) ; Argument 6
-417 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-418 : ST 1, 8(4) ; Argument 7
-419 : LDA 6, 423(0) ; Return address
-420 : ST 6, 0(4) ; Store return in callee frame
-421 : ADD 5, 4, 0 ; Push callee frame
-422 : LDA 7, 123(0) ; Call whileLoopFor
-423 : LD 1, 9(5) ; Load function result
-424 : LDC 2, 5(0) ; Caller frame size
-425 : SUB 5, 5, 2 ; Pop back to caller
-426 : ST 1, 2(4) ; Argument 1
-427 : LDA 4, 5(5) ; Base of callee frame
-428 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-429 : ST 1, 1(4) ; Argument 0
-430 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-431 : ST 1, 2(4) ; Argument 1
-432 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-433 : ST 1, 3(4) ; Argument 2
-434 : LD   1, 3(5) ;  Load parameter 'N' into R1
-435 : ST 1, 4(4) ; Argument 3
-436 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-437 : ST 1, 5(4) ; Argument 4
-438 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-439 : ST 1, 6(4) ; Argument 5
+402 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+403 : LDA 4, 5(5) ; Base of callee frame
+404 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+405 : ST 1, 1(4) ; Argument 0
+406 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+407 : ST 1, 2(4) ; Argument 1
+408 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+409 : ST 1, 3(4) ; Argument 2
+410 : LD   1, 3(5) ;  Load parameter 'N' into R1
+411 : ST 1, 4(4) ; Argument 3
+412 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+413 : ST 1, 5(4) ; Argument 4
+414 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+415 : ST 1, 6(4) ; Argument 5
+416 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+417 : ST 1, 7(4) ; Argument 6
+418 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+419 : ST 1, 8(4) ; Argument 7
+420 : LDA 6, 424(0) ; Return address
+421 : ST 6, 0(4) ; Store return in callee frame
+422 : ADD 5, 4, 0 ; Push callee frame
+423 : LDA 7, 123(0) ; Call whileLoopFor
+424 : LD 1, 9(5) ; Load function result
+425 : LDC 2, 5(0) ; Caller frame size
+426 : SUB 5, 5, 2 ; Pop back to caller
+427 : ST 1, 2(4) ; Argument 1
+428 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+429 : LDA 4, 5(5) ; Base of callee frame
+430 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+431 : ST 1, 1(4) ; Argument 0
+432 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+433 : ST 1, 2(4) ; Argument 1
+434 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+435 : ST 1, 3(4) ; Argument 2
+436 : LD   1, 3(5) ;  Load parameter 'N' into R1
+437 : ST 1, 4(4) ; Argument 3
+438 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+439 : ST 1, 5(4) ; Argument 4
 440 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-441 : ST 1, 7(4) ; Argument 6
+441 : ST 1, 6(4) ; Argument 5
 442 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-443 : ST 1, 8(4) ; Argument 7
-444 : LDA 6, 448(0) ; Return address
-445 : ST 6, 0(4) ; Store return in callee frame
-446 : ADD 5, 4, 0 ; Push callee frame
-447 : LDA 7, 123(0) ; Call whileLoopFor
-448 : LD 1, 9(5) ; Load function result
-449 : LDC 2, 5(0) ; Caller frame size
-450 : SUB 5, 5, 2 ; Pop back to caller
-451 : ST 1, 3(4) ; Argument 2
-452 : LDA 4, 5(5) ; Base of callee frame
-453 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
-454 : ST 1, 1(4) ; Argument 0
-455 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-456 : ST 1, 2(4) ; Argument 1
-457 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-458 : ST 1, 3(4) ; Argument 2
-459 : LD   1, 3(5) ;  Load parameter 'N' into R1
-460 : ST 1, 4(4) ; Argument 3
-461 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-462 : ST 1, 5(4) ; Argument 4
-463 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-464 : ST 1, 6(4) ; Argument 5
-465 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-466 : ST 1, 7(4) ; Argument 6
-467 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-468 : ST 1, 8(4) ; Argument 7
-469 : LDA 6, 473(0) ; Return address
-470 : ST 6, 0(4) ; Store return in callee frame
-471 : ADD 5, 4, 0 ; Push callee frame
-472 : LDA 7, 123(0) ; Call whileLoopFor
-473 : LD 1, 9(5) ; Load function result
-474 : LDC 2, 5(0) ; Caller frame size
-475 : SUB 5, 5, 2 ; Pop back to caller
-476 : ST 1, 4(4) ; Argument 3
-477 : LDA 4, 5(5) ; Base of callee frame
-478 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
-479 : ST 1, 1(4) ; Argument 0
-480 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-481 : ST 1, 2(4) ; Argument 1
-482 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-483 : ST 1, 3(4) ; Argument 2
-484 : LD   1, 3(5) ;  Load parameter 'N' into R1
-485 : ST 1, 4(4) ; Argument 3
-486 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-487 : ST 1, 5(4) ; Argument 4
-488 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-489 : ST 1, 6(4) ; Argument 5
-490 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-491 : ST 1, 7(4) ; Argument 6
+443 : ST 1, 7(4) ; Argument 6
+444 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+445 : ST 1, 8(4) ; Argument 7
+446 : LDA 6, 450(0) ; Return address
+447 : ST 6, 0(4) ; Store return in callee frame
+448 : ADD 5, 4, 0 ; Push callee frame
+449 : LDA 7, 123(0) ; Call whileLoopFor
+450 : LD 1, 9(5) ; Load function result
+451 : LDC 2, 5(0) ; Caller frame size
+452 : SUB 5, 5, 2 ; Pop back to caller
+453 : ST 1, 3(4) ; Argument 2
+454 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+455 : LDA 4, 5(5) ; Base of callee frame
+456 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
+457 : ST 1, 1(4) ; Argument 0
+458 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+459 : ST 1, 2(4) ; Argument 1
+460 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+461 : ST 1, 3(4) ; Argument 2
+462 : LD   1, 3(5) ;  Load parameter 'N' into R1
+463 : ST 1, 4(4) ; Argument 3
+464 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+465 : ST 1, 5(4) ; Argument 4
+466 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+467 : ST 1, 6(4) ; Argument 5
+468 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+469 : ST 1, 7(4) ; Argument 6
+470 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+471 : ST 1, 8(4) ; Argument 7
+472 : LDA 6, 476(0) ; Return address
+473 : ST 6, 0(4) ; Store return in callee frame
+474 : ADD 5, 4, 0 ; Push callee frame
+475 : LDA 7, 123(0) ; Call whileLoopFor
+476 : LD 1, 9(5) ; Load function result
+477 : LDC 2, 5(0) ; Caller frame size
+478 : SUB 5, 5, 2 ; Pop back to caller
+479 : ST 1, 4(4) ; Argument 3
+480 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+481 : LDA 4, 5(5) ; Base of callee frame
+482 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
+483 : ST 1, 1(4) ; Argument 0
+484 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+485 : ST 1, 2(4) ; Argument 1
+486 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+487 : ST 1, 3(4) ; Argument 2
+488 : LD   1, 3(5) ;  Load parameter 'N' into R1
+489 : ST 1, 4(4) ; Argument 3
+490 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+491 : ST 1, 5(4) ; Argument 4
 492 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-493 : ST 1, 8(4) ; Argument 7
-494 : LDA 6, 498(0) ; Return address
-495 : ST 6, 0(4) ; Store return in callee frame
-496 : ADD 5, 4, 0 ; Push callee frame
-497 : LDA 7, 123(0) ; Call whileLoopFor
-498 : LD 1, 9(5) ; Load function result
-499 : LDC 2, 5(0) ; Caller frame size
-500 : SUB 5, 5, 2 ; Pop back to caller
-501 : ST 1, 5(4) ; Argument 4
-502 : LDA 6, 506(0) ; Return address
-503 : ST 6, 0(4) ; Store return in callee frame
-504 : ADD 5, 4, 0 ; Push callee frame
-505 : LDA 7, 361(0) ; Call fareySelectDen
-506 : LD 1, 6(5) ; Load function result
-507 : LDC 2, 5(0) ; Caller frame size
-508 : SUB 5, 5, 2 ; Pop back to caller
-509 : ST   1, 4(5) ;  Store function result into stack frame
-510 : LD   6, 0(5) ;  Load return address
-511 : LDA  7, 0(6) ;  Return to caller
-512 : LDA 4, 5(5) ; Base of callee frame
-513 : LD   1, 3(5) ;  Load parameter 'N' into R1
-514 : ST 1, 1(4) ; Argument 0
-515 : LDA 4, 5(5) ; Base of callee frame
-516 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-517 : ST 1, 1(4) ; Argument 0
-518 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-519 : ST 1, 2(4) ; Argument 1
-520 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-521 : ST 1, 3(4) ; Argument 2
-522 : LD   1, 3(5) ;  Load parameter 'N' into R1
-523 : ST 1, 4(4) ; Argument 3
-524 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-525 : ST 1, 5(4) ; Argument 4
-526 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-527 : ST 1, 6(4) ; Argument 5
-528 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-529 : ST 1, 7(4) ; Argument 6
-530 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-531 : ST 1, 8(4) ; Argument 7
-532 : LDA 6, 536(0) ; Return address
-533 : ST 6, 0(4) ; Store return in callee frame
-534 : ADD 5, 4, 0 ; Push callee frame
-535 : LDA 7, 123(0) ; Call whileLoopFor
-536 : LD 1, 9(5) ; Load function result
-537 : LDC 2, 5(0) ; Caller frame size
-538 : SUB 5, 5, 2 ; Pop back to caller
-539 : ST 1, 2(4) ; Argument 1
-540 : LDA 4, 5(5) ; Base of callee frame
-541 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-542 : ST 1, 1(4) ; Argument 0
-543 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+493 : ST 1, 6(4) ; Argument 5
+494 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+495 : ST 1, 7(4) ; Argument 6
+496 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+497 : ST 1, 8(4) ; Argument 7
+498 : LDA 6, 502(0) ; Return address
+499 : ST 6, 0(4) ; Store return in callee frame
+500 : ADD 5, 4, 0 ; Push callee frame
+501 : LDA 7, 123(0) ; Call whileLoopFor
+502 : LD 1, 9(5) ; Load function result
+503 : LDC 2, 5(0) ; Caller frame size
+504 : SUB 5, 5, 2 ; Pop back to caller
+505 : ST 1, 5(4) ; Argument 4
+506 : LDA 6, 510(0) ; Return address
+507 : ST 6, 0(4) ; Store return in callee frame
+508 : ADD 5, 4, 0 ; Push callee frame
+509 : LDA 7, 361(0) ; Call fareySelectDen
+510 : LD 1, 6(5) ; Load function result
+511 : LDC 2, 5(0) ; Caller frame size
+512 : SUB 5, 5, 2 ; Pop back to caller
+513 : ST   1, 4(5) ;  Store function result into stack frame
+514 : LD   6, 0(5) ;  Load return address
+515 : LDA  7, 0(6) ;  Return to caller
+516 : LDA 4, 5(5) ; Base of callee frame
+517 : LD   1, 3(5) ;  Load parameter 'N' into R1
+518 : ST 1, 1(4) ; Argument 0
+519 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+520 : LDA 4, 5(5) ; Base of callee frame
+521 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+522 : ST 1, 1(4) ; Argument 0
+523 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+524 : ST 1, 2(4) ; Argument 1
+525 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+526 : ST 1, 3(4) ; Argument 2
+527 : LD   1, 3(5) ;  Load parameter 'N' into R1
+528 : ST 1, 4(4) ; Argument 3
+529 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+530 : ST 1, 5(4) ; Argument 4
+531 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+532 : ST 1, 6(4) ; Argument 5
+533 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+534 : ST 1, 7(4) ; Argument 6
+535 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+536 : ST 1, 8(4) ; Argument 7
+537 : LDA 6, 541(0) ; Return address
+538 : ST 6, 0(4) ; Store return in callee frame
+539 : ADD 5, 4, 0 ; Push callee frame
+540 : LDA 7, 123(0) ; Call whileLoopFor
+541 : LD 1, 9(5) ; Load function result
+542 : LDC 2, 5(0) ; Caller frame size
+543 : SUB 5, 5, 2 ; Pop back to caller
 544 : ST 1, 2(4) ; Argument 1
-545 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-546 : ST 1, 3(4) ; Argument 2
-547 : LD   1, 3(5) ;  Load parameter 'N' into R1
-548 : ST 1, 4(4) ; Argument 3
-549 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-550 : ST 1, 5(4) ; Argument 4
-551 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-552 : ST 1, 6(4) ; Argument 5
-553 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-554 : ST 1, 7(4) ; Argument 6
-555 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-556 : ST 1, 8(4) ; Argument 7
-557 : LDA 6, 561(0) ; Return address
-558 : ST 6, 0(4) ; Store return in callee frame
-559 : ADD 5, 4, 0 ; Push callee frame
-560 : LDA 7, 123(0) ; Call whileLoopFor
-561 : LD 1, 9(5) ; Load function result
-562 : LDC 2, 5(0) ; Caller frame size
-563 : SUB 5, 5, 2 ; Pop back to caller
-564 : ST 1, 3(4) ; Argument 2
-565 : LDA 4, 5(5) ; Base of callee frame
-566 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
-567 : ST 1, 1(4) ; Argument 0
-568 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-569 : ST 1, 2(4) ; Argument 1
-570 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-571 : ST 1, 3(4) ; Argument 2
-572 : LD   1, 3(5) ;  Load parameter 'N' into R1
-573 : ST 1, 4(4) ; Argument 3
-574 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-575 : ST 1, 5(4) ; Argument 4
-576 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-577 : ST 1, 6(4) ; Argument 5
-578 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-579 : ST 1, 7(4) ; Argument 6
-580 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-581 : ST 1, 8(4) ; Argument 7
-582 : LDA 6, 586(0) ; Return address
-583 : ST 6, 0(4) ; Store return in callee frame
-584 : ADD 5, 4, 0 ; Push callee frame
-585 : LDA 7, 123(0) ; Call whileLoopFor
-586 : LD 1, 9(5) ; Load function result
-587 : LDC 2, 5(0) ; Caller frame size
-588 : SUB 5, 5, 2 ; Pop back to caller
-589 : ST 1, 4(4) ; Argument 3
-590 : LDA 4, 5(5) ; Base of callee frame
-591 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
-592 : ST 1, 1(4) ; Argument 0
-593 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
-594 : ST 1, 2(4) ; Argument 1
-595 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
-596 : ST 1, 3(4) ; Argument 2
-597 : LD   1, 3(5) ;  Load parameter 'N' into R1
-598 : ST 1, 4(4) ; Argument 3
-599 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-600 : ST 1, 5(4) ; Argument 4
-601 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-602 : ST 1, 6(4) ; Argument 5
-603 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-604 : ST 1, 7(4) ; Argument 6
-605 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-606 : ST 1, 8(4) ; Argument 7
-607 : LDA 6, 611(0) ; Return address
-608 : ST 6, 0(4) ; Store return in callee frame
-609 : ADD 5, 4, 0 ; Push callee frame
-610 : LDA 7, 123(0) ; Call whileLoopFor
-611 : LD 1, 9(5) ; Load function result
-612 : LDC 2, 5(0) ; Caller frame size
-613 : SUB 5, 5, 2 ; Pop back to caller
-614 : ST 1, 5(4) ; Argument 4
+545 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+546 : LDA 4, 5(5) ; Base of callee frame
+547 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+548 : ST 1, 1(4) ; Argument 0
+549 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+550 : ST 1, 2(4) ; Argument 1
+551 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+552 : ST 1, 3(4) ; Argument 2
+553 : LD   1, 3(5) ;  Load parameter 'N' into R1
+554 : ST 1, 4(4) ; Argument 3
+555 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+556 : ST 1, 5(4) ; Argument 4
+557 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+558 : ST 1, 6(4) ; Argument 5
+559 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+560 : ST 1, 7(4) ; Argument 6
+561 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+562 : ST 1, 8(4) ; Argument 7
+563 : LDA 6, 567(0) ; Return address
+564 : ST 6, 0(4) ; Store return in callee frame
+565 : ADD 5, 4, 0 ; Push callee frame
+566 : LDA 7, 123(0) ; Call whileLoopFor
+567 : LD 1, 9(5) ; Load function result
+568 : LDC 2, 5(0) ; Caller frame size
+569 : SUB 5, 5, 2 ; Pop back to caller
+570 : ST 1, 3(4) ; Argument 2
+571 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+572 : LDA 4, 5(5) ; Base of callee frame
+573 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
+574 : ST 1, 1(4) ; Argument 0
+575 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+576 : ST 1, 2(4) ; Argument 1
+577 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+578 : ST 1, 3(4) ; Argument 2
+579 : LD   1, 3(5) ;  Load parameter 'N' into R1
+580 : ST 1, 4(4) ; Argument 3
+581 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+582 : ST 1, 5(4) ; Argument 4
+583 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+584 : ST 1, 6(4) ; Argument 5
+585 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+586 : ST 1, 7(4) ; Argument 6
+587 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+588 : ST 1, 8(4) ; Argument 7
+589 : LDA 6, 593(0) ; Return address
+590 : ST 6, 0(4) ; Store return in callee frame
+591 : ADD 5, 4, 0 ; Push callee frame
+592 : LDA 7, 123(0) ; Call whileLoopFor
+593 : LD 1, 9(5) ; Load function result
+594 : LDC 2, 5(0) ; Caller frame size
+595 : SUB 5, 5, 2 ; Pop back to caller
+596 : ST 1, 4(4) ; Argument 3
+597 : LDA  4, 5(4) ;  Push additional call frame for nested function calls
+598 : LDA 4, 5(5) ; Base of callee frame
+599 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
+600 : ST 1, 1(4) ; Argument 0
+601 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
+602 : ST 1, 2(4) ; Argument 1
+603 : LD   1, 2(5) ;  Load parameter 'xDen' into R1
+604 : ST 1, 3(4) ; Argument 2
+605 : LD   1, 3(5) ;  Load parameter 'N' into R1
+606 : ST 1, 4(4) ; Argument 3
+607 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+608 : ST 1, 5(4) ; Argument 4
+609 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+610 : ST 1, 6(4) ; Argument 5
+611 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+612 : ST 1, 7(4) ; Argument 6
+613 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+614 : ST 1, 8(4) ; Argument 7
 615 : LDA 6, 619(0) ; Return address
 616 : ST 6, 0(4) ; Store return in callee frame
 617 : ADD 5, 4, 0 ; Push callee frame
-618 : LDA 7, 380(0) ; Call fareySelectNum
-619 : LD 1, 6(5) ; Load function result
+618 : LDA 7, 123(0) ; Call whileLoopFor
+619 : LD 1, 9(5) ; Load function result
 620 : LDC 2, 5(0) ; Caller frame size
 621 : SUB 5, 5, 2 ; Pop back to caller
-622 : ST   1, 4(5) ;  Store function result into stack frame
-623 : LD   6, 0(5) ;  Load return address
-624 : LDA  7, 0(6) ;  Return to caller
+622 : ST 1, 5(4) ; Argument 4
+623 : LDA 6, 627(0) ; Return address
+624 : ST 6, 0(4) ; Store return in callee frame
+625 : ADD 5, 4, 0 ; Push callee frame
+626 : LDA 7, 380(0) ; Call fareySelectNum
+627 : LD 1, 6(5) ; Load function result
+628 : LDC 2, 5(0) ; Caller frame size
+629 : SUB 5, 5, 2 ; Pop back to caller
+630 : ST   1, 4(5) ;  Store function result into stack frame
+631 : LD   6, 0(5) ;  Load return address
+632 : LDA  7, 0(6) ;  Return to caller

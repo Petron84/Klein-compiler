@@ -334,26 +334,27 @@
 333 : SUB 5, 5, 2 ; Pop back to caller
 334 : ADD  3, 1, 0 ;  Store left operand into temporary register
 335 : LDA 4, 3(5) ; Base of callee frame
-336 : LDA 4, 3(5) ; Base of callee frame
-337 : LD   1, 1(5) ;  Load parameter 'n' into R1
-338 : ST 1, 1(4) ; Argument 0
-339 : LDA 6, 343(0) ; Return address
-340 : ST 6, 0(4) ; Store return in callee frame
-341 : ADD 5, 4, 0 ; Push callee frame
-342 : LDA 7, 150(0) ; Call reverse
-343 : LD 1, 2(5) ; Load function result
-344 : LDC 2, 3(0) ; Caller frame size
-345 : SUB 5, 5, 2 ; Pop back to caller
-346 : ST 1, 1(4) ; Argument 0
-347 : LDA 6, 351(0) ; Return address
-348 : ST 6, 0(4) ; Store return in callee frame
-349 : ADD 5, 4, 0 ; Push callee frame
-350 : LDA 7, 234(0) ; Call isPrime
-351 : LD 1, 2(5) ; Load function result
-352 : LDC 2, 3(0) ; Caller frame size
-353 : SUB 5, 5, 2 ; Pop back to caller
-354 : ADD  2, 3, 0 ;  Restore left operand
-355 : MUL  1, 2, 1 ;  R1 = left AND right
-356 : ST   1, 2(5) ;  Store function result into stack frame
-357 : LD   6, 0(5) ;  Load return address
-358 : LDA  7, 0(6) ;  Return to caller
+336 : LDA  4, 3(4) ;  Push additional call frame for nested function calls
+337 : LDA 4, 3(5) ; Base of callee frame
+338 : LD   1, 1(5) ;  Load parameter 'n' into R1
+339 : ST 1, 1(4) ; Argument 0
+340 : LDA 6, 344(0) ; Return address
+341 : ST 6, 0(4) ; Store return in callee frame
+342 : ADD 5, 4, 0 ; Push callee frame
+343 : LDA 7, 150(0) ; Call reverse
+344 : LD 1, 2(5) ; Load function result
+345 : LDC 2, 3(0) ; Caller frame size
+346 : SUB 5, 5, 2 ; Pop back to caller
+347 : ST 1, 1(4) ; Argument 0
+348 : LDA 6, 352(0) ; Return address
+349 : ST 6, 0(4) ; Store return in callee frame
+350 : ADD 5, 4, 0 ; Push callee frame
+351 : LDA 7, 234(0) ; Call isPrime
+352 : LD 1, 2(5) ; Load function result
+353 : LDC 2, 3(0) ; Caller frame size
+354 : SUB 5, 5, 2 ; Pop back to caller
+355 : ADD  2, 3, 0 ;  Restore left operand
+356 : MUL  1, 2, 1 ;  R1 = left AND right
+357 : ST   1, 2(5) ;  Store function result into stack frame
+358 : LD   6, 0(5) ;  Load return address
+359 : LDA  7, 0(6) ;  Return to caller
