@@ -208,7 +208,7 @@ class Generator:
                     self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
 
                     self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
-                    self.write("SUB  5, 5, 4", " Restore pointer")
+                    #self.write("SUB  5, 5, 4", " Restore pointer")
 
                     if not callee: # Only store as return value if it is a function return
                         offset = caller_params + 1
