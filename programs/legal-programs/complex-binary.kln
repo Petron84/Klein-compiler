@@ -1,4 +1,4 @@
-function main(m: integer, n : integer ) : boolean
+function main() : boolean
 	((MOD(2,2) * 3) < 4) or (not ((MOD(5,3) * 2) < 5))
 
 function MOD( m : integer, n : integer ) : integer
