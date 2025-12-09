@@ -19,150 +19,142 @@
 18 : LDA 7, 10(0) ; Call print
 19 : LDC 2, 3(0) ; Caller frame size
 20 : SUB 5, 5, 2 ; Pop frame
-21 : LD   1, 1(5) ;  Load parameter 'm' into R1
-22 : LDA 4, 4(5) ; Base of callee frame
+21 : LDA 4, 4(5) ; Base of callee frame
+22 : LD   1, 1(5) ;  Load parameter 'm' into R1
 23 : ST 1, 1(4) ; Store argument 0 in callee
 24 : LD   1, 2(5) ;  Load parameter 'n' into R1
-25 : LDA 4, 4(5) ; Base of callee frame
-26 : ST 1, 2(4) ; Store argument 1 in callee
-27 : LDA 4, 4(5) ; Base of callee frame
-28 : LDA 6, 32(0) ; Return address
-29 : ST 6, 0(4) ; Store return in callee frame
-30 : ADD 5, 4, 0 ; Push callee frame
-31 : LDA 7, 39(0) ; Call mult
-32 : LD   1, 3(5) ;  Load function result
-33 : LDC   2, 4(0) ;  Caller frame size
-34 : SUB   5, 5, 2 ;  Pop back to caller
-35 : ST 1, 3(5) ; Store result into caller’s frame
-36 : LD   1, 3(5) ;  Load return value into register 1
-37 : LD  6, 0(5) ;  Load return address for main function into register 6
-38 : LDA  7, 0(6) ;  Jump to return address of main function
+25 : ST 1, 2(4) ; Store argument 1 in callee
+26 : LDA 6, 30(0) ; Return address
+27 : ST 6, 0(4) ; Store return in callee frame
+28 : ADD 5, 4, 0 ; Push callee frame
+29 : LDA 7, 38(0) ; Call mult
+30 : LD   1, 3(5) ;  Load function result
+31 : LDC   2, 4(0) ;  Caller frame size
+32 : SUB   5, 5, 2 ;  Pop back to caller
+33 : SUB   4, 4, 2 ;  Pop back to caller
+34 : ST 1, 3(5) ; Store result into caller’s frame
+35 : LD   1, 3(5) ;  Load return value into register 1
+36 : LD  6, 0(5) ;  Load return address for main function into register 6
+37 : LDA  7, 0(6) ;  Jump to return address of main function
+38 : LDA 4, 5(5) ; Base of callee frame
 39 : LD   1, 1(5) ;  Load parameter 'm' into R1
-40 : LDA 4, 5(5) ; Base of callee frame
-41 : ST 1, 1(4) ; Store argument 0 in callee
-42 : LD   1, 2(5) ;  Load parameter 'n' into R1
-43 : LDA 4, 5(5) ; Base of callee frame
-44 : ST 1, 2(4) ; Store argument 1 in callee
-45 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-46 : LDA 4, 5(5) ; Base of callee frame
-47 : ST 1, 3(4) ; Store argument 2 in callee
-48 : LDA 4, 5(5) ; Base of callee frame
-49 : LDA 6, 53(0) ; Return address
-50 : ST 6, 0(4) ; Store return in callee frame
-51 : ADD 5, 4, 0 ; Push callee frame
-52 : LDA 7, 59(0) ; Call multWithAccum
-53 : LD   1, 4(5) ;  Load function result
-54 : LDC   2, 5(0) ;  Caller frame size
-55 : SUB   5, 5, 2 ;  Pop back to caller
-56 : ST   1, 3(5) ;  Store function result into stack frame
-57 : LD   6, 0(5) ;  Load return address
-58 : LDA  7, 0(6) ;  Return to caller
-59 : LD   1, 2(5) ;  Load parameter 'n' into R1
-60 : ADD  3, 1, 0 ;  Store left operand into temporary register
-61 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-62 : ADD  2, 3, 0 ;  Restore left operand
-63 : SUB  1, 2, 1 ;  left - right for equality check
-64 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-65 : LDC  1, 0(0) ;  false
-66 : LDA  7, 1(7) ;  skip setting true
-67 : LDC  1, 1(0) ;  true
-68 : JEQ  1, 71(0) ;  If condition is false, jump to ELSE
-69 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-70 : LDA  7, 149(0) ;  Skip ELSE block
-71 : LD   1, 2(5) ;  Load parameter 'n' into R1
-72 : LDA 4, 4(5) ; Base of callee frame
-73 : ST 1, 1(4) ; Store argument 0 in callee
-74 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-75 : LDA 4, 4(5) ; Base of callee frame
-76 : ST 1, 2(4) ; Store argument 1 in callee
-77 : LDA 4, 4(5) ; Base of callee frame
-78 : LDA 6, 82(0) ; Return address
-79 : ST 6, 0(4) ; Store return in callee frame
-80 : ADD 5, 4, 0 ; Push callee frame
-81 : LDA 7, 152(0) ; Call MOD
-82 : LD   1, 3(5) ;  Load function result
-83 : LDC   2, 4(0) ;  Caller frame size
-84 : SUB   5, 5, 2 ;  Pop back to caller
-85 : ADD  3, 1, 0 ;  Store left operand into temporary register
-86 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-87 : ADD  2, 3, 0 ;  Restore left operand
-88 : SUB  1, 2, 1 ;  left - right for equality check
-89 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-90 : LDC  1, 0(0) ;  false
-91 : LDA  7, 1(7) ;  skip setting true
-92 : LDC  1, 1(0) ;  true
-93 : JEQ  1, 124(0) ;  If condition is false, jump to ELSE
-94 : LD   1, 1(5) ;  Load parameter 'm' into R1
-95 : ADD  3, 1, 0 ;  Store left operand into temporary register
-96 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-97 : ADD  2, 3, 0 ;  Restore left operand
-98 : MUL  1, 2, 1 ;  R1 = left * right
-99 : LDA 4, 5(5) ; Base of callee frame
-100 : ST 1, 1(4) ; Store argument 0 in callee
-101 : LD   1, 2(5) ;  Load parameter 'n' into R1
-102 : ADD  3, 1, 0 ;  Store left operand into temporary register
-103 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-104 : ADD  2, 3, 0 ;  Restore left operand
-105 : DIV  1, 2, 1 ;  R1 = left / right
-106 : LDA 4, 5(5) ; Base of callee frame
-107 : ST 1, 2(4) ; Store argument 1 in callee
-108 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-109 : ADD  3, 1, 0 ;  Store left operand into temporary register
-110 : LD   1, 1(5) ;  Load parameter 'm' into R1
-111 : ADD  2, 3, 0 ;  Restore left operand
-112 : ADD  1, 2, 1 ;  R1 = left + right
-113 : LDA 4, 5(5) ; Base of callee frame
-114 : ST 1, 3(4) ; Store argument 2 in callee
-115 : LDA 4, 5(5) ; Base of callee frame
-116 : LDA 6, 120(0) ; Return address
-117 : ST 6, 0(4) ; Store return in callee frame
-118 : ADD 5, 4, 0 ; Push callee frame
-119 : LDA 7, 59(0) ; Call multWithAccum
-120 : LD   1, 4(5) ;  Load function result
-121 : LDC   2, 5(0) ;  Caller frame size
-122 : SUB   5, 5, 2 ;  Pop back to caller
-123 : LDA  7, 149(0) ;  Skip ELSE block
-124 : LD   1, 1(5) ;  Load parameter 'm' into R1
-125 : ADD  3, 1, 0 ;  Store left operand into temporary register
-126 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-127 : ADD  2, 3, 0 ;  Restore left operand
-128 : MUL  1, 2, 1 ;  R1 = left * right
-129 : LDA 4, 5(5) ; Base of callee frame
-130 : ST 1, 1(4) ; Store argument 0 in callee
-131 : LD   1, 2(5) ;  Load parameter 'n' into R1
-132 : ADD  3, 1, 0 ;  Store left operand into temporary register
-133 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-134 : ADD  2, 3, 0 ;  Restore left operand
-135 : DIV  1, 2, 1 ;  R1 = left / right
-136 : LDA 4, 5(5) ; Base of callee frame
-137 : ST 1, 2(4) ; Store argument 1 in callee
-138 : LD   1, 3(5) ;  Load parameter 'accum' into R1
-139 : LDA 4, 5(5) ; Base of callee frame
-140 : ST 1, 3(4) ; Store argument 2 in callee
-141 : LDA 4, 5(5) ; Base of callee frame
-142 : LDA 6, 146(0) ; Return address
-143 : ST 6, 0(4) ; Store return in callee frame
-144 : ADD 5, 4, 0 ; Push callee frame
-145 : LDA 7, 59(0) ; Call multWithAccum
-146 : LD   1, 4(5) ;  Load function result
-147 : LDC   2, 5(0) ;  Caller frame size
-148 : SUB   5, 5, 2 ;  Pop back to caller
-149 : ST   1, 4(5) ;  Store function result into stack frame
-150 : LD   6, 0(5) ;  Load return address
-151 : LDA  7, 0(6) ;  Return to caller
-152 : LD   1, 1(5) ;  Load parameter 'm' into R1
-153 : ADD  3, 1, 0 ;  Store left operand into temporary register
-154 : LD   1, 1(5) ;  Load parameter 'm' into R1
-155 : ADD  3, 1, 0 ;  Store left operand into temporary register
-156 : LD   1, 2(5) ;  Load parameter 'n' into R1
-157 : ADD  2, 3, 0 ;  Restore left operand
-158 : DIV  1, 2, 1 ;  R1 = left / right
-159 : ADD  3, 1, 0 ;  Store left operand into temporary register
-160 : LD   1, 2(5) ;  Load parameter 'n' into R1
-161 : ADD  2, 3, 0 ;  Restore left operand
-162 : MUL  1, 2, 1 ;  R1 = left * right
-163 : ADD  2, 3, 0 ;  Restore left operand
-164 : SUB  1, 2, 1 ;  R1 = left - right
-165 : ST   1, 3(5) ;  Store function result into stack frame
-166 : LD   6, 0(5) ;  Load return address
-167 : LDA  7, 0(6) ;  Return to caller
+40 : ST 1, 1(4) ; Store argument 0 in callee
+41 : LD   1, 2(5) ;  Load parameter 'n' into R1
+42 : ST 1, 2(4) ; Store argument 1 in callee
+43 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+44 : ST 1, 3(4) ; Store argument 2 in callee
+45 : LDA 6, 49(0) ; Return address
+46 : ST 6, 0(4) ; Store return in callee frame
+47 : ADD 5, 4, 0 ; Push callee frame
+48 : LDA 7, 56(0) ; Call multWithAccum
+49 : LD   1, 4(5) ;  Load function result
+50 : LDC   2, 5(0) ;  Caller frame size
+51 : SUB   5, 5, 2 ;  Pop back to caller
+52 : SUB   4, 4, 2 ;  Pop back to caller
+53 : ST   1, 3(5) ;  Store function result into stack frame
+54 : LD   6, 0(5) ;  Load return address
+55 : LDA  7, 0(6) ;  Return to caller
+56 : LD   1, 2(5) ;  Load parameter 'n' into R1
+57 : ADD  3, 1, 0 ;  Store left operand into temporary register
+58 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+59 : ADD  2, 3, 0 ;  Restore left operand
+60 : SUB  1, 2, 1 ;  left - right for equality check
+61 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+62 : LDC  1, 0(0) ;  false
+63 : LDA  7, 1(7) ;  skip setting true
+64 : LDC  1, 1(0) ;  true
+65 : JEQ  1, 68(0) ;  If condition is false, jump to ELSE
+66 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+67 : LDA  7, 141(0) ;  Skip ELSE block
+68 : LDA 4, 4(5) ; Base of callee frame
+69 : LD   1, 2(5) ;  Load parameter 'n' into R1
+70 : ST 1, 1(4) ; Store argument 0 in callee
+71 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+72 : ST 1, 2(4) ; Store argument 1 in callee
+73 : LDA 6, 77(0) ; Return address
+74 : ST 6, 0(4) ; Store return in callee frame
+75 : ADD 5, 4, 0 ; Push callee frame
+76 : LDA 7, 144(0) ; Call MOD
+77 : LD   1, 3(5) ;  Load function result
+78 : LDC   2, 4(0) ;  Caller frame size
+79 : SUB   5, 5, 2 ;  Pop back to caller
+80 : SUB   4, 4, 2 ;  Pop back to caller
+81 : ADD  3, 1, 0 ;  Store left operand into temporary register
+82 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+83 : ADD  2, 3, 0 ;  Restore left operand
+84 : SUB  1, 2, 1 ;  left - right for equality check
+85 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+86 : LDC  1, 0(0) ;  false
+87 : LDA  7, 1(7) ;  skip setting true
+88 : LDC  1, 1(0) ;  true
+89 : JEQ  1, 118(0) ;  If condition is false, jump to ELSE
+90 : LDA 4, 5(5) ; Base of callee frame
+91 : LD   1, 1(5) ;  Load parameter 'm' into R1
+92 : ADD  3, 1, 0 ;  Store left operand into temporary register
+93 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+94 : ADD  2, 3, 0 ;  Restore left operand
+95 : MUL  1, 2, 1 ;  R1 = left * right
+96 : ST 1, 1(4) ; Store argument 0 in callee
+97 : LD   1, 2(5) ;  Load parameter 'n' into R1
+98 : ADD  3, 1, 0 ;  Store left operand into temporary register
+99 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+100 : ADD  2, 3, 0 ;  Restore left operand
+101 : DIV  1, 2, 1 ;  R1 = left / right
+102 : ST 1, 2(4) ; Store argument 1 in callee
+103 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+104 : ADD  3, 1, 0 ;  Store left operand into temporary register
+105 : LD   1, 1(5) ;  Load parameter 'm' into R1
+106 : ADD  2, 3, 0 ;  Restore left operand
+107 : ADD  1, 2, 1 ;  R1 = left + right
+108 : ST 1, 3(4) ; Store argument 2 in callee
+109 : LDA 6, 113(0) ; Return address
+110 : ST 6, 0(4) ; Store return in callee frame
+111 : ADD 5, 4, 0 ; Push callee frame
+112 : LDA 7, 56(0) ; Call multWithAccum
+113 : LD   1, 4(5) ;  Load function result
+114 : LDC   2, 5(0) ;  Caller frame size
+115 : SUB   5, 5, 2 ;  Pop back to caller
+116 : SUB   4, 4, 2 ;  Pop back to caller
+117 : LDA  7, 141(0) ;  Skip ELSE block
+118 : LDA 4, 5(5) ; Base of callee frame
+119 : LD   1, 1(5) ;  Load parameter 'm' into R1
+120 : ADD  3, 1, 0 ;  Store left operand into temporary register
+121 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+122 : ADD  2, 3, 0 ;  Restore left operand
+123 : MUL  1, 2, 1 ;  R1 = left * right
+124 : ST 1, 1(4) ; Store argument 0 in callee
+125 : LD   1, 2(5) ;  Load parameter 'n' into R1
+126 : ADD  3, 1, 0 ;  Store left operand into temporary register
+127 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+128 : ADD  2, 3, 0 ;  Restore left operand
+129 : DIV  1, 2, 1 ;  R1 = left / right
+130 : ST 1, 2(4) ; Store argument 1 in callee
+131 : LD   1, 3(5) ;  Load parameter 'accum' into R1
+132 : ST 1, 3(4) ; Store argument 2 in callee
+133 : LDA 6, 137(0) ; Return address
+134 : ST 6, 0(4) ; Store return in callee frame
+135 : ADD 5, 4, 0 ; Push callee frame
+136 : LDA 7, 56(0) ; Call multWithAccum
+137 : LD   1, 4(5) ;  Load function result
+138 : LDC   2, 5(0) ;  Caller frame size
+139 : SUB   5, 5, 2 ;  Pop back to caller
+140 : SUB   4, 4, 2 ;  Pop back to caller
+141 : ST   1, 4(5) ;  Store function result into stack frame
+142 : LD   6, 0(5) ;  Load return address
+143 : LDA  7, 0(6) ;  Return to caller
+144 : LD   1, 1(5) ;  Load parameter 'm' into R1
+145 : ADD  3, 1, 0 ;  Store left operand into temporary register
+146 : LD   1, 1(5) ;  Load parameter 'm' into R1
+147 : ADD  3, 1, 0 ;  Store left operand into temporary register
+148 : LD   1, 2(5) ;  Load parameter 'n' into R1
+149 : ADD  2, 3, 0 ;  Restore left operand
+150 : DIV  1, 2, 1 ;  R1 = left / right
+151 : ADD  3, 1, 0 ;  Store left operand into temporary register
+152 : LD   1, 2(5) ;  Load parameter 'n' into R1
+153 : ADD  2, 3, 0 ;  Restore left operand
+154 : MUL  1, 2, 1 ;  R1 = left * right
+155 : ADD  2, 3, 0 ;  Restore left operand
+156 : SUB  1, 2, 1 ;  R1 = left - right
+157 : ST   1, 3(5) ;  Store function result into stack frame
+158 : LD   6, 0(5) ;  Load return address
+159 : LDA  7, 0(6) ;  Return to caller
