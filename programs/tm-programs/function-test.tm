@@ -54,24 +54,26 @@
 53 : LD 1, 2(5) ; Load function result
 54 : LDC 2, 4(0) ; Caller frame size
 55 : SUB 5, 5, 2 ; Pop back to caller
-56 : ST 1, 1(4) ; Argument 1
-57 : LDA 4, 4(5) ; Base of callee frame
-58 : ST 1, 1(4) ; Argument 1
-59 : LDA 6, 63(0) ; Return address
-60 : ST 6, 0(4) ; Store return in callee frame
-61 : ADD 5, 4, 0 ; Push callee frame
-62 : LDA 7, 29(0) ; Call square
-63 : LD 1, 2(5) ; Load function result
-64 : LDC 2, 4(0) ; Caller frame size
-65 : SUB 5, 5, 2 ; Pop back to caller
-66 : ST 1, 2(4) ; Argument 2
-67 : LDA 6, 71(0) ; Return address
-68 : ST 6, 0(4) ; Store return in callee frame
-69 : ADD 5, 4, 0 ; Push callee frame
-70 : LDA 7, 37(0) ; Call multiply
-71 : LD 1, 3(5) ; Load function result
-72 : LDC 2, 4(0) ; Caller frame size
-73 : SUB 5, 5, 2 ; Pop back to caller
-74 : ST   1, 3(5) ;  Store function result into stack frame
-75 : LD   6, 0(5) ;  Load return address
-76 : LDA  7, 0(6) ;  Return to caller
+56 : LDA  4, 4(4) ;  If a function call occurred, push additional callee frame
+57 : ST 1, 1(4) ; Argument 1
+58 : LDA 4, 4(5) ; Base of callee frame
+59 : ST 1, 1(4) ; Argument 1
+60 : LDA 6, 64(0) ; Return address
+61 : ST 6, 0(4) ; Store return in callee frame
+62 : ADD 5, 4, 0 ; Push callee frame
+63 : LDA 7, 29(0) ; Call square
+64 : LD 1, 2(5) ; Load function result
+65 : LDC 2, 4(0) ; Caller frame size
+66 : SUB 5, 5, 2 ; Pop back to caller
+67 : LDA  4, 4(4) ;  If a function call occurred, push additional callee frame
+68 : ST 1, 2(4) ; Argument 2
+69 : LDA 6, 73(0) ; Return address
+70 : ST 6, 0(4) ; Store return in callee frame
+71 : ADD 5, 4, 0 ; Push callee frame
+72 : LDA 7, 37(0) ; Call multiply
+73 : LD 1, 3(5) ; Load function result
+74 : LDC 2, 4(0) ; Caller frame size
+75 : SUB 5, 5, 2 ; Pop back to caller
+76 : ST   1, 3(5) ;  Store function result into stack frame
+77 : LD   6, 0(5) ;  Load return address
+78 : LDA  7, 0(6) ;  Return to caller
