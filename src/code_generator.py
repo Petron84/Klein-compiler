@@ -164,7 +164,6 @@ class Generator:
                 # Frame sizes:
                 # return address + parameters + return slot
                 caller_size = caller_params + 2       # needed for pop
-                callee_size = callee_params + 2       # conceptual only (for reasoning)
 
                 # ------------------------------------------------------------
                 # Special built-in "print": one argument, no return value
@@ -196,14 +195,11 @@ class Generator:
                     args = exp_children[1].children
 
                     # Compute callee frame base ONCE
-                    self.write(f"LDA 4, 0(5)", "Base of callee frame")
+                    self.write(f"LDA 4, {caller_size}(5)", "Base of callee frame")
 
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, f_name, callee=True)   # result → R1
-                        if arg.type == "FUNCTION-CALL":
-                            arg_size = self.symbol_table[arg.children[0].value].parameters[0] + 2
-                            self.write(f"LDA  4, {arg_size}(4)", " If a function call occurred, push additional callee frame")
                         self.write(f"ST 1, {i+1}(4)", f"Argument {i+1}")
 
                     # 2) Install return address and jump
