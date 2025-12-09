@@ -21,60 +21,64 @@
 20 : LDA 6, 24(0) ;  Compute return address
 21 : ST 6, 0(4) ;  Store return address in callee frame
 22 : ADD  5, 4, 0 ;  Update pointer
-23 : LDA 7, 46(0) ;  Call multiply_and_square
+23 : LDA 7, 47(0) ;  Call multiply_and_square
 24 : LD 1, 3(5) ;  Load callee return value into R1
 25 : LDC  4, 4(0) ;  Load frame size
-26 : ST 1, 3(5) ;  Store result into current frame's return slot
-27 : LD   1, 3(5) ;  Load return value into register 1
-28 : LD  6, 0(5) ;  Load return address for main function into register 6
-29 : LDA  7, 0(6) ;  Jump to return address of main function
-30 : LD   1, 1(5) ;  Load parameter 'a' into R1
-31 : ADD  3, 1, 0 ;  Store left operand into temporary register
-32 : LD   1, 1(5) ;  Load parameter 'a' into R1
-33 : ADD  2, 3, 0 ;  Restore left operand
-34 : MUL  1, 2, 1 ;  R1 = left * right
-35 : ST   1, 2(5) ;  Store function result into stack frame
-36 : LD   6, 0(5) ;  Load return address
-37 : LDA  7, 0(6) ;  Return to caller
-38 : LD   1, 1(5) ;  Load parameter 'a' into R1
-39 : ADD  3, 1, 0 ;  Store left operand into temporary register
-40 : LD   1, 2(5) ;  Load parameter 'b' into R1
-41 : ADD  2, 3, 0 ;  Restore left operand
-42 : MUL  1, 2, 1 ;  R1 = left * right
-43 : ST   1, 3(5) ;  Store function result into stack frame
-44 : LD   6, 0(5) ;  Load return address
-45 : LDA  7, 0(6) ;  Return to caller
-46 : LD   1, 1(5) ;  Load parameter 'a' into R1
-47 : LDA  4, 3(5) ; Restore Callee frame base
-48 : ST 1, 1(4) ;  Store argument 0 into callee frame
-49 : LDA  4, 3(5) ; Restore Call frame base
-50 : LDA 6, 54(0) ;  Compute return address
-51 : ST 6, 0(4) ;  Store return address in callee frame
-52 : ADD  5, 4, 0 ;  Update pointer
-53 : LDA 7, 30(0) ;  Call square
-54 : LD 1, 2(5) ;  Load callee return value into R1
-55 : LDC  4, 3(0) ;  Load frame size
-56 : LDA  4, 4(5) ; Restore Callee frame base
-57 : ST 1, 1(4) ;  Store argument 0 into callee frame
-58 : LD   1, 2(5) ;  Load parameter 'b' into R1
-59 : LDA  4, 3(5) ; Restore Callee frame base
-60 : ST 1, 1(4) ;  Store argument 0 into callee frame
-61 : LDA  4, 3(5) ; Restore Call frame base
-62 : LDA 6, 66(0) ;  Compute return address
-63 : ST 6, 0(4) ;  Store return address in callee frame
-64 : ADD  5, 4, 0 ;  Update pointer
-65 : LDA 7, 30(0) ;  Call square
-66 : LD 1, 2(5) ;  Load callee return value into R1
-67 : LDC  4, 3(0) ;  Load frame size
-68 : LDA  4, 4(5) ; Restore Callee frame base
-69 : ST 1, 2(4) ;  Store argument 1 into callee frame
-70 : LDA  4, 4(5) ; Restore Call frame base
-71 : LDA 6, 75(0) ;  Compute return address
-72 : ST 6, 0(4) ;  Store return address in callee frame
-73 : ADD  5, 4, 0 ;  Update pointer
-74 : LDA 7, 38(0) ;  Call multiply
-75 : LD 1, 3(5) ;  Load callee return value into R1
-76 : LDC  4, 4(0) ;  Load frame size
-77 : ST   1, 3(5) ;  Store function result into stack frame
-78 : LD   6, 0(5) ;  Load return address
-79 : LDA  7, 0(6) ;  Return to caller
+26 : SUB  5, 5, 4 ;  Restore pointer
+27 : ST 1, 3(5) ;  Store result into current frame's return slot
+28 : LD   1, 3(5) ;  Load return value into register 1
+29 : LD  6, 0(5) ;  Load return address for main function into register 6
+30 : LDA  7, 0(6) ;  Jump to return address of main function
+31 : LD   1, 1(5) ;  Load parameter 'a' into R1
+32 : ADD  3, 1, 0 ;  Store left operand into temporary register
+33 : LD   1, 1(5) ;  Load parameter 'a' into R1
+34 : ADD  2, 3, 0 ;  Restore left operand
+35 : MUL  1, 2, 1 ;  R1 = left * right
+36 : ST   1, 2(5) ;  Store function result into stack frame
+37 : LD   6, 0(5) ;  Load return address
+38 : LDA  7, 0(6) ;  Return to caller
+39 : LD   1, 1(5) ;  Load parameter 'a' into R1
+40 : ADD  3, 1, 0 ;  Store left operand into temporary register
+41 : LD   1, 2(5) ;  Load parameter 'b' into R1
+42 : ADD  2, 3, 0 ;  Restore left operand
+43 : MUL  1, 2, 1 ;  R1 = left * right
+44 : ST   1, 3(5) ;  Store function result into stack frame
+45 : LD   6, 0(5) ;  Load return address
+46 : LDA  7, 0(6) ;  Return to caller
+47 : LD   1, 1(5) ;  Load parameter 'a' into R1
+48 : LDA  4, 4(5) ; Restore Callee frame base
+49 : ST 1, 1(4) ;  Store argument 0 into callee frame
+50 : LDA  4, 4(5) ; Restore Call frame base
+51 : LDA 6, 55(0) ;  Compute return address
+52 : ST 6, 0(4) ;  Store return address in callee frame
+53 : ADD  5, 4, 0 ;  Update pointer
+54 : LDA 7, 31(0) ;  Call square
+55 : LD 1, 2(5) ;  Load callee return value into R1
+56 : LDC  4, 4(0) ;  Load frame size
+57 : SUB  5, 5, 4 ;  Restore pointer
+58 : LDA  4, 4(5) ; Restore Callee frame base
+59 : ST 1, 1(4) ;  Store argument 0 into callee frame
+60 : LD   1, 2(5) ;  Load parameter 'b' into R1
+61 : LDA  4, 4(5) ; Restore Callee frame base
+62 : ST 1, 1(4) ;  Store argument 0 into callee frame
+63 : LDA  4, 4(5) ; Restore Call frame base
+64 : LDA 6, 68(0) ;  Compute return address
+65 : ST 6, 0(4) ;  Store return address in callee frame
+66 : ADD  5, 4, 0 ;  Update pointer
+67 : LDA 7, 31(0) ;  Call square
+68 : LD 1, 2(5) ;  Load callee return value into R1
+69 : LDC  4, 4(0) ;  Load frame size
+70 : SUB  5, 5, 4 ;  Restore pointer
+71 : LDA  4, 4(5) ; Restore Callee frame base
+72 : ST 1, 2(4) ;  Store argument 1 into callee frame
+73 : LDA  4, 4(5) ; Restore Call frame base
+74 : LDA 6, 78(0) ;  Compute return address
+75 : ST 6, 0(4) ;  Store return address in callee frame
+76 : ADD  5, 4, 0 ;  Update pointer
+77 : LDA 7, 39(0) ;  Call multiply
+78 : LD 1, 3(5) ;  Load callee return value into R1
+79 : LDC  4, 4(0) ;  Load frame size
+80 : SUB  5, 5, 4 ;  Restore pointer
+81 : ST   1, 3(5) ;  Store function result into stack frame
+82 : LD   6, 0(5) ;  Load return address
+83 : LDA  7, 0(6) ;  Return to caller
