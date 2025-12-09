@@ -73,7 +73,7 @@ class Generator:
                 self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
                 self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
 
-            self.write("LDA  6, 2(7)", " Calculate return address")
+            self.write("LDA  6, 3(7)", " Calculate return address")
             self.write("ST   6, 0(5)", " Store return address in main stack frame")
             
             self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
@@ -302,13 +302,13 @@ class Generator:
                         self.write("ADD  1, 2, 1", " R1 = left OR right")
                     case "=":
                         self.write("SUB  1, 2, 1", " left - right for equality check")
-                        self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
+                        self.write("JEQ  1, 3(7)", " If R1 == 0, jump to true")
                         self.write("LDC  1, 0(0)", " false")
                         self.write("LDA  7, 1(7)", " skip setting true")
                         self.write("LDC  1, 1(0)", " true")
                     case "<":
                         self.write("SUB  1, 2, 1", " left - right for less-than check")
-                        self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
+                        self.write("JLT  1, 3(7)", " If R1 < 0, jump to true")
                         self.write("LDC  1, 0(0)", " false")
                         self.write("LDA  7, 1(7)", " skip setting true")
                         self.write("LDC  1, 1(0)", " true")

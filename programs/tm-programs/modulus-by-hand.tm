@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 2(7) ;  Calculate return address
+5 : LDA  6, 3(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -45,7 +45,7 @@
 44 : LD   1, 2(5) ;  Load parameter 'n' into R1
 45 : ADD  2, 3, 0 ;  Restore left operand
 46 : SUB  1, 2, 1 ;  left - right for less-than check
-47 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+47 : JLT  1, 3(7) ;  If R1 < 0, jump to true
 48 : LDC  1, 0(0) ;  false
 49 : LDA  7, 1(7) ;  skip setting true
 50 : LDC  1, 1(0) ;  true

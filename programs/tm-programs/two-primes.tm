@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 2(7) ;  Calculate return address
+5 : LDA  6, 3(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -16,7 +16,7 @@
 15 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
 16 : ADD  2, 3, 0 ;  Restore left operand
 17 : SUB  1, 2, 1 ;  left - right for equality check
-18 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+18 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 19 : LDC  1, 0(0) ;  false
 20 : LDA  7, 1(7) ;  skip setting true
 21 : LDC  1, 1(0) ;  true
@@ -39,7 +39,7 @@
 38 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
 39 : ADD  2, 3, 0 ;  Restore left operand
 40 : SUB  1, 2, 1 ;  left - right for equality check
-41 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+41 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 42 : LDC  1, 0(0) ;  false
 43 : LDA  7, 1(7) ;  skip setting true
 44 : LDC  1, 1(0) ;  true
@@ -62,7 +62,7 @@
 61 : LDC  1, 8(0) ;  Load boolean-literal value into register 1
 62 : ADD  2, 3, 0 ;  Restore left operand
 63 : SUB  1, 2, 1 ;  left - right for equality check
-64 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+64 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 65 : LDC  1, 0(0) ;  false
 66 : LDA  7, 1(7) ;  skip setting true
 67 : LDC  1, 1(0) ;  true
@@ -106,7 +106,7 @@
 105 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 106 : ADD  2, 3, 0 ;  Restore left operand
 107 : SUB  1, 2, 1 ;  left - right for equality check
-108 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+108 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 109 : LDC  1, 0(0) ;  false
 110 : LDA  7, 1(7) ;  skip setting true
 111 : LDC  1, 1(0) ;  true
@@ -186,7 +186,7 @@
 185 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 186 : ADD  2, 3, 0 ;  Restore left operand
 187 : SUB  1, 2, 1 ;  left - right for equality check
-188 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+188 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 189 : LDC  1, 0(0) ;  false
 190 : LDA  7, 1(7) ;  skip setting true
 191 : LDC  1, 1(0) ;  true
@@ -198,7 +198,7 @@
 197 : LD   1, 2(5) ;  Load parameter 'n' into R1
 198 : ADD  2, 3, 0 ;  Restore left operand
 199 : SUB  1, 2, 1 ;  left - right for less-than check
-200 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+200 : JLT  1, 3(7) ;  If R1 < 0, jump to true
 201 : LDC  1, 0(0) ;  false
 202 : LDA  7, 1(7) ;  skip setting true
 203 : LDC  1, 1(0) ;  true
@@ -309,7 +309,7 @@
 308 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 309 : ADD  2, 3, 0 ;  Restore left operand
 310 : SUB  1, 2, 1 ;  left - right for less-than check
-311 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+311 : JLT  1, 3(7) ;  If R1 < 0, jump to true
 312 : LDC  1, 0(0) ;  false
 313 : LDA  7, 1(7) ;  skip setting true
 314 : LDC  1, 1(0) ;  true

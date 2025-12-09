@@ -1,5 +1,5 @@
 0 : LDC  5, 1(0) ;  Set DMEM pointer to main stack frame
-1 : LDA  6, 2(7) ;  Calculate return address
+1 : LDA  6, 3(7) ;  Calculate return address
 2 : ST   6, 0(5) ;  Store return address in main stack frame
 3 : LDA  7, 9(0) ;  Load address of main IMEM block - branch to function
 4 : OUT  1, 0, 0 ;  Return result
@@ -29,7 +29,7 @@
 28 : LD   1, 1(5) ;  Load parameter 'a' into R1
 29 : ADD  2, 3, 0 ;  Restore left operand
 30 : SUB  1, 2, 1 ;  left - right for less-than check
-31 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+31 : JLT  1, 3(7) ;  If R1 < 0, jump to true
 32 : LDC  1, 0(0) ;  false
 33 : LDA  7, 1(7) ;  skip setting true
 34 : LDC  1, 1(0) ;  true
@@ -95,7 +95,7 @@
 94 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 95 : ADD  2, 3, 0 ;  Restore left operand
 96 : SUB  1, 2, 1 ;  left - right for less-than check
-97 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+97 : JLT  1, 3(7) ;  If R1 < 0, jump to true
 98 : LDC  1, 0(0) ;  false
 99 : LDA  7, 1(7) ;  skip setting true
 100 : LDC  1, 1(0) ;  true
@@ -107,7 +107,7 @@
 106 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 107 : ADD  2, 3, 0 ;  Restore left operand
 108 : SUB  1, 2, 1 ;  left - right for equality check
-109 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+109 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 110 : LDC  1, 0(0) ;  false
 111 : LDA  7, 1(7) ;  skip setting true
 112 : LDC  1, 1(0) ;  true
@@ -179,7 +179,7 @@
 178 : LD   1, 1(5) ;  Load parameter 'x' into R1
 179 : ADD  2, 3, 0 ;  Restore left operand
 180 : SUB  1, 2, 1 ;  left - right for equality check
-181 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+181 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 182 : LDC  1, 0(0) ;  false
 183 : LDA  7, 1(7) ;  skip setting true
 184 : LDC  1, 1(0) ;  true

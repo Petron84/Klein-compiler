@@ -5,7 +5,7 @@
 4 : ST   2, 2(5) ;  Store the argument into stack frame
 5 : LD   2, 3(0) ;  Load CLI arg 3 into register
 6 : ST   2, 3(5) ;  Store the argument into stack frame
-7 : LDA  6, 2(7) ;  Calculate return address
+7 : LDA  6, 3(7) ;  Calculate return address
 8 : ST   6, 0(5) ;  Store return address in main stack frame
 9 : LDA  7, 15(0) ;  Load address of main IMEM block - branch to function
 10 : OUT  1, 0, 0 ;  Return result
@@ -18,7 +18,7 @@
 17 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 18 : ADD  2, 3, 0 ;  Restore left operand
 19 : SUB  1, 2, 1 ;  left - right for equality check
-20 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+20 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
 21 : LDC  1, 0(0) ;  false
 22 : LDA  7, 1(7) ;  skip setting true
 23 : LDC  1, 1(0) ;  true
