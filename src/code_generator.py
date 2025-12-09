@@ -185,15 +185,15 @@ class Generator:
                 else:
                     args = exp_children[1].children
 
+                    self.write(f"LDA  4, {caller_size}(5)", " Base of callee frame")
+
                     # 1) Evaluate all args while 5 still points to *caller* frame
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"LDA 4, {caller_size}(5)", " Base of callee frame")
                         self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
 
                     # 2) Set return address in callee frame and perform the call
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {caller_size}(5)", " Base of callee frame")
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
                     self.write("ST 6, 0(4)", " Store return address")
 
