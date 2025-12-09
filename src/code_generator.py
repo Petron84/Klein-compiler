@@ -202,7 +202,8 @@ class Generator:
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, f_name, callee=True)   # result → R1
                         if arg.type == "FUNCTION-CALL":
-                            self.write(f"LDA  4, {caller_size}(4)", " If a function call occurred, push additional callee frame")
+                            arg_size = self.symbol_table[arg.children[0].value].parameters[0] + 2
+                            self.write(f"LDA  4, {arg_size}(4)", " If a function call occurred, push additional callee frame")
                         self.write(f"ST 1, {i+1}(4)", f"Argument {i+1}")
 
                     # 2) Install return address and jump

@@ -54,7 +54,7 @@
 53 : LD 1, 2(5) ; Load function result
 54 : LDC 2, 4(0) ; Caller frame size
 55 : SUB 5, 5, 2 ; Pop back to caller
-56 : LDA  4, 4(4) ;  If a function call occurred, push additional callee frame
+56 : LDA  4, 3(4) ;  If a function call occurred, push additional callee frame
 57 : ST 1, 1(4) ; Argument 1
 58 : LDA 4, 4(5) ; Base of callee frame
 59 : ST 1, 1(4) ; Argument 1
@@ -65,7 +65,7 @@
 64 : LD 1, 2(5) ; Load function result
 65 : LDC 2, 4(0) ; Caller frame size
 66 : SUB 5, 5, 2 ; Pop back to caller
-67 : LDA  4, 4(4) ;  If a function call occurred, push additional callee frame
+67 : LDA  4, 3(4) ;  If a function call occurred, push additional callee frame
 68 : ST 1, 2(4) ; Argument 2
 69 : LDA 6, 73(0) ; Return address
 70 : ST 6, 0(4) ; Store return in callee frame
