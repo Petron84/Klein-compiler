@@ -3,51 +3,51 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 2(7) ;  Calculate return address
+5 : LDA  6, 4(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
-7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
-8 : OUT  1, 0, 0 ;  Return result
-9 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-10 : OUT  1, 0, 0 ;  Hardcoded print function
-11 : LD   6, 0(5) ;  Load return addess from stack frame.
-12 : LDA  7, 0(6) ;  Jump to return address.
-13 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-14 : ADD  3, 1, 0 ;  Store left operand into temporary register
-15 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-16 : ADD  2, 3, 0 ;  Restore left operand
-17 : SUB  1, 2, 1 ;  left - right for equality check
-18 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-19 : LDC  1, 0(0) ;  false
-20 : LDA  7, 1(7) ;  skip setting true
-21 : LDC  1, 1(0) ;  true
-22 : JEQ  1, 39(0) ;  If condition is false, jump to ELSE
-23 : LDC  1, 2147481647(0) ;  Load boolean-literal value into register 1
-24 : LDA  4, 4(5) ; Restore Callee frame base
-25 : ST 1, 1(5) ;  Store argument 0 into callee frame
-26 : LDC  1, 2047483747(0) ;  Load boolean-literal value into register 1
-27 : LDA  4, 4(5) ; Restore Callee frame base
-28 : ST 1, 2(5) ;  Store argument 1 into callee frame
-29 : LDA  4, 4(5) ; Restore Call frame base
-30 : LDA 6, 34(0) ;  Compute return address
+7 : LDC  4, 4(0) ;  Load size of main stack frame
+8 : ADD  5, 5, 4 ;  Advance R5 to next frame
+9 : LDA  7, 15(0) ;  Load address of main IMEM block - branch to function
+10 : OUT  1, 0, 0 ;  Return result
+11 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+12 : OUT  1, 0, 0 ;  Hardcoded print function
+13 : LD   6, 0(5) ;  Load return addess from stack frame.
+14 : LDA  7, 0(6) ;  Jump to return address.
+15 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
+16 : ADD  3, 1, 0 ;  Store left operand into temporary register
+17 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+18 : ADD  2, 3, 0 ;  Restore left operand
+19 : SUB  1, 2, 1 ;  left - right for equality check
+20 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+21 : LDC  1, 0(0) ;  false
+22 : LDA  7, 1(7) ;  skip setting true
+23 : LDC  1, 1(0) ;  true
+24 : JEQ  1, 40(0) ;  If condition is false, jump to ELSE
+25 : LDA  4, 0(5) ;  Save callee frame base
+26 : LDC  1, 2147481647(0) ;  Load boolean-literal value into register 1
+27 : ST 1, 1(4) ;  Store argument 0 into callee frame
+28 : LDC  1, 2047483747(0) ;  Load boolean-literal value into register 1
+29 : ST 1, 2(4) ;  Store argument 1 into callee frame
+30 : LDA 6, 35(0) ;  Compute return address
 31 : ST 6, 0(4) ;  Store return address in callee frame
-32 : ADD  5, 4, 0 ;  Update pointer
-33 : LDA 7, 162(0) ;  Call factor
-34 : LD 1, 3(5) ;  Load callee return value into R1
-35 : LDC  4, 4(0) ;  Load frame size
-36 : SUB  5, 5, 4 ;  Restore pointer
-37 : ST 1, 3(5) ;  Store result into current frame's return slot
-38 : LDA  7, 54(0) ;  Skip ELSE block
-39 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-40 : LDA  4, 4(5) ; Restore Callee frame base
-41 : ST 1, 1(5) ;  Store argument 0 into callee frame
-42 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
-43 : LDA  4, 4(5) ; Restore Callee frame base
-44 : ST 1, 2(5) ;  Store argument 1 into callee frame
-45 : LDA  4, 4(5) ; Restore Call frame base
-46 : LDA 6, 50(0) ;  Compute return address
-47 : ST 6, 0(4) ;  Store return address in callee frame
-48 : ADD  5, 4, 0 ;  Update pointer
-49 : LDA 7, 162(0) ;  Call factor
+32 : LDA  2, 4(4) ;  Compute end of frame
+33 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+34 : LDA 7, 161(0) ;  Call factor
+35 : LD 1, 3(5) ;  Load callee return value into R1
+36 : LDC  4, 4(0) ;  Load frame size
+37 : SUB  5, 5, 4 ;  Restore pointer
+38 : ST 1, 3(5) ;  Store result into current frame's return slot
+39 : LDA  7, 54(0) ;  Skip ELSE block
+40 : LDA  4, 0(5) ;  Save callee frame base
+41 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
+42 : ST 1, 1(4) ;  Store argument 0 into callee frame
+43 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
+44 : ST 1, 2(4) ;  Store argument 1 into callee frame
+45 : LDA 6, 50(0) ;  Compute return address
+46 : ST 6, 0(4) ;  Store return address in callee frame
+47 : LDA  2, 4(4) ;  Compute end of frame
+48 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+49 : LDA 7, 161(0) ;  Call factor
 50 : LD 1, 3(5) ;  Load callee return value into R1
 51 : LDC  4, 4(0) ;  Load frame size
 52 : SUB  5, 5, 4 ;  Restore pointer
@@ -66,130 +66,128 @@
 65 : LDC  1, 1(0) ;  true
 66 : JEQ  1, 69(0) ;  If condition is false, jump to ELSE
 67 : LD   1, 1(5) ;  Load parameter 'a' into R1
-68 : LDA  7, 87(0) ;  Skip ELSE block
-69 : LD   1, 1(5) ;  Load parameter 'a' into R1
-70 : ADD  3, 1, 0 ;  Store left operand into temporary register
-71 : LD   1, 2(5) ;  Load parameter 'b' into R1
-72 : ADD  2, 3, 0 ;  Restore left operand
-73 : SUB  1, 2, 1 ;  R1 = left - right
-74 : LDA  4, 4(5) ; Restore Callee frame base
-75 : ST 1, 1(5) ;  Store argument 0 into callee frame
+68 : LDA  7, 86(0) ;  Skip ELSE block
+69 : LDA  4, 0(5) ;  Save callee frame base
+70 : LD   1, 1(5) ;  Load parameter 'a' into R1
+71 : ADD  3, 1, 0 ;  Store left operand into temporary register
+72 : LD   1, 2(5) ;  Load parameter 'b' into R1
+73 : ADD  2, 3, 0 ;  Restore left operand
+74 : SUB  1, 2, 1 ;  R1 = left - right
+75 : ST 1, 1(4) ;  Store argument 0 into callee frame
 76 : LD   1, 2(5) ;  Load parameter 'b' into R1
-77 : LDA  4, 4(5) ; Restore Callee frame base
-78 : ST 1, 2(5) ;  Store argument 1 into callee frame
-79 : LDA  4, 4(5) ; Restore Call frame base
-80 : LDA 6, 84(0) ;  Compute return address
-81 : ST 6, 0(4) ;  Store return address in callee frame
-82 : ADD  5, 4, 0 ;  Update pointer
-83 : LDA 7, 57(0) ;  Call remainder
-84 : LD 1, 3(5) ;  Load callee return value into R1
-85 : LDC  4, 4(0) ;  Load frame size
-86 : SUB  5, 5, 4 ;  Restore pointer
-87 : ST   1, 3(5) ;  Store function result into stack frame
-88 : LD   6, 0(5) ;  Load return address
-89 : LDA  7, 0(6) ;  Return to caller
-90 : LD   1, 2(5) ;  Load parameter 'b' into R1
-91 : ADD  3, 1, 0 ;  Store left operand into temporary register
-92 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
-93 : ADD  2, 3, 0 ;  Restore left operand
-94 : SUB  1, 2, 1 ;  left - right for equality check
-95 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-96 : LDC  1, 0(0) ;  false
-97 : LDA  7, 1(7) ;  skip setting true
-98 : LDC  1, 1(0) ;  true
-99 : JEQ  1, 102(0) ;  If condition is false, jump to ELSE
-100 : LD   1, 1(5) ;  Load parameter 'a' into R1
-101 : LDA  7, 129(0) ;  Skip ELSE block
+77 : ST 1, 2(4) ;  Store argument 1 into callee frame
+78 : LDA 6, 83(0) ;  Compute return address
+79 : ST 6, 0(4) ;  Store return address in callee frame
+80 : LDA  2, 4(4) ;  Compute end of frame
+81 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+82 : LDA 7, 57(0) ;  Call remainder
+83 : LD 1, 3(5) ;  Load callee return value into R1
+84 : LDC  4, 4(0) ;  Load frame size
+85 : SUB  5, 5, 4 ;  Restore pointer
+86 : ST   1, 3(5) ;  Store function result into stack frame
+87 : LD   6, 0(5) ;  Load return address
+88 : LDA  7, 0(6) ;  Return to caller
+89 : LD   1, 2(5) ;  Load parameter 'b' into R1
+90 : ADD  3, 1, 0 ;  Store left operand into temporary register
+91 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
+92 : ADD  2, 3, 0 ;  Restore left operand
+93 : SUB  1, 2, 1 ;  left - right for equality check
+94 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+95 : LDC  1, 0(0) ;  false
+96 : LDA  7, 1(7) ;  skip setting true
+97 : LDC  1, 1(0) ;  true
+98 : JEQ  1, 101(0) ;  If condition is false, jump to ELSE
+99 : LD   1, 1(5) ;  Load parameter 'a' into R1
+100 : LDA  7, 128(0) ;  Skip ELSE block
+101 : LDA  4, 0(5) ;  Save callee frame base
 102 : LD   1, 2(5) ;  Load parameter 'b' into R1
-103 : LDA  4, 4(5) ; Restore Callee frame base
-104 : ST 1, 1(5) ;  Store argument 0 into callee frame
+103 : ST 1, 1(4) ;  Store argument 0 into callee frame
+104 : LDA  4, 0(5) ;  Save callee frame base
 105 : LD   1, 1(5) ;  Load parameter 'a' into R1
-106 : LDA  4, 4(5) ; Restore Callee frame base
-107 : ST 1, 1(5) ;  Store argument 0 into callee frame
-108 : LD   1, 2(5) ;  Load parameter 'b' into R1
-109 : LDA  4, 4(5) ; Restore Callee frame base
-110 : ST 1, 2(5) ;  Store argument 1 into callee frame
-111 : LDA  4, 4(5) ; Restore Call frame base
-112 : LDA 6, 116(0) ;  Compute return address
-113 : ST 6, 0(4) ;  Store return address in callee frame
-114 : ADD  5, 4, 0 ;  Update pointer
-115 : LDA 7, 57(0) ;  Call remainder
-116 : LD 1, 3(5) ;  Load callee return value into R1
-117 : LDC  4, 4(0) ;  Load frame size
-118 : SUB  5, 5, 4 ;  Restore pointer
-119 : LDA  4, 4(5) ; Restore Callee frame base
-120 : ST 1, 2(5) ;  Store argument 1 into callee frame
-121 : LDA  4, 4(5) ; Restore Call frame base
-122 : LDA 6, 126(0) ;  Compute return address
-123 : ST 6, 0(4) ;  Store return address in callee frame
-124 : ADD  5, 4, 0 ;  Update pointer
-125 : LDA 7, 90(0) ;  Call gcd
-126 : LD 1, 3(5) ;  Load callee return value into R1
-127 : LDC  4, 4(0) ;  Load frame size
-128 : SUB  5, 5, 4 ;  Restore pointer
-129 : ST   1, 3(5) ;  Store function result into stack frame
-130 : LD   6, 0(5) ;  Load return address
-131 : LDA  7, 0(6) ;  Return to caller
-132 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-133 : ADD  3, 1, 0 ;  Store left operand into temporary register
-134 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
-135 : ADD  2, 3, 0 ;  Restore left operand
-136 : DIV  1, 2, 1 ;  R1 = left / right
-137 : LDA  4, 5(5) ;  Update DMEM pointer
-138 : LDA 6, 142(0) ;  Compute return address
-139 : ST   6, 0(4) ;  Store return address
-140 : ADD  5, 4, 0 ;  Updated Pointer
-141 : LDA  7, 10(0) ; Call print
-142 : LDC  4, 5(0) ;  Load frame size
-143 : SUB  5, 5, 4 ;  Restore pointer
-144 : ST   1, 4(5) ;  Store function result into stack frame
-145 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
-146 : ADD  3, 1, 0 ;  Store left operand into temporary register
-147 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
-148 : ADD  2, 3, 0 ;  Restore left operand
-149 : DIV  1, 2, 1 ;  R1 = left / right
-150 : LDA  4, 5(5) ;  Update DMEM pointer
-151 : LDA 6, 155(0) ;  Compute return address
-152 : ST   6, 0(4) ;  Store return address
-153 : ADD  5, 4, 0 ;  Updated Pointer
-154 : LDA  7, 10(0) ; Call print
-155 : LDC  4, 5(0) ;  Load frame size
-156 : SUB  5, 5, 4 ;  Restore pointer
-157 : ST   1, 4(5) ;  Store function result into stack frame
-158 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
-159 : ST   1, 4(5) ;  Store function result into stack frame
-160 : LD   6, 0(5) ;  Load return address
-161 : LDA  7, 0(6) ;  Return to caller
+106 : ST 1, 1(4) ;  Store argument 0 into callee frame
+107 : LD   1, 2(5) ;  Load parameter 'b' into R1
+108 : ST 1, 2(4) ;  Store argument 1 into callee frame
+109 : LDA 6, 114(0) ;  Compute return address
+110 : ST 6, 0(4) ;  Store return address in callee frame
+111 : LDA  2, 4(4) ;  Compute end of frame
+112 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+113 : LDA 7, 57(0) ;  Call remainder
+114 : LD 1, 3(5) ;  Load callee return value into R1
+115 : LDC  4, 4(0) ;  Load frame size
+116 : SUB  5, 5, 4 ;  Restore pointer
+117 : LDC  2, 4(0) ;  Stores arg frame size
+118 : SUB  5, 5, 2 ;  Pop frame
+119 : ST 1, 2(4) ;  Store argument 1 into callee frame
+120 : LDA 6, 125(0) ;  Compute return address
+121 : ST 6, 0(4) ;  Store return address in callee frame
+122 : LDA  2, 4(4) ;  Compute end of frame
+123 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+124 : LDA 7, 89(0) ;  Call gcd
+125 : LD 1, 3(5) ;  Load callee return value into R1
+126 : LDC  4, 4(0) ;  Load frame size
+127 : SUB  5, 5, 4 ;  Restore pointer
+128 : ST   1, 3(5) ;  Store function result into stack frame
+129 : LD   6, 0(5) ;  Load return address
+130 : LDA  7, 0(6) ;  Return to caller
+131 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
+132 : ADD  3, 1, 0 ;  Store left operand into temporary register
+133 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
+134 : ADD  2, 3, 0 ;  Restore left operand
+135 : DIV  1, 2, 1 ;  R1 = left / right
+136 : LDA  4, 3(5) ;  Update DMEM pointer
+137 : LDA 6, 141(0) ;  Compute return address
+138 : ST   6, 0(4) ;  Store return address
+139 : ADD  5, 4, 0 ;  Updated Pointer
+140 : LDA  7, 12(0) ; Call print
+141 : LDC  4, 3(0) ;  Load frame size
+142 : SUB  5, 5, 4 ;  Restore pointer
+143 : ST   1, 4(5) ;  Store function result into stack frame
+144 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
+145 : ADD  3, 1, 0 ;  Store left operand into temporary register
+146 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
+147 : ADD  2, 3, 0 ;  Restore left operand
+148 : DIV  1, 2, 1 ;  R1 = left / right
+149 : LDA  4, 3(5) ;  Update DMEM pointer
+150 : LDA 6, 154(0) ;  Compute return address
+151 : ST   6, 0(4) ;  Store return address
+152 : ADD  5, 4, 0 ;  Updated Pointer
+153 : LDA  7, 12(0) ; Call print
+154 : LDC  4, 3(0) ;  Load frame size
+155 : SUB  5, 5, 4 ;  Restore pointer
+156 : ST   1, 4(5) ;  Store function result into stack frame
+157 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
+158 : ST   1, 4(5) ;  Store function result into stack frame
+159 : LD   6, 0(5) ;  Load return address
+160 : LDA  7, 0(6) ;  Return to caller
+161 : LDA  4, 0(5) ;  Save callee frame base
 162 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-163 : LDA  4, 4(5) ; Restore Callee frame base
-164 : ST 1, 1(5) ;  Store argument 0 into callee frame
-165 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
-166 : LDA  4, 4(5) ; Restore Callee frame base
-167 : ST 1, 2(5) ;  Store argument 1 into callee frame
-168 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
-169 : LDA  4, 4(5) ; Restore Callee frame base
-170 : ST 1, 1(5) ;  Store argument 0 into callee frame
-171 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
-172 : LDA  4, 4(5) ; Restore Callee frame base
-173 : ST 1, 2(5) ;  Store argument 1 into callee frame
-174 : LDA  4, 4(5) ; Restore Call frame base
-175 : LDA 6, 179(0) ;  Compute return address
-176 : ST 6, 0(4) ;  Store return address in callee frame
-177 : ADD  5, 4, 0 ;  Update pointer
-178 : LDA 7, 90(0) ;  Call gcd
-179 : LD 1, 3(5) ;  Load callee return value into R1
-180 : LDC  4, 4(0) ;  Load frame size
-181 : SUB  5, 5, 4 ;  Restore pointer
-182 : LDA  4, 4(5) ; Restore Callee frame base
-183 : ST 1, 3(5) ;  Store argument 2 into callee frame
-184 : LDA  4, 4(5) ; Restore Call frame base
-185 : LDA 6, 189(0) ;  Compute return address
-186 : ST 6, 0(4) ;  Store return address in callee frame
-187 : ADD  5, 4, 0 ;  Update pointer
-188 : LDA 7, 132(0) ;  Call displayAndPrint
-189 : LD 1, 4(5) ;  Load callee return value into R1
-190 : LDC  4, 4(0) ;  Load frame size
-191 : SUB  5, 5, 4 ;  Restore pointer
-192 : ST   1, 3(5) ;  Store function result into stack frame
-193 : LD   6, 0(5) ;  Load return address
-194 : LDA  7, 0(6) ;  Return to caller
+163 : ST 1, 1(4) ;  Store argument 0 into callee frame
+164 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
+165 : ST 1, 2(4) ;  Store argument 1 into callee frame
+166 : LDA  4, 0(5) ;  Save callee frame base
+167 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
+168 : ST 1, 1(4) ;  Store argument 0 into callee frame
+169 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
+170 : ST 1, 2(4) ;  Store argument 1 into callee frame
+171 : LDA 6, 176(0) ;  Compute return address
+172 : ST 6, 0(4) ;  Store return address in callee frame
+173 : LDA  2, 4(4) ;  Compute end of frame
+174 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+175 : LDA 7, 89(0) ;  Call gcd
+176 : LD 1, 3(5) ;  Load callee return value into R1
+177 : LDC  4, 4(0) ;  Load frame size
+178 : SUB  5, 5, 4 ;  Restore pointer
+179 : LDC  2, 4(0) ;  Stores arg frame size
+180 : SUB  5, 5, 2 ;  Pop frame
+181 : ST 1, 3(4) ;  Store argument 2 into callee frame
+182 : LDA 6, 187(0) ;  Compute return address
+183 : ST 6, 0(4) ;  Store return address in callee frame
+184 : LDA  2, 5(4) ;  Compute end of frame
+185 : ADD  5, 2, 0 ;  Advance pointer to end of frame
+186 : LDA 7, 131(0) ;  Call displayAndPrint
+187 : LD 1, 4(5) ;  Load callee return value into R1
+188 : LDC  4, 5(0) ;  Load frame size
+189 : SUB  5, 5, 4 ;  Restore pointer
+190 : ST   1, 3(5) ;  Store function result into stack frame
+191 : LD   6, 0(5) ;  Load return address
+192 : LDA  7, 0(6) ;  Return to caller
