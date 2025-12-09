@@ -44,7 +44,7 @@
 43 : LD   6, 0(5) ;  Load return address
 44 : LDA  7, 0(6) ;  Return to caller
 45 : LDA 4, 4(5) ; Base of callee frame
-46 : LDA  4, 4(4) ;  Push additional call frame for nested function calls
+46 : LDA  5, 0(4) ;  Update callee frame base
 47 : LDA 4, 4(5) ; Base of callee frame
 48 : LD   1, 1(5) ;  Load parameter 'a' into R1
 49 : ST 1, 1(4) ; Argument 0
@@ -56,7 +56,7 @@
 55 : LDC 2, 4(0) ; Caller frame size
 56 : SUB 5, 5, 2 ; Pop back to caller
 57 : ST 1, 1(4) ; Argument 0
-58 : LDA  4, 4(4) ;  Push additional call frame for nested function calls
+58 : LDA  5, 0(4) ;  Update callee frame base
 59 : LDA 4, 4(5) ; Base of callee frame
 60 : LD   1, 2(5) ;  Load parameter 'b' into R1
 61 : ST 1, 1(4) ; Argument 0
