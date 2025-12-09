@@ -182,19 +182,18 @@ class Generator:
                     
                     args = exp_children[1].children
 
+                    self.write(f"LDA  4, {callee_size}(5)", " Compute callee frame size")
+                    self.write("ADD  5, 4, 0", " Reserve callee frame on DMEM")
+
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"LDA  4, {callee_size}(5)", "Restore Callee frame base")
-                        self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
+                        self.write(f"ST 1, {i+1}(5)", f" Store argument {i} into callee frame")
 
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1
 
-                    self.write(f"LDA  4, {callee_size}(5)", "Restore Call frame base")
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
-                    self.write("ST 6, 0(4)", " Store return address in callee frame")
-
-                    self.write("ADD  5, 4, 0", " Update pointer")
+                    self.write("ST 6, 0(5)", " Store return address in callee frame")
 
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
