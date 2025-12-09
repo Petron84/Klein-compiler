@@ -180,7 +180,7 @@ class Generator:
                     self.write("SUB  5, 5, 4", " Restore pointer")
                     
                 else:
-                    self.write("LDA  5, 0(5)", " Save callee frame base")
+                    self.write("LDA  4, 0(5)", " Save callee frame base")
                     
                     args = exp_children[1].children
 
