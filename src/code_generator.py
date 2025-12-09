@@ -219,7 +219,6 @@ class Generator:
 
                     self.write(f"LDC   2, {callee_size}(0)", " Caller frame size")
                     self.write("SUB   5, 5, 2", " Pop back to caller")
-                    self.write("SUB   4, 4, 2", " Pop back to caller")
 
                     # 4) If we are PRODUCING the caller’s own value, store it
                     if not callee:
