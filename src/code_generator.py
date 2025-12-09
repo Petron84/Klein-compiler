@@ -200,10 +200,8 @@ class Generator:
 
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
-                        if arg.type == "FUNCTION-CALL":
-                            self.write(f"LDA  5, 0(4)", " Update callee frame base")
-                        self.instruction_rules(arg, curr_function, callee=True)   # result → R1
-                        self.write(f"ST 1, {i+1}(4)", f"Argument {i}")
+                        self.instruction_rules(arg, f_name, callee=True)   # result → R1
+                        self.write(f"ST 1, {i+1}(4)", f"Argument {i+1}")
 
                     # 2) Install return address and jump
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
