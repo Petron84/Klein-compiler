@@ -201,7 +201,7 @@ class Generator:
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)   # result → R1
-                        self.write(f"ST 1, {i+1}(5)", f"Store evaluated argument {i}")
+                        self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee")
 
                     # 2) Install return address and jump
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1

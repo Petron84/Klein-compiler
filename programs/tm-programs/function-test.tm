@@ -13,9 +13,9 @@
 12 : LDA  7, 0(6) ;  Jump to return address.
 13 : LDA 4, 4(5) ; Base of callee frame
 14 : LD   1, 1(5) ;  Load parameter 'a' into R1
-15 : ST 1, 1(5) ; Store evaluated argument 0
+15 : ST 1, 1(4) ; Store argument 0 in callee
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
-17 : ST 1, 2(5) ; Store evaluated argument 1
+17 : ST 1, 2(4) ; Store argument 1 in callee
 18 : LDA 6, 22(0) ; Return address
 19 : ST 6, 0(4) ; Store return in callee frame
 20 : ADD 5, 4, 0 ; Push callee frame
@@ -46,7 +46,7 @@
 45 : LDA 4, 4(5) ; Base of callee frame
 46 : LDA 4, 4(5) ; Base of callee frame
 47 : LD   1, 1(5) ;  Load parameter 'a' into R1
-48 : ST 1, 1(5) ; Store evaluated argument 0
+48 : ST 1, 1(4) ; Store argument 0 in callee
 49 : LDA 6, 53(0) ; Return address
 50 : ST 6, 0(4) ; Store return in callee frame
 51 : ADD 5, 4, 0 ; Push callee frame
@@ -54,10 +54,10 @@
 53 : LD 1, 2(5) ; Load function result
 54 : LDC 2, 4(0) ; Caller frame size
 55 : SUB 5, 5, 2 ; Pop back to caller
-56 : ST 1, 1(5) ; Store evaluated argument 0
+56 : ST 1, 1(4) ; Store argument 0 in callee
 57 : LDA 4, 4(5) ; Base of callee frame
 58 : LD   1, 2(5) ;  Load parameter 'b' into R1
-59 : ST 1, 1(5) ; Store evaluated argument 0
+59 : ST 1, 1(4) ; Store argument 0 in callee
 60 : LDA 6, 64(0) ; Return address
 61 : ST 6, 0(4) ; Store return in callee frame
 62 : ADD 5, 4, 0 ; Push callee frame
@@ -65,7 +65,7 @@
 64 : LD 1, 2(5) ; Load function result
 65 : LDC 2, 4(0) ; Caller frame size
 66 : SUB 5, 5, 2 ; Pop back to caller
-67 : ST 1, 2(5) ; Store evaluated argument 1
+67 : ST 1, 2(4) ; Store argument 1 in callee
 68 : LDA 6, 72(0) ; Return address
 69 : ST 6, 0(4) ; Store return in callee frame
 70 : ADD 5, 4, 0 ; Push callee frame
