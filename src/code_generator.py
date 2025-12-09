@@ -192,7 +192,7 @@ class Generator:
                     temp_label = f"!return_{self.label_id}"
                     self.label_id += 1
 
-                    self.write(f"LDA  4, {caller_size}(5)", "Restore Call frame base")
+                    self.write(f"LDA  4, {callee_offset}(5)", "Restore Call frame base")
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
                     self.write("ST 6, 0(4)", " Store return address in callee frame")
 
