@@ -156,59 +156,63 @@ class Generator:
         match exp_type:
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
-
                 callee_params = self.symbol_table[f_name].parameters[0]
                 caller_params = self.symbol_table[curr_function].parameters[0]
-                callee_size = caller_params + 2
-            
-                if f_name== "print":
-                    self.instruction_rules(exp_children[1], curr_function,callee=True)
 
-                    self.write(f"LDA  4, {callee_size}(5)", " Update DMEM pointer")
+                caller_size = caller_params + 2     # size of *current* (caller) frame
+                callee_size = callee_params + 2     # size of *callee* frame
 
-                    temp_label = f"!return_{self.label_id}"
-                    self.label_id += 1
+                if f_name == "print":
+                    # Evaluate argument expression while 5 still points to *caller* frame
+                    self.instruction_rules(exp_children[1], curr_function, callee=True)
 
+                    # Base of callee frame lives right above caller frame
+                    self.write(f"LDA 4, {caller_size}(5)", " Base of callee frame")
+                    # Put return address in callee frame
+                    temp_label = f"!return_{self.label_id}"; self.label_id += 1
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
+                    self.write("ST 6, 0(4)", " Store return address")
 
-                    self.write("ST   6, 0(4)", " Store return address")
-                    self.write("ADD  5, 4, 0", " Updated Pointer")
-                    self.write("LDA  7, @print(0)", "Call print")
+                    # Switch to callee frame and call
+                    self.write("ADD 5, 4, 0", " Switch frame pointer to callee")
+                    self.write("LDA 7, @print(0)", " Call print")
+
+                    # Return label & restore pointer (subtract callee size!)
                     self.placeholders[temp_label] = self.line_counter
-                    self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
-                    self.write("SUB  5, 5, 4", " Restore pointer")
-                    
+                    self.write(f"LDC 4, {callee_size}(0)", " Load callee frame size")
+                    self.write("SUB 5, 5, 4", " Restore frame pointer to caller")
+
                 else:
-                    
                     args = exp_children[1].children
 
-                    self.write(f"LDA  4, {callee_size}(5)", " Compute callee frame size")
-                    self.write("ADD  5, 4, 0", " Reserve callee frame on DMEM")
-
+                    # 1) Evaluate all args while 5 still points to *caller* frame
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)
-                        self.write(f"ST 1, {i+1}(5)", f" Store argument {i} into callee frame")
+                        self.write(f"LDA 4, {caller_size}(5)", " Base of callee frame")
+                        self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
 
-                    temp_label = f"!return_{self.label_id}"
-                    self.label_id += 1
-
+                    # 2) Set return address in callee frame and perform the call
+                    temp_label = f"!return_{self.label_id}"; self.label_id += 1
+                    self.write(f"LDA 4, {caller_size}(5)", " Base of callee frame")
                     self.write(f"LDA 6, {temp_label}(0)", " Compute return address")
-                    self.write("ST 6, 0(5)", " Store return address in callee frame")
+                    self.write("ST 6, 0(4)", " Store return address")
 
+                    self.write("ADD 5, 4, 0", " Switch frame pointer to callee")
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
+                    # 3) On return: read callee's return value then restore pointer
                     self.placeholders[temp_label] = self.line_counter
-
                     call_offset = callee_params + 1
-
                     self.write(f"LD 1, {call_offset}(5)", " Load callee return value into R1")
 
-                    self.write(f"LDC  4, {callee_size}(0)", " Load frame size")
-                    self.write("SUB  5, 5, 4", " Restore pointer")
+                    self.write(f"LDC 4, {callee_size}(0)", " Load callee frame size")
+                    self.write("SUB 5, 5, 4", " Restore frame pointer to caller")
 
-                    if not callee: # Only store as return value if it is a function return
+                    # 4) If this call's value is the function's own return, store it
+                    if not callee:
                         offset = caller_params + 1
                         self.write(f"ST 1, {offset}(5)", " Store result into current frame's return slot")
+
 
             case "INTEGER-LITERAL":
                 value = body.value
