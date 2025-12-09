@@ -8,9 +8,9 @@
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
 9 : LDA 4, 4(5) ; Base of callee frame
-10 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+10 : LDC  1, 2(0) ;  Load integer-literal value into register 1
 11 : ST 1, 1(4) ; Store argument 0 in callee
-12 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+12 : LDC  1, 2(0) ;  Load integer-literal value into register 1
 13 : ST 1, 2(4) ; Store argument 1 in callee
 14 : LDA 6, 18(0) ; Return address
 15 : ST 6, 0(4) ; Store return in callee frame
@@ -21,11 +21,11 @@
 20 : SUB   5, 5, 2 ;  Pop back to caller
 21 : SUB   4, 4, 2 ;  Pop back to caller
 22 : ADD  3, 1, 0 ;  Store left operand into temporary register
-23 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
+23 : LDC  1, 3(0) ;  Load integer-literal value into register 1
 24 : ADD  2, 3, 0 ;  Restore left operand
 25 : MUL  1, 2, 1 ;  R1 = left * right
 26 : ADD  3, 1, 0 ;  Store left operand into temporary register
-27 : LDC  1, 4(0) ;  Load boolean-literal value into register 1
+27 : LDC  1, 4(0) ;  Load integer-literal value into register 1
 28 : ADD  2, 3, 0 ;  Restore left operand
 29 : SUB  1, 2, 1 ;  left - right for less-than check
 30 : JLT  1, 2(7) ;  If R1 < 0, jump to true
@@ -34,9 +34,9 @@
 33 : LDC  1, 1(0) ;  true
 34 : ADD  3, 1, 0 ;  Store left operand into temporary register
 35 : LDA 4, 4(5) ; Base of callee frame
-36 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
+36 : LDC  1, 5(0) ;  Load integer-literal value into register 1
 37 : ST 1, 1(4) ; Store argument 0 in callee
-38 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
+38 : LDC  1, 3(0) ;  Load integer-literal value into register 1
 39 : ST 1, 2(4) ; Store argument 1 in callee
 40 : LDA 6, 44(0) ; Return address
 41 : ST 6, 0(4) ; Store return in callee frame
@@ -47,11 +47,11 @@
 46 : SUB   5, 5, 2 ;  Pop back to caller
 47 : SUB   4, 4, 2 ;  Pop back to caller
 48 : ADD  3, 1, 0 ;  Store left operand into temporary register
-49 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
+49 : LDC  1, 2(0) ;  Load integer-literal value into register 1
 50 : ADD  2, 3, 0 ;  Restore left operand
 51 : MUL  1, 2, 1 ;  R1 = left * right
 52 : ADD  3, 1, 0 ;  Store left operand into temporary register
-53 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
+53 : LDC  1, 5(0) ;  Load integer-literal value into register 1
 54 : ADD  2, 3, 0 ;  Restore left operand
 55 : SUB  1, 2, 1 ;  left - right for less-than check
 56 : JLT  1, 2(7) ;  If R1 < 0, jump to true

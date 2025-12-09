@@ -227,7 +227,7 @@ class Generator:
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
+                self.write(f"LDC  1, {value}(0)", " Load integer-literal value into register 1")
 
                 if not callee: # Only store as return value if it is a function return
                     curr_params = self.symbol_table[curr_function].parameters[0]
@@ -236,10 +236,12 @@ class Generator:
 
             case "BOOLEAN-LITERAL":
                 value = body.value
+                print(value)
                 if value == "true":
                     value = 1
                 else:
                     value = 0
+                print(value)
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
 
                 if not callee: # Only store as return value if it is a function return
