@@ -73,8 +73,10 @@ class Generator:
                 self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
                 self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
 
-            self.write("LDA  6, 2(7)", " Calculate return address")
+            self.write("LDA  6, 4(7)", " Calculate return address")
             self.write("ST   6, 0(5)", " Store return address in main stack frame")
+            self.write(f"LDC  4, {num_params + 2}(0)", " Load size of main stack frame")
+            self.write("ADD  5, 5, 4", " Advance R5 to next frame")
             
             self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
 
