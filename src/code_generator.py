@@ -163,8 +163,8 @@ class Generator:
 
                 # Frame sizes:
                 # return address + parameters + return slot
-                caller_size = caller_params + 2       # needed for pop
-                callee_size = callee_params + 2       # conceptual only (for reasoning)
+                caller_size = caller_params + 2
+                callee_size = callee_params + 2
 
                 # ------------------------------------------------------------
                 # Special built-in "print": one argument, no return value
@@ -195,13 +195,14 @@ class Generator:
                     # 1) Evaluate arguments and store into future frame
                     args = exp_children[1].children
 
-                    # Compute callee frame base ONCE
-                    self.write(f"LDA 4, {callee_size}(5)", "Base of callee frame")
-
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
                         self.instruction_rules(arg, curr_function, callee=True)   # result → R1
+                        self.write(f"LDA 4, {callee_size}(5)", "Base of callee frame")
+
                         self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee")
+
+                    self.write(f"LDA 4, {callee_size}(5)", "Base of callee frame")
 
                     # 2) Install return address and jump
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
