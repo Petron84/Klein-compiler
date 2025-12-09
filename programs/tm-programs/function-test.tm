@@ -23,7 +23,7 @@
 22 : ADD  5, 4, 0 ;  Update pointer
 23 : LDA 7, 47(0) ;  Call multiply_and_square
 24 : LD 1, 3(5) ;  Load callee return value into R1
-25 : LDC  4, 3(0) ;  Load frame size
+25 : LDC  4, 4(0) ;  Load frame size
 26 : SUB  5, 5, 4 ;  Restore pointer
 27 : ST 1, 3(5) ;  Store result into current frame's return slot
 28 : LD   1, 3(5) ;  Load return value into register 1
@@ -54,7 +54,7 @@
 53 : ADD  5, 4, 0 ;  Update pointer
 54 : LDA 7, 31(0) ;  Call square
 55 : LD 1, 2(5) ;  Load callee return value into R1
-56 : LDC  4, 2(0) ;  Load frame size
+56 : LDC  4, 4(0) ;  Load frame size
 57 : SUB  5, 5, 4 ;  Restore pointer
 58 : LDA  4, 4(5) ; Restore Callee frame base
 59 : ST 1, 1(4) ;  Store argument 0 into callee frame
@@ -67,7 +67,7 @@
 66 : ADD  5, 4, 0 ;  Update pointer
 67 : LDA 7, 31(0) ;  Call square
 68 : LD 1, 2(5) ;  Load callee return value into R1
-69 : LDC  4, 2(0) ;  Load frame size
+69 : LDC  4, 4(0) ;  Load frame size
 70 : SUB  5, 5, 4 ;  Restore pointer
 71 : LDA  4, 4(5) ; Restore Callee frame base
 72 : ST 1, 2(4) ;  Store argument 1 into callee frame
@@ -77,7 +77,7 @@
 76 : ADD  5, 4, 0 ;  Update pointer
 77 : LDA 7, 39(0) ;  Call multiply
 78 : LD 1, 3(5) ;  Load callee return value into R1
-79 : LDC  4, 3(0) ;  Load frame size
+79 : LDC  4, 4(0) ;  Load frame size
 80 : SUB  5, 5, 4 ;  Restore pointer
 81 : ST   1, 3(5) ;  Store function result into stack frame
 82 : LD   6, 0(5) ;  Load return address
