@@ -164,6 +164,7 @@ class Generator:
                 # Frame sizes:
                 # return address + parameters + return slot
                 caller_size = caller_params + 2       # needed for pop
+                callee_size = callee_params + 2       # conceptual only (for reasoning)
 
                 # ------------------------------------------------------------
                 # Special built-in "print": one argument, no return value
@@ -199,8 +200,8 @@ class Generator:
 
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
-                        self.instruction_rules(arg, f_name, callee=True)   # result → R1
-                        self.write(f"ST 1, {i+1}(4)", f"Argument {i+1}")
+                        self.instruction_rules(arg, curr_function, callee=True)   # result → R1
+                        self.write(f"ST 1, {i+1}(4)", f"Argument {i}")
 
                     # 2) Install return address and jump
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
