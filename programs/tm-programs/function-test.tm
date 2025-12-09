@@ -58,27 +58,26 @@
 57 : SUB  5, 5, 4 ;  Restore pointer
 58 : LDA  4, 4(5) ; Restore Callee frame base
 59 : ST 1, 1(4) ;  Store argument 0 into callee frame
-60 : LD   1, 2(5) ;  Load parameter 'b' into R1
-61 : LDA  4, 4(5) ; Restore Callee frame base
-62 : ST 1, 1(4) ;  Store argument 0 into callee frame
-63 : LDA  4, 4(5) ; Restore Call frame base
-64 : LDA 6, 68(0) ;  Compute return address
-65 : ST 6, 0(4) ;  Store return address in callee frame
-66 : ADD  5, 4, 0 ;  Update pointer
-67 : LDA 7, 31(0) ;  Call square
-68 : LD 1, 2(5) ;  Load callee return value into R1
-69 : LDC  4, 4(0) ;  Load frame size
-70 : SUB  5, 5, 4 ;  Restore pointer
-71 : LDA  4, 4(5) ; Restore Callee frame base
-72 : ST 1, 2(4) ;  Store argument 1 into callee frame
-73 : LDA  4, 4(5) ; Restore Call frame base
-74 : LDA 6, 78(0) ;  Compute return address
-75 : ST 6, 0(4) ;  Store return address in callee frame
-76 : ADD  5, 4, 0 ;  Update pointer
-77 : LDA 7, 39(0) ;  Call multiply
-78 : LD 1, 3(5) ;  Load callee return value into R1
-79 : LDC  4, 4(0) ;  Load frame size
-80 : SUB  5, 5, 4 ;  Restore pointer
-81 : ST   1, 3(5) ;  Store function result into stack frame
-82 : LD   6, 0(5) ;  Load return address
-83 : LDA  7, 0(6) ;  Return to caller
+60 : LDA  4, 4(5) ; Restore Callee frame base
+61 : ST 1, 1(4) ;  Store argument 0 into callee frame
+62 : LDA  4, 4(5) ; Restore Call frame base
+63 : LDA 6, 67(0) ;  Compute return address
+64 : ST 6, 0(4) ;  Store return address in callee frame
+65 : ADD  5, 4, 0 ;  Update pointer
+66 : LDA 7, 31(0) ;  Call square
+67 : LD 1, 2(5) ;  Load callee return value into R1
+68 : LDC  4, 4(0) ;  Load frame size
+69 : SUB  5, 5, 4 ;  Restore pointer
+70 : LDA  4, 4(5) ; Restore Callee frame base
+71 : ST 1, 2(4) ;  Store argument 1 into callee frame
+72 : LDA  4, 4(5) ; Restore Call frame base
+73 : LDA 6, 77(0) ;  Compute return address
+74 : ST 6, 0(4) ;  Store return address in callee frame
+75 : ADD  5, 4, 0 ;  Update pointer
+76 : LDA 7, 39(0) ;  Call multiply
+77 : LD 1, 3(5) ;  Load callee return value into R1
+78 : LDC  4, 4(0) ;  Load frame size
+79 : SUB  5, 5, 4 ;  Restore pointer
+80 : ST   1, 3(5) ;  Store function result into stack frame
+81 : LD   6, 0(5) ;  Load return address
+82 : LDA  7, 0(6) ;  Return to caller

@@ -184,7 +184,7 @@ class Generator:
                     args = exp_children[1].children
 
                     for i, arg in enumerate(args):
-                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.instruction_rules(arg, f_name, callee=True)
                         self.write(f"LDA  4, {callee_size}(5)", "Restore Callee frame base")
                         self.write(f"ST 1, {i+1}(4)", f" Store argument {i} into callee frame")
 
