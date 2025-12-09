@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 3(7) ;  Calculate return address
+5 : LDA  6, 2(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -16,12 +16,12 @@
 15 : LD   1, 2(5) ;  Load parameter 'n' into R1
 16 : ADD  2, 3, 0 ;  Restore left operand
 17 : DIV  1, 2, 1 ;  R1 = left / right
-18 : LDA 4, 4(5) ; Base of callee frame
+18 : LDA 4, 3(5) ; Base of callee frame
 19 : LDA 6, 23(0) ; Return address
 20 : ST 6, 0(4) ; Store return addr in callee frame
 21 : ADD 5, 4, 0 ; Push new frame
 22 : LDA 7, 10(0) ; Call print
-23 : LDC 2, 4(0) ; Caller frame size
+23 : LDC 2, 3(0) ; Caller frame size
 24 : SUB 5, 5, 2 ; Pop frame
 25 : LDA 4, 4(5) ; Base of callee frame
 26 : LD   1, 1(5) ;  Load parameter 'm' into R1
@@ -45,7 +45,7 @@
 44 : LD   1, 2(5) ;  Load parameter 'n' into R1
 45 : ADD  2, 3, 0 ;  Restore left operand
 46 : SUB  1, 2, 1 ;  left - right for less-than check
-47 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+47 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 48 : LDC  1, 0(0) ;  false
 49 : LDA  7, 1(7) ;  skip setting true
 50 : LDC  1, 1(0) ;  true

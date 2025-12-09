@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 3(7) ;  Calculate return address
+5 : LDA  6, 2(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -16,12 +16,12 @@
 15 : LDC  1, 3(0) ;  Load boolean-literal value into register 1
 16 : ADD  2, 3, 0 ;  Restore left operand
 17 : SUB  1, 2, 1 ;  left - right for equality check
-18 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+18 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 19 : LDC  1, 0(0) ;  false
 20 : LDA  7, 1(7) ;  skip setting true
 21 : LDC  1, 1(0) ;  true
 22 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
-23 : LDA 4, 4(5) ; Base of callee frame
+23 : LDA 4, 3(5) ; Base of callee frame
 24 : LD   1, 1(5) ;  Load parameter 'n' into R1
 25 : ST 1, 1(4) ; Store argument 0 in callee
 26 : LDA 6, 30(0) ; Return address
@@ -29,7 +29,7 @@
 28 : ADD 5, 4, 0 ; Push callee frame
 29 : LDA 7, 338(0) ; Call emirp
 30 : LD   1, 2(5) ;  Load function result
-31 : LDC   2, 4(0) ;  Caller frame size
+31 : LDC   2, 3(0) ;  Caller frame size
 32 : SUB   5, 5, 2 ;  Pop back to caller
 33 : SUB   4, 4, 2 ;  Pop back to caller
 34 : ST 1, 3(5) ; Store result into caller’s frame
@@ -39,12 +39,12 @@
 38 : LDC  1, 5(0) ;  Load boolean-literal value into register 1
 39 : ADD  2, 3, 0 ;  Restore left operand
 40 : SUB  1, 2, 1 ;  left - right for equality check
-41 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+41 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 42 : LDC  1, 0(0) ;  false
 43 : LDA  7, 1(7) ;  skip setting true
 44 : LDC  1, 1(0) ;  true
 45 : JEQ  1, 59(0) ;  If condition is false, jump to ELSE
-46 : LDA 4, 4(5) ; Base of callee frame
+46 : LDA 4, 3(5) ; Base of callee frame
 47 : LD   1, 1(5) ;  Load parameter 'n' into R1
 48 : ST 1, 1(4) ; Store argument 0 in callee
 49 : LDA 6, 53(0) ; Return address
@@ -52,7 +52,7 @@
 51 : ADD 5, 4, 0 ; Push callee frame
 52 : LDA 7, 294(0) ; Call snowball
 53 : LD   1, 2(5) ;  Load function result
-54 : LDC   2, 4(0) ;  Caller frame size
+54 : LDC   2, 3(0) ;  Caller frame size
 55 : SUB   5, 5, 2 ;  Pop back to caller
 56 : SUB   4, 4, 2 ;  Pop back to caller
 57 : ST 1, 3(5) ; Store result into caller’s frame
@@ -62,12 +62,12 @@
 61 : LDC  1, 8(0) ;  Load boolean-literal value into register 1
 62 : ADD  2, 3, 0 ;  Restore left operand
 63 : SUB  1, 2, 1 ;  left - right for equality check
-64 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+64 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 65 : LDC  1, 0(0) ;  false
 66 : LDA  7, 1(7) ;  skip setting true
 67 : LDC  1, 1(0) ;  true
 68 : JEQ  1, 82(0) ;  If condition is false, jump to ELSE
-69 : LDA 4, 4(5) ; Base of callee frame
+69 : LDA 4, 3(5) ; Base of callee frame
 70 : LD   1, 1(5) ;  Load parameter 'n' into R1
 71 : ST 1, 1(4) ; Store argument 0 in callee
 72 : LDA 6, 76(0) ; Return address
@@ -75,7 +75,7 @@
 74 : ADD 5, 4, 0 ; Push callee frame
 75 : LDA 7, 261(0) ; Call doBoth
 76 : LD   1, 2(5) ;  Load function result
-77 : LDC   2, 4(0) ;  Caller frame size
+77 : LDC   2, 3(0) ;  Caller frame size
 78 : SUB   5, 5, 2 ;  Pop back to caller
 79 : SUB   4, 4, 2 ;  Pop back to caller
 80 : ST 1, 3(5) ; Store result into caller’s frame
@@ -106,7 +106,7 @@
 105 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 106 : ADD  2, 3, 0 ;  Restore left operand
 107 : SUB  1, 2, 1 ;  left - right for equality check
-108 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+108 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 109 : LDC  1, 0(0) ;  false
 110 : LDA  7, 1(7) ;  skip setting true
 111 : LDC  1, 1(0) ;  true
@@ -153,7 +153,7 @@
 152 : ST   1, 3(5) ;  Store function result into stack frame
 153 : LD   6, 0(5) ;  Load return address
 154 : LDA  7, 0(6) ;  Return to caller
-155 : LDA 4, 3(5) ; Base of callee frame
+155 : LDA 4, 4(5) ; Base of callee frame
 156 : LD   1, 1(5) ;  Load parameter 'n' into R1
 157 : ST 1, 1(4) ; Store argument 0 in callee
 158 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
@@ -163,7 +163,7 @@
 162 : ADD 5, 4, 0 ; Push callee frame
 163 : LDA 7, 103(0) ; Call reverseL
 164 : LD   1, 3(5) ;  Load function result
-165 : LDC   2, 3(0) ;  Caller frame size
+165 : LDC   2, 4(0) ;  Caller frame size
 166 : SUB   5, 5, 2 ;  Pop back to caller
 167 : SUB   4, 4, 2 ;  Pop back to caller
 168 : ST   1, 2(5) ;  Store function result into stack frame
@@ -186,7 +186,7 @@
 185 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 186 : ADD  2, 3, 0 ;  Restore left operand
 187 : SUB  1, 2, 1 ;  left - right for equality check
-188 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+188 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 189 : LDC  1, 0(0) ;  false
 190 : LDA  7, 1(7) ;  skip setting true
 191 : LDC  1, 1(0) ;  true
@@ -198,7 +198,7 @@
 197 : LD   1, 2(5) ;  Load parameter 'n' into R1
 198 : ADD  2, 3, 0 ;  Restore left operand
 199 : SUB  1, 2, 1 ;  left - right for less-than check
-200 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+200 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 201 : LDC  1, 0(0) ;  false
 202 : LDA  7, 1(7) ;  skip setting true
 203 : LDC  1, 1(0) ;  true
@@ -241,7 +241,7 @@
 240 : ST   1, 3(5) ;  Store function result into stack frame
 241 : LD   6, 0(5) ;  Load return address
 242 : LDA  7, 0(6) ;  Return to caller
-243 : LDA 4, 3(5) ; Base of callee frame
+243 : LDA 4, 4(5) ; Base of callee frame
 244 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
 245 : ST 1, 1(4) ; Store argument 0 in callee
 246 : LD   1, 1(5) ;  Load parameter 'n' into R1
@@ -251,7 +251,7 @@
 250 : ADD 5, 4, 0 ; Push callee frame
 251 : LDA 7, 195(0) ; Call hasDivisorFrom
 252 : LD   1, 3(5) ;  Load function result
-253 : LDC   2, 3(0) ;  Caller frame size
+253 : LDC   2, 4(0) ;  Caller frame size
 254 : SUB   5, 5, 2 ;  Pop back to caller
 255 : SUB   4, 4, 2 ;  Pop back to caller
 256 : LDC  2, 1(0) ;  Load 1 into R2
@@ -309,7 +309,7 @@
 308 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 309 : ADD  2, 3, 0 ;  Restore left operand
 310 : SUB  1, 2, 1 ;  left - right for less-than check
-311 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+311 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 312 : LDC  1, 0(0) ;  false
 313 : LDA  7, 1(7) ;  skip setting true
 314 : LDC  1, 1(0) ;  true

@@ -1,7 +1,7 @@
 0 : LDC  5, 2(0) ;  Set DMEM pointer to main stack frame
 1 : LD   2, 1(0) ;  Load CLI arg 1 into register
 2 : ST   2, 1(5) ;  Store the argument into stack frame
-3 : LDA  6, 3(7) ;  Calculate return address
+3 : LDA  6, 2(7) ;  Calculate return address
 4 : ST   6, 0(5) ;  Store return address in main stack frame
 5 : LDA  7, 11(0) ;  Load address of main IMEM block - branch to function
 6 : OUT  1, 0, 0 ;  Return result
@@ -9,7 +9,7 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDA 4, 3(5) ; Base of callee frame
+11 : LDA 4, 4(5) ; Base of callee frame
 12 : LD   1, 1(5) ;  Load parameter 'n' into R1
 13 : ST 1, 1(4) ; Store argument 0 in callee
 14 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
@@ -19,7 +19,7 @@
 18 : ADD 5, 4, 0 ; Push callee frame
 19 : LDA 7, 161(0) ; Call loopToN
 20 : LD   1, 3(5) ;  Load function result
-21 : LDC   2, 3(0) ;  Caller frame size
+21 : LDC   2, 4(0) ;  Caller frame size
 22 : SUB   5, 5, 2 ;  Pop back to caller
 23 : SUB   4, 4, 2 ;  Pop back to caller
 24 : ST 1, 2(5) ; Store result into caller’s frame
@@ -31,7 +31,7 @@
 30 : LD   1, 2(5) ;  Load parameter 'den' into R1
 31 : ADD  2, 3, 0 ;  Restore left operand
 32 : SUB  1, 2, 1 ;  left - right for less-than check
-33 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+33 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 34 : LDC  1, 0(0) ;  false
 35 : LDA  7, 1(7) ;  skip setting true
 36 : LDC  1, 1(0) ;  true
@@ -75,7 +75,7 @@
 74 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 75 : ADD  2, 3, 0 ;  Restore left operand
 76 : SUB  1, 2, 1 ;  left - right for equality check
-77 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+77 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 78 : LDC  1, 0(0) ;  false
 79 : LDA  7, 1(7) ;  skip setting true
 80 : LDC  1, 1(0) ;  true
@@ -83,12 +83,12 @@
 82 : LD   6, 0(5) ;  Load return address
 83 : LDA  7, 0(6) ;  Return to caller
 84 : LD   1, 2(5) ;  Load parameter 'current' into R1
-85 : LDA 4, 4(5) ; Base of callee frame
+85 : LDA 4, 3(5) ; Base of callee frame
 86 : LDA 6, 90(0) ; Return address
 87 : ST 6, 0(4) ; Store return addr in callee frame
 88 : ADD 5, 4, 0 ; Push new frame
 89 : LDA 7, 8(0) ; Call print
-90 : LDC 2, 4(0) ; Caller frame size
+90 : LDC 2, 3(0) ; Caller frame size
 91 : SUB 5, 5, 2 ; Pop frame
 92 : ST   1, 3(5) ;  Store function result into stack frame
 93 : LDA 4, 4(5) ; Base of callee frame
@@ -164,7 +164,7 @@
 163 : LD   1, 2(5) ;  Load parameter 'current' into R1
 164 : ADD  2, 3, 0 ;  Restore left operand
 165 : SUB  1, 2, 1 ;  left - right for equality check
-166 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+166 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 167 : LDC  1, 0(0) ;  false
 168 : LDA  7, 1(7) ;  skip setting true
 169 : LDC  1, 1(0) ;  true

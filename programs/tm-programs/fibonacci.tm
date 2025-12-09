@@ -1,7 +1,7 @@
 0 : LDC  5, 2(0) ;  Set DMEM pointer to main stack frame
 1 : LD   2, 1(0) ;  Load CLI arg 1 into register
 2 : ST   2, 1(5) ;  Store the argument into stack frame
-3 : LDA  6, 3(7) ;  Calculate return address
+3 : LDA  6, 2(7) ;  Calculate return address
 4 : ST   6, 0(5) ;  Store return address in main stack frame
 5 : LDA  7, 11(0) ;  Load address of main IMEM block - branch to function
 6 : OUT  1, 0, 0 ;  Return result
@@ -14,7 +14,7 @@
 13 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 14 : ADD  2, 3, 0 ;  Restore left operand
 15 : SUB  1, 2, 1 ;  left - right for less-than check
-16 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+16 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 17 : LDC  1, 0(0) ;  false
 18 : LDA  7, 1(7) ;  skip setting true
 19 : LDC  1, 1(0) ;  true
@@ -22,7 +22,7 @@
 21 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 22 : ST 1, 2(5) ;  Store result into current frame's return slot
 23 : LDA  7, 42(0) ;  Skip ELSE block
-24 : LDA 4, 3(5) ; Base of callee frame
+24 : LDA 4, 6(5) ; Base of callee frame
 25 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
 26 : ST 1, 1(4) ; Store argument 0 in callee
 27 : LD   1, 1(5) ;  Load parameter 'elementWanted' into R1
@@ -36,7 +36,7 @@
 35 : ADD 5, 4, 0 ; Push callee frame
 36 : LDA 7, 45(0) ; Call addNext
 37 : LD   1, 5(5) ;  Load function result
-38 : LDC   2, 3(0) ;  Caller frame size
+38 : LDC   2, 6(0) ;  Caller frame size
 39 : SUB   5, 5, 2 ;  Pop back to caller
 40 : SUB   4, 4, 2 ;  Pop back to caller
 41 : ST 1, 2(5) ; Store result into caller’s frame
@@ -48,7 +48,7 @@
 47 : LD   1, 1(5) ;  Load parameter 'currentElement' into R1
 48 : ADD  2, 3, 0 ;  Restore left operand
 49 : SUB  1, 2, 1 ;  left - right for equality check
-50 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+50 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 51 : LDC  1, 0(0) ;  false
 52 : LDA  7, 1(7) ;  skip setting true
 53 : LDC  1, 1(0) ;  true

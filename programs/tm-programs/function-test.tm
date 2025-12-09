@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 3(7) ;  Calculate return address
+5 : LDA  6, 2(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -45,7 +45,7 @@
 44 : LD   6, 0(5) ;  Load return address
 45 : LDA  7, 0(6) ;  Return to caller
 46 : LDA 4, 4(5) ; Base of callee frame
-47 : LDA 4, 4(5) ; Base of callee frame
+47 : LDA 4, 3(5) ; Base of callee frame
 48 : LD   1, 1(5) ;  Load parameter 'a' into R1
 49 : ST 1, 1(4) ; Store argument 0 in callee
 50 : LDA 6, 54(0) ; Return address
@@ -53,11 +53,11 @@
 52 : ADD 5, 4, 0 ; Push callee frame
 53 : LDA 7, 30(0) ; Call square
 54 : LD   1, 2(5) ;  Load function result
-55 : LDC   2, 4(0) ;  Caller frame size
+55 : LDC   2, 3(0) ;  Caller frame size
 56 : SUB   5, 5, 2 ;  Pop back to caller
 57 : SUB   4, 4, 2 ;  Pop back to caller
 58 : ST 1, 1(4) ; Store argument 0 in callee
-59 : LDA 4, 4(5) ; Base of callee frame
+59 : LDA 4, 3(5) ; Base of callee frame
 60 : LD   1, 2(5) ;  Load parameter 'b' into R1
 61 : ST 1, 1(4) ; Store argument 0 in callee
 62 : LDA 6, 66(0) ; Return address
@@ -65,7 +65,7 @@
 64 : ADD 5, 4, 0 ; Push callee frame
 65 : LDA 7, 30(0) ; Call square
 66 : LD   1, 2(5) ;  Load function result
-67 : LDC   2, 4(0) ;  Caller frame size
+67 : LDC   2, 3(0) ;  Caller frame size
 68 : SUB   5, 5, 2 ;  Pop back to caller
 69 : SUB   4, 4, 2 ;  Pop back to caller
 70 : ST 1, 2(4) ; Store argument 1 in callee

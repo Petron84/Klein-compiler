@@ -73,7 +73,7 @@ class Generator:
                 self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
                 self.write(f"ST   2, {i}(5)", f" Store the argument into stack frame")
 
-            self.write("LDA  6, 3(7)", " Calculate return address")
+            self.write("LDA  6, 2(7)", " Calculate return address")
             self.write("ST   6, 0(5)", " Store return address in main stack frame")
             
             self.DMEM = main_frame.top + num_params + 2 # Set pointer to free stack frame
@@ -175,7 +175,7 @@ class Generator:
 
                     # Calculate callee base (only once)
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {caller_size}(5)", "Base of callee frame")
+                    self.write(f"LDA 4, {callee_size}(5)", "Base of callee frame")
 
                     # Install return address and jump
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
@@ -185,7 +185,7 @@ class Generator:
 
                     # Place return label and pop back to caller
                     self.placeholders[temp_label] = self.line_counter
-                    self.write(f"LDC 2, {caller_size}(0)", "Caller frame size")
+                    self.write(f"LDC 2, {callee_size}(0)", "Caller frame size")
                     self.write("SUB 5, 5, 2", "Pop frame")
 
                 # ------------------------------------------------------------
@@ -196,7 +196,7 @@ class Generator:
                     args = exp_children[1].children
 
                     # Compute callee frame base ONCE
-                    self.write(f"LDA 4, {caller_size}(5)", "Base of callee frame")
+                    self.write(f"LDA 4, {callee_size}(5)", "Base of callee frame")
 
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
@@ -216,7 +216,7 @@ class Generator:
                     return_slot = callee_params + 1   # location of callee return
                     self.write(f"LD   1, {return_slot}(5)", " Load function result")
 
-                    self.write(f"LDC   2, {caller_size}(0)", " Caller frame size")
+                    self.write(f"LDC   2, {callee_size}(0)", " Caller frame size")
                     self.write("SUB   5, 5, 2", " Pop back to caller")
                     self.write("SUB   4, 4, 2", " Pop back to caller")
 
@@ -302,13 +302,13 @@ class Generator:
                         self.write("ADD  1, 2, 1", " R1 = left OR right")
                     case "=":
                         self.write("SUB  1, 2, 1", " left - right for equality check")
-                        self.write("JEQ  1, 3(7)", " If R1 == 0, jump to true")
+                        self.write("JEQ  1, 2(7)", " If R1 == 0, jump to true")
                         self.write("LDC  1, 0(0)", " false")
                         self.write("LDA  7, 1(7)", " skip setting true")
                         self.write("LDC  1, 1(0)", " true")
                     case "<":
                         self.write("SUB  1, 2, 1", " left - right for less-than check")
-                        self.write("JLT  1, 3(7)", " If R1 < 0, jump to true")
+                        self.write("JLT  1, 2(7)", " If R1 < 0, jump to true")
                         self.write("LDC  1, 0(0)", " false")
                         self.write("LDA  7, 1(7)", " skip setting true")
                         self.write("LDC  1, 1(0)", " true")

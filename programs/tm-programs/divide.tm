@@ -5,7 +5,7 @@
 4 : ST   2, 2(5) ;  Store the argument into stack frame
 5 : LD   2, 3(0) ;  Load CLI arg 3 into register
 6 : ST   2, 3(5) ;  Store the argument into stack frame
-7 : LDA  6, 3(7) ;  Calculate return address
+7 : LDA  6, 2(7) ;  Calculate return address
 8 : ST   6, 0(5) ;  Store return address in main stack frame
 9 : LDA  7, 15(0) ;  Load address of main IMEM block - branch to function
 10 : OUT  1, 0, 0 ;  Return result
@@ -18,7 +18,7 @@
 17 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 18 : ADD  2, 3, 0 ;  Restore left operand
 19 : SUB  1, 2, 1 ;  left - right for equality check
-20 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+20 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 21 : LDC  1, 0(0) ;  false
 22 : LDA  7, 1(7) ;  skip setting true
 23 : LDC  1, 1(0) ;  true
@@ -70,16 +70,16 @@
 69 : LD   1, 2(5) ;  Load parameter 'b' into R1
 70 : ADD  2, 3, 0 ;  Restore left operand
 71 : DIV  1, 2, 1 ;  R1 = left / right
-72 : LDA 4, 5(5) ; Base of callee frame
+72 : LDA 4, 3(5) ; Base of callee frame
 73 : LDA 6, 77(0) ; Return address
 74 : ST 6, 0(4) ; Store return addr in callee frame
 75 : ADD 5, 4, 0 ; Push new frame
 76 : LDA 7, 12(0) ; Call print
-77 : LDC 2, 5(0) ; Caller frame size
+77 : LDC 2, 3(0) ; Caller frame size
 78 : SUB 5, 5, 2 ; Pop frame
 79 : ST   1, 4(5) ;  Store function result into stack frame
 80 : LDA 4, 5(5) ; Base of callee frame
-81 : LDA 4, 5(5) ; Base of callee frame
+81 : LDA 4, 4(5) ; Base of callee frame
 82 : LD   1, 1(5) ;  Load parameter 'a' into R1
 83 : ADD  3, 1, 0 ;  Store left operand into temporary register
 84 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
@@ -93,7 +93,7 @@
 92 : ADD 5, 4, 0 ; Push callee frame
 93 : LDA 7, 47(0) ; Call MOD
 94 : LD   1, 3(5) ;  Load function result
-95 : LDC   2, 5(0) ;  Caller frame size
+95 : LDC   2, 4(0) ;  Caller frame size
 96 : SUB   5, 5, 2 ;  Pop back to caller
 97 : SUB   4, 4, 2 ;  Pop back to caller
 98 : ST 1, 1(4) ; Store argument 0 in callee

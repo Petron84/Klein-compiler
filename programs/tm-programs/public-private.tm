@@ -3,7 +3,7 @@
 2 : ST   2, 1(5) ;  Store the argument into stack frame
 3 : LD   2, 2(0) ;  Load CLI arg 2 into register
 4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LDA  6, 3(7) ;  Calculate return address
+5 : LDA  6, 2(7) ;  Calculate return address
 6 : ST   6, 0(5) ;  Store return address in main stack frame
 7 : LDA  7, 13(0) ;  Load address of main IMEM block - branch to function
 8 : OUT  1, 0, 0 ;  Return result
@@ -16,7 +16,7 @@
 15 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 16 : ADD  2, 3, 0 ;  Restore left operand
 17 : SUB  1, 2, 1 ;  left - right for equality check
-18 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+18 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 19 : LDC  1, 0(0) ;  false
 20 : LDA  7, 1(7) ;  skip setting true
 21 : LDC  1, 1(0) ;  true
@@ -58,7 +58,7 @@
 57 : LD   1, 2(5) ;  Load parameter 'b' into R1
 58 : ADD  2, 3, 0 ;  Restore left operand
 59 : SUB  1, 2, 1 ;  left - right for less-than check
-60 : JLT  1, 3(7) ;  If R1 < 0, jump to true
+60 : JLT  1, 2(7) ;  If R1 < 0, jump to true
 61 : LDC  1, 0(0) ;  false
 62 : LDA  7, 1(7) ;  skip setting true
 63 : LDC  1, 1(0) ;  true
@@ -90,7 +90,7 @@
 89 : LDC  1, 0(0) ;  Load boolean-literal value into register 1
 90 : ADD  2, 3, 0 ;  Restore left operand
 91 : SUB  1, 2, 1 ;  left - right for equality check
-92 : JEQ  1, 3(7) ;  If R1 == 0, jump to true
+92 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
 93 : LDC  1, 0(0) ;  false
 94 : LDA  7, 1(7) ;  skip setting true
 95 : LDC  1, 1(0) ;  true
@@ -130,12 +130,12 @@
 129 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 130 : ADD  2, 3, 0 ;  Restore left operand
 131 : DIV  1, 2, 1 ;  R1 = left / right
-132 : LDA 4, 5(5) ; Base of callee frame
+132 : LDA 4, 3(5) ; Base of callee frame
 133 : LDA 6, 137(0) ; Return address
 134 : ST 6, 0(4) ; Store return addr in callee frame
 135 : ADD 5, 4, 0 ; Push new frame
 136 : LDA 7, 10(0) ; Call print
-137 : LDC 2, 5(0) ; Caller frame size
+137 : LDC 2, 3(0) ; Caller frame size
 138 : SUB 5, 5, 2 ; Pop frame
 139 : ST   1, 4(5) ;  Store function result into stack frame
 140 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
@@ -143,19 +143,19 @@
 142 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 143 : ADD  2, 3, 0 ;  Restore left operand
 144 : DIV  1, 2, 1 ;  R1 = left / right
-145 : LDA 4, 5(5) ; Base of callee frame
+145 : LDA 4, 3(5) ; Base of callee frame
 146 : LDA 6, 150(0) ; Return address
 147 : ST 6, 0(4) ; Store return addr in callee frame
 148 : ADD 5, 4, 0 ; Push new frame
 149 : LDA 7, 10(0) ; Call print
-150 : LDC 2, 5(0) ; Caller frame size
+150 : LDC 2, 3(0) ; Caller frame size
 151 : SUB 5, 5, 2 ; Pop frame
 152 : ST   1, 4(5) ;  Store function result into stack frame
 153 : LD   1, 3(5) ;  Load parameter 'commonFactor' into R1
 154 : ST   1, 4(5) ;  Store function result into stack frame
 155 : LD   6, 0(5) ;  Load return address
 156 : LDA  7, 0(6) ;  Return to caller
-157 : LDA 4, 4(5) ; Base of callee frame
+157 : LDA 4, 5(5) ; Base of callee frame
 158 : LD   1, 1(5) ;  Load parameter 'publicKey' into R1
 159 : ST 1, 1(4) ; Store argument 0 in callee
 160 : LD   1, 2(5) ;  Load parameter 'privateKey' into R1
@@ -179,7 +179,7 @@
 178 : ADD 5, 4, 0 ; Push callee frame
 179 : LDA 7, 127(0) ; Call displayAndPrint
 180 : LD   1, 4(5) ;  Load function result
-181 : LDC   2, 4(0) ;  Caller frame size
+181 : LDC   2, 5(0) ;  Caller frame size
 182 : SUB   5, 5, 2 ;  Pop back to caller
 183 : SUB   4, 4, 2 ;  Pop back to caller
 184 : ST   1, 3(5) ;  Store function result into stack frame
