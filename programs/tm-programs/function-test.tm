@@ -19,60 +19,64 @@
 18 : LDA 6, 22(0) ; Return address
 19 : ST 6, 0(4) ; Store return in callee frame
 20 : ADD 5, 4, 0 ; Push callee frame
-21 : LDA 7, 45(0) ; Call multiply_and_square
-22 : LD 1, 3(5) ; Load function result
-23 : LDC 2, 4(0) ; Caller frame size
-24 : SUB 5, 5, 2 ; Pop back to caller
-25 : ST 1, 3(5) ; Store result into caller’s frame
-26 : LD   1, 3(5) ;  Load return value into register 1
-27 : LD  6, 0(5) ;  Load return address for main function into register 6
-28 : LDA  7, 0(6) ;  Jump to return address of main function
-29 : LD   1, 1(5) ;  Load parameter 'a' into R1
-30 : ADD  3, 1, 0 ;  Store left operand into temporary register
-31 : LD   1, 1(5) ;  Load parameter 'a' into R1
-32 : ADD  2, 3, 0 ;  Restore left operand
-33 : MUL  1, 2, 1 ;  R1 = left * right
-34 : ST   1, 2(5) ;  Store function result into stack frame
-35 : LD   6, 0(5) ;  Load return address
-36 : LDA  7, 0(6) ;  Return to caller
-37 : LD   1, 1(5) ;  Load parameter 'a' into R1
-38 : ADD  3, 1, 0 ;  Store left operand into temporary register
-39 : LD   1, 2(5) ;  Load parameter 'b' into R1
-40 : ADD  2, 3, 0 ;  Restore left operand
-41 : MUL  1, 2, 1 ;  R1 = left * right
-42 : ST   1, 3(5) ;  Store function result into stack frame
-43 : LD   6, 0(5) ;  Load return address
-44 : LDA  7, 0(6) ;  Return to caller
-45 : LDA 4, 4(5) ; Base of callee frame
+21 : LDA 7, 46(0) ; Call multiply_and_square
+22 : LD   1, 3(5) ;  Load function result
+23 : LDC   2, 4(0) ;  Caller frame size
+24 : SUB   5, 5, 2 ;  Pop back to caller
+25 : SUB   4, 4, 2 ;  Pop back to caller
+26 : ST 1, 3(5) ; Store result into caller’s frame
+27 : LD   1, 3(5) ;  Load return value into register 1
+28 : LD  6, 0(5) ;  Load return address for main function into register 6
+29 : LDA  7, 0(6) ;  Jump to return address of main function
+30 : LD   1, 1(5) ;  Load parameter 'a' into R1
+31 : ADD  3, 1, 0 ;  Store left operand into temporary register
+32 : LD   1, 1(5) ;  Load parameter 'a' into R1
+33 : ADD  2, 3, 0 ;  Restore left operand
+34 : MUL  1, 2, 1 ;  R1 = left * right
+35 : ST   1, 2(5) ;  Store function result into stack frame
+36 : LD   6, 0(5) ;  Load return address
+37 : LDA  7, 0(6) ;  Return to caller
+38 : LD   1, 1(5) ;  Load parameter 'a' into R1
+39 : ADD  3, 1, 0 ;  Store left operand into temporary register
+40 : LD   1, 2(5) ;  Load parameter 'b' into R1
+41 : ADD  2, 3, 0 ;  Restore left operand
+42 : MUL  1, 2, 1 ;  R1 = left * right
+43 : ST   1, 3(5) ;  Store function result into stack frame
+44 : LD   6, 0(5) ;  Load return address
+45 : LDA  7, 0(6) ;  Return to caller
 46 : LDA 4, 4(5) ; Base of callee frame
-47 : LD   1, 1(5) ;  Load parameter 'a' into R1
-48 : ST 1, 1(4) ; Store argument 0 in callee
-49 : LDA 6, 53(0) ; Return address
-50 : ST 6, 0(4) ; Store return in callee frame
-51 : ADD 5, 4, 0 ; Push callee frame
-52 : LDA 7, 29(0) ; Call square
-53 : LD 1, 2(5) ; Load function result
-54 : LDC 2, 4(0) ; Caller frame size
-55 : SUB 5, 5, 2 ; Pop back to caller
-56 : ST 1, 1(4) ; Store argument 0 in callee
-57 : LDA 4, 4(5) ; Base of callee frame
-58 : LD   1, 2(5) ;  Load parameter 'b' into R1
-59 : ST 1, 1(4) ; Store argument 0 in callee
-60 : LDA 6, 64(0) ; Return address
-61 : ST 6, 0(4) ; Store return in callee frame
-62 : ADD 5, 4, 0 ; Push callee frame
-63 : LDA 7, 29(0) ; Call square
-64 : LD 1, 2(5) ; Load function result
-65 : LDC 2, 4(0) ; Caller frame size
-66 : SUB 5, 5, 2 ; Pop back to caller
-67 : ST 1, 2(4) ; Store argument 1 in callee
-68 : LDA 6, 72(0) ; Return address
-69 : ST 6, 0(4) ; Store return in callee frame
-70 : ADD 5, 4, 0 ; Push callee frame
-71 : LDA 7, 37(0) ; Call multiply
-72 : LD 1, 3(5) ; Load function result
-73 : LDC 2, 4(0) ; Caller frame size
-74 : SUB 5, 5, 2 ; Pop back to caller
-75 : ST   1, 3(5) ;  Store function result into stack frame
-76 : LD   6, 0(5) ;  Load return address
-77 : LDA  7, 0(6) ;  Return to caller
+47 : LDA 4, 4(5) ; Base of callee frame
+48 : LD   1, 1(5) ;  Load parameter 'a' into R1
+49 : ST 1, 1(4) ; Store argument 0 in callee
+50 : LDA 6, 54(0) ; Return address
+51 : ST 6, 0(4) ; Store return in callee frame
+52 : ADD 5, 4, 0 ; Push callee frame
+53 : LDA 7, 30(0) ; Call square
+54 : LD   1, 2(5) ;  Load function result
+55 : LDC   2, 4(0) ;  Caller frame size
+56 : SUB   5, 5, 2 ;  Pop back to caller
+57 : SUB   4, 4, 2 ;  Pop back to caller
+58 : ST 1, 1(4) ; Store argument 0 in callee
+59 : LDA 4, 4(5) ; Base of callee frame
+60 : LD   1, 2(5) ;  Load parameter 'b' into R1
+61 : ST 1, 1(4) ; Store argument 0 in callee
+62 : LDA 6, 66(0) ; Return address
+63 : ST 6, 0(4) ; Store return in callee frame
+64 : ADD 5, 4, 0 ; Push callee frame
+65 : LDA 7, 30(0) ; Call square
+66 : LD   1, 2(5) ;  Load function result
+67 : LDC   2, 4(0) ;  Caller frame size
+68 : SUB   5, 5, 2 ;  Pop back to caller
+69 : SUB   4, 4, 2 ;  Pop back to caller
+70 : ST 1, 2(4) ; Store argument 1 in callee
+71 : LDA 6, 75(0) ; Return address
+72 : ST 6, 0(4) ; Store return in callee frame
+73 : ADD 5, 4, 0 ; Push callee frame
+74 : LDA 7, 38(0) ; Call multiply
+75 : LD   1, 3(5) ;  Load function result
+76 : LDC   2, 4(0) ;  Caller frame size
+77 : SUB   5, 5, 2 ;  Pop back to caller
+78 : SUB   4, 4, 2 ;  Pop back to caller
+79 : ST   1, 3(5) ;  Store function result into stack frame
+80 : LD   6, 0(5) ;  Load return address
+81 : LDA  7, 0(6) ;  Return to caller

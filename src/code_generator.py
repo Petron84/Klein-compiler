@@ -214,10 +214,11 @@ class Generator:
                     self.placeholders[temp_label] = self.line_counter
 
                     return_slot = callee_params + 1   # location of callee return
-                    self.write(f"LD 1, {return_slot}(5)", "Load function result")
+                    self.write(f"LD   1, {return_slot}(5)", " Load function result")
 
-                    self.write(f"LDC 2, {caller_size}(0)", "Caller frame size")
-                    self.write("SUB 5, 5, 2", "Pop back to caller")
+                    self.write(f"LDC   2, {caller_size}(0)", " Caller frame size")
+                    self.write("SUB   5, 5, 2", " Pop back to caller")
+                    self.write("SUB   4, 4, 2", " Pop back to caller")
 
                     # 4) If we are PRODUCING the caller’s own value, store it
                     if not callee:
