@@ -10,13 +10,13 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : LDA 4, 3(5) ; Callee frame base from caller base
-13 : LDA 6, 17(0) ; Compute return address
-14 : ST 6, 0(4) ; Store return address in callee frame
-15 : ADD 5, 4, 0 ; Push callee frame
+12 : LDA 4, 3(5) ; Base of callee frame
+13 : LDA 6, 17(0) ; Return address
+14 : ST 6, 0(4) ; Store return addr in callee frame
+15 : ADD 5, 4, 0 ; Push new frame
 16 : LDA 7, 8(0) ; Call print
-17 : LDC 2, 3(0) ; Load caller frame size
-18 : SUB 5, 5, 2 ; Restore pointer
+17 : LDC 2, 3(0) ; Caller frame size
+18 : SUB 5, 5, 2 ; Pop frame
 19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
 20 : ADD  3, 1, 0 ;  Store left operand into temporary register
 21 : LD   1, 1(5) ;  Load parameter 'n' into R1
