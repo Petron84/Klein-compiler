@@ -11,7 +11,7 @@
 10 : OUT  1, 0, 0 ;  Hardcoded print function
 11 : LD   6, 0(5) ;  Load return addess from stack frame.
 12 : LDA  7, 0(6) ;  Jump to return address.
-13 : LDA 4, 4(5) ; Base of callee frame
+13 : LDA 4, 0(5) ; Base of callee frame
 14 : LD   1, 1(5) ;  Load parameter 'a' into R1
 15 : ST 1, 1(4) ; Argument 1
 16 : LD   1, 2(5) ;  Load parameter 'b' into R1
@@ -43,8 +43,8 @@
 42 : ST   1, 3(5) ;  Store function result into stack frame
 43 : LD   6, 0(5) ;  Load return address
 44 : LDA  7, 0(6) ;  Return to caller
-45 : LDA 4, 4(5) ; Base of callee frame
-46 : LDA 4, 4(5) ; Base of callee frame
+45 : LDA 4, 0(5) ; Base of callee frame
+46 : LDA 4, 0(5) ; Base of callee frame
 47 : LD   1, 1(5) ;  Load parameter 'a' into R1
 48 : ST 1, 1(4) ; Argument 1
 49 : LDA 6, 53(0) ; Return address
@@ -56,7 +56,7 @@
 55 : SUB 5, 5, 2 ; Pop back to caller
 56 : LDA  4, 3(4) ;  If a function call occurred, push additional callee frame
 57 : ST 1, 1(4) ; Argument 1
-58 : LDA 4, 4(5) ; Base of callee frame
+58 : LDA 4, 0(5) ; Base of callee frame
 59 : ST 1, 1(4) ; Argument 1
 60 : LDA 6, 64(0) ; Return address
 61 : ST 6, 0(4) ; Store return in callee frame

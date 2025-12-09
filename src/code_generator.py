@@ -196,7 +196,7 @@ class Generator:
                     args = exp_children[1].children
 
                     # Compute callee frame base ONCE
-                    self.write(f"LDA 4, {caller_size}(5)", "Base of callee frame")
+                    self.write(f"LDA 4, 0(5)", "Base of callee frame")
 
                     # Store parameters at offsets 1..N
                     for i, arg in enumerate(args):
