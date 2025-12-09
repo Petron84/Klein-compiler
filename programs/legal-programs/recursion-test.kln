@@ -1,0 +1,9 @@
+function main(a: integer, b: integer): integer
+	add_till_n(a,b)
+
+function add_till_n(a: integer, b: integer): integer
+	print(a)
+	if a = b then
+	a
+	else
+	add_till_n((a+1),b)
