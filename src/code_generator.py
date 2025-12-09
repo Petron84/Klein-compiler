@@ -207,6 +207,7 @@ class Generator:
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
                     self.write("ST 6, 0(4)", "Store return in callee frame")
+                    self.write("ADD 5, 4, 0", "Push callee frame")
                     self.write(f"LDA 7, @{f_name}(0)", f"Call {f_name}")
 
                     # 3) Upon return: load return value + restore caller frame
