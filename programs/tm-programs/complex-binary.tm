@@ -18,7 +18,7 @@
 17 : LDA 6, 21(0) ; Return address
 18 : ST 6, 0(4) ; Store return address into callee frame
 19 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-20 : LDA 7, 71(0) ; Call MOD
+20 : LDA 7, 72(0) ; Call MOD
 21 : LD 1, 3(5) ; Load callee result into R1
 22 : LDC 2, 6(0) ; Callee frame size
 23 : SUB 5, 5, 2 ; Pop back to caller
@@ -45,7 +45,7 @@
 44 : LDA 6, 48(0) ; Return address
 45 : ST 6, 0(4) ; Store return address into callee frame
 46 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-47 : LDA 7, 71(0) ; Call MOD
+47 : LDA 7, 72(0) ; Call MOD
 48 : LD 1, 3(5) ; Load callee result into R1
 49 : LDC 2, 6(0) ; Callee frame size
 50 : SUB 5, 5, 2 ; Pop back to caller
@@ -66,22 +66,23 @@
 65 : LD 2, 2(5) ; Restore left operand from depth 0
 66 : ADD 1, 2, 1 ; R1 = left OR right
 67 : ST 1, 1(5) ; Store result into current frame's return slot
-68 : LD 1, 1(5) ; Load main return value into R1
-69 : LD 6, 0(5) ; Load main return address
-70 : LDA 7, 0(6) ; Return from main
-71 : LD 1, 1(5) ; Load parameter 'm' into R1
-72 : ST 1, 4(5) ; Spill left operand at depth 0
-73 : LD 1, 1(5) ; Load parameter 'm' into R1
-74 : ST 1, 5(5) ; Spill left operand at depth 1
-75 : LD 1, 2(5) ; Load parameter 'n' into R1
-76 : LD 2, 5(5) ; Restore left operand from depth 1
-77 : DIV 1, 2, 1 ; R1 = left / right
-78 : ST 1, 5(5) ; Spill left operand at depth 1
-79 : LD 1, 2(5) ; Load parameter 'n' into R1
-80 : LD 2, 5(5) ; Restore left operand from depth 1
-81 : MUL 1, 2, 1 ; R1 = left * right
-82 : LD 2, 4(5) ; Restore left operand from depth 0
-83 : SUB 1, 2, 1 ; R1 = left - right
-84 : ST 1, 3(5) ; Store function result into frame return slot
-85 : LD 6, 0(5) ; Load return address
-86 : LDA 7, 0(6) ; Return to caller
+68 : LDC 5, 1(0) ; Reset R5 to main frame base (DMEM[N+1])
+69 : LD 1, 1(5) ; Load main return value into R1
+70 : LD 6, 0(5) ; Load root return address from main frame
+71 : LDA 7, 0(6) ; Return from main to runtime epilogue
+72 : LD 1, 1(5) ; Load parameter 'm' into R1
+73 : ST 1, 4(5) ; Spill left operand at depth 0
+74 : LD 1, 1(5) ; Load parameter 'm' into R1
+75 : ST 1, 5(5) ; Spill left operand at depth 1
+76 : LD 1, 2(5) ; Load parameter 'n' into R1
+77 : LD 2, 5(5) ; Restore left operand from depth 1
+78 : DIV 1, 2, 1 ; R1 = left / right
+79 : ST 1, 5(5) ; Spill left operand at depth 1
+80 : LD 1, 2(5) ; Load parameter 'n' into R1
+81 : LD 2, 5(5) ; Restore left operand from depth 1
+82 : MUL 1, 2, 1 ; R1 = left * right
+83 : LD 2, 4(5) ; Restore left operand from depth 0
+84 : SUB 1, 2, 1 ; R1 = left - right
+85 : ST 1, 3(5) ; Store function result into frame return slot
+86 : LD 6, 0(5) ; Load return address
+87 : LDA 7, 0(6) ; Return to caller

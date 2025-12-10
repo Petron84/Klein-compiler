@@ -188,13 +188,17 @@ class Generator:
         for exp in main_body:
             self.instruction_rules(exp, "main")
 
-        # Epilogue for main: move return value from frame into R1 and return
+        # Epilogue for main: ensure R5 points to main frame base BEFORE final return
+        # (prevents loading return address from DMEM[0] if R5 drifted due to pops)
         frame = self.stack_frames.pop()
         main_params = self.symbol_table['main'].parameters[0]
+        main_base = main_params + 1  # DMEM[N+1] for N args
+        self.write(f"LDC 5, {main_base}(0)", "Reset R5 to main frame base (DMEM[N+1])")
+
         offset = main_params + 1
         self.write(f"LD 1, {offset}(5)", "Load main return value into R1")
-        self.write("LD 6, 0(5)", "Load main return address")
-        self.write("LDA 7, 0(6)", "Return from main")
+        self.write("LD 6, 0(5)", "Load root return address from main frame")
+        self.write("LDA 7, 0(6)", "Return from main to runtime epilogue")
 
         # Other functions
         del functions['main']

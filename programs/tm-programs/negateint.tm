@@ -13,6 +13,7 @@
 12 : LD 1, 1(5) ; Load parameter 'n' into R1
 13 : SUB 1, 0, 1 ; Negate value in R1
 14 : ST 1, 2(5) ; Store result into current frame's return slot
-15 : LD 1, 2(5) ; Load main return value into R1
-16 : LD 6, 0(5) ; Load main return address
-17 : LDA 7, 0(6) ; Return from main
+15 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
+16 : LD 1, 2(5) ; Load main return value into R1
+17 : LD 6, 0(5) ; Load root return address from main frame
+18 : LDA 7, 0(6) ; Return from main to runtime epilogue
