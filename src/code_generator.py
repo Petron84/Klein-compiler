@@ -260,7 +260,7 @@ class Generator:
                     args = exp_children[1].children
                     for i, arg in enumerate(args):
                         # Evaluate argument i -> R1 (nested calls may clobber R4)
-                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.instruction_rules(arg, f_name, callee=True)
 
                         # Use caller_size to compute where the callee frame will be placed
                         self.write(f"LDA 4, {caller_size}(5)", "Compute future callee base using caller_size")

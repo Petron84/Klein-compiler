@@ -26,7 +26,7 @@
 25 : LDC 1, 1(0) ; Load integer-literal into R1
 26 : LDA 4, 4(5) ; Compute future callee base using caller_size
 27 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
-28 : LD 1, 1(5) ; Load parameter 'elementWanted' into R1
+28 : LD 1, 2(5) ; Load parameter 'elementWanted' into R1
 29 : LDA 4, 4(5) ; Compute future callee base using caller_size
 30 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
 31 : LDC 1, 0(0) ; Load integer-literal into R1

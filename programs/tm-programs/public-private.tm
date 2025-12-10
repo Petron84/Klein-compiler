@@ -165,30 +165,28 @@
 164 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
 165 : LDA 4, 4(5) ; Compute future callee base using caller_size
 166 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
-167 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
-168 : LDA 4, 4(5) ; Compute future callee base using caller_size
-169 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
-170 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
-171 : LDA 4, 4(5) ; Compute future callee base using caller_size
-172 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
-173 : LDA 4, 4(5) ; Compute future callee base (caller_size)
-174 : LDA 6, 178(0) ; Return address
-175 : ST 6, 0(4) ; Store return in callee frame
-176 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-177 : LDA 7, 91(0) ; Call gcd
-178 : LD 1, 3(5) ; Load callee result into R1
-179 : LDC 2, 5(0) ; Callee frame size
-180 : SUB 5, 5, 2 ; Pop callee frame
-181 : LDA 4, 4(5) ; Compute future callee base using caller_size
-182 : ST 1, 3(4) ; Store argument 2 into callee's param slot (future frame)
-183 : LDA 4, 4(5) ; Compute future callee base (caller_size)
-184 : LDA 6, 188(0) ; Return address
-185 : ST 6, 0(4) ; Store return in callee frame
-186 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-187 : LDA 7, 133(0) ; Call displayAndPrint
-188 : LD 1, 4(5) ; Load callee result into R1
-189 : LDC 2, 5(0) ; Callee frame size
-190 : SUB 5, 5, 2 ; Pop callee frame
-191 : ST 1, 3(5) ; Store function result into frame return slot
-192 : LD 6, 0(5) ; Load return address
-193 : LDA 7, 0(6) ; Return to caller
+167 : LDA 4, 5(5) ; Compute future callee base using caller_size
+168 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
+169 : LDA 4, 5(5) ; Compute future callee base using caller_size
+170 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
+171 : LDA 4, 5(5) ; Compute future callee base (caller_size)
+172 : LDA 6, 176(0) ; Return address
+173 : ST 6, 0(4) ; Store return in callee frame
+174 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+175 : LDA 7, 91(0) ; Call gcd
+176 : LD 1, 3(5) ; Load callee result into R1
+177 : LDC 2, 5(0) ; Callee frame size
+178 : SUB 5, 5, 2 ; Pop callee frame
+179 : LDA 4, 4(5) ; Compute future callee base using caller_size
+180 : ST 1, 3(4) ; Store argument 2 into callee's param slot (future frame)
+181 : LDA 4, 4(5) ; Compute future callee base (caller_size)
+182 : LDA 6, 186(0) ; Return address
+183 : ST 6, 0(4) ; Store return in callee frame
+184 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+185 : LDA 7, 133(0) ; Call displayAndPrint
+186 : LD 1, 4(5) ; Load callee result into R1
+187 : LDC 2, 5(0) ; Callee frame size
+188 : SUB 5, 5, 2 ; Pop callee frame
+189 : ST 1, 3(5) ; Store function result into frame return slot
+190 : LD 6, 0(5) ; Load return address
+191 : LDA 7, 0(6) ; Return to caller
