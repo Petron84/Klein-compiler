@@ -37,7 +37,7 @@
 36 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 37 : LDA 7, 234(0) ; Call ODD
 38 : LD 1, 2(5) ; Load callee result into R1
-39 : LDC 2, 4(0) ; Callee frame size
+39 : LDC 2, 3(0) ; Callee frame size
 40 : SUB 5, 5, 2 ; Pop callee frame
 41 : ST 1, 2(5) ; Store result into caller’s frame
 42 : LD 1, 2(5) ; Load main return value into R1
@@ -59,7 +59,7 @@
 58 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 59 : LDA 7, 541(0) ; Call LE
 60 : LD 1, 3(5) ; Load callee result into R1
-61 : LDC 2, 5(0) ; Callee frame size
+61 : LDC 2, 7(0) ; Callee frame size
 62 : SUB 5, 5, 2 ; Pop callee frame
 63 : JEQ 1, 82(0) ; If condition is false, jump to ELSE
 64 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -77,7 +77,7 @@
 76 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 77 : LDA 7, 102(0) ; Call SQRTSEARCH
 78 : LD 1, 4(5) ; Load callee result into R1
-79 : LDC 2, 6(0) ; Callee frame size
+79 : LDC 2, 7(0) ; Callee frame size
 80 : SUB 5, 5, 2 ; Pop callee frame
 81 : LDA 7, 99(0) ; Skip ELSE block
 82 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -95,7 +95,7 @@
 94 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 95 : LDA 7, 102(0) ; Call SQRTSEARCH
 96 : LD 1, 4(5) ; Load callee result into R1
-97 : LDC 2, 6(0) ; Callee frame size
+97 : LDC 2, 7(0) ; Callee frame size
 98 : SUB 5, 5, 2 ; Pop callee frame
 99 : ST 1, 5(5) ; Store function result into frame return slot
 100 : LD 6, 0(5) ; Load return address
@@ -116,7 +116,7 @@
 115 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 116 : LDA 7, 541(0) ; Call LE
 117 : LD 1, 3(5) ; Load callee result into R1
-118 : LDC 2, 5(0) ; Callee frame size
+118 : LDC 2, 6(0) ; Callee frame size
 119 : SUB 5, 5, 2 ; Pop callee frame
 120 : JEQ 1, 174(0) ; If condition is false, jump to ELSE
 121 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -133,7 +133,7 @@
 132 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 133 : LDA 7, 463(0) ; Call TIMES
 134 : LD 1, 3(5) ; Load callee result into R1
-135 : LDC 2, 5(0) ; Callee frame size
+135 : LDC 2, 6(0) ; Callee frame size
 136 : SUB 5, 5, 2 ; Pop callee frame
 137 : LD 2, 5(5) ; Restore left operand from depth 0
 138 : SUB 1, 2, 1 ; R1 = left - right
@@ -151,7 +151,7 @@
 150 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 151 : LDA 7, 463(0) ; Call TIMES
 152 : LD 1, 3(5) ; Load callee result into R1
-153 : LDC 2, 5(0) ; Callee frame size
+153 : LDC 2, 6(0) ; Callee frame size
 154 : SUB 5, 5, 2 ; Pop callee frame
 155 : ST 1, 5(5) ; Spill left operand at depth 0
 156 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -165,7 +165,7 @@
 164 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 165 : LDA 7, 541(0) ; Call LE
 166 : LD 1, 3(5) ; Load callee result into R1
-167 : LDC 2, 5(0) ; Callee frame size
+167 : LDC 2, 6(0) ; Callee frame size
 168 : SUB 5, 5, 2 ; Pop callee frame
 169 : JEQ 1, 172(0) ; If condition is false, jump to ELSE
 170 : LD 1, 2(5) ; Load parameter 'low' into R1
@@ -193,7 +193,7 @@
 192 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 193 : LDA 7, 479(0) ; Call PLUS
 194 : LD 1, 3(5) ; Load callee result into R1
-195 : LDC 2, 5(0) ; Callee frame size
+195 : LDC 2, 6(0) ; Callee frame size
 196 : SUB 5, 5, 2 ; Pop callee frame
 197 : ST 1, 5(5) ; Spill left operand at depth 0
 198 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -207,7 +207,7 @@
 206 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 207 : LDA 7, 45(0) ; Call SQRTSPLIT
 208 : LD 1, 5(5) ; Load callee result into R1
-209 : LDC 2, 7(0) ; Callee frame size
+209 : LDC 2, 6(0) ; Callee frame size
 210 : SUB 5, 5, 2 ; Pop callee frame
 211 : ST 1, 4(5) ; Store function result into frame return slot
 212 : LD 6, 0(5) ; Load return address
@@ -227,7 +227,7 @@
 226 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 227 : LDA 7, 102(0) ; Call SQRTSEARCH
 228 : LD 1, 4(5) ; Load callee result into R1
-229 : LDC 2, 6(0) ; Callee frame size
+229 : LDC 2, 3(0) ; Callee frame size
 230 : SUB 5, 5, 2 ; Pop callee frame
 231 : ST 1, 2(5) ; Store function result into frame return slot
 232 : LD 6, 0(5) ; Load return address
@@ -244,7 +244,7 @@
 243 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 244 : LDA 7, 541(0) ; Call LE
 245 : LD 1, 3(5) ; Load callee result into R1
-246 : LDC 2, 5(0) ; Callee frame size
+246 : LDC 2, 4(0) ; Callee frame size
 247 : SUB 5, 5, 2 ; Pop callee frame
 248 : JEQ 1, 294(0) ; If condition is false, jump to ELSE
 249 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -262,7 +262,7 @@
 261 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 262 : LDA 7, 455(0) ; Call DIV
 263 : LD 1, 3(5) ; Load callee result into R1
-264 : LDC 2, 5(0) ; Callee frame size
+264 : LDC 2, 4(0) ; Callee frame size
 265 : SUB 5, 5, 2 ; Pop callee frame
 266 : ST 1, 3(5) ; Spill left operand at depth 0
 267 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -277,7 +277,7 @@
 276 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 277 : LDA 7, 455(0) ; Call DIV
 278 : LD 1, 3(5) ; Load callee result into R1
-279 : LDC 2, 5(0) ; Callee frame size
+279 : LDC 2, 4(0) ; Callee frame size
 280 : SUB 5, 5, 2 ; Pop callee frame
 281 : LD 2, 3(5) ; Restore left operand from depth 0
 282 : ADD 1, 2, 1 ; R1 = left + right
@@ -301,7 +301,7 @@
 300 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 301 : LDA 7, 450(0) ; Call NEG
 302 : LD 1, 2(5) ; Load callee result into R1
-303 : LDC 2, 3(0) ; Callee frame size
+303 : LDC 2, 4(0) ; Callee frame size
 304 : SUB 5, 5, 2 ; Pop callee frame
 305 : LDA 4, 4(5) ; Recompute callee base from callee size
 306 : ST 1, 1(4) ; Store argument 0 in callee
@@ -314,7 +314,7 @@
 313 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 314 : LDA 7, 450(0) ; Call NEG
 315 : LD 1, 2(5) ; Load callee result into R1
-316 : LDC 2, 3(0) ; Callee frame size
+316 : LDC 2, 4(0) ; Callee frame size
 317 : SUB 5, 5, 2 ; Pop callee frame
 318 : LDA 4, 4(5) ; Recompute callee base from callee size
 319 : ST 1, 1(4) ; Store argument 0 in callee
@@ -327,7 +327,7 @@
 326 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 327 : LDA 7, 455(0) ; Call DIV
 328 : LD 1, 3(5) ; Load callee result into R1
-329 : LDC 2, 5(0) ; Callee frame size
+329 : LDC 2, 4(0) ; Callee frame size
 330 : SUB 5, 5, 2 ; Pop callee frame
 331 : ST 1, 3(5) ; Spill left operand at depth 0
 332 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -339,7 +339,7 @@
 338 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 339 : LDA 7, 450(0) ; Call NEG
 340 : LD 1, 2(5) ; Load callee result into R1
-341 : LDC 2, 3(0) ; Callee frame size
+341 : LDC 2, 4(0) ; Callee frame size
 342 : SUB 5, 5, 2 ; Pop callee frame
 343 : LDA 4, 4(5) ; Recompute callee base from callee size
 344 : ST 1, 1(4) ; Store argument 0 in callee
@@ -352,7 +352,7 @@
 351 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 352 : LDA 7, 455(0) ; Call DIV
 353 : LD 1, 3(5) ; Load callee result into R1
-354 : LDC 2, 5(0) ; Callee frame size
+354 : LDC 2, 4(0) ; Callee frame size
 355 : SUB 5, 5, 2 ; Pop callee frame
 356 : LD 2, 3(5) ; Restore left operand from depth 0
 357 : ADD 1, 2, 1 ; R1 = left + right
@@ -443,7 +443,7 @@
 442 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 443 : LDA 7, 450(0) ; Call NEG
 444 : LD 1, 2(5) ; Load callee result into R1
-445 : LDC 2, 3(0) ; Callee frame size
+445 : LDC 2, 4(0) ; Callee frame size
 446 : SUB 5, 5, 2 ; Pop callee frame
 447 : ST 1, 2(5) ; Store function result into frame return slot
 448 : LD 6, 0(5) ; Load return address
@@ -513,7 +513,7 @@
 512 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 513 : LDA 7, 541(0) ; Call LE
 514 : LD 1, 3(5) ; Load callee result into R1
-515 : LDC 2, 5(0) ; Callee frame size
+515 : LDC 2, 4(0) ; Callee frame size
 516 : SUB 5, 5, 2 ; Pop callee frame
 517 : LDC 2, 1(0) ; Load 1 into R2
 518 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -532,7 +532,7 @@
 531 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 532 : LDA 7, 606(0) ; Call LT
 533 : LD 1, 3(5) ; Load callee result into R1
-534 : LDC 2, 5(0) ; Callee frame size
+534 : LDC 2, 4(0) ; Callee frame size
 535 : SUB 5, 5, 2 ; Pop callee frame
 536 : LDC 2, 1(0) ; Load 1 into R2
 537 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -585,7 +585,7 @@
 584 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 585 : LDA 7, 594(0) ; Call EQ
 586 : LD 1, 3(5) ; Load callee result into R1
-587 : LDC 2, 5(0) ; Callee frame size
+587 : LDC 2, 4(0) ; Callee frame size
 588 : SUB 5, 5, 2 ; Pop callee frame
 589 : LDC 2, 1(0) ; Load 1 into R2
 590 : SUB 1, 2, 1 ; Logical NOT: 1 - R1

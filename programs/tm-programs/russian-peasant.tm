@@ -53,7 +53,7 @@
 52 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 53 : LDA 7, 60(0) ; Call multWithAccum
 54 : LD 1, 4(5) ; Load callee result into R1
-55 : LDC 2, 6(0) ; Callee frame size
+55 : LDC 2, 4(0) ; Callee frame size
 56 : SUB 5, 5, 2 ; Pop callee frame
 57 : ST 1, 3(5) ; Store function result into frame return slot
 58 : LD 6, 0(5) ; Load return address

@@ -21,7 +21,7 @@
 20 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 21 : LDA 7, 47(0) ; Call mul2
 22 : LD 1, 2(5) ; Load callee result into R1
-23 : LDC 2, 4(0) ; Callee frame size
+23 : LDC 2, 6(0) ; Callee frame size
 24 : SUB 5, 5, 2 ; Pop callee frame
 25 : ST 1, 4(5) ; Spill left operand at depth 0
 26 : LD 1, 2(5) ; Load parameter 'y' into R1
@@ -35,7 +35,7 @@
 34 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 35 : LDA 7, 47(0) ; Call mul2
 36 : LD 1, 2(5) ; Load callee result into R1
-37 : LDC 2, 4(0) ; Callee frame size
+37 : LDC 2, 6(0) ; Callee frame size
 38 : SUB 5, 5, 2 ; Pop callee frame
 39 : LD 2, 5(5) ; Restore left operand from depth 1
 40 : ADD 1, 2, 1 ; R1 = left + right

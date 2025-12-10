@@ -22,7 +22,7 @@
 21 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 22 : LDA 7, 168(0) ; Call loopToN
 23 : LD 1, 3(5) ; Load callee result into R1
-24 : LDC 2, 5(0) ; Callee frame size
+24 : LDC 2, 3(0) ; Callee frame size
 25 : SUB 5, 5, 2 ; Pop callee frame
 26 : ST 1, 2(5) ; Store result into caller’s frame
 27 : LD 1, 2(5) ; Load main return value into R1

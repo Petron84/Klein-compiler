@@ -34,7 +34,7 @@
 33 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 34 : LDA 7, 161(0) ; Call factor
 35 : LD 1, 3(5) ; Load callee result into R1
-36 : LDC 2, 4(0) ; Callee frame size
+36 : LDC 2, 5(0) ; Callee frame size
 37 : SUB 5, 5, 2 ; Pop callee frame
 38 : ST 1, 3(5) ; Store result into caller’s frame
 39 : LDA 7, 55(0) ; Skip ELSE block
@@ -50,7 +50,7 @@
 49 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 50 : LDA 7, 161(0) ; Call factor
 51 : LD 1, 3(5) ; Load callee result into R1
-52 : LDC 2, 4(0) ; Callee frame size
+52 : LDC 2, 5(0) ; Callee frame size
 53 : SUB 5, 5, 2 ; Pop callee frame
 54 : ST 1, 3(5) ; Store result into caller’s frame
 55 : LD 1, 3(5) ; Load main return value into R1
@@ -177,7 +177,7 @@
 176 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 177 : LDA 7, 91(0) ; Call gcd
 178 : LD 1, 3(5) ; Load callee result into R1
-179 : LDC 2, 5(0) ; Callee frame size
+179 : LDC 2, 4(0) ; Callee frame size
 180 : SUB 5, 5, 2 ; Pop callee frame
 181 : LDA 4, 4(5) ; Recompute callee base from callee size
 182 : ST 1, 3(4) ; Store argument 2 in callee
@@ -187,7 +187,7 @@
 186 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 187 : LDA 7, 133(0) ; Call displayAndPrint
 188 : LD 1, 4(5) ; Load callee result into R1
-189 : LDC 2, 5(0) ; Callee frame size
+189 : LDC 2, 4(0) ; Callee frame size
 190 : SUB 5, 5, 2 ; Pop callee frame
 191 : ST 1, 3(5) ; Store function result into frame return slot
 192 : LD 6, 0(5) ; Load return address

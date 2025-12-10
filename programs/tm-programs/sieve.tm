@@ -22,7 +22,7 @@
 21 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 22 : LDA 7, 200(0) ; Call sieveAt
 23 : LD 1, 3(5) ; Load callee result into R1
-24 : LDC 2, 5(0) ; Callee frame size
+24 : LDC 2, 3(0) ; Callee frame size
 25 : SUB 5, 5, 2 ; Pop callee frame
 26 : ST 1, 2(5) ; Store result into caller’s frame
 27 : LD 1, 2(5) ; Load main return value into R1
@@ -108,7 +108,7 @@
 107 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 108 : LDA 7, 63(0) ; Call divides
 109 : LD 1, 3(5) ; Load callee result into R1
-110 : LDC 2, 5(0) ; Callee frame size
+110 : LDC 2, 6(0) ; Callee frame size
 111 : SUB 5, 5, 2 ; Pop callee frame
 112 : ST 1, 4(5) ; Spill left operand at depth 0
 113 : LD 1, 1(5) ; Load parameter 'i' into R1
@@ -148,7 +148,7 @@
 147 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 148 : LDA 7, 88(0) ; Call hasDivisorFrom
 149 : LD 1, 3(5) ; Load callee result into R1
-150 : LDC 2, 6(0) ; Callee frame size
+150 : LDC 2, 3(0) ; Callee frame size
 151 : SUB 5, 5, 2 ; Pop callee frame
 152 : LDC 2, 1(0) ; Load 1 into R2
 153 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -164,7 +164,7 @@
 163 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 164 : LDA 7, 138(0) ; Call isPrime
 165 : LD 1, 2(5) ; Load callee result into R1
-166 : LDC 2, 3(0) ; Callee frame size
+166 : LDC 2, 5(0) ; Callee frame size
 167 : SUB 5, 5, 2 ; Pop callee frame
 168 : JEQ 1, 171(0) ; If condition is false, jump to ELSE
 169 : LD 1, 1(5) ; Load parameter 'current' into R1
