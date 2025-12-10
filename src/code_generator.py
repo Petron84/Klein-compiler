@@ -33,7 +33,7 @@ class Generator:
         # R1 : expression/return value
         # R2 : left operand / general temp
         # R3 : right operand scratch / general temp
-        # R4 : temporary address computations (do NOT rely across nested eval)
+        # R4 : FP (current function's frame base)  <-- NEW INVARIANT
         # R5 : DMEM pointer (stack pointer)
         # R6 : return address
         # R7 : program counter
@@ -60,7 +60,7 @@ class Generator:
         main_frame = self.stack_frames[-1]
 
         self.write(f"LDC 5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
-        self.write("ADD 4, 5, 0", " Mirror caller frame top (optional)")
+        self.write("ADD 4, 5, 0", " Set FP (R4) = current frame base")  # FP initialized
 
         # Load CLI args into the main frame
         for i in range(1, num_params + 1):
@@ -111,6 +111,9 @@ class Generator:
         self.write("------MAIN------", header=True)
         self.placeholders['@main'] = self.line_counter
 
+        # At function entry: set FP = SP
+        self.write("ADD 4, 5, 0", " Set FP at @main entry")
+
         for exp in main_body:
             self.instruction_rules(exp, "main")
 
@@ -118,8 +121,8 @@ class Generator:
         _ = self.stack_frames.pop()
         main_params = self.symbol_table['main'].parameters[0]
         offset = main_params + 1
-        self.write(f"LD 1, {offset}(5)", " Load main return value")
-        self.write("LD 6, 0(5)", " Load return address")
+        self.write(f"LD 1, {offset}(4)", " Load main return value (via FP)")  # use FP
+        self.write("LD 6, 0(4)", " Load return address (via FP)")             # use FP
         self.write("LDA 7, 0(6)", " Return from main")
 
         # Generate the rest
@@ -131,13 +134,16 @@ class Generator:
             num_params = self.symbol_table[f].parameters[0]
             self.create_frame(f)
 
+            # Function entry: set FP = SP
+            self.write("ADD 4, 5, 0", f" Set FP at @{f} entry")
+
             for exp in body:
                 self.instruction_rules(exp, f, callee=True)
 
-            # Function epilogue: store R1 into return slot, then return
+            # Function epilogue: store R1 into return slot at FP, then return
             ret_off = num_params + 1
-            self.write(f"ST 1, {ret_off}(5)", " Store function result")
-            self.write("LD 6, 0(5)", " Load return address")
+            self.write(f"ST 1, {ret_off}(4)", " Store function result (via FP)")
+            self.write("LD 6, 0(4)", " Load return address (via FP)")
             self.write("LDA 7, 0(6)", " Return to caller")
             self.stack_frames.pop()
 
@@ -160,13 +166,13 @@ class Generator:
 
                 # ---------- Push callee frame FIRST ----------
                 # Reserve the callee frame so nested calls cannot overlap it.
-                self.write(f"LDA 4, {callee_size}(5)", " Compute callee frame base")
-                self.write("ADD 5, 4, 0", " Push callee frame")
+                self.write(f"LDA 4, {callee_size}(5)", " Compute callee frame base (temp)")
+                self.write("ADD 5, 4, 0", " Push callee frame (SP=callee)")
 
                 if f_name == "print":
-                    # Evaluate its single argument → R1
+                    # Evaluate its single argument → R1 (identifier loads via FP=R4)
                     self.instruction_rules(exp_children[1], curr_function, callee=True)
-                    # Store arg into callee frame (now at 5)
+                    # Store arg into callee frame (now at SP=R5)
                     self.write("ST 1, 1(5)", " Store print arg in callee frame")
                     # Install RA and call
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
@@ -184,8 +190,9 @@ class Generator:
 
                     for i, arg in enumerate(args):
                         # Evaluate argument (may perform nested calls)
+                        # Identifier loads use FP=R4, so they read from the caller frame.
                         self.instruction_rules(arg, curr_function, callee=True)  # → R1
-                        # When nested calls return, R5 again points to CALLEE frame.
+                        # After nested calls return, SP=R5 points back to callee frame.
                         self.write(f"ST 1, {i+1}(5)", f" Store argument {i} in callee frame")
 
                     # Install RA and call
@@ -201,10 +208,10 @@ class Generator:
                     self.write(f"LDC 2, {callee_size}(0)", " Caller frame size")
                     self.write("SUB 5, 5, 2", " Pop callee frame")
 
-                    # If this call is the value of the current function, store it
+                    # If this call is the value of the current function, store it (via FP)
                     if not callee:
                         caller_return = caller_params + 1
-                        self.write(f"ST 1, {caller_return}(5)", " Store result into caller frame")
+                        self.write(f"ST 1, {caller_return}(4)", " Store result into caller frame (via FP)")
 
             case "INTEGER-LITERAL":
                 value = body.value
@@ -212,7 +219,7 @@ class Generator:
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
                     offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(5)", " Store into current frame's return slot")
+                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
 
             case "BOOLEAN-LITERAL":
                 value = 1 if body.value == "true" else 0
@@ -220,19 +227,20 @@ class Generator:
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
                     offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(5)", " Store into current frame's return slot")
+                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
 
             case "IDENTIFIER":
+                # Load from the CURRENT FUNCTION'S FRAME via FP (R4)
                 params = self.symbol_table[curr_function].parameters
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
                         offset = i + 1
-                        self.write(f"LD 1, {offset}(5)", f" Load parameter '{exp_value}'")
+                        self.write(f"LD 1, {offset}(4)", f" Load parameter '{exp_value}' via FP")
                         break
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
                     offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(5)", " Store into current frame's return slot")
+                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
 
             case "UNARY-EXPRESSION":
                 inner_exp = exp_children[0]
@@ -245,7 +253,7 @@ class Generator:
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
                     offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(5)", " Store into current frame's return slot")
+                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
 
             case "BINARY-EXPRESSION":
                 left_exp = exp_children[0]
@@ -301,7 +309,7 @@ class Generator:
 
                 if not callee:
                     offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(5)", " Store into current frame's return slot")
+                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
 
             case "IF-EXPRESSION":
                 self.write("----IF-BLOCK----", header=True)

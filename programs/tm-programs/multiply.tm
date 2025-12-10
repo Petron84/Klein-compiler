@@ -1,5 +1,5 @@
 0 : LDC 5, 3(0) ;  Set DMEM pointer to main stack frame
-1 : ADD 4, 5, 0 ;  Mirror caller frame top (optional)
+1 : ADD 4, 5, 0 ;  Set FP (R4) = current frame base
 2 : LD 2, 1(0) ;  Load CLI arg 1 into R2
 3 : ST 2, 1(5) ;  Store arg 1 into main frame
 4 : LD 2, 2(0) ;  Load CLI arg 2 into R2
@@ -12,13 +12,14 @@
 11 : OUT 1, 0, 0 ;  print(R1)
 12 : LD 6, 0(5) ;  Load return address
 13 : LDA 7, 0(6) ;  Return
-14 : LD 1, 2(5) ;  Load parameter 'y'
-15 : ADD 3, 1, 0 ;  Stash right in R3
-16 : LD 1, 1(5) ;  Load parameter 'x'
-17 : ADD 2, 1, 0 ;  Move left to R2
-18 : ADD 1, 3, 0 ;  Restore right to R1
-19 : MUL 1, 2, 1 ;  R1 = left * right
-20 : ST 1, 3(5) ;  Store into current frame's return slot
-21 : LD 1, 3(5) ;  Load main return value
-22 : LD 6, 0(5) ;  Load return address
-23 : LDA 7, 0(6) ;  Return from main
+14 : ADD 4, 5, 0 ;  Set FP at 14 entry
+15 : LD 1, 2(4) ;  Load parameter 'y' via FP
+16 : ADD 3, 1, 0 ;  Stash right in R3
+17 : LD 1, 1(4) ;  Load parameter 'x' via FP
+18 : ADD 2, 1, 0 ;  Move left to R2
+19 : ADD 1, 3, 0 ;  Restore right to R1
+20 : MUL 1, 2, 1 ;  R1 = left * right
+21 : ST 1, 3(4) ;  Store into current frame's return slot (via FP)
+22 : LD 1, 3(4) ;  Load main return value (via FP)
+23 : LD 6, 0(4) ;  Load return address (via FP)
+24 : LDA 7, 0(6) ;  Return from main

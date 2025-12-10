@@ -1,5 +1,5 @@
 0 : LDC 5, 2(0) ;  Set DMEM pointer to main stack frame
-1 : ADD 4, 5, 0 ;  Mirror caller frame top (optional)
+1 : ADD 4, 5, 0 ;  Set FP (R4) = current frame base
 2 : LD 2, 1(0) ;  Load CLI arg 1 into R2
 3 : ST 2, 1(5) ;  Store arg 1 into main frame
 4 : LDA 6, 2(7) ;  Calculate return address
@@ -10,46 +10,47 @@
 9 : OUT 1, 0, 0 ;  print(R1)
 10 : LD 6, 0(5) ;  Load return address
 11 : LDA 7, 0(6) ;  Return
-12 : LDC 1, 10(0) ;  Load integer literal into R1
-13 : ADD 3, 1, 0 ;  Stash right in R3
-14 : LD 1, 1(5) ;  Load parameter 'n'
-15 : ADD 2, 1, 0 ;  Move left to R2
-16 : ADD 1, 3, 0 ;  Restore right to R1
-17 : SUB 1, 2, 1 ;  left - right
-18 : JLT 1, 2(7) ;  if < 0 then true
-19 : LDC 1, 0(0) ;  false
-20 : LDA 7, 1(7) ;  skip setting true
-21 : LDC 1, 1(0) ;  true
-22 : JEQ 1, 50(0) ;  If false, jump to ELSE
-23 : LDC 1, 5(0) ;  Load integer literal into R1
-24 : ADD 3, 1, 0 ;  Stash right in R3
-25 : LD 1, 1(5) ;  Load parameter 'n'
-26 : ADD 2, 1, 0 ;  Move left to R2
-27 : ADD 1, 3, 0 ;  Restore right to R1
-28 : SUB 1, 2, 1 ;  left - right
-29 : JLT 1, 2(7) ;  if < 0 then true
-30 : LDC 1, 0(0) ;  false
-31 : LDA 7, 1(7) ;  skip setting true
-32 : LDC 1, 1(0) ;  true
-33 : JEQ 1, 42(0) ;  If false, jump to ELSE
-34 : LDC 1, 2(0) ;  Load integer literal into R1
-35 : ADD 3, 1, 0 ;  Stash right in R3
-36 : LD 1, 1(5) ;  Load parameter 'n'
-37 : ADD 2, 1, 0 ;  Move left to R2
-38 : ADD 1, 3, 0 ;  Restore right to R1
-39 : MUL 1, 2, 1 ;  R1 = left * right
-40 : ST 1, 2(5) ;  Store into current frame's return slot
-41 : LDA 7, 49(0) ;  Skip ELSE
-42 : LDC 1, 1(0) ;  Load integer literal into R1
-43 : ADD 3, 1, 0 ;  Stash right in R3
-44 : LD 1, 1(5) ;  Load parameter 'n'
-45 : ADD 2, 1, 0 ;  Move left to R2
-46 : ADD 1, 3, 0 ;  Restore right to R1
-47 : SUB 1, 2, 1 ;  R1 = left - right
-48 : ST 1, 2(5) ;  Store into current frame's return slot
-49 : LDA 7, 52(0) ;  Skip ELSE
-50 : LDC 1, 1(0) ;  Load integer literal into R1
-51 : ST 1, 2(5) ;  Store into current frame's return slot
-52 : LD 1, 2(5) ;  Load main return value
-53 : LD 6, 0(5) ;  Load return address
-54 : LDA 7, 0(6) ;  Return from main
+12 : ADD 4, 5, 0 ;  Set FP at 12 entry
+13 : LDC 1, 10(0) ;  Load integer literal into R1
+14 : ADD 3, 1, 0 ;  Stash right in R3
+15 : LD 1, 1(4) ;  Load parameter 'n' via FP
+16 : ADD 2, 1, 0 ;  Move left to R2
+17 : ADD 1, 3, 0 ;  Restore right to R1
+18 : SUB 1, 2, 1 ;  left - right
+19 : JLT 1, 2(7) ;  if < 0 then true
+20 : LDC 1, 0(0) ;  false
+21 : LDA 7, 1(7) ;  skip setting true
+22 : LDC 1, 1(0) ;  true
+23 : JEQ 1, 51(0) ;  If false, jump to ELSE
+24 : LDC 1, 5(0) ;  Load integer literal into R1
+25 : ADD 3, 1, 0 ;  Stash right in R3
+26 : LD 1, 1(4) ;  Load parameter 'n' via FP
+27 : ADD 2, 1, 0 ;  Move left to R2
+28 : ADD 1, 3, 0 ;  Restore right to R1
+29 : SUB 1, 2, 1 ;  left - right
+30 : JLT 1, 2(7) ;  if < 0 then true
+31 : LDC 1, 0(0) ;  false
+32 : LDA 7, 1(7) ;  skip setting true
+33 : LDC 1, 1(0) ;  true
+34 : JEQ 1, 43(0) ;  If false, jump to ELSE
+35 : LDC 1, 2(0) ;  Load integer literal into R1
+36 : ADD 3, 1, 0 ;  Stash right in R3
+37 : LD 1, 1(4) ;  Load parameter 'n' via FP
+38 : ADD 2, 1, 0 ;  Move left to R2
+39 : ADD 1, 3, 0 ;  Restore right to R1
+40 : MUL 1, 2, 1 ;  R1 = left * right
+41 : ST 1, 2(4) ;  Store into current frame's return slot (via FP)
+42 : LDA 7, 50(0) ;  Skip ELSE
+43 : LDC 1, 1(0) ;  Load integer literal into R1
+44 : ADD 3, 1, 0 ;  Stash right in R3
+45 : LD 1, 1(4) ;  Load parameter 'n' via FP
+46 : ADD 2, 1, 0 ;  Move left to R2
+47 : ADD 1, 3, 0 ;  Restore right to R1
+48 : SUB 1, 2, 1 ;  R1 = left - right
+49 : ST 1, 2(4) ;  Store into current frame's return slot (via FP)
+50 : LDA 7, 53(0) ;  Skip ELSE
+51 : LDC 1, 1(0) ;  Load integer literal into R1
+52 : ST 1, 2(4) ;  Store into current frame's return slot (via FP)
+53 : LD 1, 2(4) ;  Load main return value (via FP)
+54 : LD 6, 0(4) ;  Load return address (via FP)
+55 : LDA 7, 0(6) ;  Return from main
