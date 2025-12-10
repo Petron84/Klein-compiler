@@ -10,9 +10,6 @@
 9 : LDA 7, 0(6) ; Jump back to caller
 10 : LDC 1, 1(0) ; Load boolean-literal into R1
 11 : ST 1, 1(5) ; Store result into current frame's return slot
-12 : LDC 5, 1(0) ; Anchor R5 to main frame base (DMEM[N+1])
-13 : ST 1, 1(5) ; Store final result into MAIN frame's return slot
-14 : LDC 5, 1(0) ; Reset R5 to main frame base (DMEM[N+1])
-15 : LD 1, 1(5) ; Load main return value into R1
-16 : LD 6, 0(5) ; Load root return address from main frame
-17 : LDA 7, 0(6) ; Return from main to runtime epilogue
+12 : LD 1, 1(5) ; Load main return value into R1
+13 : LD 6, 0(5) ; Load main return address
+14 : LDA 7, 0(6) ; Return from main

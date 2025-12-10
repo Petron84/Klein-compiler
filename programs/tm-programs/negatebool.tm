@@ -14,9 +14,6 @@
 13 : LDC 2, 1(0) ; Load 1 into R2
 14 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
 15 : ST 1, 2(5) ; Store result into current frame's return slot
-16 : LDC 5, 2(0) ; Anchor R5 to main frame base (DMEM[N+1])
-17 : ST 1, 2(5) ; Store final result into MAIN frame's return slot
-18 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
-19 : LD 1, 2(5) ; Load main return value into R1
-20 : LD 6, 0(5) ; Load root return address from main frame
-21 : LDA 7, 0(6) ; Return from main to runtime epilogue
+16 : LD 1, 2(5) ; Load main return value into R1
+17 : LD 6, 0(5) ; Load main return address
+18 : LDA 7, 0(6) ; Return from main

@@ -14,13 +14,10 @@
 13 : ST 6, 0(4) ; Store return address in callee frame
 14 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 15 : LDA 7, 7(0) ; Call built-in print
-16 : LDC 2, 3(0) ; Callee frame size
+16 : LDC 2, 2(0) ; Caller frame size
 17 : SUB 5, 5, 2 ; Pop back to caller
 18 : LDC 1, 1(0) ; Load integer-literal into R1
 19 : ST 1, 1(5) ; Store result into current frame's return slot
-20 : LDC 5, 1(0) ; Anchor R5 to main frame base (DMEM[N+1])
-21 : ST 1, 1(5) ; Store final result into MAIN frame's return slot
-22 : LDC 5, 1(0) ; Reset R5 to main frame base (DMEM[N+1])
-23 : LD 1, 1(5) ; Load main return value into R1
-24 : LD 6, 0(5) ; Load root return address from main frame
-25 : LDA 7, 0(6) ; Return from main to runtime epilogue
+20 : LD 1, 1(5) ; Load main return value into R1
+21 : LD 6, 0(5) ; Load main return address
+22 : LDA 7, 0(6) ; Return from main
