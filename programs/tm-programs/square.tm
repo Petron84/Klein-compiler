@@ -10,11 +10,12 @@
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
 11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : ADD  3, 1, 0 ;  Store left operand into temporary register
+12 : ST   1, 3(4) ;  Store right operand result into return value slot
 13 : LD   1, 1(5) ;  Load parameter 'n' into R1
-14 : ADD  2, 3, 0 ;  Restore left operand
-15 : MUL  1, 2, 1 ;  R1 = left * right
-16 : ST 1, 2(5) ;  Store result into current frame's return slot
-17 : LD   1, 2(5) ;  Load return value into register 1
-18 : LD  6, 0(5) ;  Load return address for main function into register 6
-19 : LDA  7, 0(6) ;  Jump to return address of main function
+14 : ADD  2, 1, 0 ;  Move left operand to register 2
+15 : LD   1, 3(4) ;  Return right operand back into register 1
+16 : MUL  1, 2, 1 ;  R1 = left * right
+17 : ST 1, 2(5) ;  Store result into current frame's return slot
+18 : LD   1, 2(5) ;  Load return value into register 1
+19 : LD  6, 0(5) ;  Load return address for main function into register 6
+20 : LDA  7, 0(6) ;  Jump to return address of main function

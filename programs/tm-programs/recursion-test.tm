@@ -37,35 +37,37 @@
 36 : LDC 2, 3(0) ; Caller frame size
 37 : SUB 5, 5, 2 ; Pop frame
 38 : ST   1, 3(5) ;  Store function result into stack frame
-39 : LD   1, 1(5) ;  Load parameter 'a' into R1
-40 : ADD  3, 1, 0 ;  Store left operand into temporary register
-41 : LD   1, 2(5) ;  Load parameter 'b' into R1
-42 : ADD  2, 3, 0 ;  Restore left operand
-43 : SUB  1, 2, 1 ;  left - right for equality check
-44 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
-45 : LDC  1, 0(0) ;  false
-46 : LDA  7, 1(7) ;  skip setting true
-47 : LDC  1, 1(0) ;  true
-48 : JEQ  1, 51(0) ;  If condition is false, jump to ELSE
-49 : LD   1, 1(5) ;  Load parameter 'a' into R1
-50 : LDA  7, 68(0) ;  Skip ELSE block
-51 : LDA 4, 4(5) ; Base of callee frame
-52 : LD   1, 1(5) ;  Load parameter 'a' into R1
-53 : ADD  3, 1, 0 ;  Store left operand into temporary register
-54 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-55 : ADD  2, 3, 0 ;  Restore left operand
-56 : ADD  1, 2, 1 ;  R1 = left + right
-57 : ST 1, 1(4) ; Store argument 0 in callee
-58 : LD   1, 2(5) ;  Load parameter 'b' into R1
-59 : ST 1, 2(4) ; Store argument 1 in callee
-60 : LDA 6, 64(0) ; Return address
-61 : ST 6, 0(4) ; Store return in callee frame
-62 : ADD 5, 4, 0 ; Push callee frame
-63 : LDA 7, 30(0) ; Call add_till_n
-64 : LD   1, 3(5) ;  Load function result
-65 : LDC   2, 4(0) ;  Caller frame size
-66 : SUB   5, 5, 2 ;  Pop back to caller
-67 : SUB   4, 4, 2 ;  Pop back to caller
-68 : ST   1, 3(5) ;  Store function result into stack frame
-69 : LD   6, 0(5) ;  Load return address
-70 : LDA  7, 0(6) ;  Return to caller
+39 : LD   1, 2(5) ;  Load parameter 'b' into R1
+40 : ST   1, 3(4) ;  Store right operand result into return value slot
+41 : LD   1, 1(5) ;  Load parameter 'a' into R1
+42 : ADD  2, 1, 0 ;  Move left operand to register 2
+43 : LD   1, 3(4) ;  Return right operand back into register 1
+44 : SUB  1, 2, 1 ;  left - right for equality check
+45 : JEQ  1, 2(7) ;  If R1 == 0, jump to true
+46 : LDC  1, 0(0) ;  false
+47 : LDA  7, 1(7) ;  skip setting true
+48 : LDC  1, 1(0) ;  true
+49 : JEQ  1, 52(0) ;  If condition is false, jump to ELSE
+50 : LD   1, 1(5) ;  Load parameter 'a' into R1
+51 : LDA  7, 70(0) ;  Skip ELSE block
+52 : LDA 4, 4(5) ; Base of callee frame
+53 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+54 : ST   1, 3(4) ;  Store right operand result into return value slot
+55 : LD   1, 1(5) ;  Load parameter 'a' into R1
+56 : ADD  2, 1, 0 ;  Move left operand to register 2
+57 : LD   1, 3(4) ;  Return right operand back into register 1
+58 : ADD  1, 2, 1 ;  R1 = left + right
+59 : ST 1, 1(4) ; Store argument 0 in callee
+60 : LD   1, 2(5) ;  Load parameter 'b' into R1
+61 : ST 1, 2(4) ; Store argument 1 in callee
+62 : LDA 6, 66(0) ; Return address
+63 : ST 6, 0(4) ; Store return in callee frame
+64 : ADD 5, 4, 0 ; Push callee frame
+65 : LDA 7, 30(0) ; Call add_till_n
+66 : LD   1, 3(5) ;  Load function result
+67 : LDC   2, 4(0) ;  Caller frame size
+68 : SUB   5, 5, 2 ;  Pop back to caller
+69 : SUB   4, 4, 2 ;  Pop back to caller
+70 : ST   1, 3(5) ;  Store function result into stack frame
+71 : LD   6, 0(5) ;  Load return address
+72 : LDA  7, 0(6) ;  Return to caller

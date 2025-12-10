@@ -236,12 +236,10 @@ class Generator:
 
             case "BOOLEAN-LITERAL":
                 value = body.value
-                print(value)
                 if value == "true":
                     value = 1
                 else:
                     value = 0
-                print(value)
                 self.write(f"LDC  1, {value}(0)", " Load boolean-literal value into register 1")
 
                 if not callee: # Only store as return value if it is a function return
@@ -282,12 +280,25 @@ class Generator:
                 left_exp = exp_children[0]
                 right_exp = exp_children[1]
                 curr_params = self.symbol_table[curr_function].parameters[0]
+                single_values = ["INTEGER-LITERAL","BOOLEAN-LITERAL","IDENTIFIER"]
 
-                self.instruction_rules(left_exp, curr_function, callee=True)
-                self.write("ADD  3, 1, 0"," Store left operand into temporary register")
+                if left_exp.type in single_values and (right_exp.type not in single_values):
+                    self.instruction_rules(right_exp, curr_function, callee=True)
+                    self.write("ADD  3, 1, 0", " Move right operand to register 3")
+                    self.instruction_rules(left_exp, curr_function, callee=True)
+                    self.write("ADD  2, 1, 0", " Move left operand to register 2")
+                    self.write("ADD  1, 3, 0", " Move right operand to register 1")
 
-                self.instruction_rules(right_exp, curr_function, callee=True)
-                self.write(f"ADD  2, 3, 0", " Restore left operand")
+                elif left_exp.type in single_values and right_exp.type in single_values:
+                    self.instruction_rules(right_exp, curr_function, callee=True)
+                    self.write("ST   1, 3(4)", " Store right operand result into return value slot")
+                    self.instruction_rules(left_exp, curr_function, callee=True)
+                    self.write("ADD  2, 1, 0", " Move left operand to register 2")
+                    self.write("LD   1, 3(4)", " Return right operand back into register 1")
+                else:
+                    self.instruction_rules(left_exp,curr_function,callee=True)
+                    self.write("ADD  2, 1, 0", " Move left operand to register 2")
+                    self.instruction_rules(right_exp, curr_function, callee=True)
 
                 match exp_value:
                     case "+":

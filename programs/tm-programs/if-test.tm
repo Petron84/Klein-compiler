@@ -17,25 +17,27 @@
 16 : LDA 7, 8(0) ; Call print
 17 : LDC 2, 3(0) ; Caller frame size
 18 : SUB 5, 5, 2 ; Pop frame
-19 : LDC  1, 10(0) ;  Load boolean-literal value into register 1
-20 : ADD  3, 1, 0 ;  Store left operand into temporary register
-21 : LD   1, 1(5) ;  Load parameter 'n' into R1
-22 : ADD  2, 3, 0 ;  Restore left operand
-23 : SUB  1, 2, 1 ;  left - right for less-than check
-24 : JLT  1, 2(7) ;  If R1 < 0, jump to true
-25 : LDC  1, 0(0) ;  false
-26 : LDA  7, 1(7) ;  skip setting true
-27 : LDC  1, 1(0) ;  true
-28 : JEQ  1, 36(0) ;  If condition is false, jump to ELSE
-29 : LD   1, 1(5) ;  Load parameter 'n' into R1
-30 : ADD  3, 1, 0 ;  Store left operand into temporary register
-31 : LDC  1, 2(0) ;  Load boolean-literal value into register 1
-32 : ADD  2, 3, 0 ;  Restore left operand
-33 : MUL  1, 2, 1 ;  R1 = left * right
-34 : ST 1, 2(5) ;  Store result into current frame's return slot
-35 : LDA  7, 38(0) ;  Skip ELSE block
-36 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-37 : ST 1, 2(5) ;  Store result into current frame's return slot
-38 : LD   1, 2(5) ;  Load return value into register 1
-39 : LD  6, 0(5) ;  Load return address for main function into register 6
-40 : LDA  7, 0(6) ;  Jump to return address of main function
+19 : LD   1, 1(5) ;  Load parameter 'n' into R1
+20 : ST   1, 3(4) ;  Store right operand result into return value slot
+21 : LDC  1, 10(0) ;  Load integer-literal value into register 1
+22 : ADD  2, 1, 0 ;  Move left operand to register 2
+23 : LD   1, 3(4) ;  Return right operand back into register 1
+24 : SUB  1, 2, 1 ;  left - right for less-than check
+25 : JLT  1, 2(7) ;  If R1 < 0, jump to true
+26 : LDC  1, 0(0) ;  false
+27 : LDA  7, 1(7) ;  skip setting true
+28 : LDC  1, 1(0) ;  true
+29 : JEQ  1, 38(0) ;  If condition is false, jump to ELSE
+30 : LDC  1, 2(0) ;  Load integer-literal value into register 1
+31 : ST   1, 3(4) ;  Store right operand result into return value slot
+32 : LD   1, 1(5) ;  Load parameter 'n' into R1
+33 : ADD  2, 1, 0 ;  Move left operand to register 2
+34 : LD   1, 3(4) ;  Return right operand back into register 1
+35 : MUL  1, 2, 1 ;  R1 = left * right
+36 : ST 1, 2(5) ;  Store result into current frame's return slot
+37 : LDA  7, 40(0) ;  Skip ELSE block
+38 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+39 : ST 1, 2(5) ;  Store result into current frame's return slot
+40 : LD   1, 2(5) ;  Load return value into register 1
+41 : LD  6, 0(5) ;  Load return address for main function into register 6
+42 : LDA  7, 0(6) ;  Jump to return address of main function
