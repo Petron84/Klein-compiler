@@ -1,9 +1,17 @@
-function main(a:integer, b:integer): integer
-	if (0 < sub(b,a)) then
-		a + b - sub(b,(a-b))
-	else
-		b - a + sub(b,(a-b))
+function main(a:integer, b:integer, c:integer): integer
+    if isZero(a) then
+        if isPositive(b) then
+            b + c
+        else
+            c - b
+    else
+        if isPositive(c) then
+            a * c
+        else
+            a + b
 
-function sub(m: integer, n:integer): integer
-	m - n
-	
+function isZero(x:integer): boolean
+    x == 0
+
+function isPositive(x:integer): boolean
+    x > 0
