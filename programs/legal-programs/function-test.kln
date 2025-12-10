@@ -1,17 +1,14 @@
-function main(a:integer, b:integer, c:integer): integer
-    if isZero(a) then
-        if isPositive(b) then
-            b + c
-        else
-            c - b
-    else
-        if isPositive(c) then
-            a * c
-        else
-            a + b
+function main(x:integer, y:integer): integer
+    add( double(x), triple(y) )
 
-function isZero(x:integer): boolean
-    x = 0
+function add(a:integer, b:integer): integer
+    a + b
 
-function isPositive(x:integer): boolean
-    0 < x
+function double(n:integer): integer
+    mul2(n)
+
+function triple(n:integer): integer
+    add(n, mul2(n))
+
+function mul2(k:integer): integer
+    k * 2
