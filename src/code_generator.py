@@ -264,7 +264,7 @@ class Generator:
                     args = exp_children[1].children
                     for i, arg in enumerate(args):
                         # Evaluate arg -> R1 (this may perform nested calls and clobber R4)
-                        self.instruction_rules(arg, curr_function, callee=True)
+                        self.instruction_rules(arg, f_name, callee=True)
 
                         # Recompute callee base AFTER evaluation, BEFORE using (4)
                         self.write(f"LDA 4, {callee_size}(5)", "Compute callee base")
