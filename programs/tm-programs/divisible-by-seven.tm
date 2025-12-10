@@ -1,15 +1,15 @@
 0 : LDC  5, 2(0) ;  Set DMEM pointer to main stack frame
-1 : LD   2, 1(0) ;  Load CLI arg 1 into register
-2 : ST   2, 1(5) ;  Store the argument into stack frame
-3 : LDA  6, 2(7) ;  Calculate return address
-4 : ST   6, 0(5) ;  Store return address in main stack frame
-5 : LDA  7, 11(0) ;  Load address of main IMEM block - branch to function
-6 : OUT  1, 0, 0 ;  Return result
-7 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-8 : OUT  1, 0, 0 ;  Hardcoded print function
-9 : LD   6, 0(5) ;  Load return addess from stack frame.
-10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LDC  4, 1(0) ;  Top of caller frame
+1 : LDC  4, 0(5) ;  Set top of caller frame
+2 : LD   2, 1(0) ;  Load CLI arg 1 into register
+3 : ST   2, 1(5) ;  Store the argument into stack frame
+4 : LDA  6, 2(7) ;  Calculate return address
+5 : ST   6, 0(5) ;  Store return address in main stack frame
+6 : LDA  7, 12(0) ;  Load address of main IMEM block - branch to function
+7 : OUT  1, 0, 0 ;  Return result
+8 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+9 : OUT  1, 0, 0 ;  Hardcoded print function
+10 : LD   6, 0(5) ;  Load return addess from stack frame.
+11 : LDA  7, 0(6) ;  Jump to return address.
 12 : LDA 4, 4(5) ; Base of callee frame
 13 : LDC  1, 10(0) ;  Load integer-literal value into register 1
 14 : ST   1, 3(4) ;  Store right operand result into return value slot
@@ -131,7 +131,7 @@
 130 : LDA 6, 134(0) ; Return address
 131 : ST 6, 0(4) ; Store return in callee frame
 132 : ADD 5, 4, 0 ; Push callee frame
-133 : LDA 7, 11(0) ; Call main
+133 : LDA 7, 12(0) ; Call main
 134 : LD   1, 2(5) ;  Load function result
 135 : LDC   2, 3(0) ;  Caller frame size
 136 : SUB   5, 5, 2 ;  Pop back to caller

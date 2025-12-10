@@ -1,19 +1,19 @@
 0 : LDC  5, 4(0) ;  Set DMEM pointer to main stack frame
-1 : LD   2, 1(0) ;  Load CLI arg 1 into register
-2 : ST   2, 1(5) ;  Store the argument into stack frame
-3 : LD   2, 2(0) ;  Load CLI arg 2 into register
-4 : ST   2, 2(5) ;  Store the argument into stack frame
-5 : LD   2, 3(0) ;  Load CLI arg 3 into register
-6 : ST   2, 3(5) ;  Store the argument into stack frame
-7 : LDA  6, 2(7) ;  Calculate return address
-8 : ST   6, 0(5) ;  Store return address in main stack frame
-9 : LDA  7, 15(0) ;  Load address of main IMEM block - branch to function
-10 : OUT  1, 0, 0 ;  Return result
-11 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-12 : OUT  1, 0, 0 ;  Hardcoded print function
-13 : LD   6, 0(5) ;  Load return addess from stack frame.
-14 : LDA  7, 0(6) ;  Jump to return address.
-15 : LDC  4, 1(0) ;  Top of caller frame
+1 : LDC  4, 0(5) ;  Set top of caller frame
+2 : LD   2, 1(0) ;  Load CLI arg 1 into register
+3 : ST   2, 1(5) ;  Store the argument into stack frame
+4 : LD   2, 2(0) ;  Load CLI arg 2 into register
+5 : ST   2, 2(5) ;  Store the argument into stack frame
+6 : LD   2, 3(0) ;  Load CLI arg 3 into register
+7 : ST   2, 3(5) ;  Store the argument into stack frame
+8 : LDA  6, 2(7) ;  Calculate return address
+9 : ST   6, 0(5) ;  Store return address in main stack frame
+10 : LDA  7, 16(0) ;  Load address of main IMEM block - branch to function
+11 : OUT  1, 0, 0 ;  Return result
+12 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+13 : OUT  1, 0, 0 ;  Hardcoded print function
+14 : LD   6, 0(5) ;  Load return addess from stack frame.
+15 : LDA  7, 0(6) ;  Jump to return address.
 16 : LDA 4, 5(5) ; Base of callee frame
 17 : LD   1, 1(5) ;  Load parameter 'xNum' into R1
 18 : ST 1, 1(4) ; Store argument 0 in callee
@@ -33,7 +33,7 @@
 32 : LDA 6, 36(0) ; Return address
 33 : ST 6, 0(4) ; Store return addr in callee frame
 34 : ADD 5, 4, 0 ; Push new frame
-35 : LDA 7, 12(0) ; Call print
+35 : LDA 7, 13(0) ; Call print
 36 : LDC 2, 3(0) ; Caller frame size
 37 : SUB 5, 5, 2 ; Pop frame
 38 : LDA 4, 5(5) ; Base of callee frame

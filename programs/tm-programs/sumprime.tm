@@ -1,13 +1,13 @@
 0 : LDC  5, 1(0) ;  Set DMEM pointer to main stack frame
-1 : LDA  6, 2(7) ;  Calculate return address
-2 : ST   6, 0(5) ;  Store return address in main stack frame
-3 : LDA  7, 9(0) ;  Load address of main IMEM block - branch to function
-4 : OUT  1, 0, 0 ;  Return result
-5 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-6 : OUT  1, 0, 0 ;  Hardcoded print function
-7 : LD   6, 0(5) ;  Load return addess from stack frame.
-8 : LDA  7, 0(6) ;  Jump to return address.
-9 : LDC  4, 1(0) ;  Top of caller frame
+1 : LDC  4, 0(5) ;  Set top of caller frame
+2 : LDA  6, 2(7) ;  Calculate return address
+3 : ST   6, 0(5) ;  Store return address in main stack frame
+4 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function
+5 : OUT  1, 0, 0 ;  Return result
+6 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
+7 : OUT  1, 0, 0 ;  Hardcoded print function
+8 : LD   6, 0(5) ;  Load return addess from stack frame.
+9 : LDA  7, 0(6) ;  Jump to return address.
 10 : LDA 4, 4(5) ; Base of callee frame
 11 : LDC  1, 2(0) ;  Load integer-literal value into register 1
 12 : ST 1, 1(4) ; Store argument 0 in callee

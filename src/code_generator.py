@@ -68,6 +68,7 @@ class Generator:
             main_frame = self.stack_frames[-1]
 
             self.write(f"LDC  5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
+            self.write("LDC  4, 0(5)"," Set top of caller frame")
 
             for i in range(1, num_params + 1):
                 self.write(f"LD   2, {i}(0)", f" Load CLI arg {i} into register")
@@ -116,7 +117,6 @@ class Generator:
         self.write("------MAIN-------",header=True)
         self.placeholders['@main'] = self.line_counter
 
-        self.write("LDC  4, 1(0)"," Top of caller frame")
         for exp in main_body:
             self.instruction_rules(exp,"main")
 
