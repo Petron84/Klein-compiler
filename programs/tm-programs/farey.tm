@@ -29,14 +29,14 @@
 28 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 29 : LDA 7, 590(0) ; Call fareyNum
 30 : LD 1, 4(5) ; Load callee result into R1
-31 : LDC 2, 5(0) ; Caller frame size
+31 : LDC 2, 5(0) ; Callee frame size
 32 : SUB 5, 5, 2 ; Pop back to caller
 33 : LDA 4, 5(5) ; Recompute callee base from caller size
 34 : LDA 6, 38(0) ; Return address
 35 : ST 6, 0(4) ; Store return address in callee frame
 36 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 37 : LDA 7, 13(0) ; Call built-in print
-38 : LDC 2, 5(0) ; Caller frame size
+38 : LDC 2, 3(0) ; Callee frame size
 39 : SUB 5, 5, 2 ; Pop back to caller
 40 : LD 1, 1(5) ; Load parameter 'xNum' into R1
 41 : LDA 4, 5(5) ; Recompute callee base from caller size
@@ -53,7 +53,7 @@
 52 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 53 : LDA 7, 440(0) ; Call fareyDen
 54 : LD 1, 4(5) ; Load callee result into R1
-55 : LDC 2, 5(0) ; Caller frame size
+55 : LDC 2, 5(0) ; Callee frame size
 56 : SUB 5, 5, 2 ; Pop back to caller
 57 : ST 1, 4(5) ; Store result into caller’s return slot
 58 : LD 1, 4(5) ; Load main return value into R1
@@ -105,7 +105,7 @@
 104 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 105 : LDA 7, 61(0) ; Call greater
 106 : LD 1, 3(5) ; Load callee result into R1
-107 : LDC 2, 7(0) ; Caller frame size
+107 : LDC 2, 6(0) ; Callee frame size
 108 : SUB 5, 5, 2 ; Pop back to caller
 109 : ST 1, 5(5) ; Store function result into frame return slot
 110 : LD 6, 0(5) ; Load return address
@@ -142,7 +142,7 @@
 141 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 142 : LDA 7, 61(0) ; Call greater
 143 : LD 1, 3(5) ; Load callee result into R1
-144 : LDC 2, 11(0) ; Caller frame size
+144 : LDC 2, 6(0) ; Callee frame size
 145 : SUB 5, 5, 2 ; Pop back to caller
 146 : ST 1, 10(5) ; Spill left operand at depth 0
 147 : LD 1, 8(5) ; Load parameter 'd' into R1
@@ -157,7 +157,7 @@
 156 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 157 : LDA 7, 61(0) ; Call greater
 158 : LD 1, 3(5) ; Load callee result into R1
-159 : LDC 2, 11(0) ; Caller frame size
+159 : LDC 2, 6(0) ; Callee frame size
 160 : SUB 5, 5, 2 ; Pop back to caller
 161 : LD 2, 10(5) ; Restore left operand from depth 0
 162 : ADD 1, 2, 1 ; R1 = left OR right
@@ -226,7 +226,7 @@
 225 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 226 : LDA 7, 112(0) ; Call fractionEqual
 227 : LD 1, 5(5) ; Load callee result into R1
-228 : LDC 2, 11(0) ; Caller frame size
+228 : LDC 2, 8(0) ; Callee frame size
 229 : SUB 5, 5, 2 ; Pop back to caller
 230 : JEQ 1, 285(0) ; If condition is false, jump to ELSE
 231 : LD 1, 1(5) ; Load parameter 'selector' into R1
@@ -309,7 +309,7 @@
 308 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 309 : LDA 7, 87(0) ; Call fractionGreater
 310 : LD 1, 5(5) ; Load callee result into R1
-311 : LDC 2, 11(0) ; Caller frame size
+311 : LDC 2, 7(0) ; Callee frame size
 312 : SUB 5, 5, 2 ; Pop back to caller
 313 : JEQ 1, 355(0) ; If condition is false, jump to ELSE
 314 : LD 1, 1(5) ; Load parameter 'selector' into R1
@@ -350,7 +350,7 @@
 349 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 350 : LDA 7, 132(0) ; Call whileLoopFor
 351 : LD 1, 9(5) ; Load callee result into R1
-352 : LDC 2, 11(0) ; Caller frame size
+352 : LDC 2, 11(0) ; Callee frame size
 353 : SUB 5, 5, 2 ; Pop back to caller
 354 : LDA 7, 395(0) ; Skip ELSE block
 355 : LD 1, 1(5) ; Load parameter 'selector' into R1
@@ -391,7 +391,7 @@
 390 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 391 : LDA 7, 132(0) ; Call whileLoopFor
 392 : LD 1, 9(5) ; Load callee result into R1
-393 : LDC 2, 11(0) ; Caller frame size
+393 : LDC 2, 11(0) ; Callee frame size
 394 : SUB 5, 5, 2 ; Pop back to caller
 395 : ST 1, 9(5) ; Store function result into frame return slot
 396 : LD 6, 0(5) ; Load return address
@@ -408,7 +408,7 @@
 407 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 408 : LDA 7, 61(0) ; Call greater
 409 : LD 1, 3(5) ; Load callee result into R1
-410 : LDC 2, 7(0) ; Caller frame size
+410 : LDC 2, 6(0) ; Callee frame size
 411 : SUB 5, 5, 2 ; Pop back to caller
 412 : JEQ 1, 415(0) ; If condition is false, jump to ELSE
 413 : LD 1, 5(5) ; Load parameter 'd' into R1
@@ -429,7 +429,7 @@
 428 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 429 : LDA 7, 61(0) ; Call greater
 430 : LD 1, 3(5) ; Load callee result into R1
-431 : LDC 2, 7(0) ; Caller frame size
+431 : LDC 2, 6(0) ; Callee frame size
 432 : SUB 5, 5, 2 ; Pop back to caller
 433 : JEQ 1, 436(0) ; If condition is false, jump to ELSE
 434 : LD 1, 4(5) ; Load parameter 'c' into R1
@@ -471,7 +471,7 @@
 470 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 471 : LDA 7, 132(0) ; Call whileLoopFor
 472 : LD 1, 9(5) ; Load callee result into R1
-473 : LDC 2, 5(0) ; Caller frame size
+473 : LDC 2, 11(0) ; Callee frame size
 474 : SUB 5, 5, 2 ; Pop back to caller
 475 : LDA 4, 5(5) ; Recompute callee base from caller size
 476 : ST 1, 2(4) ; Store argument 1 in callee frame
@@ -505,7 +505,7 @@
 504 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 505 : LDA 7, 132(0) ; Call whileLoopFor
 506 : LD 1, 9(5) ; Load callee result into R1
-507 : LDC 2, 5(0) ; Caller frame size
+507 : LDC 2, 11(0) ; Callee frame size
 508 : SUB 5, 5, 2 ; Pop back to caller
 509 : LDA 4, 5(5) ; Recompute callee base from caller size
 510 : ST 1, 3(4) ; Store argument 2 in callee frame
@@ -539,7 +539,7 @@
 538 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 539 : LDA 7, 132(0) ; Call whileLoopFor
 540 : LD 1, 9(5) ; Load callee result into R1
-541 : LDC 2, 5(0) ; Caller frame size
+541 : LDC 2, 11(0) ; Callee frame size
 542 : SUB 5, 5, 2 ; Pop back to caller
 543 : LDA 4, 5(5) ; Recompute callee base from caller size
 544 : ST 1, 4(4) ; Store argument 3 in callee frame
@@ -573,7 +573,7 @@
 572 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 573 : LDA 7, 132(0) ; Call whileLoopFor
 574 : LD 1, 9(5) ; Load callee result into R1
-575 : LDC 2, 5(0) ; Caller frame size
+575 : LDC 2, 11(0) ; Callee frame size
 576 : SUB 5, 5, 2 ; Pop back to caller
 577 : LDA 4, 5(5) ; Recompute callee base from caller size
 578 : ST 1, 5(4) ; Store argument 4 in callee frame
@@ -583,7 +583,7 @@
 582 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 583 : LDA 7, 398(0) ; Call fareySelectDen
 584 : LD 1, 6(5) ; Load callee result into R1
-585 : LDC 2, 5(0) ; Caller frame size
+585 : LDC 2, 7(0) ; Callee frame size
 586 : SUB 5, 5, 2 ; Pop back to caller
 587 : ST 1, 4(5) ; Store function result into frame return slot
 588 : LD 6, 0(5) ; Load return address
@@ -621,7 +621,7 @@
 620 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 621 : LDA 7, 132(0) ; Call whileLoopFor
 622 : LD 1, 9(5) ; Load callee result into R1
-623 : LDC 2, 5(0) ; Caller frame size
+623 : LDC 2, 11(0) ; Callee frame size
 624 : SUB 5, 5, 2 ; Pop back to caller
 625 : LDA 4, 5(5) ; Recompute callee base from caller size
 626 : ST 1, 2(4) ; Store argument 1 in callee frame
@@ -655,7 +655,7 @@
 654 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 655 : LDA 7, 132(0) ; Call whileLoopFor
 656 : LD 1, 9(5) ; Load callee result into R1
-657 : LDC 2, 5(0) ; Caller frame size
+657 : LDC 2, 11(0) ; Callee frame size
 658 : SUB 5, 5, 2 ; Pop back to caller
 659 : LDA 4, 5(5) ; Recompute callee base from caller size
 660 : ST 1, 3(4) ; Store argument 2 in callee frame
@@ -689,7 +689,7 @@
 688 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 689 : LDA 7, 132(0) ; Call whileLoopFor
 690 : LD 1, 9(5) ; Load callee result into R1
-691 : LDC 2, 5(0) ; Caller frame size
+691 : LDC 2, 11(0) ; Callee frame size
 692 : SUB 5, 5, 2 ; Pop back to caller
 693 : LDA 4, 5(5) ; Recompute callee base from caller size
 694 : ST 1, 4(4) ; Store argument 3 in callee frame
@@ -723,7 +723,7 @@
 722 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 723 : LDA 7, 132(0) ; Call whileLoopFor
 724 : LD 1, 9(5) ; Load callee result into R1
-725 : LDC 2, 5(0) ; Caller frame size
+725 : LDC 2, 11(0) ; Callee frame size
 726 : SUB 5, 5, 2 ; Pop back to caller
 727 : LDA 4, 5(5) ; Recompute callee base from caller size
 728 : ST 1, 5(4) ; Store argument 4 in callee frame
@@ -733,7 +733,7 @@
 732 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 733 : LDA 7, 419(0) ; Call fareySelectNum
 734 : LD 1, 6(5) ; Load callee result into R1
-735 : LDC 2, 5(0) ; Caller frame size
+735 : LDC 2, 7(0) ; Callee frame size
 736 : SUB 5, 5, 2 ; Pop back to caller
 737 : ST 1, 4(5) ; Store function result into frame return slot
 738 : LD 6, 0(5) ; Load return address

@@ -24,7 +24,7 @@
 23 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 24 : LDA 7, 32(0) ; Call add_till_n
 25 : LD 1, 3(5) ; Load callee result into R1
-26 : LDC 2, 4(0) ; Caller frame size
+26 : LDC 2, 5(0) ; Callee frame size
 27 : SUB 5, 5, 2 ; Pop back to caller
 28 : ST 1, 3(5) ; Store result into caller’s return slot
 29 : LD 1, 3(5) ; Load main return value into R1
@@ -36,7 +36,7 @@
 35 : ST 6, 0(4) ; Store return address in callee frame
 36 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 37 : LDA 7, 11(0) ; Call built-in print
-38 : LDC 2, 5(0) ; Caller frame size
+38 : LDC 2, 3(0) ; Callee frame size
 39 : SUB 5, 5, 2 ; Pop back to caller
 40 : LD 1, 1(5) ; Load parameter 'a' into R1
 41 : ST 1, 4(5) ; Spill left operand at depth 0
@@ -66,7 +66,7 @@
 65 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 66 : LDA 7, 32(0) ; Call add_till_n
 67 : LD 1, 3(5) ; Load callee result into R1
-68 : LDC 2, 5(0) ; Caller frame size
+68 : LDC 2, 5(0) ; Callee frame size
 69 : SUB 5, 5, 2 ; Pop back to caller
 70 : ST 1, 3(5) ; Store function result into frame return slot
 71 : LD 6, 0(5) ; Load return address

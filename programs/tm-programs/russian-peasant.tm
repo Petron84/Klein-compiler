@@ -18,7 +18,7 @@
 17 : ST 6, 0(4) ; Store return address in callee frame
 18 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 19 : LDA 7, 11(0) ; Call built-in print
-20 : LDC 2, 4(0) ; Caller frame size
+20 : LDC 2, 3(0) ; Callee frame size
 21 : SUB 5, 5, 2 ; Pop back to caller
 22 : LD 1, 1(5) ; Load parameter 'm' into R1
 23 : LDA 4, 4(5) ; Recompute callee base from caller size
@@ -32,7 +32,7 @@
 31 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 32 : LDA 7, 40(0) ; Call mult
 33 : LD 1, 3(5) ; Load callee result into R1
-34 : LDC 2, 4(0) ; Caller frame size
+34 : LDC 2, 4(0) ; Callee frame size
 35 : SUB 5, 5, 2 ; Pop back to caller
 36 : ST 1, 3(5) ; Store result into caller’s return slot
 37 : LD 1, 3(5) ; Load main return value into R1
@@ -53,7 +53,7 @@
 52 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 53 : LDA 7, 60(0) ; Call multWithAccum
 54 : LD 1, 4(5) ; Load callee result into R1
-55 : LDC 2, 4(0) ; Caller frame size
+55 : LDC 2, 6(0) ; Callee frame size
 56 : SUB 5, 5, 2 ; Pop back to caller
 57 : ST 1, 3(5) ; Store function result into frame return slot
 58 : LD 6, 0(5) ; Load return address
@@ -82,7 +82,7 @@
 81 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 82 : LDA 7, 153(0) ; Call MOD
 83 : LD 1, 3(5) ; Load callee result into R1
-84 : LDC 2, 6(0) ; Caller frame size
+84 : LDC 2, 6(0) ; Callee frame size
 85 : SUB 5, 5, 2 ; Pop back to caller
 86 : ST 1, 5(5) ; Spill left operand at depth 0
 87 : LDC 1, 1(0) ; Load integer-literal into R1
@@ -120,7 +120,7 @@
 119 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 120 : LDA 7, 60(0) ; Call multWithAccum
 121 : LD 1, 4(5) ; Load callee result into R1
-122 : LDC 2, 6(0) ; Caller frame size
+122 : LDC 2, 6(0) ; Callee frame size
 123 : SUB 5, 5, 2 ; Pop back to caller
 124 : LDA 7, 150(0) ; Skip ELSE block
 125 : LD 1, 1(5) ; Load parameter 'm' into R1
@@ -146,7 +146,7 @@
 145 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 146 : LDA 7, 60(0) ; Call multWithAccum
 147 : LD 1, 4(5) ; Load callee result into R1
-148 : LDC 2, 6(0) ; Caller frame size
+148 : LDC 2, 6(0) ; Callee frame size
 149 : SUB 5, 5, 2 ; Pop back to caller
 150 : ST 1, 4(5) ; Store function result into frame return slot
 151 : LD 6, 0(5) ; Load return address

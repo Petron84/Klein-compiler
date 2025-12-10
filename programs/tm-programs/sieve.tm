@@ -22,7 +22,7 @@
 21 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 22 : LDA 7, 200(0) ; Call sieveAt
 23 : LD 1, 3(5) ; Load callee result into R1
-24 : LDC 2, 3(0) ; Caller frame size
+24 : LDC 2, 5(0) ; Callee frame size
 25 : SUB 5, 5, 2 ; Pop back to caller
 26 : ST 1, 2(5) ; Store result into caller’s return slot
 27 : LD 1, 2(5) ; Load main return value into R1
@@ -56,7 +56,7 @@
 55 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 56 : LDA 7, 30(0) ; Call rem
 57 : LD 1, 3(5) ; Load callee result into R1
-58 : LDC 2, 5(0) ; Caller frame size
+58 : LDC 2, 5(0) ; Callee frame size
 59 : SUB 5, 5, 2 ; Pop back to caller
 60 : ST 1, 3(5) ; Store function result into frame return slot
 61 : LD 6, 0(5) ; Load return address
@@ -73,7 +73,7 @@
 72 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 73 : LDA 7, 30(0) ; Call rem
 74 : LD 1, 3(5) ; Load callee result into R1
-75 : LDC 2, 5(0) ; Caller frame size
+75 : LDC 2, 5(0) ; Callee frame size
 76 : SUB 5, 5, 2 ; Pop back to caller
 77 : ST 1, 4(5) ; Spill left operand at depth 0
 78 : LDC 1, 0(0) ; Load integer-literal into R1
@@ -108,7 +108,7 @@
 107 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 108 : LDA 7, 63(0) ; Call divides
 109 : LD 1, 3(5) ; Load callee result into R1
-110 : LDC 2, 6(0) ; Caller frame size
+110 : LDC 2, 5(0) ; Callee frame size
 111 : SUB 5, 5, 2 ; Pop back to caller
 112 : ST 1, 4(5) ; Spill left operand at depth 0
 113 : LD 1, 1(5) ; Load parameter 'i' into R1
@@ -127,7 +127,7 @@
 126 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 127 : LDA 7, 88(0) ; Call hasDivisorFrom
 128 : LD 1, 3(5) ; Load callee result into R1
-129 : LDC 2, 6(0) ; Caller frame size
+129 : LDC 2, 6(0) ; Callee frame size
 130 : SUB 5, 5, 2 ; Pop back to caller
 131 : LD 2, 4(5) ; Restore left operand from depth 0
 132 : ADD 1, 2, 1 ; R1 = left OR right
@@ -148,7 +148,7 @@
 147 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 148 : LDA 7, 88(0) ; Call hasDivisorFrom
 149 : LD 1, 3(5) ; Load callee result into R1
-150 : LDC 2, 3(0) ; Caller frame size
+150 : LDC 2, 6(0) ; Callee frame size
 151 : SUB 5, 5, 2 ; Pop back to caller
 152 : LDC 2, 1(0) ; Load 1 into R2
 153 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -164,7 +164,7 @@
 163 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 164 : LDA 7, 138(0) ; Call isPrime
 165 : LD 1, 2(5) ; Load callee result into R1
-166 : LDC 2, 5(0) ; Caller frame size
+166 : LDC 2, 3(0) ; Callee frame size
 167 : SUB 5, 5, 2 ; Pop back to caller
 168 : JEQ 1, 171(0) ; If condition is false, jump to ELSE
 169 : LD 1, 1(5) ; Load parameter 'current' into R1
@@ -175,7 +175,7 @@
 174 : ST 6, 0(4) ; Store return address in callee frame
 175 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 176 : LDA 7, 9(0) ; Call built-in print
-177 : LDC 2, 5(0) ; Caller frame size
+177 : LDC 2, 3(0) ; Callee frame size
 178 : SUB 5, 5, 2 ; Pop back to caller
 179 : LD 1, 1(5) ; Load parameter 'current' into R1
 180 : ST 1, 4(5) ; Spill left operand at depth 0
@@ -193,7 +193,7 @@
 192 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 193 : LDA 7, 200(0) ; Call sieveAt
 194 : LD 1, 3(5) ; Load callee result into R1
-195 : LDC 2, 5(0) ; Caller frame size
+195 : LDC 2, 5(0) ; Callee frame size
 196 : SUB 5, 5, 2 ; Pop back to caller
 197 : ST 1, 3(5) ; Store function result into frame return slot
 198 : LD 6, 0(5) ; Load return address
@@ -222,7 +222,7 @@
 221 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 222 : LDA 7, 157(0) ; Call doSieveAt
 223 : LD 1, 3(5) ; Load callee result into R1
-224 : LDC 2, 5(0) ; Caller frame size
+224 : LDC 2, 5(0) ; Callee frame size
 225 : SUB 5, 5, 2 ; Pop back to caller
 226 : ST 1, 3(5) ; Store function result into frame return slot
 227 : LD 6, 0(5) ; Load return address

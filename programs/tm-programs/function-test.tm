@@ -30,7 +30,7 @@
 29 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 30 : LDA 7, 40(0) ; Call sub
 31 : LD 1, 3(5) ; Load callee result into R1
-32 : LDC 2, 5(0) ; Caller frame size
+32 : LDC 2, 5(0) ; Callee frame size
 33 : SUB 5, 5, 2 ; Pop back to caller
 34 : LD 2, 4(5) ; Restore left operand from depth 0
 35 : SUB 1, 2, 1 ; R1 = left - right

@@ -22,7 +22,7 @@
 21 : ST 6, 0(4) ; Store return address in callee frame
 22 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 23 : LDA 7, 11(0) ; Call built-in print
-24 : LDC 2, 4(0) ; Caller frame size
+24 : LDC 2, 3(0) ; Callee frame size
 25 : SUB 5, 5, 2 ; Pop back to caller
 26 : LD 1, 1(5) ; Load parameter 'm' into R1
 27 : LDA 4, 4(5) ; Recompute callee base from caller size
@@ -36,7 +36,7 @@
 35 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 36 : LDA 7, 44(0) ; Call mod
 37 : LD 1, 3(5) ; Load callee result into R1
-38 : LDC 2, 4(0) ; Caller frame size
+38 : LDC 2, 5(0) ; Callee frame size
 39 : SUB 5, 5, 2 ; Pop back to caller
 40 : ST 1, 3(5) ; Store result into caller’s return slot
 41 : LD 1, 3(5) ; Load main return value into R1
@@ -70,7 +70,7 @@
 69 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 70 : LDA 7, 44(0) ; Call mod
 71 : LD 1, 3(5) ; Load callee result into R1
-72 : LDC 2, 5(0) ; Caller frame size
+72 : LDC 2, 5(0) ; Callee frame size
 73 : SUB 5, 5, 2 ; Pop back to caller
 74 : ST 1, 3(5) ; Store function result into frame return slot
 75 : LD 6, 0(5) ; Load return address

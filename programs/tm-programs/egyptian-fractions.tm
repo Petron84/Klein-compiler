@@ -37,7 +37,7 @@
 36 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 37 : LDA 7, 86(0) ; Call MOD
 38 : LD 1, 3(5) ; Load callee result into R1
-39 : LDC 2, 5(0) ; Caller frame size
+39 : LDC 2, 6(0) ; Callee frame size
 40 : SUB 5, 5, 2 ; Pop back to caller
 41 : ST 1, 4(5) ; Spill left operand at depth 0
 42 : LDC 1, 0(0) ; Load integer-literal into R1
@@ -78,7 +78,7 @@
 77 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 78 : LDA 7, 102(0) ; Call print_and_continue
 79 : LD 1, 4(5) ; Load callee result into R1
-80 : LDC 2, 5(0) ; Caller frame size
+80 : LDC 2, 6(0) ; Callee frame size
 81 : SUB 5, 5, 2 ; Pop back to caller
 82 : ST 1, 3(5) ; Store result into caller’s return slot
 83 : LD 1, 3(5) ; Load main return value into R1
@@ -106,7 +106,7 @@
 105 : ST 6, 0(4) ; Store return address in callee frame
 106 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 107 : LDA 7, 11(0) ; Call built-in print
-108 : LDC 2, 6(0) ; Caller frame size
+108 : LDC 2, 3(0) ; Callee frame size
 109 : SUB 5, 5, 2 ; Pop back to caller
 110 : LD 1, 3(5) ; Load parameter 'unit' into R1
 111 : ST 1, 5(5) ; Spill left operand at depth 0
@@ -132,7 +132,7 @@
 131 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 132 : LDA 7, 14(0) ; Call main
 133 : LD 1, 3(5) ; Load callee result into R1
-134 : LDC 2, 6(0) ; Caller frame size
+134 : LDC 2, 5(0) ; Callee frame size
 135 : SUB 5, 5, 2 ; Pop back to caller
 136 : ST 1, 4(5) ; Store function result into frame return slot
 137 : LD 6, 0(5) ; Load return address

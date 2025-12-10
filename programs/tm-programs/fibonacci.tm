@@ -41,7 +41,7 @@
 40 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 41 : LDA 7, 49(0) ; Call addNext
 42 : LD 1, 5(5) ; Load callee result into R1
-43 : LDC 2, 4(0) ; Caller frame size
+43 : LDC 2, 7(0) ; Callee frame size
 44 : SUB 5, 5, 2 ; Pop back to caller
 45 : ST 1, 2(5) ; Store result into caller’s return slot
 46 : LD 1, 2(5) ; Load main return value into R1
@@ -85,7 +85,7 @@
 84 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 85 : LDA 7, 49(0) ; Call addNext
 86 : LD 1, 5(5) ; Load callee result into R1
-87 : LDC 2, 7(0) ; Caller frame size
+87 : LDC 2, 7(0) ; Callee frame size
 88 : SUB 5, 5, 2 ; Pop back to caller
 89 : ST 1, 5(5) ; Store function result into frame return slot
 90 : LD 6, 0(5) ; Load return address

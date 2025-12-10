@@ -31,7 +31,7 @@
 30 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 31 : LDA 7, 345(0) ; Call emirp
 32 : LD 1, 2(5) ; Load callee result into R1
-33 : LDC 2, 5(0) ; Caller frame size
+33 : LDC 2, 4(0) ; Callee frame size
 34 : SUB 5, 5, 2 ; Pop back to caller
 35 : ST 1, 3(5) ; Store result into caller’s return slot
 36 : LDA 7, 85(0) ; Skip ELSE block
@@ -54,7 +54,7 @@
 53 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 54 : LDA 7, 301(0) ; Call snowball
 55 : LD 1, 2(5) ; Load callee result into R1
-56 : LDC 2, 5(0) ; Caller frame size
+56 : LDC 2, 5(0) ; Callee frame size
 57 : SUB 5, 5, 2 ; Pop back to caller
 58 : ST 1, 3(5) ; Store result into caller’s return slot
 59 : LDA 7, 85(0) ; Skip ELSE block
@@ -77,7 +77,7 @@
 76 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 77 : LDA 7, 269(0) ; Call doBoth
 78 : LD 1, 2(5) ; Load callee result into R1
-79 : LDC 2, 5(0) ; Caller frame size
+79 : LDC 2, 3(0) ; Callee frame size
 80 : SUB 5, 5, 2 ; Pop back to caller
 81 : ST 1, 3(5) ; Store result into caller’s return slot
 82 : LDA 7, 85(0) ; Skip ELSE block
@@ -139,7 +139,7 @@
 138 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 139 : LDA 7, 88(0) ; Call MOD
 140 : LD 1, 3(5) ; Load callee result into R1
-141 : LDC 2, 5(0) ; Caller frame size
+141 : LDC 2, 6(0) ; Callee frame size
 142 : SUB 5, 5, 2 ; Pop back to caller
 143 : LD 2, 4(5) ; Restore left operand from depth 0
 144 : ADD 1, 2, 1 ; R1 = left + right
@@ -151,7 +151,7 @@
 150 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 151 : LDA 7, 104(0) ; Call reverseL
 152 : LD 1, 3(5) ; Load callee result into R1
-153 : LDC 2, 5(0) ; Caller frame size
+153 : LDC 2, 5(0) ; Callee frame size
 154 : SUB 5, 5, 2 ; Pop back to caller
 155 : ST 1, 3(5) ; Store function result into frame return slot
 156 : LD 6, 0(5) ; Load return address
@@ -168,7 +168,7 @@
 167 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 168 : LDA 7, 104(0) ; Call reverseL
 169 : LD 1, 3(5) ; Load callee result into R1
-170 : LDC 2, 3(0) ; Caller frame size
+170 : LDC 2, 5(0) ; Callee frame size
 171 : SUB 5, 5, 2 ; Pop back to caller
 172 : ST 1, 2(5) ; Store function result into frame return slot
 173 : LD 6, 0(5) ; Load return address
@@ -185,7 +185,7 @@
 184 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 185 : LDA 7, 88(0) ; Call MOD
 186 : LD 1, 3(5) ; Load callee result into R1
-187 : LDC 2, 5(0) ; Caller frame size
+187 : LDC 2, 6(0) ; Callee frame size
 188 : SUB 5, 5, 2 ; Pop back to caller
 189 : ST 1, 4(5) ; Spill left operand at depth 0
 190 : LDC 1, 0(0) ; Load integer-literal into R1
@@ -220,7 +220,7 @@
 219 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 220 : LDA 7, 175(0) ; Call divides
 221 : LD 1, 3(5) ; Load callee result into R1
-222 : LDC 2, 6(0) ; Caller frame size
+222 : LDC 2, 5(0) ; Callee frame size
 223 : SUB 5, 5, 2 ; Pop back to caller
 224 : ST 1, 4(5) ; Spill left operand at depth 0
 225 : LD 1, 1(5) ; Load parameter 'i' into R1
@@ -239,7 +239,7 @@
 238 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 239 : LDA 7, 200(0) ; Call hasDivisorFrom
 240 : LD 1, 3(5) ; Load callee result into R1
-241 : LDC 2, 6(0) ; Caller frame size
+241 : LDC 2, 6(0) ; Callee frame size
 242 : SUB 5, 5, 2 ; Pop back to caller
 243 : LD 2, 4(5) ; Restore left operand from depth 0
 244 : ADD 1, 2, 1 ; R1 = left OR right
@@ -260,7 +260,7 @@
 259 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 260 : LDA 7, 200(0) ; Call hasDivisorFrom
 261 : LD 1, 3(5) ; Load callee result into R1
-262 : LDC 2, 3(0) ; Caller frame size
+262 : LDC 2, 6(0) ; Callee frame size
 263 : SUB 5, 5, 2 ; Pop back to caller
 264 : LDC 2, 1(0) ; Load 1 into R2
 265 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -276,14 +276,14 @@
 275 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 276 : LDA 7, 345(0) ; Call emirp
 277 : LD 1, 2(5) ; Load callee result into R1
-278 : LDC 2, 3(0) ; Caller frame size
+278 : LDC 2, 4(0) ; Callee frame size
 279 : SUB 5, 5, 2 ; Pop back to caller
 280 : LDA 4, 3(5) ; Recompute callee base from caller size
 281 : LDA 6, 285(0) ; Return address
 282 : ST 6, 0(4) ; Store return address in callee frame
 283 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 284 : LDA 7, 11(0) ; Call built-in print
-285 : LDC 2, 3(0) ; Caller frame size
+285 : LDC 2, 3(0) ; Callee frame size
 286 : SUB 5, 5, 2 ; Pop back to caller
 287 : LD 1, 1(5) ; Load parameter 'n' into R1
 288 : LDA 4, 3(5) ; Recompute callee base from caller size
@@ -294,7 +294,7 @@
 293 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 294 : LDA 7, 301(0) ; Call snowball
 295 : LD 1, 2(5) ; Load callee result into R1
-296 : LDC 2, 3(0) ; Caller frame size
+296 : LDC 2, 5(0) ; Callee frame size
 297 : SUB 5, 5, 2 ; Pop back to caller
 298 : ST 1, 2(5) ; Store function result into frame return slot
 299 : LD 6, 0(5) ; Load return address
@@ -308,7 +308,7 @@
 307 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 308 : LDA 7, 250(0) ; Call isPrime
 309 : LD 1, 2(5) ; Load callee result into R1
-310 : LDC 2, 5(0) ; Caller frame size
+310 : LDC 2, 3(0) ; Callee frame size
 311 : SUB 5, 5, 2 ; Pop back to caller
 312 : ST 1, 3(5) ; Spill left operand at depth 0
 313 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -336,7 +336,7 @@
 335 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 336 : LDA 7, 250(0) ; Call isPrime
 337 : LD 1, 2(5) ; Load callee result into R1
-338 : LDC 2, 5(0) ; Caller frame size
+338 : LDC 2, 3(0) ; Callee frame size
 339 : SUB 5, 5, 2 ; Pop back to caller
 340 : LD 2, 3(5) ; Restore left operand from depth 0
 341 : MUL 1, 2, 1 ; R1 = left AND right
@@ -352,7 +352,7 @@
 351 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 352 : LDA 7, 250(0) ; Call isPrime
 353 : LD 1, 2(5) ; Load callee result into R1
-354 : LDC 2, 4(0) ; Caller frame size
+354 : LDC 2, 3(0) ; Callee frame size
 355 : SUB 5, 5, 2 ; Pop back to caller
 356 : ST 1, 3(5) ; Spill left operand at depth 0
 357 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -364,7 +364,7 @@
 363 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 364 : LDA 7, 158(0) ; Call reverse
 365 : LD 1, 2(5) ; Load callee result into R1
-366 : LDC 2, 4(0) ; Caller frame size
+366 : LDC 2, 3(0) ; Callee frame size
 367 : SUB 5, 5, 2 ; Pop back to caller
 368 : LDA 4, 4(5) ; Recompute callee base from caller size
 369 : ST 1, 1(4) ; Store argument 0 in callee frame
@@ -374,7 +374,7 @@
 373 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 374 : LDA 7, 250(0) ; Call isPrime
 375 : LD 1, 2(5) ; Load callee result into R1
-376 : LDC 2, 4(0) ; Caller frame size
+376 : LDC 2, 3(0) ; Callee frame size
 377 : SUB 5, 5, 2 ; Pop back to caller
 378 : LD 2, 3(5) ; Restore left operand from depth 0
 379 : MUL 1, 2, 1 ; R1 = left AND right

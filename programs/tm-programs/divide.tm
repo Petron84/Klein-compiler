@@ -42,7 +42,7 @@
 41 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 42 : LDA 7, 66(0) ; Call printAndDivide
 43 : LD 1, 4(5) ; Load callee result into R1
-44 : LDC 2, 6(0) ; Caller frame size
+44 : LDC 2, 6(0) ; Callee frame size
 45 : SUB 5, 5, 2 ; Pop back to caller
 46 : ST 1, 4(5) ; Store result into caller’s return slot
 47 : LD 1, 4(5) ; Load main return value into R1
@@ -78,7 +78,7 @@
 77 : ST 6, 0(4) ; Store return address in callee frame
 78 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 79 : LDA 7, 13(0) ; Call built-in print
-80 : LDC 2, 6(0) ; Caller frame size
+80 : LDC 2, 3(0) ; Callee frame size
 81 : SUB 5, 5, 2 ; Pop back to caller
 82 : LD 1, 1(5) ; Load parameter 'a' into R1
 83 : ST 1, 5(5) ; Spill left operand at depth 0
@@ -96,7 +96,7 @@
 95 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 96 : LDA 7, 50(0) ; Call MOD
 97 : LD 1, 3(5) ; Load callee result into R1
-98 : LDC 2, 6(0) ; Caller frame size
+98 : LDC 2, 6(0) ; Callee frame size
 99 : SUB 5, 5, 2 ; Pop back to caller
 100 : LDA 4, 6(5) ; Recompute callee base from caller size
 101 : ST 1, 1(4) ; Store argument 0 in callee frame
@@ -116,7 +116,7 @@
 115 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 116 : LDA 7, 16(0) ; Call main
 117 : LD 1, 4(5) ; Load callee result into R1
-118 : LDC 2, 6(0) ; Caller frame size
+118 : LDC 2, 6(0) ; Callee frame size
 119 : SUB 5, 5, 2 ; Pop back to caller
 120 : ST 1, 4(5) ; Store function result into frame return slot
 121 : LD 6, 0(5) ; Load return address

@@ -47,9 +47,9 @@ class Generator:
         # R7: program counter
 
         # Frame layout per function f:
-        # [0]         Return address
-        # [1..P]      Parameters
-        # [P+1]       Return value
+        # [0]           Return address
+        # [1..P]        Parameters
+        # [P+1]         Return value
         # [P+2..P+1+T]  Expression temp slots (reserved; T = self.temp_slots[f])
 
     # -------------- Public API ----------------
@@ -230,7 +230,7 @@ class Generator:
         exp_children = body.children
 
         match exp_type:
-            # ---------- FUNCTION CALL ----------                            
+            # ---------- FUNCTION CALL ----------
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
 
@@ -238,7 +238,7 @@ class Generator:
                 callee_params = self.symbol_table[f_name].parameters[0] if f_name in self.symbol_table else (1 if f_name == "print" else 0)
                 caller_params = self.symbol_table[curr_function].parameters[0]
 
-                # Sizes include temp slots
+                # Sizes: include temp slots for caller and callee
                 caller_size = caller_params + 2 + self.temp_slots.get(curr_function, 0)
                 callee_size = callee_params + 2 + self.temp_slots.get(f_name, 0)
 
@@ -254,9 +254,9 @@ class Generator:
                     self.write("ADD 5, 4, 0", "Push callee frame (R5 := callee base)")
                     self.write("LDA 7, @print(0)", "Call built-in print")
 
-                    # Return label and pop
+                    # Return label and pop by callee_size (NOT caller_size)
                     self.placeholders[temp_label] = self.line_counter
-                    self.write(f"LDC 2, {caller_size}(0)", "Caller frame size")
+                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size")
                     self.write("SUB 5, 5, 2", "Pop back to caller")
 
                 else:
@@ -265,7 +265,6 @@ class Generator:
                     for i, arg in enumerate(args):
                         # Evaluate arg -> R1 (this may perform nested calls and clobber R4)
                         self.instruction_rules(arg, curr_function, callee=True)
-
                         # Recompute callee base AFTER evaluation, BEFORE using (4)
                         self.write(f"LDA 4, {caller_size}(5)", "Recompute callee base from caller size")
                         self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee frame")
@@ -280,18 +279,17 @@ class Generator:
                     self.write("ADD 5, 4, 0", "Push callee frame (R5 := callee base)")
                     self.write(f"LDA 7, @{f_name}(0)", f"Call {f_name}")
 
-                    # 4) Upon return: load callee return value, pop to caller
+                    # 4) Upon return: load callee return value and pop back by callee_size
                     self.placeholders[temp_label] = self.line_counter
-                    return_slot = callee_params + 1
+                    return_slot = callee_params + 1  # callee return slot
                     self.write(f"LD 1, {return_slot}(5)", "Load callee result into R1")
-                    self.write(f"LDC 2, {caller_size}(0)", "Caller frame size")
+                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size")
                     self.write("SUB 5, 5, 2", "Pop back to caller")
 
-                    # 5) If producing the caller’s own value, store it
+                    # 5) If we are producing the caller’s own value, store it
                     if not callee:
                         caller_return = caller_params + 1
                         self.write(f"ST 1, {caller_return}(5)", "Store result into caller’s return slot")
-
 
             # ---------- LITERALS ----------
             case "INTEGER-LITERAL":
@@ -342,7 +340,6 @@ class Generator:
                 left_exp = exp_children[0]
                 right_exp = exp_children[1]
                 curr_params = self.symbol_table[curr_function].parameters[0]
-                # T is already accounted in frame sizing; we use _cur_spill for the current depth
 
                 # Evaluate left → R1
                 self.instruction_rules(left_exp, curr_function, callee=True)

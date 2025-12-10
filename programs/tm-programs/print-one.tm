@@ -14,7 +14,7 @@
 13 : ST 6, 0(4) ; Store return address in callee frame
 14 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 15 : LDA 7, 7(0) ; Call built-in print
-16 : LDC 2, 2(0) ; Caller frame size
+16 : LDC 2, 3(0) ; Callee frame size
 17 : SUB 5, 5, 2 ; Pop back to caller
 18 : LDC 1, 1(0) ; Load integer-literal into R1
 19 : ST 1, 1(5) ; Store result into current frame's return slot

@@ -20,7 +20,7 @@
 19 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 20 : LDA 7, 71(0) ; Call MOD
 21 : LD 1, 3(5) ; Load callee result into R1
-22 : LDC 2, 4(0) ; Caller frame size
+22 : LDC 2, 6(0) ; Callee frame size
 23 : SUB 5, 5, 2 ; Pop back to caller
 24 : ST 1, 2(5) ; Spill left operand at depth 0
 25 : LDC 1, 3(0) ; Load integer-literal into R1
@@ -47,7 +47,7 @@
 46 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 47 : LDA 7, 71(0) ; Call MOD
 48 : LD 1, 3(5) ; Load callee result into R1
-49 : LDC 2, 4(0) ; Caller frame size
+49 : LDC 2, 6(0) ; Callee frame size
 50 : SUB 5, 5, 2 ; Pop back to caller
 51 : ST 1, 3(5) ; Spill left operand at depth 1
 52 : LDC 1, 2(0) ; Load integer-literal into R1
