@@ -1,5 +1,5 @@
 0 : LDC  5, 1(0) ;  Set DMEM pointer to main stack frame
-1 : LDC  4, 0(5) ;  Set top of caller frame
+1 : ADD  4, 5, 0 ;  Set top of caller frame
 2 : LDA  6, 2(7) ;  Calculate return address
 3 : ST   6, 0(5) ;  Store return address in main stack frame
 4 : LDA  7, 10(0) ;  Load address of main IMEM block - branch to function

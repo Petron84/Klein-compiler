@@ -1,5 +1,5 @@
 0 : LDC  5, 4(0) ;  Set DMEM pointer to main stack frame
-1 : LDC  4, 0(5) ;  Set top of caller frame
+1 : ADD  4, 5, 0 ;  Set top of caller frame
 2 : LD   2, 1(0) ;  Load CLI arg 1 into register
 3 : ST   2, 1(5) ;  Store the argument into stack frame
 4 : LD   2, 2(0) ;  Load CLI arg 2 into register
