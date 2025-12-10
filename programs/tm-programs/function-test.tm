@@ -13,9 +13,9 @@
 12 : LD 6, 0(5) ; Load return address from current frame
 13 : LDA 7, 0(6) ; Jump back to caller
 14 : LD 1, 1(5) ; Load parameter 'x' into R1
-15 : LDA 4, 5(5) ; Recompute callee base from callee size
+15 : LDA 4, 6(5) ; Recompute callee base from callee size
 16 : ST 1, 1(4) ; Store argument 0 in callee
-17 : LDA 4, 4(5) ; Recompute callee base from callee size
+17 : LDA 4, 6(5) ; Recompute callee base from callee size
 18 : LDA 6, 22(0) ; Return address
 19 : ST 6, 0(4) ; Store return in callee frame
 20 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -27,9 +27,9 @@
 26 : LD 1, 2(5) ; Load parameter 'y' into R1
 27 : ST 1, 5(5) ; Spill left operand at depth 1
 28 : LD 1, 2(5) ; Load parameter 'y' into R1
-29 : LDA 4, 5(5) ; Recompute callee base from callee size
+29 : LDA 4, 6(5) ; Recompute callee base from callee size
 30 : ST 1, 1(4) ; Store argument 0 in callee
-31 : LDA 4, 4(5) ; Recompute callee base from callee size
+31 : LDA 4, 6(5) ; Recompute callee base from callee size
 32 : LDA 6, 36(0) ; Return address
 33 : ST 6, 0(4) ; Store return in callee frame
 34 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
