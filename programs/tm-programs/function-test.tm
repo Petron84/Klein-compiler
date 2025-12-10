@@ -1,5 +1,5 @@
-0 : LDC 5, 3(0) ; Set DMEM pointer (R5) to main stack frame base
-1 : ADD 4, 5, 0 ; Set top of caller frame (R4 := R5)
+0 : LDC 5, 0(0) ; Set DMEM pointer (R5) to main stack frame base
+1 : ADD 4, 5, 0 ; Set R4 := R5 (caller base)
 2 : LD 2, 1(0) ; Load CLI arg 1 into R2
 3 : ST 2, 1(5) ; Store arg 1 into main frame parameter slot
 4 : LD 2, 2(0) ; Load CLI arg 2 into R2
@@ -19,12 +19,12 @@
 18 : ADD 1, 2, 1 ; R1 = left + right
 19 : ST 1, 4(5) ; Spill left operand at depth 0
 20 : LD 1, 2(5) ; Load parameter 'b' into R1
-21 : LDA 4, 5(5) ; Recompute callee base from callee size
-22 : ST 1, 1(4) ; Store argument 0 in callee
+21 : LDA 4, 5(5) ; Compute future callee base using caller_size
+22 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
 23 : LD 1, 1(5) ; Load parameter 'a' into R1
-24 : LDA 4, 5(5) ; Recompute callee base from callee size
-25 : ST 1, 2(4) ; Store argument 1 in callee
-26 : LDA 4, 5(5) ; Recompute callee base from callee size
+24 : LDA 4, 5(5) ; Compute future callee base using caller_size
+25 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
+26 : LDA 4, 5(5) ; Compute future callee base (caller_size)
 27 : LDA 6, 31(0) ; Return address
 28 : ST 6, 0(4) ; Store return in callee frame
 29 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)

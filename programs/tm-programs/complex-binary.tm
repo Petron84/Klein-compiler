@@ -1,5 +1,5 @@
-0 : LDC 5, 1(0) ; Set DMEM pointer (R5) to main stack frame base
-1 : ADD 4, 5, 0 ; Set top of caller frame (R4 := R5)
+0 : LDC 5, 0(0) ; Set DMEM pointer (R5) to main stack frame base
+1 : ADD 4, 5, 0 ; Set R4 := R5 (caller base)
 2 : LDA 6, 2(7) ; Calculate return address (PC + 2)
 3 : ST 6, 0(5) ; Store return address in main frame
 4 : LDA 7, 10(0) ; Branch to main function
@@ -9,12 +9,12 @@
 8 : LD 6, 0(5) ; Load return address from current frame
 9 : LDA 7, 0(6) ; Jump back to caller
 10 : LDC 1, 2(0) ; Load integer-literal into R1
-11 : LDA 4, 6(5) ; Recompute callee base from callee size
-12 : ST 1, 1(4) ; Store argument 0 in callee
+11 : LDA 4, 4(5) ; Compute future callee base using caller_size
+12 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
 13 : LDC 1, 2(0) ; Load integer-literal into R1
-14 : LDA 4, 6(5) ; Recompute callee base from callee size
-15 : ST 1, 2(4) ; Store argument 1 in callee
-16 : LDA 4, 6(5) ; Recompute callee base from callee size
+14 : LDA 4, 4(5) ; Compute future callee base using caller_size
+15 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
+16 : LDA 4, 4(5) ; Compute future callee base (caller_size)
 17 : LDA 6, 21(0) ; Return address
 18 : ST 6, 0(4) ; Store return in callee frame
 19 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -36,12 +36,12 @@
 35 : LDC 1, 1(0) ; true
 36 : ST 1, 2(5) ; Spill left operand at depth 0
 37 : LDC 1, 5(0) ; Load integer-literal into R1
-38 : LDA 4, 6(5) ; Recompute callee base from callee size
-39 : ST 1, 1(4) ; Store argument 0 in callee
+38 : LDA 4, 4(5) ; Compute future callee base using caller_size
+39 : ST 1, 1(4) ; Store argument 0 into callee's param slot (future frame)
 40 : LDC 1, 3(0) ; Load integer-literal into R1
-41 : LDA 4, 6(5) ; Recompute callee base from callee size
-42 : ST 1, 2(4) ; Store argument 1 in callee
-43 : LDA 4, 6(5) ; Recompute callee base from callee size
+41 : LDA 4, 4(5) ; Compute future callee base using caller_size
+42 : ST 1, 2(4) ; Store argument 1 into callee's param slot (future frame)
+43 : LDA 4, 4(5) ; Compute future callee base (caller_size)
 44 : LDA 6, 48(0) ; Return address
 45 : ST 6, 0(4) ; Store return in callee frame
 46 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
