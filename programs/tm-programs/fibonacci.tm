@@ -23,74 +23,66 @@
 22 : JEQ 1, 26(0) ;  If false, jump to ELSE
 23 : LDC 1, 0(0) ;  Load integer literal into R1
 24 : ST 1, 2(5) ;  Store into current frame's return slot
-25 : LDA 7, 47(0) ;  Skip ELSE
-26 : LDC 1, 1(0) ;  Load integer literal into R1
-27 : LDA 4, 6(5) ;  [JIT] callee frame base
-28 : ST 1, 1(4) ;  Store arg 0 in callee frame
-29 : LD 1, 1(5) ;  Load parameter 'elementWanted'
-30 : LDA 4, 6(5) ;  [JIT] callee frame base
-31 : ST 1, 2(4) ;  Store arg 1 in callee frame
+25 : LDA 7, 43(0) ;  Skip ELSE
+26 : LDA 4, 6(5) ;  Compute callee frame base
+27 : ADD 5, 4, 0 ;  Push callee frame
+28 : LDC 1, 1(0) ;  Load integer literal into R1
+29 : ST 1, 1(5) ;  Store argument 0 in callee frame
+30 : LD 1, 1(5) ;  Load parameter 'elementWanted'
+31 : ST 1, 2(5) ;  Store argument 1 in callee frame
 32 : LDC 1, 0(0) ;  Load integer literal into R1
-33 : LDA 4, 6(5) ;  [JIT] callee frame base
-34 : ST 1, 3(4) ;  Store arg 2 in callee frame
-35 : LDC 1, 1(0) ;  Load integer literal into R1
-36 : LDA 4, 6(5) ;  [JIT] callee frame base
-37 : ST 1, 4(4) ;  Store arg 3 in callee frame
-38 : LDA 4, 6(5) ;  [JIT] callee frame base
-39 : LDA 6, 43(0) ;  Return address
-40 : ST 6, 0(4) ;  Store RA in callee frame
-41 : ADD 5, 4, 0 ;  Push callee frame
-42 : LDA 7, 50(0) ;  Call addNext
-43 : LD 1, 5(5) ;  Load callee result
-44 : LDC 2, 6(0) ;  Caller frame size
-45 : SUB 5, 5, 2 ;  Pop callee frame
-46 : ST 1, 2(5) ;  Store result into caller frame
-47 : LD 1, 2(5) ;  Load main return value
-48 : LD 6, 0(5) ;  Load return address
-49 : LDA 7, 0(6) ;  Return from main
-50 : LD 1, 1(5) ;  Load parameter 'currentElement'
-51 : ADD 3, 1, 0 ;  Stash right in R3
-52 : LD 1, 2(5) ;  Load parameter 'elementWanted'
-53 : ADD 2, 1, 0 ;  Move left to R2
-54 : ADD 1, 3, 0 ;  Restore right to R1
-55 : SUB 1, 2, 1 ;  left - right
-56 : JEQ 1, 2(7) ;  if 0 then true
-57 : LDC 1, 0(0) ;  false
-58 : LDA 7, 1(7) ;  skip setting true
-59 : LDC 1, 1(0) ;  true
-60 : JEQ 1, 63(0) ;  If false, jump to ELSE
-61 : LD 1, 4(5) ;  Load parameter 'currentSum'
-62 : LDA 7, 93(0) ;  Skip ELSE
-63 : LDC 1, 1(0) ;  Load integer literal into R1
-64 : ADD 3, 1, 0 ;  Stash right in R3
-65 : LD 1, 1(5) ;  Load parameter 'currentElement'
-66 : ADD 2, 1, 0 ;  Move left to R2
-67 : ADD 1, 3, 0 ;  Restore right to R1
-68 : ADD 1, 2, 1 ;  R1 = left + right
-69 : LDA 4, 6(5) ;  [JIT] callee frame base
-70 : ST 1, 1(4) ;  Store arg 0 in callee frame
-71 : LD 1, 2(5) ;  Load parameter 'elementWanted'
-72 : LDA 4, 6(5) ;  [JIT] callee frame base
-73 : ST 1, 2(4) ;  Store arg 1 in callee frame
-74 : LD 1, 4(5) ;  Load parameter 'currentSum'
-75 : LDA 4, 6(5) ;  [JIT] callee frame base
-76 : ST 1, 3(4) ;  Store arg 2 in callee frame
-77 : LD 1, 4(5) ;  Load parameter 'currentSum'
-78 : ADD 3, 1, 0 ;  Stash right in R3
-79 : LD 1, 3(5) ;  Load parameter 'previousSum'
-80 : ADD 2, 1, 0 ;  Move left to R2
-81 : ADD 1, 3, 0 ;  Restore right to R1
-82 : ADD 1, 2, 1 ;  R1 = left + right
-83 : LDA 4, 6(5) ;  [JIT] callee frame base
-84 : ST 1, 4(4) ;  Store arg 3 in callee frame
-85 : LDA 4, 6(5) ;  [JIT] callee frame base
-86 : LDA 6, 90(0) ;  Return address
-87 : ST 6, 0(4) ;  Store RA in callee frame
-88 : ADD 5, 4, 0 ;  Push callee frame
-89 : LDA 7, 50(0) ;  Call addNext
-90 : LD 1, 5(5) ;  Load callee result
-91 : LDC 2, 6(0) ;  Caller frame size
-92 : SUB 5, 5, 2 ;  Pop callee frame
-93 : ST 1, 5(5) ;  Store function result
-94 : LD 6, 0(5) ;  Load return address
-95 : LDA 7, 0(6) ;  Return to caller
+33 : ST 1, 3(5) ;  Store argument 2 in callee frame
+34 : LDC 1, 1(0) ;  Load integer literal into R1
+35 : ST 1, 4(5) ;  Store argument 3 in callee frame
+36 : LDA 6, 39(0) ;  Return address
+37 : ST 6, 0(5) ;  Store RA in callee frame
+38 : LDA 7, 46(0) ;  Call addNext
+39 : LD 1, 5(5) ;  Load callee result
+40 : LDC 2, 6(0) ;  Caller frame size
+41 : SUB 5, 5, 2 ;  Pop callee frame
+42 : ST 1, 2(5) ;  Store result into caller frame
+43 : LD 1, 2(5) ;  Load main return value
+44 : LD 6, 0(5) ;  Load return address
+45 : LDA 7, 0(6) ;  Return from main
+46 : LD 1, 1(5) ;  Load parameter 'currentElement'
+47 : ADD 3, 1, 0 ;  Stash right in R3
+48 : LD 1, 2(5) ;  Load parameter 'elementWanted'
+49 : ADD 2, 1, 0 ;  Move left to R2
+50 : ADD 1, 3, 0 ;  Restore right to R1
+51 : SUB 1, 2, 1 ;  left - right
+52 : JEQ 1, 2(7) ;  if 0 then true
+53 : LDC 1, 0(0) ;  false
+54 : LDA 7, 1(7) ;  skip setting true
+55 : LDC 1, 1(0) ;  true
+56 : JEQ 1, 59(0) ;  If false, jump to ELSE
+57 : LD 1, 4(5) ;  Load parameter 'currentSum'
+58 : LDA 7, 85(0) ;  Skip ELSE
+59 : LDA 4, 6(5) ;  Compute callee frame base
+60 : ADD 5, 4, 0 ;  Push callee frame
+61 : LDC 1, 1(0) ;  Load integer literal into R1
+62 : ADD 3, 1, 0 ;  Stash right in R3
+63 : LD 1, 1(5) ;  Load parameter 'currentElement'
+64 : ADD 2, 1, 0 ;  Move left to R2
+65 : ADD 1, 3, 0 ;  Restore right to R1
+66 : ADD 1, 2, 1 ;  R1 = left + right
+67 : ST 1, 1(5) ;  Store argument 0 in callee frame
+68 : LD 1, 2(5) ;  Load parameter 'elementWanted'
+69 : ST 1, 2(5) ;  Store argument 1 in callee frame
+70 : LD 1, 4(5) ;  Load parameter 'currentSum'
+71 : ST 1, 3(5) ;  Store argument 2 in callee frame
+72 : LD 1, 4(5) ;  Load parameter 'currentSum'
+73 : ADD 3, 1, 0 ;  Stash right in R3
+74 : LD 1, 3(5) ;  Load parameter 'previousSum'
+75 : ADD 2, 1, 0 ;  Move left to R2
+76 : ADD 1, 3, 0 ;  Restore right to R1
+77 : ADD 1, 2, 1 ;  R1 = left + right
+78 : ST 1, 4(5) ;  Store argument 3 in callee frame
+79 : LDA 6, 82(0) ;  Return address
+80 : ST 6, 0(5) ;  Store RA in callee frame
+81 : LDA 7, 46(0) ;  Call addNext
+82 : LD 1, 5(5) ;  Load callee result
+83 : LDC 2, 6(0) ;  Caller frame size
+84 : SUB 5, 5, 2 ;  Pop callee frame
+85 : ST 1, 5(5) ;  Store function result
+86 : LD 6, 0(5) ;  Load return address
+87 : LDA 7, 0(6) ;  Return to caller

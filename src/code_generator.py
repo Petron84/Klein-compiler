@@ -33,7 +33,7 @@ class Generator:
         # R1 : expression/return value
         # R2 : left operand / general temp
         # R3 : right operand scratch / general temp
-        # R4 : callee frame base (computed JIT; do NOT rely on it across nested eval)
+        # R4 : temporary address computations (do NOT rely across nested eval)
         # R5 : DMEM pointer (stack pointer)
         # R6 : return address
         # R7 : program counter
@@ -42,8 +42,7 @@ class Generator:
         # [0]    : return address
         # [1..N] : parameters
         # [N+1]  : return value
-
-        # DMEM layout:
+        #
         # Frames grow upward from DMEM[1]. DMEM[0] holds the max address (e.g., 1023).
 
     def generate(self):
@@ -159,40 +158,40 @@ class Generator:
                 caller_params = self.symbol_table[curr_function].parameters[0]
                 callee_size = callee_params + 2   # RA + params + return
 
-                # Built-in print
+                # ---------- Push callee frame FIRST ----------
+                # Reserve the callee frame so nested calls cannot overlap it.
+                self.write(f"LDA 4, {callee_size}(5)", " Compute callee frame base")
+                self.write("ADD 5, 4, 0", " Push callee frame")
+
                 if f_name == "print":
                     # Evaluate its single argument → R1
                     self.instruction_rules(exp_children[1], curr_function, callee=True)
-
-                    # JIT: compute base and call
+                    # Store arg into callee frame (now at 5)
+                    self.write("ST 1, 1(5)", " Store print arg in callee frame")
+                    # Install RA and call
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {callee_size}(5)", " [JIT] callee frame base")
                     self.write(f"LDA 6, {temp_label}(0)", " Return address")
-                    self.write("ST 6, 0(4)", " Store RA in callee frame")
-                    self.write("ADD 5, 4, 0", " Push callee frame")
+                    self.write("ST 6, 0(5)", " Store RA in callee frame")
                     self.write("LDA 7, @print(0)", " Call print")
-
                     # Return & pop callee frame
                     self.placeholders[temp_label] = self.line_counter
                     self.write(f"LDC 2, {callee_size}(0)", " Caller frame size")
                     self.write("SUB 5, 5, 2", " Pop callee frame")
 
-                # Ordinary calls
                 else:
+                    # Evaluate each argument and store immediately INTO the pushed callee frame.
                     args = exp_children[1].children
 
-                    # Evaluate each argument and store immediately with JIT base
                     for i, arg in enumerate(args):
+                        # Evaluate argument (may perform nested calls)
                         self.instruction_rules(arg, curr_function, callee=True)  # → R1
-                        self.write(f"LDA 4, {callee_size}(5)", " [JIT] callee frame base")
-                        self.write(f"ST 1, {i+1}(4)", f" Store arg {i} in callee frame")
+                        # When nested calls return, R5 again points to CALLEE frame.
+                        self.write(f"ST 1, {i+1}(5)", f" Store argument {i} in callee frame")
 
-                    # Install RA, push callee frame, call (JIT base again)
+                    # Install RA and call
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {callee_size}(5)", " [JIT] callee frame base")
                     self.write(f"LDA 6, {temp_label}(0)", " Return address")
-                    self.write("ST 6, 0(4)", " Store RA in callee frame")
-                    self.write("ADD 5, 4, 0", " Push callee frame")
+                    self.write("ST 6, 0(5)", " Store RA in callee frame")
                     self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
 
                     # Upon return: read result, then pop callee frame
@@ -202,7 +201,7 @@ class Generator:
                     self.write(f"LDC 2, {callee_size}(0)", " Caller frame size")
                     self.write("SUB 5, 5, 2", " Pop callee frame")
 
-                    # If this produces the current function's value, store it
+                    # If this call is the value of the current function, store it
                     if not callee:
                         caller_return = caller_params + 1
                         self.write(f"ST 1, {caller_return}(5)", " Store result into caller frame")
@@ -255,17 +254,14 @@ class Generator:
                 single_values = ["INTEGER-LITERAL", "BOOLEAN-LITERAL", "IDENTIFIER"]
 
                 if left_exp.type in single_values and (right_exp.type not in single_values):
-                    # Evaluate right first → R1, stash in R3
+                    # Evaluate right → R1, stash to R3; then left → R1 → R2; restore right to R1
                     self.instruction_rules(right_exp, curr_function, callee=True)
                     self.write("ADD 3, 1, 0", " Stash right in R3")
-                    # Evaluate left → R1, move to R2
                     self.instruction_rules(left_exp, curr_function, callee=True)
                     self.write("ADD 2, 1, 0", " Move left to R2")
-                    # Restore right into R1
                     self.write("ADD 1, 3, 0", " Restore right to R1")
 
                 elif left_exp.type in single_values and right_exp.type in single_values:
-                    # Right → R1 → R3, then left → R1 → R2
                     self.instruction_rules(right_exp, curr_function, callee=True)
                     self.write("ADD 3, 1, 0", " Stash right in R3")
                     self.instruction_rules(left_exp, curr_function, callee=True)
@@ -273,7 +269,6 @@ class Generator:
                     self.write("ADD 1, 3, 0", " Restore right to R1")
 
                 else:
-                    # General: left → R1 → R2, right → R1
                     self.instruction_rules(left_exp, curr_function, callee=True)
                     self.write("ADD 2, 1, 0", " Move left to R2")
                     self.instruction_rules(right_exp, curr_function, callee=True)

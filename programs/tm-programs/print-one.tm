@@ -8,16 +8,17 @@
 7 : OUT 1, 0, 0 ;  print(R1)
 8 : LD 6, 0(5) ;  Load return address
 9 : LDA 7, 0(6) ;  Return
-10 : LDC 1, 1(0) ;  Load integer literal into R1
-11 : LDA 4, 3(5) ;  [JIT] callee frame base
-12 : LDA 6, 16(0) ;  Return address
-13 : ST 6, 0(4) ;  Store RA in callee frame
-14 : ADD 5, 4, 0 ;  Push callee frame
-15 : LDA 7, 7(0) ;  Call print
-16 : LDC 2, 3(0) ;  Caller frame size
-17 : SUB 5, 5, 2 ;  Pop callee frame
-18 : LDC 1, 1(0) ;  Load integer literal into R1
-19 : ST 1, 1(5) ;  Store into current frame's return slot
-20 : LD 1, 1(5) ;  Load main return value
-21 : LD 6, 0(5) ;  Load return address
-22 : LDA 7, 0(6) ;  Return from main
+10 : LDA 4, 3(5) ;  Compute callee frame base
+11 : ADD 5, 4, 0 ;  Push callee frame
+12 : LDC 1, 1(0) ;  Load integer literal into R1
+13 : ST 1, 1(5) ;  Store print arg in callee frame
+14 : LDA 6, 17(0) ;  Return address
+15 : ST 6, 0(5) ;  Store RA in callee frame
+16 : LDA 7, 7(0) ;  Call print
+17 : LDC 2, 3(0) ;  Caller frame size
+18 : SUB 5, 5, 2 ;  Pop callee frame
+19 : LDC 1, 1(0) ;  Load integer literal into R1
+20 : ST 1, 1(5) ;  Store into current frame's return slot
+21 : LD 1, 1(5) ;  Load main return value
+22 : LD 6, 0(5) ;  Load return address
+23 : LDA 7, 0(6) ;  Return from main

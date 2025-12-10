@@ -12,64 +12,61 @@
 11 : OUT 1, 0, 0 ;  print(R1)
 12 : LD 6, 0(5) ;  Load return address
 13 : LDA 7, 0(6) ;  Return
-14 : LD 1, 1(5) ;  Load parameter 'a'
-15 : LDA 4, 4(5) ;  [JIT] callee frame base
-16 : ST 1, 1(4) ;  Store arg 0 in callee frame
-17 : LD 1, 2(5) ;  Load parameter 'b'
-18 : LDA 4, 4(5) ;  [JIT] callee frame base
-19 : ST 1, 2(4) ;  Store arg 1 in callee frame
-20 : LDA 4, 4(5) ;  [JIT] callee frame base
-21 : LDA 6, 25(0) ;  Return address
-22 : ST 6, 0(4) ;  Store RA in callee frame
-23 : ADD 5, 4, 0 ;  Push callee frame
-24 : LDA 7, 32(0) ;  Call add_till_n
-25 : LD 1, 3(5) ;  Load callee result
-26 : LDC 2, 4(0) ;  Caller frame size
-27 : SUB 5, 5, 2 ;  Pop callee frame
-28 : ST 1, 3(5) ;  Store result into caller frame
-29 : LD 1, 3(5) ;  Load main return value
-30 : LD 6, 0(5) ;  Load return address
-31 : LDA 7, 0(6) ;  Return from main
+14 : LDA 4, 4(5) ;  Compute callee frame base
+15 : ADD 5, 4, 0 ;  Push callee frame
+16 : LD 1, 1(5) ;  Load parameter 'a'
+17 : ST 1, 1(5) ;  Store argument 0 in callee frame
+18 : LD 1, 2(5) ;  Load parameter 'b'
+19 : ST 1, 2(5) ;  Store argument 1 in callee frame
+20 : LDA 6, 23(0) ;  Return address
+21 : ST 6, 0(5) ;  Store RA in callee frame
+22 : LDA 7, 30(0) ;  Call add_till_n
+23 : LD 1, 3(5) ;  Load callee result
+24 : LDC 2, 4(0) ;  Caller frame size
+25 : SUB 5, 5, 2 ;  Pop callee frame
+26 : ST 1, 3(5) ;  Store result into caller frame
+27 : LD 1, 3(5) ;  Load main return value
+28 : LD 6, 0(5) ;  Load return address
+29 : LDA 7, 0(6) ;  Return from main
+30 : LDA 4, 3(5) ;  Compute callee frame base
+31 : ADD 5, 4, 0 ;  Push callee frame
 32 : LD 1, 1(5) ;  Load parameter 'a'
-33 : LDA 4, 3(5) ;  [JIT] callee frame base
-34 : LDA 6, 38(0) ;  Return address
-35 : ST 6, 0(4) ;  Store RA in callee frame
-36 : ADD 5, 4, 0 ;  Push callee frame
-37 : LDA 7, 11(0) ;  Call print
-38 : LDC 2, 3(0) ;  Caller frame size
-39 : SUB 5, 5, 2 ;  Pop callee frame
-40 : LD 1, 2(5) ;  Load parameter 'b'
-41 : ADD 3, 1, 0 ;  Stash right in R3
-42 : LD 1, 1(5) ;  Load parameter 'a'
-43 : ADD 2, 1, 0 ;  Move left to R2
-44 : ADD 1, 3, 0 ;  Restore right to R1
-45 : SUB 1, 2, 1 ;  left - right
-46 : JEQ 1, 2(7) ;  if 0 then true
-47 : LDC 1, 0(0) ;  false
-48 : LDA 7, 1(7) ;  skip setting true
-49 : LDC 1, 1(0) ;  true
-50 : JEQ 1, 53(0) ;  If false, jump to ELSE
-51 : LD 1, 1(5) ;  Load parameter 'a'
-52 : LDA 7, 72(0) ;  Skip ELSE
-53 : LDC 1, 1(0) ;  Load integer literal into R1
-54 : ADD 3, 1, 0 ;  Stash right in R3
-55 : LD 1, 1(5) ;  Load parameter 'a'
-56 : ADD 2, 1, 0 ;  Move left to R2
-57 : ADD 1, 3, 0 ;  Restore right to R1
-58 : ADD 1, 2, 1 ;  R1 = left + right
-59 : LDA 4, 4(5) ;  [JIT] callee frame base
-60 : ST 1, 1(4) ;  Store arg 0 in callee frame
+33 : ST 1, 1(5) ;  Store print arg in callee frame
+34 : LDA 6, 37(0) ;  Return address
+35 : ST 6, 0(5) ;  Store RA in callee frame
+36 : LDA 7, 11(0) ;  Call print
+37 : LDC 2, 3(0) ;  Caller frame size
+38 : SUB 5, 5, 2 ;  Pop callee frame
+39 : LD 1, 2(5) ;  Load parameter 'b'
+40 : ADD 3, 1, 0 ;  Stash right in R3
+41 : LD 1, 1(5) ;  Load parameter 'a'
+42 : ADD 2, 1, 0 ;  Move left to R2
+43 : ADD 1, 3, 0 ;  Restore right to R1
+44 : SUB 1, 2, 1 ;  left - right
+45 : JEQ 1, 2(7) ;  if 0 then true
+46 : LDC 1, 0(0) ;  false
+47 : LDA 7, 1(7) ;  skip setting true
+48 : LDC 1, 1(0) ;  true
+49 : JEQ 1, 52(0) ;  If false, jump to ELSE
+50 : LD 1, 1(5) ;  Load parameter 'a'
+51 : LDA 7, 69(0) ;  Skip ELSE
+52 : LDA 4, 4(5) ;  Compute callee frame base
+53 : ADD 5, 4, 0 ;  Push callee frame
+54 : LDC 1, 1(0) ;  Load integer literal into R1
+55 : ADD 3, 1, 0 ;  Stash right in R3
+56 : LD 1, 1(5) ;  Load parameter 'a'
+57 : ADD 2, 1, 0 ;  Move left to R2
+58 : ADD 1, 3, 0 ;  Restore right to R1
+59 : ADD 1, 2, 1 ;  R1 = left + right
+60 : ST 1, 1(5) ;  Store argument 0 in callee frame
 61 : LD 1, 2(5) ;  Load parameter 'b'
-62 : LDA 4, 4(5) ;  [JIT] callee frame base
-63 : ST 1, 2(4) ;  Store arg 1 in callee frame
-64 : LDA 4, 4(5) ;  [JIT] callee frame base
-65 : LDA 6, 69(0) ;  Return address
-66 : ST 6, 0(4) ;  Store RA in callee frame
-67 : ADD 5, 4, 0 ;  Push callee frame
-68 : LDA 7, 32(0) ;  Call add_till_n
-69 : LD 1, 3(5) ;  Load callee result
-70 : LDC 2, 4(0) ;  Caller frame size
-71 : SUB 5, 5, 2 ;  Pop callee frame
-72 : ST 1, 3(5) ;  Store function result
-73 : LD 6, 0(5) ;  Load return address
-74 : LDA 7, 0(6) ;  Return to caller
+62 : ST 1, 2(5) ;  Store argument 1 in callee frame
+63 : LDA 6, 66(0) ;  Return address
+64 : ST 6, 0(5) ;  Store RA in callee frame
+65 : LDA 7, 30(0) ;  Call add_till_n
+66 : LD 1, 3(5) ;  Load callee result
+67 : LDC 2, 4(0) ;  Caller frame size
+68 : SUB 5, 5, 2 ;  Pop callee frame
+69 : ST 1, 3(5) ;  Store function result
+70 : LD 6, 0(5) ;  Load return address
+71 : LDA 7, 0(6) ;  Return to caller
