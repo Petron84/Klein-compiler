@@ -260,38 +260,43 @@ class Generator:
                     self.write("SUB 5, 5, 2", "Pop back to caller")
 
                 else:
-                    # 1) Evaluate arguments sequentially and store into future callee frame
+                                    
+                    # 1) Evaluate arguments and store into future callee frame
                     args = exp_children[1].children
                     for i, arg in enumerate(args):
-                        # Evaluate arg -> R1 (this may perform nested calls and clobber R4)
+                        # Evaluate argument i -> R1 (nested calls may clobber R4)
                         self.instruction_rules(arg, curr_function, callee=True)
 
-                        # Recompute callee base AFTER evaluation, BEFORE using (4)
-                        self.write(f"LDA 4, {callee_size}(5)", "Compute callee base")
-                        self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee frame")
+                        # Recompute callee base AFTER evaluation, BEFORE using R4
+                        self.write(f"LDA 4, {callee_size}(5)", "Recompute callee base from callee size")
+                        self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee")
 
                     # 2) Install return address — recompute base again to be safe
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
                     self.write(f"LDA 4, {callee_size}(5)", "Recompute callee base from callee size")
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
-                    self.write("ST 6, 0(4)", "Store return address into callee frame")
+                    self.write("ST 6, 0(4)", "Store return in callee frame")
 
                     # 3) Push callee frame and jump
-                    self.write("ADD 5, 4, 0", "Push callee frame (R5 := callee base)")
+                    self.write("ADD 5, 4, 0", "Push callee frame (FP := callee base)")
                     self.write(f"LDA 7, @{f_name}(0)", f"Call {f_name}")
 
                     # 4) Upon return: load callee return value, pop to caller
                     self.placeholders[temp_label] = self.line_counter
                     return_slot = callee_params + 1
                     self.write(f"LD 1, {return_slot}(5)", "Load callee result into R1")
-                    self.write(f"LDC 2, {callee_size}(0)", "Caller frame size")
-                    self.write("SUB 5, 5, 2", "Pop back to caller")
+
+                    # Use callee_size to pop FP; fix the comment string
+                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size")
+                    self.write("SUB 5, 5, 2", "Pop callee frame")
+
+                    # IMPORTANT: do not touch R4 here; caller will recompute as needed
+                    # (remove) self.write("SUB 4, 4, 2", " Pop back to caller")
 
                     # 5) If producing the caller’s own value, store it
                     if not callee:
                         caller_return = caller_params + 1
-                        self.write(f"ST 1, {caller_return}(5)", "Store result into caller’s return slot")
-
+                        self.write(f"ST 1, {caller_return}(5)", "Store result into caller’s frame")
 
             # ---------- LITERALS ----------
             case "INTEGER-LITERAL":
