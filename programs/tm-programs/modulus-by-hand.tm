@@ -47,7 +47,7 @@
 46 : LD 1, 2(5) ; Load parameter 'n' into R1
 47 : LD 2, 4(5) ; Restore left operand from depth 0
 48 : SUB 1, 2, 1 ; left - right for less-than check
-49 : JLT 1, 3(7) ; If R1 < 0, jump to true
+49 : JLT 1, 2(7) ; If R1 < 0, jump to true
 50 : LDC 1, 0(0) ; false
 51 : LDA 7, 1(7) ; skip setting true
 52 : LDC 1, 1(0) ; true

@@ -104,7 +104,7 @@
 103 : SUB 5, 5, 2 ; Pop callee frame
 104 : LD 2, 4(5) ; Restore left operand from depth 0
 105 : SUB 1, 2, 1 ; left - right for equality check
-106 : JEQ 1, 3(7) ; If R1 == 0, jump to true
+106 : JEQ 1, 2(7) ; If R1 == 0, jump to true
 107 : LDC 1, 0(0) ; false
 108 : LDA 7, 1(7) ; skip setting true
 109 : LDC 1, 1(0) ; true
@@ -211,7 +211,7 @@
 210 : LDC 1, 10(0) ; Load integer-literal into R1
 211 : LD 2, 3(5) ; Restore left operand from depth 0
 212 : SUB 1, 2, 1 ; left - right for less-than check
-213 : JLT 1, 3(7) ; If R1 < 0, jump to true
+213 : JLT 1, 2(7) ; If R1 < 0, jump to true
 214 : LDC 1, 0(0) ; false
 215 : LDA 7, 1(7) ; skip setting true
 216 : LDC 1, 1(0) ; true
@@ -245,7 +245,7 @@
 244 : LD 1, 1(5) ; Load parameter 'n' into R1
 245 : LD 2, 3(5) ; Restore left operand from depth 0
 246 : SUB 1, 2, 1 ; left - right for less-than check
-247 : JLT 1, 3(7) ; If R1 < 0, jump to true
+247 : JLT 1, 2(7) ; If R1 < 0, jump to true
 248 : LDC 1, 0(0) ; false
 249 : LDA 7, 1(7) ; skip setting true
 250 : LDC 1, 1(0) ; true
@@ -263,7 +263,7 @@
 262 : LD 1, 1(5) ; Load parameter 'n' into R1
 263 : LD 2, 3(5) ; Restore left operand from depth 0
 264 : SUB 1, 2, 1 ; left - right for less-than check
-265 : JLT 1, 3(7) ; If R1 < 0, jump to true
+265 : JLT 1, 2(7) ; If R1 < 0, jump to true
 266 : LDC 1, 0(0) ; false
 267 : LDA 7, 1(7) ; skip setting true
 268 : LDC 1, 1(0) ; true
@@ -288,7 +288,7 @@
 287 : LDC 1, 0(0) ; Load integer-literal into R1
 288 : LD 2, 4(5) ; Restore left operand from depth 0
 289 : SUB 1, 2, 1 ; left - right for equality check
-290 : JEQ 1, 3(7) ; If R1 == 0, jump to true
+290 : JEQ 1, 2(7) ; If R1 == 0, jump to true
 291 : LDC 1, 0(0) ; false
 292 : LDA 7, 1(7) ; skip setting true
 293 : LDC 1, 1(0) ; true

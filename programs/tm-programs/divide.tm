@@ -19,7 +19,7 @@
 18 : LDC 1, 0(0) ; Load integer-literal into R1
 19 : LD 2, 5(5) ; Restore left operand from depth 0
 20 : SUB 1, 2, 1 ; left - right for equality check
-21 : JEQ 1, 3(7) ; If R1 == 0, jump to true
+21 : JEQ 1, 2(7) ; If R1 == 0, jump to true
 22 : LDC 1, 0(0) ; false
 23 : LDA 7, 1(7) ; skip setting true
 24 : LDC 1, 1(0) ; true
