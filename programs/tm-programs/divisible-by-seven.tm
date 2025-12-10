@@ -66,7 +66,7 @@
 65 : LDC 1, 7(0) ; Load integer-literal into R1
 66 : LD 2, 3(5) ; Restore left operand from depth 0
 67 : SUB 1, 2, 1 ; left - right for equality check
-68 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+68 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 69 : LDC 1, 0(0) ; false
 70 : LDA 7, 1(7) ; skip setting true
 71 : LDC 1, 1(0) ; true
@@ -76,7 +76,7 @@
 75 : LDC 1, 0(0) ; Load integer-literal into R1
 76 : LD 2, 4(5) ; Restore left operand from depth 1
 77 : SUB 1, 2, 1 ; left - right for equality check
-78 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+78 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 79 : LDC 1, 0(0) ; false
 80 : LDA 7, 1(7) ; skip setting true
 81 : LDC 1, 1(0) ; true
@@ -89,7 +89,7 @@
 88 : SUB 1, 0, 1 ; Negate value in R1
 89 : LD 2, 4(5) ; Restore left operand from depth 1
 90 : SUB 1, 2, 1 ; left - right for equality check
-91 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+91 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 92 : LDC 1, 0(0) ; false
 93 : LDA 7, 1(7) ; skip setting true
 94 : LDC 1, 1(0) ; true
@@ -102,7 +102,7 @@
 101 : SUB 1, 0, 1 ; Negate value in R1
 102 : LD 2, 4(5) ; Restore left operand from depth 1
 103 : SUB 1, 2, 1 ; left - right for equality check
-104 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+104 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 105 : LDC 1, 0(0) ; false
 106 : LDA 7, 1(7) ; skip setting true
 107 : LDC 1, 1(0) ; true
@@ -116,7 +116,7 @@
 115 : LDC 1, 14(0) ; Load integer-literal into R1
 116 : LD 2, 3(5) ; Restore left operand from depth 0
 117 : SUB 1, 2, 1 ; left - right for less-than check
-118 : JLT 1, 2(7) ; If R1 < 0, jump to true
+118 : JLT 1, 3(7) ; If R1 < 0, jump to true
 119 : LDC 1, 0(0) ; false
 120 : LDA 7, 1(7) ; skip setting true
 121 : LDC 1, 1(0) ; true

@@ -15,7 +15,7 @@
 14 : LDC 1, 1(0) ; Load integer-literal into R1
 15 : LD 2, 3(5) ; Restore left operand from depth 0
 16 : SUB 1, 2, 1 ; left - right for less-than check
-17 : JLT 1, 2(7) ; If R1 < 0, jump to true
+17 : JLT 1, 3(7) ; If R1 < 0, jump to true
 18 : LDC 1, 0(0) ; false
 19 : LDA 7, 1(7) ; skip setting true
 20 : LDC 1, 1(0) ; true
@@ -52,7 +52,7 @@
 51 : LD 1, 1(5) ; Load parameter 'currentElement' into R1
 52 : LD 2, 6(5) ; Restore left operand from depth 0
 53 : SUB 1, 2, 1 ; left - right for equality check
-54 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+54 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 55 : LDC 1, 0(0) ; false
 56 : LDA 7, 1(7) ; skip setting true
 57 : LDC 1, 1(0) ; true

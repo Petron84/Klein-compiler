@@ -89,7 +89,7 @@
 88 : LDC 1, 10(0) ; Load integer-literal into R1
 89 : LD 2, 5(5) ; Restore left operand from depth 0
 90 : SUB 1, 2, 1 ; left - right for less-than check
-91 : JLT 1, 2(7) ; If R1 < 0, jump to true
+91 : JLT 1, 3(7) ; If R1 < 0, jump to true
 92 : LDC 1, 0(0) ; false
 93 : LDA 7, 1(7) ; skip setting true
 94 : LDC 1, 1(0) ; true

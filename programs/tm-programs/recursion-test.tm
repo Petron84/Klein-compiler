@@ -43,7 +43,7 @@
 42 : LD 1, 2(5) ; Load parameter 'b' into R1
 43 : LD 2, 4(5) ; Restore left operand from depth 0
 44 : SUB 1, 2, 1 ; left - right for equality check
-45 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+45 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 46 : LDC 1, 0(0) ; false
 47 : LDA 7, 1(7) ; skip setting true
 48 : LDC 1, 1(0) ; true

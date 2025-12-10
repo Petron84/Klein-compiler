@@ -33,7 +33,7 @@
 32 : LD 1, 2(5) ; Load parameter 'den' into R1
 33 : LD 2, 4(5) ; Restore left operand from depth 0
 34 : SUB 1, 2, 1 ; left - right for less-than check
-35 : JLT 1, 2(7) ; If R1 < 0, jump to true
+35 : JLT 1, 3(7) ; If R1 < 0, jump to true
 36 : LDC 1, 0(0) ; false
 37 : LDA 7, 1(7) ; skip setting true
 38 : LDC 1, 1(0) ; true
@@ -79,7 +79,7 @@
 78 : LDC 1, 0(0) ; Load integer-literal into R1
 79 : LD 2, 4(5) ; Restore left operand from depth 0
 80 : SUB 1, 2, 1 ; left - right for equality check
-81 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+81 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 82 : LDC 1, 0(0) ; false
 83 : LDA 7, 1(7) ; skip setting true
 84 : LDC 1, 1(0) ; true
@@ -171,7 +171,7 @@
 170 : LD 1, 2(5) ; Load parameter 'current' into R1
 171 : LD 2, 4(5) ; Restore left operand from depth 0
 172 : SUB 1, 2, 1 ; left - right for equality check
-173 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+173 : JEQ 1, 3(7) ; If R1 == 0, jump to true
 174 : LDC 1, 0(0) ; false
 175 : LDA 7, 1(7) ; skip setting true
 176 : LDC 1, 1(0) ; true

@@ -15,7 +15,7 @@
 14 : LDC 1, 10(0) ; Load integer-literal into R1
 15 : LD 2, 3(5) ; Restore left operand from depth 0
 16 : SUB 1, 2, 1 ; left - right for less-than check
-17 : JLT 1, 2(7) ; If R1 < 0, jump to true
+17 : JLT 1, 3(7) ; If R1 < 0, jump to true
 18 : LDC 1, 0(0) ; false
 19 : LDA 7, 1(7) ; skip setting true
 20 : LDC 1, 1(0) ; true
@@ -25,7 +25,7 @@
 24 : LDC 1, 5(0) ; Load integer-literal into R1
 25 : LD 2, 3(5) ; Restore left operand from depth 0
 26 : SUB 1, 2, 1 ; left - right for less-than check
-27 : JLT 1, 2(7) ; If R1 < 0, jump to true
+27 : JLT 1, 3(7) ; If R1 < 0, jump to true
 28 : LDC 1, 0(0) ; false
 29 : LDA 7, 1(7) ; skip setting true
 30 : LDC 1, 1(0) ; true
