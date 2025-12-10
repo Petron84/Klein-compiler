@@ -1,8 +1,11 @@
 function main(x:integer, y:integer): integer
-    add( mul2(x), add(n, mul2(n)) )
+    add( mul2(x), add(y, mul2(y)) )
 
 function add(a:integer, b:integer): integer
     a + b
+
+function triple(n:integer): integer
+    add(n, mul2(n))
 
 function mul2(k:integer): integer
     k * 2
