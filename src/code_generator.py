@@ -24,26 +24,19 @@ class Generator:
         # Instruction Memory
         self.IMEM = []
 
-        # reference to determine tops of stack frames in DMEM
+        # DMEM model
         self.DMEM = 1
         self.stack_frames = []
 
         # Register convention:
         # R0 : constant 0
         # R1 : expression/return value
-        # R2 : left operand / general temp
-        # R3 : right operand scratch / general temp
-        # R4 : FP (current function's frame base)  <-- NEW INVARIANT
-        # R5 : DMEM pointer (stack pointer)
+        # R2 : saved arg #1 / left operand
+        # R3 : saved arg #2 / right operand
+        # R4 : FP (current function's frame base)  <-- stable per function
+        # R5 : SP / DMEM pointer
         # R6 : return address
         # R7 : program counter
-
-        # Stack frame layout (per function):
-        # [0]    : return address
-        # [1..N] : parameters
-        # [N+1]  : return value
-        #
-        # Frames grow upward from DMEM[1]. DMEM[0] holds the max address (e.g., 1023).
 
     def generate(self):
         self.initialize()
@@ -55,33 +48,32 @@ class Generator:
     def initialize(self):
         self.write("-----INITIALIZE RUNTIME SYSTEM-----", header=True)
         num_params = self.symbol_table['main'].parameters[0]
-        self.DMEM = num_params + 1  # Set DMEM to top of main stack frame
-        self.create_frame('main')   # Create stack frame for initial main function call
+        self.DMEM = num_params + 1
+        self.create_frame('main')
         main_frame = self.stack_frames[-1]
 
-        self.write(f"LDC 5, {main_frame.top}(0)", " Set DMEM pointer to main stack frame")
-        self.write("ADD 4, 5, 0", " Set FP (R4) = current frame base")  # FP initialized
+        self.write(f"LDC 5, {main_frame.top}(0)", " SP = main frame base")
+        self.write("ADD 4, 5, 0", " FP = SP (enter main)")
 
-        # Load CLI args into the main frame
+        # load CLI args into main frame
         for i in range(1, num_params + 1):
-            self.write(f"LD 2, {i}(0)", f" Load CLI arg {i} into R2")
-            self.write(f"ST 2, {i}(5)", f" Store arg {i} into main frame")
+            self.write(f"LD 2, {i}(0)", f" Load CLI arg {i} -> R2")
+            self.write(f"ST 2, {i}(5)", f" Store arg {i} at main frame")
 
-        # Set main's return address and call it
-        self.write("LDA 6, 2(7)", " Calculate return address")
-        self.write("ST 6, 0(5)", " Store return address in main frame")
+        # set RA and branch to @main
+        self.write("LDA 6, 2(7)", " RA = next after branch")
+        self.write("ST 6, 0(5)", " Store RA in main frame")
+        self.DMEM = main_frame.top + num_params + 2
 
-        self.DMEM = main_frame.top + num_params + 2  # pointer to free space above main frame
+        self.write("LDA 7, @main(0)", " Jump to main")
+        self.write("OUT 1, 0, 0", " Print R1")
+        self.write("HALT 0, 0, 0", " Halt")
 
-        self.write("LDA 7, @main(0)", " Branch to main")
-        self.write("OUT 1, 0, 0", " Print main's result")
-        self.write("HALT 0, 0, 0", " Terminate program")
-
-        # Built-in print
+        # builtin print
         self.write("------PRINT------", header=True)
         self.placeholders["@print"] = self.line_counter
         self.write("OUT 1, 0, 0", " print(R1)")
-        self.write("LD 6, 0(5)", " Load return address")
+        self.write("LD 6, 0(4)", " Load RA via FP")
         self.write("LDA 7, 0(6)", " Return")
 
     def create_frame(self, f_name):
@@ -97,7 +89,6 @@ class Generator:
 
     def load_functions(self):
         f_list = {}
-        # Map function names to bodies; addresses patched later via placeholders
         for f in self.AST:
             f_name = f.children[0].value
             f_body = f.children[3].children
@@ -106,45 +97,44 @@ class Generator:
         return f_list
 
     def generate_imem(self, functions):
-        # Generate main first
+        # MAIN
         main_body = functions['main']
         self.write("------MAIN------", header=True)
         self.placeholders['@main'] = self.line_counter
 
-        # At function entry: set FP = SP
-        self.write("ADD 4, 5, 0", " Set FP at @main entry")
+        # function entry: FP = SP
+        self.write("ADD 4, 5, 0", " FP = SP at @main entry")
 
         for exp in main_body:
             self.instruction_rules(exp, "main")
 
-        # Epilogue for main
-        _ = self.stack_frames.pop()
+        # epilogue (via FP)
+        self.stack_frames.pop()
         main_params = self.symbol_table['main'].parameters[0]
-        offset = main_params + 1
-        self.write(f"LD 1, {offset}(4)", " Load main return value (via FP)")  # use FP
-        self.write("LD 6, 0(4)", " Load return address (via FP)")             # use FP
-        self.write("LDA 7, 0(6)", " Return from main")
+        ret_off = main_params + 1
+        self.write(f"LD 1, {ret_off}(4)", " R1 = return value (via FP)")
+        self.write("LD 6, 0(4)", " RA from FP")
+        self.write("LDA 7, 0(6)", " return")
 
-        # Generate the rest
+        # Others
         del functions['main']
         for f, body in functions.items():
             self.write(f"------{f.upper()}------", header=True)
             self.placeholders[f"@{f}"] = self.line_counter
-
             num_params = self.symbol_table[f].parameters[0]
             self.create_frame(f)
 
-            # Function entry: set FP = SP
-            self.write("ADD 4, 5, 0", f" Set FP at @{f} entry")
+            # function entry: FP = SP
+            self.write("ADD 4, 5, 0", f" FP = SP at @{f} entry")
 
             for exp in body:
                 self.instruction_rules(exp, f, callee=True)
 
-            # Function epilogue: store R1 into return slot at FP, then return
+            # epilogue (via FP)
             ret_off = num_params + 1
-            self.write(f"ST 1, {ret_off}(4)", " Store function result (via FP)")
-            self.write("LD 6, 0(4)", " Load return address (via FP)")
-            self.write("LDA 7, 0(6)", " Return to caller")
+            self.write(f"ST 1, {ret_off}(4)", " store result in return slot (via FP)")
+            self.write("LD 6, 0(4)", " load RA (via FP)")
+            self.write("LDA 7, 0(6)", " return to caller")
             self.stack_frames.pop()
 
     def fill_placeholders(self):
@@ -158,176 +148,159 @@ class Generator:
         exp_children = body.children
 
         match exp_type:
+
             case "FUNCTION-CALL":
                 f_name = exp_children[0].value
                 callee_params = self.symbol_table[f_name].parameters[0]
                 caller_params = self.symbol_table[curr_function].parameters[0]
                 callee_size = callee_params + 2   # RA + params + return
 
-                # ---------- Push callee frame FIRST ----------
-                # Reserve the callee frame so nested calls cannot overlap it.
-                self.write(f"LDA 4, {callee_size}(5)", " Compute callee frame base (temp)")
-                self.write("ADD 5, 4, 0", " Push callee frame (SP=callee)")
+                # ---- 1) Evaluate arguments FIRST (save in registers) ----
+                args = exp_children[1].children if len(exp_children) > 1 else []
+                if len(args) == 0:
+                    # no-arg call: nothing to evaluate
+                    pass
+                elif len(args) == 1:
+                    # arg0 -> R2
+                    self.instruction_rules(args[0], curr_function, callee=True)  # R1
+                    self.write("ADD 2, 1, 0", " Save arg0 in R2")
+                elif len(args) == 2:
+                    # left -> R2, right -> R3
+                    self.instruction_rules(args[0], curr_function, callee=True)  # R1
+                    self.write("ADD 2, 1, 0", " Save arg0 in R2")
+                    self.instruction_rules(args[1], curr_function, callee=True)  # R1
+                    self.write("ADD 3, 1, 0", " Save arg1 in R3")
 
-                if f_name == "print":
-                    # Evaluate its single argument → R1 (identifier loads via FP=R4)
-                    self.instruction_rules(exp_children[1], curr_function, callee=True)
-                    # Store arg into callee frame (now at SP=R5)
-                    self.write("ST 1, 1(5)", " Store print arg in callee frame")
-                    # Install RA and call
-                    temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 6, {temp_label}(0)", " Return address")
-                    self.write("ST 6, 0(5)", " Store RA in callee frame")
-                    self.write("LDA 7, @print(0)", " Call print")
-                    # Return & pop callee frame
-                    self.placeholders[temp_label] = self.line_counter
-                    self.write(f"LDC 2, {callee_size}(0)", " Caller frame size")
-                    self.write("SUB 5, 5, 2", " Pop callee frame")
+                # ---- 2) Push callee frame, store params from registers ----
+                self.write(f"LDA 6, {f'!return_{self.label_id}'}(0)", " Prepare RA label")
+                ret_label = f"!return_{self.label_id}"; self.label_id += 1
 
-                else:
-                    # Evaluate each argument and store immediately INTO the pushed callee frame.
-                    args = exp_children[1].children
+                self.write(f"LDA 2, {callee_size}(5)", " callee base size -> R2")
+                self.write("ADD 5, 2, 0", " push callee frame (SP = callee)")
 
-                    for i, arg in enumerate(args):
-                        # Evaluate argument (may perform nested calls)
-                        # Identifier loads use FP=R4, so they read from the caller frame.
-                        self.instruction_rules(arg, curr_function, callee=True)  # → R1
-                        # After nested calls return, SP=R5 points back to callee frame.
-                        self.write(f"ST 1, {i+1}(5)", f" Store argument {i} in callee frame")
+                # Store RA at [0](SP)
+                self.write("ST 6, 0(5)", " store RA in callee frame")
 
-                    # Install RA and call
-                    temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 6, {temp_label}(0)", " Return address")
-                    self.write("ST 6, 0(5)", " Store RA in callee frame")
-                    self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
+                # Store parameters (if any)
+                if len(args) >= 1:
+                    self.write("ST 2, 1(5)", " TEMP overwrite: fix below")
 
-                    # Upon return: read result, then pop callee frame
-                    self.placeholders[temp_label] = self.line_counter
-                    return_slot = callee_params + 1
-                    self.write(f"LD 1, {return_slot}(5)", " Load callee result")
-                    self.write(f"LDC 2, {callee_size}(0)", " Caller frame size")
-                    self.write("SUB 5, 5, 2", " Pop callee frame")
+                # Correct param writes using saved registers
+                if len(args) == 1:
+                    self.write("ST 2, 0(0)", " noop slot")  # harmless filler to keep line numbers stable
+                    self.write("ST 2, 0(0)", " noop slot")
+                    self.write("ST 2, 0(0)", " noop slot")
+                    # actually store arg from R2
+                    self.write("ST 2, 0(0)", " noop")
+                    self.IMEM[-4] = f"{self.line_counter-4} : ST 2, 1(5) ; store arg0 from R2"
+                elif len(args) == 2:
+                    # store arg0 from R2 and arg1 from R3
+                    self.write("ST 2, 1(5)", " store arg0 from R2")
+                    self.write("ST 3, 2(5)", " store arg1 from R3")
 
-                    # If this call is the value of the current function, store it (via FP)
-                    if not callee:
-                        caller_return = caller_params + 1
-                        self.write(f"ST 1, {caller_return}(4)", " Store result into caller frame (via FP)")
+                # ---- 3) Call ----
+                self.write(f"LDA 7, @{f_name}(0)", f" Call {f_name}")
+
+                # ---- 4) After return: load result, pop callee frame ----
+                self.placeholders[ret_label] = self.line_counter
+                return_slot = callee_params + 1
+                self.write(f"LD 1, {return_slot}(5)", " load callee result")
+                self.write(f"LDC 2, {callee_size}(0)", " size to pop")
+                self.write("SUB 5, 5, 2", " pop callee frame")
+
+                # ---- 5) If this call yields the current function's value, write to FP return slot
+                if not callee:
+                    caller_return = caller_params + 1
+                    self.write(f"ST 1, {caller_return}(4)", " store result into caller frame (via FP)")
 
             case "INTEGER-LITERAL":
                 value = body.value
-                self.write(f"LDC 1, {value}(0)", " Load integer literal into R1")
+                self.write(f"LDC 1, {value}(0)", " literal -> R1")
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
-                    offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
+                    self.write(f"ST 1, {curr_params + 1}(4)", " store into return slot (via FP)")
 
             case "BOOLEAN-LITERAL":
                 value = 1 if body.value == "true" else 0
-                self.write(f"LDC 1, {value}(0)", " Load boolean literal into R1")
+                self.write(f"LDC 1, {value}(0)", " bool -> R1")
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
-                    offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
+                    self.write(f"ST 1, {curr_params + 1}(4)", " store into return slot (via FP)")
 
             case "IDENTIFIER":
-                # Load from the CURRENT FUNCTION'S FRAME via FP (R4)
+                # Always load params via FP (R4), not SP
                 params = self.symbol_table[curr_function].parameters
                 for i, p in enumerate(params[1]):
                     if p[0] == exp_value:
-                        offset = i + 1
-                        self.write(f"LD 1, {offset}(4)", f" Load parameter '{exp_value}' via FP")
+                        self.write(f"LD 1, {i + 1}(4)", f" load '{exp_value}' via FP")
                         break
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
-                    offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
+                    self.write(f"ST 1, {curr_params + 1}(4)", " store into return slot (via FP)")
 
             case "UNARY-EXPRESSION":
-                inner_exp = exp_children[0]
-                self.instruction_rules(inner_exp, curr_function, callee=True)
+                inner = exp_children[0]
+                self.instruction_rules(inner, curr_function, callee=True)
                 if exp_value == "-":
-                    self.write("SUB 1, 0, 1", " Negate R1")
+                    self.write("SUB 1, 0, 1", " negate")
                 elif exp_value == "not":
-                    self.write("LDC 2, 1(0)", " Load 1 into R2")
-                    self.write("SUB 1, 2, 1", " R1 = 1 - R1 (logical NOT)")
+                    self.write("LDC 2, 1(0)", " load 1")
+                    self.write("SUB 1, 2, 1", " 1 - R1")
                 if not callee:
                     curr_params = self.symbol_table[curr_function].parameters[0]
-                    offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
+                    self.write(f"ST 1, {curr_params + 1}(4)", " store into return slot (via FP)")
 
             case "BINARY-EXPRESSION":
-                left_exp = exp_children[0]
-                right_exp = exp_children[1]
+                left = exp_children[0]; right = exp_children[1]
                 curr_params = self.symbol_table[curr_function].parameters[0]
-                single_values = ["INTEGER-LITERAL", "BOOLEAN-LITERAL", "IDENTIFIER"]
+                singles = {"INTEGER-LITERAL","BOOLEAN-LITERAL","IDENTIFIER"}
 
-                if left_exp.type in single_values and (right_exp.type not in single_values):
-                    # Evaluate right → R1, stash to R3; then left → R1 → R2; restore right to R1
-                    self.instruction_rules(right_exp, curr_function, callee=True)
-                    self.write("ADD 3, 1, 0", " Stash right in R3")
-                    self.instruction_rules(left_exp, curr_function, callee=True)
-                    self.write("ADD 2, 1, 0", " Move left to R2")
-                    self.write("ADD 1, 3, 0", " Restore right to R1")
-
-                elif left_exp.type in single_values and right_exp.type in single_values:
-                    self.instruction_rules(right_exp, curr_function, callee=True)
-                    self.write("ADD 3, 1, 0", " Stash right in R3")
-                    self.instruction_rules(left_exp, curr_function, callee=True)
-                    self.write("ADD 2, 1, 0", " Move left to R2")
-                    self.write("ADD 1, 3, 0", " Restore right to R1")
-
-                else:
-                    self.instruction_rules(left_exp, curr_function, callee=True)
-                    self.write("ADD 2, 1, 0", " Move left to R2")
-                    self.instruction_rules(right_exp, curr_function, callee=True)
+                # Evaluate right, stash R3; evaluate left, stash R2; restore right to R1
+                self.instruction_rules(right, curr_function, callee=True)
+                self.write("ADD 3, 1, 0", " stash right in R3")
+                self.instruction_rules(left, curr_function, callee=True)
+                self.write("ADD 2, 1, 0", " stash left in R2")
+                self.write("ADD 1, 3, 0", " restore right to R1")
 
                 match exp_value:
-                    case "+":
-                        self.write("ADD 1, 2, 1", " R1 = left + right")
-                    case "-":
-                        self.write("SUB 1, 2, 1", " R1 = left - right")
-                    case "*":
-                        self.write("MUL 1, 2, 1", " R1 = left * right")
-                    case "/":
-                        self.write("DIV 1, 2, 1", " R1 = left / right")
-                    case "and":
-                        self.write("MUL 1, 2, 1", " R1 = left AND right")
-                    case "or":
-                        self.write("ADD 1, 2, 1", " R1 = left OR right")
+                    case "+": self.write("ADD 1, 2, 1", " left + right")
+                    case "-": self.write("SUB 1, 2, 1", " left - right")
+                    case "*": self.write("MUL 1, 2, 1", " left * right")
+                    case "/": self.write("DIV 1, 2, 1", " left / right")
+                    case "and": self.write("MUL 1, 2, 1", " left AND right")
+                    case "or": self.write("ADD 1, 2, 1", " left OR right")
                     case "=":
                         self.write("SUB 1, 2, 1", " left - right")
                         self.write("JEQ 1, 2(7)", " if 0 then true")
                         self.write("LDC 1, 0(0)", " false")
-                        self.write("LDA 7, 1(7)", " skip setting true")
+                        self.write("LDA 7, 1(7)", " skip")
                         self.write("LDC 1, 1(0)", " true")
                     case "<":
                         self.write("SUB 1, 2, 1", " left - right")
                         self.write("JLT 1, 2(7)", " if < 0 then true")
                         self.write("LDC 1, 0(0)", " false")
-                        self.write("LDA 7, 1(7)", " skip setting true")
+                        self.write("LDA 7, 1(7)", " skip")
                         self.write("LDC 1, 1(0)", " true")
 
                 if not callee:
-                    offset = curr_params + 1
-                    self.write(f"ST 1, {offset}(4)", " Store into current frame's return slot (via FP)")
+                    self.write(f"ST 1, {curr_params + 1}(4)", " store into return slot (via FP)")
 
             case "IF-EXPRESSION":
                 self.write("----IF-BLOCK----", header=True)
-                condition_exp = exp_children[0]
-                self.instruction_rules(condition_exp, curr_function, callee=True)
+                cond = exp_children[0]
+                self.instruction_rules(cond, curr_function, callee=True)
 
-                temp_label_else = "!temp_" + str(self.label_id); self.label_id += 1
-                self.write(f"JEQ 1, {temp_label_else}(0)", " If false, jump to ELSE")
+                else_lbl = f"!temp_{self.label_id}"; self.label_id += 1
+                end_lbl  = f"!temp_{self.label_id}"; self.label_id += 1
+                self.write(f"JEQ 1, {else_lbl}(0)", " if false -> ELSE")
 
                 self.write("----THEN-BLOCK----", header=True)
                 then_exp = exp_children[1]
                 self.instruction_rules(then_exp, curr_function, callee=callee)
-
-                temp_label_endif = "!temp_" + str(self.label_id); self.label_id += 1
-                self.write(f"LDA 7, {temp_label_endif}(0)", " Skip ELSE")
+                self.write(f"LDA 7, {end_lbl}(0)", " skip ELSE")
 
                 self.write("----ELSE-BLOCK----", header=True)
-                self.placeholders[temp_label_else] = self.line_counter
+                self.placeholders[else_lbl] = self.line_counter
                 else_exp = exp_children[2]
                 self.instruction_rules(else_exp, curr_function, callee=callee)
-                self.placeholders[temp_label_endif] = self.line_counter
+                self.placeholders[end_lbl] = self.line_counter
