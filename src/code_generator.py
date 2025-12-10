@@ -178,6 +178,7 @@ class Generator:
     # -------------- Code Emission ----------------
     def generate_imem(self, functions):
         # ----- MAIN -----
+                
         main_body = functions['main']
         self.write("------MAIN------", header=True)
         self.placeholders['@main'] = self.line_counter
@@ -188,15 +189,16 @@ class Generator:
         for exp in main_body:
             self.instruction_rules(exp, "main")
 
-        # Epilogue for main: ensure R5 points to main frame base BEFORE final return
-        # (prevents loading return address from DMEM[0] if R5 drifted due to pops)
-        frame = self.stack_frames.pop()
+        # >>> NEW: after evaluating main's expression(s), force-write the final R1 into main's return slot
         main_params = self.symbol_table['main'].parameters[0]
-        main_base = main_params + 1  # DMEM[N+1] for N args
-        self.write(f"LDC 5, {main_base}(0)", "Reset R5 to main frame base (DMEM[N+1])")
+        main_base   = main_params + 1                 # DMEM[N+1] when N args
+        self.write(f"LDC 5, {main_base}(0)", "Anchor R5 to main frame base (DMEM[N+1])")
+        self.write(f"ST 1, {main_params + 1}(5)", "Store final result into MAIN frame's return slot")
 
-        offset = main_params + 1
-        self.write(f"LD 1, {offset}(5)", "Load main return value into R1")
+        # Existing epilogue (keep it; it now reads the value you just stored)
+        frame = self.stack_frames.pop()
+        self.write(f"LDC 5, {main_base}(0)", "Reset R5 to main frame base (DMEM[N+1])")
+        self.write(f"LD 1, {main_params + 1}(5)", "Load main return value into R1")
         self.write("LD 6, 0(5)", "Load root return address from main frame")
         self.write("LDA 7, 0(6)", "Return from main to runtime epilogue")
 

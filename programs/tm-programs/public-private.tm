@@ -32,7 +32,7 @@
 31 : LDA 6, 35(0) ; Return address
 32 : ST 6, 0(4) ; Store return address into callee frame
 33 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-34 : LDA 7, 162(0) ; Call factor
+34 : LDA 7, 164(0) ; Call factor
 35 : LD 1, 3(5) ; Load callee result into R1
 36 : LDC 2, 4(0) ; Callee frame size
 37 : SUB 5, 5, 2 ; Pop back to caller
@@ -48,148 +48,150 @@
 47 : LDA 6, 51(0) ; Return address
 48 : ST 6, 0(4) ; Store return address into callee frame
 49 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-50 : LDA 7, 162(0) ; Call factor
+50 : LDA 7, 164(0) ; Call factor
 51 : LD 1, 3(5) ; Load callee result into R1
 52 : LDC 2, 4(0) ; Callee frame size
 53 : SUB 5, 5, 2 ; Pop back to caller
 54 : ST 1, 3(5) ; Store result into caller’s return slot
-55 : LDC 5, 3(0) ; Reset R5 to main frame base (DMEM[N+1])
-56 : LD 1, 3(5) ; Load main return value into R1
-57 : LD 6, 0(5) ; Load root return address from main frame
-58 : LDA 7, 0(6) ; Return from main to runtime epilogue
-59 : LD 1, 1(5) ; Load parameter 'a' into R1
-60 : ST 1, 4(5) ; Spill left operand at depth 0
-61 : LD 1, 2(5) ; Load parameter 'b' into R1
-62 : LD 2, 4(5) ; Restore left operand from depth 0
-63 : SUB 1, 2, 1 ; left - right for less-than check
-64 : JLT 1, 2(7) ; If R1 < 0, jump to true
-65 : LDC 1, 0(0) ; false
-66 : LDA 7, 1(7) ; skip setting true
-67 : LDC 1, 1(0) ; true
-68 : JEQ 1, 71(0) ; If condition is false, jump to ELSE
-69 : LD 1, 1(5) ; Load parameter 'a' into R1
-70 : LDA 7, 89(0) ; Skip ELSE block
+55 : LDC 5, 3(0) ; Anchor R5 to main frame base (DMEM[N+1])
+56 : ST 1, 3(5) ; Store final result into MAIN frame's return slot
+57 : LDC 5, 3(0) ; Reset R5 to main frame base (DMEM[N+1])
+58 : LD 1, 3(5) ; Load main return value into R1
+59 : LD 6, 0(5) ; Load root return address from main frame
+60 : LDA 7, 0(6) ; Return from main to runtime epilogue
+61 : LD 1, 1(5) ; Load parameter 'a' into R1
+62 : ST 1, 4(5) ; Spill left operand at depth 0
+63 : LD 1, 2(5) ; Load parameter 'b' into R1
+64 : LD 2, 4(5) ; Restore left operand from depth 0
+65 : SUB 1, 2, 1 ; left - right for less-than check
+66 : JLT 1, 2(7) ; If R1 < 0, jump to true
+67 : LDC 1, 0(0) ; false
+68 : LDA 7, 1(7) ; skip setting true
+69 : LDC 1, 1(0) ; true
+70 : JEQ 1, 73(0) ; If condition is false, jump to ELSE
 71 : LD 1, 1(5) ; Load parameter 'a' into R1
-72 : ST 1, 4(5) ; Spill left operand at depth 0
-73 : LD 1, 2(5) ; Load parameter 'b' into R1
-74 : LD 2, 4(5) ; Restore left operand from depth 0
-75 : SUB 1, 2, 1 ; R1 = left - right
-76 : LDA 4, 5(5) ; Recompute callee base from caller size
-77 : ST 1, 1(4) ; Store argument 0 in callee frame
-78 : LD 1, 2(5) ; Load parameter 'b' into R1
-79 : LDA 4, 5(5) ; Recompute callee base from caller size
-80 : ST 1, 2(4) ; Store argument 1 in callee frame
+72 : LDA 7, 91(0) ; Skip ELSE block
+73 : LD 1, 1(5) ; Load parameter 'a' into R1
+74 : ST 1, 4(5) ; Spill left operand at depth 0
+75 : LD 1, 2(5) ; Load parameter 'b' into R1
+76 : LD 2, 4(5) ; Restore left operand from depth 0
+77 : SUB 1, 2, 1 ; R1 = left - right
+78 : LDA 4, 5(5) ; Recompute callee base from caller size
+79 : ST 1, 1(4) ; Store argument 0 in callee frame
+80 : LD 1, 2(5) ; Load parameter 'b' into R1
 81 : LDA 4, 5(5) ; Recompute callee base from caller size
-82 : LDA 6, 86(0) ; Return address
-83 : ST 6, 0(4) ; Store return address into callee frame
-84 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-85 : LDA 7, 59(0) ; Call remainder
-86 : LD 1, 3(5) ; Load callee result into R1
-87 : LDC 2, 5(0) ; Callee frame size
-88 : SUB 5, 5, 2 ; Pop back to caller
-89 : ST 1, 3(5) ; Store function result into frame return slot
-90 : LD 6, 0(5) ; Load return address
-91 : LDA 7, 0(6) ; Return to caller
-92 : LD 1, 2(5) ; Load parameter 'b' into R1
-93 : ST 1, 4(5) ; Spill left operand at depth 0
-94 : LDC 1, 0(0) ; Load integer-literal into R1
-95 : LD 2, 4(5) ; Restore left operand from depth 0
-96 : SUB 1, 2, 1 ; left - right for equality check
-97 : JEQ 1, 2(7) ; If R1 == 0, jump to true
-98 : LDC 1, 0(0) ; false
-99 : LDA 7, 1(7) ; skip setting true
-100 : LDC 1, 1(0) ; true
-101 : JEQ 1, 104(0) ; If condition is false, jump to ELSE
-102 : LD 1, 1(5) ; Load parameter 'a' into R1
-103 : LDA 7, 131(0) ; Skip ELSE block
-104 : LD 1, 2(5) ; Load parameter 'b' into R1
-105 : LDA 4, 5(5) ; Recompute callee base from caller size
-106 : ST 1, 1(4) ; Store argument 0 in callee frame
-107 : LD 1, 1(5) ; Load parameter 'a' into R1
-108 : LDA 4, 5(5) ; Recompute callee base from caller size
-109 : ST 1, 1(4) ; Store argument 0 in callee frame
-110 : LD 1, 2(5) ; Load parameter 'b' into R1
-111 : LDA 4, 5(5) ; Recompute callee base from caller size
-112 : ST 1, 2(4) ; Store argument 1 in callee frame
+82 : ST 1, 2(4) ; Store argument 1 in callee frame
+83 : LDA 4, 5(5) ; Recompute callee base from caller size
+84 : LDA 6, 88(0) ; Return address
+85 : ST 6, 0(4) ; Store return address into callee frame
+86 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+87 : LDA 7, 61(0) ; Call remainder
+88 : LD 1, 3(5) ; Load callee result into R1
+89 : LDC 2, 5(0) ; Callee frame size
+90 : SUB 5, 5, 2 ; Pop back to caller
+91 : ST 1, 3(5) ; Store function result into frame return slot
+92 : LD 6, 0(5) ; Load return address
+93 : LDA 7, 0(6) ; Return to caller
+94 : LD 1, 2(5) ; Load parameter 'b' into R1
+95 : ST 1, 4(5) ; Spill left operand at depth 0
+96 : LDC 1, 0(0) ; Load integer-literal into R1
+97 : LD 2, 4(5) ; Restore left operand from depth 0
+98 : SUB 1, 2, 1 ; left - right for equality check
+99 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+100 : LDC 1, 0(0) ; false
+101 : LDA 7, 1(7) ; skip setting true
+102 : LDC 1, 1(0) ; true
+103 : JEQ 1, 106(0) ; If condition is false, jump to ELSE
+104 : LD 1, 1(5) ; Load parameter 'a' into R1
+105 : LDA 7, 133(0) ; Skip ELSE block
+106 : LD 1, 2(5) ; Load parameter 'b' into R1
+107 : LDA 4, 5(5) ; Recompute callee base from caller size
+108 : ST 1, 1(4) ; Store argument 0 in callee frame
+109 : LD 1, 1(5) ; Load parameter 'a' into R1
+110 : LDA 4, 5(5) ; Recompute callee base from caller size
+111 : ST 1, 1(4) ; Store argument 0 in callee frame
+112 : LD 1, 2(5) ; Load parameter 'b' into R1
 113 : LDA 4, 5(5) ; Recompute callee base from caller size
-114 : LDA 6, 118(0) ; Return address
-115 : ST 6, 0(4) ; Store return address into callee frame
-116 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-117 : LDA 7, 59(0) ; Call remainder
-118 : LD 1, 3(5) ; Load callee result into R1
-119 : LDC 2, 5(0) ; Callee frame size
-120 : SUB 5, 5, 2 ; Pop back to caller
-121 : LDA 4, 5(5) ; Recompute callee base from caller size
-122 : ST 1, 2(4) ; Store argument 1 in callee frame
+114 : ST 1, 2(4) ; Store argument 1 in callee frame
+115 : LDA 4, 5(5) ; Recompute callee base from caller size
+116 : LDA 6, 120(0) ; Return address
+117 : ST 6, 0(4) ; Store return address into callee frame
+118 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+119 : LDA 7, 61(0) ; Call remainder
+120 : LD 1, 3(5) ; Load callee result into R1
+121 : LDC 2, 5(0) ; Callee frame size
+122 : SUB 5, 5, 2 ; Pop back to caller
 123 : LDA 4, 5(5) ; Recompute callee base from caller size
-124 : LDA 6, 128(0) ; Return address
-125 : ST 6, 0(4) ; Store return address into callee frame
-126 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-127 : LDA 7, 92(0) ; Call gcd
-128 : LD 1, 3(5) ; Load callee result into R1
-129 : LDC 2, 5(0) ; Callee frame size
-130 : SUB 5, 5, 2 ; Pop back to caller
-131 : ST 1, 3(5) ; Store function result into frame return slot
-132 : LD 6, 0(5) ; Load return address
-133 : LDA 7, 0(6) ; Return to caller
-134 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
-135 : ST 1, 5(5) ; Spill left operand at depth 0
-136 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
-137 : LD 2, 5(5) ; Restore left operand from depth 0
-138 : DIV 1, 2, 1 ; R1 = left / right
-139 : LDA 4, 5(5) ; Recompute callee base from caller size
-140 : LDA 6, 144(0) ; Return address
-141 : ST 6, 0(4) ; Store return address in callee frame
-142 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-143 : LDA 7, 11(0) ; Call built-in print
-144 : LDC 2, 3(0) ; Callee frame size
-145 : SUB 5, 5, 2 ; Pop back to caller
-146 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
-147 : ST 1, 5(5) ; Spill left operand at depth 0
-148 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
-149 : LD 2, 5(5) ; Restore left operand from depth 0
-150 : DIV 1, 2, 1 ; R1 = left / right
-151 : LDA 4, 5(5) ; Recompute callee base from caller size
-152 : LDA 6, 156(0) ; Return address
-153 : ST 6, 0(4) ; Store return address in callee frame
-154 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-155 : LDA 7, 11(0) ; Call built-in print
-156 : LDC 2, 3(0) ; Callee frame size
-157 : SUB 5, 5, 2 ; Pop back to caller
-158 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
-159 : ST 1, 4(5) ; Store function result into frame return slot
-160 : LD 6, 0(5) ; Load return address
-161 : LDA 7, 0(6) ; Return to caller
-162 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
-163 : LDA 4, 4(5) ; Recompute callee base from caller size
-164 : ST 1, 1(4) ; Store argument 0 in callee frame
-165 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
-166 : LDA 4, 4(5) ; Recompute callee base from caller size
-167 : ST 1, 2(4) ; Store argument 1 in callee frame
-168 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
-169 : LDA 4, 4(5) ; Recompute callee base from caller size
-170 : ST 1, 1(4) ; Store argument 0 in callee frame
-171 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
-172 : LDA 4, 4(5) ; Recompute callee base from caller size
-173 : ST 1, 2(4) ; Store argument 1 in callee frame
+124 : ST 1, 2(4) ; Store argument 1 in callee frame
+125 : LDA 4, 5(5) ; Recompute callee base from caller size
+126 : LDA 6, 130(0) ; Return address
+127 : ST 6, 0(4) ; Store return address into callee frame
+128 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+129 : LDA 7, 94(0) ; Call gcd
+130 : LD 1, 3(5) ; Load callee result into R1
+131 : LDC 2, 5(0) ; Callee frame size
+132 : SUB 5, 5, 2 ; Pop back to caller
+133 : ST 1, 3(5) ; Store function result into frame return slot
+134 : LD 6, 0(5) ; Load return address
+135 : LDA 7, 0(6) ; Return to caller
+136 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
+137 : ST 1, 5(5) ; Spill left operand at depth 0
+138 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
+139 : LD 2, 5(5) ; Restore left operand from depth 0
+140 : DIV 1, 2, 1 ; R1 = left / right
+141 : LDA 4, 5(5) ; Recompute callee base from caller size
+142 : LDA 6, 146(0) ; Return address
+143 : ST 6, 0(4) ; Store return address in callee frame
+144 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+145 : LDA 7, 11(0) ; Call built-in print
+146 : LDC 2, 3(0) ; Callee frame size
+147 : SUB 5, 5, 2 ; Pop back to caller
+148 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
+149 : ST 1, 5(5) ; Spill left operand at depth 0
+150 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
+151 : LD 2, 5(5) ; Restore left operand from depth 0
+152 : DIV 1, 2, 1 ; R1 = left / right
+153 : LDA 4, 5(5) ; Recompute callee base from caller size
+154 : LDA 6, 158(0) ; Return address
+155 : ST 6, 0(4) ; Store return address in callee frame
+156 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+157 : LDA 7, 11(0) ; Call built-in print
+158 : LDC 2, 3(0) ; Callee frame size
+159 : SUB 5, 5, 2 ; Pop back to caller
+160 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
+161 : ST 1, 4(5) ; Store function result into frame return slot
+162 : LD 6, 0(5) ; Load return address
+163 : LDA 7, 0(6) ; Return to caller
+164 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
+165 : LDA 4, 4(5) ; Recompute callee base from caller size
+166 : ST 1, 1(4) ; Store argument 0 in callee frame
+167 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
+168 : LDA 4, 4(5) ; Recompute callee base from caller size
+169 : ST 1, 2(4) ; Store argument 1 in callee frame
+170 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
+171 : LDA 4, 4(5) ; Recompute callee base from caller size
+172 : ST 1, 1(4) ; Store argument 0 in callee frame
+173 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
 174 : LDA 4, 4(5) ; Recompute callee base from caller size
-175 : LDA 6, 179(0) ; Return address
-176 : ST 6, 0(4) ; Store return address into callee frame
-177 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-178 : LDA 7, 92(0) ; Call gcd
-179 : LD 1, 3(5) ; Load callee result into R1
-180 : LDC 2, 5(0) ; Callee frame size
-181 : SUB 5, 5, 2 ; Pop back to caller
-182 : LDA 4, 4(5) ; Recompute callee base from caller size
-183 : ST 1, 3(4) ; Store argument 2 in callee frame
+175 : ST 1, 2(4) ; Store argument 1 in callee frame
+176 : LDA 4, 4(5) ; Recompute callee base from caller size
+177 : LDA 6, 181(0) ; Return address
+178 : ST 6, 0(4) ; Store return address into callee frame
+179 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+180 : LDA 7, 94(0) ; Call gcd
+181 : LD 1, 3(5) ; Load callee result into R1
+182 : LDC 2, 5(0) ; Callee frame size
+183 : SUB 5, 5, 2 ; Pop back to caller
 184 : LDA 4, 4(5) ; Recompute callee base from caller size
-185 : LDA 6, 189(0) ; Return address
-186 : ST 6, 0(4) ; Store return address into callee frame
-187 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-188 : LDA 7, 134(0) ; Call displayAndPrint
-189 : LD 1, 4(5) ; Load callee result into R1
-190 : LDC 2, 5(0) ; Callee frame size
-191 : SUB 5, 5, 2 ; Pop back to caller
-192 : ST 1, 3(5) ; Store function result into frame return slot
-193 : LD 6, 0(5) ; Load return address
-194 : LDA 7, 0(6) ; Return to caller
+185 : ST 1, 3(4) ; Store argument 2 in callee frame
+186 : LDA 4, 4(5) ; Recompute callee base from caller size
+187 : LDA 6, 191(0) ; Return address
+188 : ST 6, 0(4) ; Store return address into callee frame
+189 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
+190 : LDA 7, 136(0) ; Call displayAndPrint
+191 : LD 1, 4(5) ; Load callee result into R1
+192 : LDC 2, 5(0) ; Callee frame size
+193 : SUB 5, 5, 2 ; Pop back to caller
+194 : ST 1, 3(5) ; Store function result into frame return slot
+195 : LD 6, 0(5) ; Load return address
+196 : LDA 7, 0(6) ; Return to caller

@@ -16,7 +16,9 @@
 15 : LD 2, 3(5) ; Restore left operand from depth 0
 16 : MUL 1, 2, 1 ; R1 = left * right
 17 : ST 1, 2(5) ; Store result into current frame's return slot
-18 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
-19 : LD 1, 2(5) ; Load main return value into R1
-20 : LD 6, 0(5) ; Load root return address from main frame
-21 : LDA 7, 0(6) ; Return from main to runtime epilogue
+18 : LDC 5, 2(0) ; Anchor R5 to main frame base (DMEM[N+1])
+19 : ST 1, 2(5) ; Store final result into MAIN frame's return slot
+20 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
+21 : LD 1, 2(5) ; Load main return value into R1
+22 : LD 6, 0(5) ; Load root return address from main frame
+23 : LDA 7, 0(6) ; Return from main to runtime epilogue

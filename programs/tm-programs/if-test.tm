@@ -46,7 +46,9 @@
 45 : LDA 7, 48(0) ; Skip ELSE block
 46 : LDC 1, 1(0) ; Load integer-literal into R1
 47 : ST 1, 2(5) ; Store result into current frame's return slot
-48 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
-49 : LD 1, 2(5) ; Load main return value into R1
-50 : LD 6, 0(5) ; Load root return address from main frame
-51 : LDA 7, 0(6) ; Return from main to runtime epilogue
+48 : LDC 5, 2(0) ; Anchor R5 to main frame base (DMEM[N+1])
+49 : ST 1, 2(5) ; Store final result into MAIN frame's return slot
+50 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
+51 : LD 1, 2(5) ; Load main return value into R1
+52 : LD 6, 0(5) ; Load root return address from main frame
+53 : LDA 7, 0(6) ; Return from main to runtime epilogue

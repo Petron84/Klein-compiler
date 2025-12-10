@@ -15,7 +15,9 @@
 14 : SUB 1, 0, 1 ; Negate value in R1
 15 : SUB 1, 0, 1 ; Negate value in R1
 16 : ST 1, 2(5) ; Store result into current frame's return slot
-17 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
-18 : LD 1, 2(5) ; Load main return value into R1
-19 : LD 6, 0(5) ; Load root return address from main frame
-20 : LDA 7, 0(6) ; Return from main to runtime epilogue
+17 : LDC 5, 2(0) ; Anchor R5 to main frame base (DMEM[N+1])
+18 : ST 1, 2(5) ; Store final result into MAIN frame's return slot
+19 : LDC 5, 2(0) ; Reset R5 to main frame base (DMEM[N+1])
+20 : LD 1, 2(5) ; Load main return value into R1
+21 : LD 6, 0(5) ; Load root return address from main frame
+22 : LDA 7, 0(6) ; Return from main to runtime epilogue

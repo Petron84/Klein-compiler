@@ -28,22 +28,24 @@
 27 : LDA 6, 31(0) ; Return address
 28 : ST 6, 0(4) ; Store return address into callee frame
 29 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
-30 : LDA 7, 41(0) ; Call sub
+30 : LDA 7, 43(0) ; Call sub
 31 : LD 1, 3(5) ; Load callee result into R1
 32 : LDC 2, 5(0) ; Callee frame size
 33 : SUB 5, 5, 2 ; Pop back to caller
 34 : LD 2, 4(5) ; Restore left operand from depth 0
 35 : SUB 1, 2, 1 ; R1 = left - right
 36 : ST 1, 3(5) ; Store result into current frame's return slot
-37 : LDC 5, 3(0) ; Reset R5 to main frame base (DMEM[N+1])
-38 : LD 1, 3(5) ; Load main return value into R1
-39 : LD 6, 0(5) ; Load root return address from main frame
-40 : LDA 7, 0(6) ; Return from main to runtime epilogue
-41 : LD 1, 1(5) ; Load parameter 'm' into R1
-42 : ST 1, 4(5) ; Spill left operand at depth 0
-43 : LD 1, 2(5) ; Load parameter 'n' into R1
-44 : LD 2, 4(5) ; Restore left operand from depth 0
-45 : SUB 1, 2, 1 ; R1 = left - right
-46 : ST 1, 3(5) ; Store function result into frame return slot
-47 : LD 6, 0(5) ; Load return address
-48 : LDA 7, 0(6) ; Return to caller
+37 : LDC 5, 3(0) ; Anchor R5 to main frame base (DMEM[N+1])
+38 : ST 1, 3(5) ; Store final result into MAIN frame's return slot
+39 : LDC 5, 3(0) ; Reset R5 to main frame base (DMEM[N+1])
+40 : LD 1, 3(5) ; Load main return value into R1
+41 : LD 6, 0(5) ; Load root return address from main frame
+42 : LDA 7, 0(6) ; Return from main to runtime epilogue
+43 : LD 1, 1(5) ; Load parameter 'm' into R1
+44 : ST 1, 4(5) ; Spill left operand at depth 0
+45 : LD 1, 2(5) ; Load parameter 'n' into R1
+46 : LD 2, 4(5) ; Restore left operand from depth 0
+47 : SUB 1, 2, 1 ; R1 = left - right
+48 : ST 1, 3(5) ; Store function result into frame return slot
+49 : LD 6, 0(5) ; Load return address
+50 : LDA 7, 0(6) ; Return to caller
