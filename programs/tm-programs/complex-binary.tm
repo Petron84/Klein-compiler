@@ -9,18 +9,18 @@
 8 : LD 6, 0(5) ; Load return address from current frame
 9 : LDA 7, 0(6) ; Jump back to caller
 10 : LDC 1, 2(0) ; Load integer-literal into R1
-11 : LDA 4, 4(5) ; Recompute callee base from caller size
+11 : LDA 4, 6(5) ; Compute callee base
 12 : ST 1, 1(4) ; Store argument 0 in callee frame
 13 : LDC 1, 2(0) ; Load integer-literal into R1
-14 : LDA 4, 4(5) ; Recompute callee base from caller size
+14 : LDA 4, 6(5) ; Compute callee base
 15 : ST 1, 2(4) ; Store argument 1 in callee frame
-16 : LDA 4, 4(5) ; Recompute callee base from caller size
+16 : LDA 4, 6(5) ; Recompute callee base from callee size
 17 : LDA 6, 21(0) ; Return address
 18 : ST 6, 0(4) ; Store return address into callee frame
 19 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 20 : LDA 7, 71(0) ; Call MOD
 21 : LD 1, 3(5) ; Load callee result into R1
-22 : LDC 2, 4(0) ; Caller frame size
+22 : LDC 2, 6(0) ; Caller frame size
 23 : SUB 5, 5, 2 ; Pop back to caller
 24 : ST 1, 2(5) ; Spill left operand at depth 0
 25 : LDC 1, 3(0) ; Load integer-literal into R1
@@ -36,18 +36,18 @@
 35 : LDC 1, 1(0) ; true
 36 : ST 1, 2(5) ; Spill left operand at depth 0
 37 : LDC 1, 5(0) ; Load integer-literal into R1
-38 : LDA 4, 4(5) ; Recompute callee base from caller size
+38 : LDA 4, 6(5) ; Compute callee base
 39 : ST 1, 1(4) ; Store argument 0 in callee frame
 40 : LDC 1, 3(0) ; Load integer-literal into R1
-41 : LDA 4, 4(5) ; Recompute callee base from caller size
+41 : LDA 4, 6(5) ; Compute callee base
 42 : ST 1, 2(4) ; Store argument 1 in callee frame
-43 : LDA 4, 4(5) ; Recompute callee base from caller size
+43 : LDA 4, 6(5) ; Recompute callee base from callee size
 44 : LDA 6, 48(0) ; Return address
 45 : ST 6, 0(4) ; Store return address into callee frame
 46 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
 47 : LDA 7, 71(0) ; Call MOD
 48 : LD 1, 3(5) ; Load callee result into R1
-49 : LDC 2, 4(0) ; Caller frame size
+49 : LDC 2, 6(0) ; Caller frame size
 50 : SUB 5, 5, 2 ; Pop back to caller
 51 : ST 1, 3(5) ; Spill left operand at depth 1
 52 : LDC 1, 2(0) ; Load integer-literal into R1

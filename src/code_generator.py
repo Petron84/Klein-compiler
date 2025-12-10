@@ -267,12 +267,12 @@ class Generator:
                         self.instruction_rules(arg, curr_function, callee=True)
 
                         # Recompute callee base AFTER evaluation, BEFORE using (4)
-                        self.write(f"LDA 4, {caller_size}(5)", "Recompute callee base from caller size")
+                        self.write(f"LDA 4, {callee_size}(5)", "Compute callee base")
                         self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee frame")
 
                     # 2) Install return address — recompute base again to be safe
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {caller_size}(5)", "Recompute callee base from caller size")
+                    self.write(f"LDA 4, {callee_size}(5)", "Recompute callee base from callee size")
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
                     self.write("ST 6, 0(4)", "Store return address into callee frame")
 
@@ -284,7 +284,7 @@ class Generator:
                     self.placeholders[temp_label] = self.line_counter
                     return_slot = callee_params + 1
                     self.write(f"LD 1, {return_slot}(5)", "Load callee result into R1")
-                    self.write(f"LDC 2, {caller_size}(0)", "Caller frame size")
+                    self.write(f"LDC 2, {callee_size}(0)", "Caller frame size")
                     self.write("SUB 5, 5, 2", "Pop back to caller")
 
                     # 5) If producing the caller’s own value, store it

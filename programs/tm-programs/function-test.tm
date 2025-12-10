@@ -19,12 +19,12 @@
 18 : ADD 1, 2, 1 ; R1 = left + right
 19 : ST 1, 4(5) ; Spill left operand at depth 0
 20 : LD 1, 2(5) ; Load parameter 'b' into R1
-21 : LDA 4, 5(5) ; Recompute callee base from caller size
+21 : LDA 4, 5(5) ; Compute callee base
 22 : ST 1, 1(4) ; Store argument 0 in callee frame
 23 : LD 1, 1(5) ; Load parameter 'a' into R1
-24 : LDA 4, 5(5) ; Recompute callee base from caller size
+24 : LDA 4, 5(5) ; Compute callee base
 25 : ST 1, 2(4) ; Store argument 1 in callee frame
-26 : LDA 4, 5(5) ; Recompute callee base from caller size
+26 : LDA 4, 5(5) ; Recompute callee base from callee size
 27 : LDA 6, 31(0) ; Return address
 28 : ST 6, 0(4) ; Store return address into callee frame
 29 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
