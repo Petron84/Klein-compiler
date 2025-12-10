@@ -9,10 +9,11 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : LDC  2, 1(0) ;  Load 1 into R2
-13 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
-14 : ST 1, 2(5) ;  Store result into current frame's return slot
-15 : LD   1, 2(5) ;  Load return value into register 1
-16 : LD  6, 0(5) ;  Load return address for main function into register 6
-17 : LDA  7, 0(6) ;  Jump to return address of main function
+11 : LDC  4, 1(0) ;  Top of caller frame
+12 : LD   1, 1(5) ;  Load parameter 'n' into R1
+13 : LDC  2, 1(0) ;  Load 1 into R2
+14 : SUB  1, 2, 1 ;  Logical NOT: 1 - R1
+15 : ST 1, 2(5) ;  Store result into current frame's return slot
+16 : LD   1, 2(5) ;  Load return value into register 1
+17 : LD  6, 0(5) ;  Load return address for main function into register 6
+18 : LDA  7, 0(6) ;  Jump to return address of main function

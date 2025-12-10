@@ -9,13 +9,14 @@
 8 : OUT  1, 0, 0 ;  Hardcoded print function
 9 : LD   6, 0(5) ;  Load return addess from stack frame.
 10 : LDA  7, 0(6) ;  Jump to return address.
-11 : LD   1, 1(5) ;  Load parameter 'n' into R1
-12 : ST   1, 3(4) ;  Store right operand result into return value slot
-13 : LD   1, 1(5) ;  Load parameter 'n' into R1
-14 : ADD  2, 1, 0 ;  Move left operand to register 2
-15 : LD   1, 3(4) ;  Return right operand back into register 1
-16 : MUL  1, 2, 1 ;  R1 = left * right
-17 : ST 1, 2(5) ;  Store result into current frame's return slot
-18 : LD   1, 2(5) ;  Load return value into register 1
-19 : LD  6, 0(5) ;  Load return address for main function into register 6
-20 : LDA  7, 0(6) ;  Jump to return address of main function
+11 : LDC  4, 1(0) ;  Top of caller frame
+12 : LD   1, 1(5) ;  Load parameter 'n' into R1
+13 : ST   1, 3(4) ;  Store right operand result into return value slot
+14 : LD   1, 1(5) ;  Load parameter 'n' into R1
+15 : ADD  2, 1, 0 ;  Move left operand to register 2
+16 : LD   1, 3(4) ;  Return right operand back into register 1
+17 : MUL  1, 2, 1 ;  R1 = left * right
+18 : ST 1, 2(5) ;  Store result into current frame's return slot
+19 : LD   1, 2(5) ;  Load return value into register 1
+20 : LD  6, 0(5) ;  Load return address for main function into register 6
+21 : LDA  7, 0(6) ;  Jump to return address of main function

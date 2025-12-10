@@ -116,6 +116,7 @@ class Generator:
         self.write("------MAIN-------",header=True)
         self.placeholders['@main'] = self.line_counter
 
+        self.write("LDC  4, 1(0)"," Top of caller frame")
         for exp in main_body:
             self.instruction_rules(exp,"main")
 

@@ -7,16 +7,17 @@
 6 : OUT  1, 0, 0 ;  Hardcoded print function
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
-9 : LDC  1, 1(0) ;  Load integer-literal value into register 1
-10 : LDA 4, 3(5) ; Base of callee frame
-11 : LDA 6, 15(0) ; Return address
-12 : ST 6, 0(4) ; Store return addr in callee frame
-13 : ADD 5, 4, 0 ; Push new frame
-14 : LDA 7, 6(0) ; Call print
-15 : LDC 2, 3(0) ; Caller frame size
-16 : SUB 5, 5, 2 ; Pop frame
-17 : LDC  1, 1(0) ;  Load integer-literal value into register 1
-18 : ST 1, 1(5) ;  Store result into current frame's return slot
-19 : LD   1, 1(5) ;  Load return value into register 1
-20 : LD  6, 0(5) ;  Load return address for main function into register 6
-21 : LDA  7, 0(6) ;  Jump to return address of main function
+9 : LDC  4, 1(0) ;  Top of caller frame
+10 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+11 : LDA 4, 3(5) ; Base of callee frame
+12 : LDA 6, 16(0) ; Return address
+13 : ST 6, 0(4) ; Store return addr in callee frame
+14 : ADD 5, 4, 0 ; Push new frame
+15 : LDA 7, 6(0) ; Call print
+16 : LDC 2, 3(0) ; Caller frame size
+17 : SUB 5, 5, 2 ; Pop frame
+18 : LDC  1, 1(0) ;  Load integer-literal value into register 1
+19 : ST 1, 1(5) ;  Store result into current frame's return slot
+20 : LD   1, 1(5) ;  Load return value into register 1
+21 : LD  6, 0(5) ;  Load return address for main function into register 6
+22 : LDA  7, 0(6) ;  Jump to return address of main function

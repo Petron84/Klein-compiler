@@ -7,8 +7,9 @@
 6 : OUT  1, 0, 0 ;  Hardcoded print function
 7 : LD   6, 0(5) ;  Load return addess from stack frame.
 8 : LDA  7, 0(6) ;  Jump to return address.
-9 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
-10 : ST 1, 1(5) ;  Store result into current frame's return slot
-11 : LD   1, 1(5) ;  Load return value into register 1
-12 : LD  6, 0(5) ;  Load return address for main function into register 6
-13 : LDA  7, 0(6) ;  Jump to return address of main function
+9 : LDC  4, 1(0) ;  Top of caller frame
+10 : LDC  1, 1(0) ;  Load boolean-literal value into register 1
+11 : ST 1, 1(5) ;  Store result into current frame's return slot
+12 : LD   1, 1(5) ;  Load return value into register 1
+13 : LD  6, 0(5) ;  Load return address for main function into register 6
+14 : LDA  7, 0(6) ;  Jump to return address of main function
