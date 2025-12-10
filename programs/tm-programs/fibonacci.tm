@@ -1,66 +1,92 @@
-0 : LDC 5, 2(0) ;  SP = main frame base
-1 : ADD 4, 5, 0 ;  FP = SP (enter main)
-2 : LD 2, 1(0) ;  Load CLI arg 1 -> R2
-3 : ST 2, 1(5) ;  Store arg 1 at main frame
-4 : LDA 6, 2(7) ;  RA = next after branch
-5 : ST 6, 0(5) ;  Store RA in main frame
-6 : LDA 7, 12(0) ;  Jump to main
-7 : OUT 1, 0, 0 ;  Print R1
-8 : HALT 0, 0, 0 ;  Halt
-9 : OUT 1, 0, 0 ;  print(R1)
-10 : LD 6, 0(4) ;  Load RA via FP
-11 : LDA 7, 0(6) ;  Return
-12 : ADD 4, 5, 0 ;  FP = SP at 12 entry
-13 : LDC 1, 1(0) ;  literal -> R1
-14 : ADD 3, 1, 0 ;  stash right in R3
-15 : LD 1, 1(4) ;  load 'elementWanted' via FP
-16 : ADD 2, 1, 0 ;  stash left in R2
-17 : ADD 1, 3, 0 ;  restore right to R1
-18 : SUB 1, 2, 1 ;  left - right
-19 : JLT 1, 2(7) ;  if < 0 then true
-20 : LDC 1, 0(0) ;  false
-21 : LDA 7, 1(7) ;  skip
-22 : LDC 1, 1(0) ;  true
-23 : JEQ 1, 27(0) ;  if false -> ELSE
-24 : LDC 1, 0(0) ;  literal -> R1
-25 : ST 1, 2(4) ;  store into return slot (via FP)
-26 : LDA 7, 37(0) ;  skip ELSE
-27 : LDA 6, 33(0) ;  Prepare RA label
-28 : LDA 2, 6(5) ;  callee base size -> R2
-29 : ADD 5, 2, 0 ;  push callee frame (SP = callee)
-30 : ST 6, 0(5) ;  store RA in callee frame
-31 : ST 2, 1(5) ;  TEMP overwrite: fix below
-32 : LDA 7, 40(0) ;  Call addNext
-33 : LD 1, 5(5) ;  load callee result
-34 : LDC 2, 6(0) ;  size to pop
-35 : SUB 5, 5, 2 ;  pop callee frame
-36 : ST 1, 2(4) ;  store result into caller frame (via FP)
-37 : LD 1, 2(4) ;  R1 = return value (via FP)
-38 : LD 6, 0(4) ;  RA from FP
-39 : LDA 7, 0(6) ;  return
-40 : ADD 4, 5, 0 ;  FP = SP at 40 entry
-41 : LD 1, 1(4) ;  load 'currentElement' via FP
-42 : ADD 3, 1, 0 ;  stash right in R3
-43 : LD 1, 2(4) ;  load 'elementWanted' via FP
-44 : ADD 2, 1, 0 ;  stash left in R2
-45 : ADD 1, 3, 0 ;  restore right to R1
-46 : SUB 1, 2, 1 ;  left - right
-47 : JEQ 1, 2(7) ;  if 0 then true
-48 : LDC 1, 0(0) ;  false
-49 : LDA 7, 1(7) ;  skip
-50 : LDC 1, 1(0) ;  true
-51 : JEQ 1, 54(0) ;  if false -> ELSE
-52 : LD 1, 4(4) ;  load 'currentSum' via FP
-53 : LDA 7, 63(0) ;  skip ELSE
-54 : LDA 6, 60(0) ;  Prepare RA label
-55 : LDA 2, 6(5) ;  callee base size -> R2
-56 : ADD 5, 2, 0 ;  push callee frame (SP = callee)
-57 : ST 6, 0(5) ;  store RA in callee frame
-58 : ST 2, 1(5) ;  TEMP overwrite: fix below
-59 : LDA 7, 40(0) ;  Call addNext
-60 : LD 1, 5(5) ;  load callee result
-61 : LDC 2, 6(0) ;  size to pop
-62 : SUB 5, 5, 2 ;  pop callee frame
-63 : ST 1, 5(4) ;  store result in return slot (via FP)
-64 : LD 6, 0(4) ;  load RA (via FP)
-65 : LDA 7, 0(6) ;  return to caller
+0 : LDC 5, 2(0) ; Set DMEM pointer (R5) to main stack frame base
+1 : ADD 4, 5, 0 ; Set top of caller frame (R4 := R5)
+2 : LD 2, 1(0) ; Load CLI arg 1 into R2
+3 : ST 2, 1(5) ; Store arg 1 into main frame parameter slot
+4 : LDA 6, 2(7) ; Calculate return address (PC + 2)
+5 : ST 6, 0(5) ; Store return address in main frame
+6 : LDA 7, 12(0) ; Branch to main function
+7 : OUT 1, 0, 0 ; Return/print result from main in R1
+8 : HALT 0, 0, 0 ; Terminate program
+9 : OUT 1, 0, 0 ; Hardcoded print: output R1
+10 : LD 6, 0(5) ; Load return address from current frame
+11 : LDA 7, 0(6) ; Jump back to caller
+12 : LD 1, 1(5) ; Load parameter 'elementWanted' into R1
+13 : ST 1, 3(5) ; Spill left operand at depth 0
+14 : LDC 1, 1(0) ; Load integer-literal into R1
+15 : LD 2, 3(5) ; Restore left operand from depth 0
+16 : SUB 1, 2, 1 ; left - right for less-than check
+17 : JLT 1, 2(7) ; If R1 < 0, jump to true
+18 : LDC 1, 0(0) ; false
+19 : LDA 7, 1(7) ; skip setting true
+20 : LDC 1, 1(0) ; true
+21 : JEQ 1, 25(0) ; If condition is false, jump to ELSE
+22 : LDC 1, 0(0) ; Load integer-literal into R1
+23 : ST 1, 2(5) ; Store result into current frame's return slot
+24 : LDA 7, 46(0) ; Skip ELSE block
+25 : LDC 1, 1(0) ; Load integer-literal into R1
+26 : LDA 4, 7(5) ; Recompute callee base from callee size
+27 : ST 1, 1(4) ; Store argument 0 in callee
+28 : LD 1, 1(5) ; Load parameter 'elementWanted' into R1
+29 : LDA 4, 7(5) ; Recompute callee base from callee size
+30 : ST 1, 2(4) ; Store argument 1 in callee
+31 : LDC 1, 0(0) ; Load integer-literal into R1
+32 : LDA 4, 7(5) ; Recompute callee base from callee size
+33 : ST 1, 3(4) ; Store argument 2 in callee
+34 : LDC 1, 1(0) ; Load integer-literal into R1
+35 : LDA 4, 7(5) ; Recompute callee base from callee size
+36 : ST 1, 4(4) ; Store argument 3 in callee
+37 : LDA 4, 7(5) ; Recompute callee base from callee size
+38 : LDA 6, 42(0) ; Return address
+39 : ST 6, 0(4) ; Store return in callee frame
+40 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+41 : LDA 7, 49(0) ; Call addNext
+42 : LD 1, 5(5) ; Load callee result into R1
+43 : LDC 2, 7(0) ; Callee frame size
+44 : SUB 5, 5, 2 ; Pop callee frame
+45 : ST 1, 2(5) ; Store result into caller’s frame
+46 : LD 1, 2(5) ; Load main return value into R1
+47 : LD 6, 0(5) ; Load main return address
+48 : LDA 7, 0(6) ; Return from main
+49 : LD 1, 2(5) ; Load parameter 'elementWanted' into R1
+50 : ST 1, 6(5) ; Spill left operand at depth 0
+51 : LD 1, 1(5) ; Load parameter 'currentElement' into R1
+52 : LD 2, 6(5) ; Restore left operand from depth 0
+53 : SUB 1, 2, 1 ; left - right for equality check
+54 : JEQ 1, 2(7) ; If R1 == 0, jump to true
+55 : LDC 1, 0(0) ; false
+56 : LDA 7, 1(7) ; skip setting true
+57 : LDC 1, 1(0) ; true
+58 : JEQ 1, 61(0) ; If condition is false, jump to ELSE
+59 : LD 1, 4(5) ; Load parameter 'currentSum' into R1
+60 : LDA 7, 89(0) ; Skip ELSE block
+61 : LD 1, 1(5) ; Load parameter 'currentElement' into R1
+62 : ST 1, 6(5) ; Spill left operand at depth 0
+63 : LDC 1, 1(0) ; Load integer-literal into R1
+64 : LD 2, 6(5) ; Restore left operand from depth 0
+65 : ADD 1, 2, 1 ; R1 = left + right
+66 : LDA 4, 7(5) ; Recompute callee base from callee size
+67 : ST 1, 1(4) ; Store argument 0 in callee
+68 : LD 1, 2(5) ; Load parameter 'elementWanted' into R1
+69 : LDA 4, 7(5) ; Recompute callee base from callee size
+70 : ST 1, 2(4) ; Store argument 1 in callee
+71 : LD 1, 4(5) ; Load parameter 'currentSum' into R1
+72 : LDA 4, 7(5) ; Recompute callee base from callee size
+73 : ST 1, 3(4) ; Store argument 2 in callee
+74 : LD 1, 3(5) ; Load parameter 'previousSum' into R1
+75 : ST 1, 6(5) ; Spill left operand at depth 0
+76 : LD 1, 4(5) ; Load parameter 'currentSum' into R1
+77 : LD 2, 6(5) ; Restore left operand from depth 0
+78 : ADD 1, 2, 1 ; R1 = left + right
+79 : LDA 4, 7(5) ; Recompute callee base from callee size
+80 : ST 1, 4(4) ; Store argument 3 in callee
+81 : LDA 4, 7(5) ; Recompute callee base from callee size
+82 : LDA 6, 86(0) ; Return address
+83 : ST 6, 0(4) ; Store return in callee frame
+84 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+85 : LDA 7, 49(0) ; Call addNext
+86 : LD 1, 5(5) ; Load callee result into R1
+87 : LDC 2, 7(0) ; Callee frame size
+88 : SUB 5, 5, 2 ; Pop callee frame
+89 : ST 1, 5(5) ; Store function result into frame return slot
+90 : LD 6, 0(5) ; Load return address
+91 : LDA 7, 0(6) ; Return to caller
