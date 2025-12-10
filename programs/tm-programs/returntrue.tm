@@ -1,15 +1,15 @@
-0 : LDC 5, 1(0) ;  Set DMEM pointer to main stack frame
-1 : ADD 4, 5, 0 ;  Set top of caller frame (scratch)
-2 : LDA 6, 2(7) ;  Calculate return address (two lines ahead)
-3 : ST 6, 0(5) ;  Store return address in main stack frame
-4 : LDA 7, 10(0) ;  Load address of main IMEM block - branch to function
-5 : OUT 1, 0, 0 ;  Return result
-6 : HALT 0, 0, 0 ;  Terminate program execution
-7 : OUT 1, 0, 0 ;  Hardcoded print function
-8 : LD 6, 0(5) ;  Load return address from stack frame
-9 : LDA 7, 0(6) ;  Jump to return address
-10 : LDC 1, 1(0) ;  Load boolean-literal value into R1
-11 : ST 1, 1(5) ;  Store result into current frame's return slot
-12 : LD 1, 1(5) ;  Load return value into register 1
-13 : LD 6, 0(5) ;  Load return address for main function into register 6
-14 : LDA 7, 0(6) ;  Jump to runtime continuation
+0 : LDC 5, 1(0) ; Set DMEM pointer (R5) to main stack frame base
+1 : ADD 4, 5, 0 ; Set top of caller frame (R4 := R5)
+2 : LDA 6, 2(7) ; Calculate return address (PC + 2)
+3 : ST 6, 0(5) ; Store return address in main frame
+4 : LDA 7, 10(0) ; Branch to main function
+5 : OUT 1, 0, 0 ; Return/print result from main in R1
+6 : HALT 0, 0, 0 ; Terminate program
+7 : OUT 1, 0, 0 ; Hardcoded print: output R1
+8 : LD 6, 0(5) ; Load return address from current frame
+9 : LDA 7, 0(6) ; Jump back to caller
+10 : LDC 1, 1(0) ; Load boolean-literal into R1
+11 : ST 1, 1(5) ; Store result into current frame's return slot
+12 : LD 1, 1(5) ; Load main return value into R1
+13 : LD 6, 0(5) ; Load main return address
+14 : LDA 7, 0(6) ; Return from main
