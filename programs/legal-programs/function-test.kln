@@ -1,5 +1,8 @@
 function main(a:integer, b:integer): integer
-	a + b - sub(b,a)
+	if (0 < sub(b,a)) then
+		a + b - sub(b,(a-b))
+	else
+		b - a + sub(b,(a-b))
 
 function sub(m: integer, n:integer): integer
 	m - n
