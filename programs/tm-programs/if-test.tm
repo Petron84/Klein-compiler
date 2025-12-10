@@ -1,55 +1,55 @@
 0 : LDC 5, 2(0) ;  Set DMEM pointer to main stack frame
-1 : ADD 4, 5, 0 ;  Set top of caller frame
-2 : LD 2, 1(0) ;  Load CLI arg 1 into register
-3 : ST 2, 1(5) ;  Store the argument into stack frame
+1 : ADD 4, 5, 0 ;  Mirror caller frame top (optional)
+2 : LD 2, 1(0) ;  Load CLI arg 1 into R2
+3 : ST 2, 1(5) ;  Store arg 1 into main frame
 4 : LDA 6, 2(7) ;  Calculate return address
-5 : ST 6, 0(5) ;  Store return address in main stack frame
-6 : LDA 7, 12(0) ;  Load address of main IMEM block - branch to function
-7 : OUT 1, 0, 0 ;  Return result
-8 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-9 : OUT 1, 0, 0 ;  Hardcoded print function
-10 : LD 6, 0(5) ;  Load return addess from stack frame.
-11 : LDA 7, 0(6) ;  Jump to return address.
-12 : LDC 1, 10(0) ;  Load integer-literal value into register 1
-13 : ADD 3, 1, 0 ;  Stash right operand in R3
-14 : LD 1, 1(5) ;  Load parameter 'n' into R1
-15 : ADD 2, 1, 0 ;  Move left operand to register 2
-16 : ADD 1, 3, 0 ;  Restore right operand from R3
-17 : SUB 1, 2, 1 ;  left - right for less-than check
-18 : JLT 1, 2(7) ;  If R1 < 0, jump to true
+5 : ST 6, 0(5) ;  Store return address in main frame
+6 : LDA 7, 12(0) ;  Branch to main
+7 : OUT 1, 0, 0 ;  Print main's result
+8 : HALT 0, 0, 0 ;  Terminate program
+9 : OUT 1, 0, 0 ;  print(R1)
+10 : LD 6, 0(5) ;  Load return address
+11 : LDA 7, 0(6) ;  Return
+12 : LDC 1, 10(0) ;  Load integer literal into R1
+13 : ADD 3, 1, 0 ;  Stash right in R3
+14 : LD 1, 1(5) ;  Load parameter 'n'
+15 : ADD 2, 1, 0 ;  Move left to R2
+16 : ADD 1, 3, 0 ;  Restore right to R1
+17 : SUB 1, 2, 1 ;  left - right
+18 : JLT 1, 2(7) ;  if < 0 then true
 19 : LDC 1, 0(0) ;  false
 20 : LDA 7, 1(7) ;  skip setting true
 21 : LDC 1, 1(0) ;  true
-22 : JEQ 1, 50(0) ;  If condition is false, jump to ELSE
-23 : LDC 1, 5(0) ;  Load integer-literal value into register 1
-24 : ADD 3, 1, 0 ;  Stash right operand in R3
-25 : LD 1, 1(5) ;  Load parameter 'n' into R1
-26 : ADD 2, 1, 0 ;  Move left operand to register 2
-27 : ADD 1, 3, 0 ;  Restore right operand from R3
-28 : SUB 1, 2, 1 ;  left - right for less-than check
-29 : JLT 1, 2(7) ;  If R1 < 0, jump to true
+22 : JEQ 1, 50(0) ;  If false, jump to ELSE
+23 : LDC 1, 5(0) ;  Load integer literal into R1
+24 : ADD 3, 1, 0 ;  Stash right in R3
+25 : LD 1, 1(5) ;  Load parameter 'n'
+26 : ADD 2, 1, 0 ;  Move left to R2
+27 : ADD 1, 3, 0 ;  Restore right to R1
+28 : SUB 1, 2, 1 ;  left - right
+29 : JLT 1, 2(7) ;  if < 0 then true
 30 : LDC 1, 0(0) ;  false
 31 : LDA 7, 1(7) ;  skip setting true
 32 : LDC 1, 1(0) ;  true
-33 : JEQ 1, 42(0) ;  If condition is false, jump to ELSE
-34 : LDC 1, 2(0) ;  Load integer-literal value into register 1
-35 : ADD 3, 1, 0 ;  Stash right operand in R3
-36 : LD 1, 1(5) ;  Load parameter 'n' into R1
-37 : ADD 2, 1, 0 ;  Move left operand to register 2
-38 : ADD 1, 3, 0 ;  Restore right operand from R3
+33 : JEQ 1, 42(0) ;  If false, jump to ELSE
+34 : LDC 1, 2(0) ;  Load integer literal into R1
+35 : ADD 3, 1, 0 ;  Stash right in R3
+36 : LD 1, 1(5) ;  Load parameter 'n'
+37 : ADD 2, 1, 0 ;  Move left to R2
+38 : ADD 1, 3, 0 ;  Restore right to R1
 39 : MUL 1, 2, 1 ;  R1 = left * right
-40 : ST 1, 2(5) ;  Store result into current frame's return slot
-41 : LDA 7, 49(0) ;  Skip ELSE block
-42 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-43 : ADD 3, 1, 0 ;  Stash right operand in R3
-44 : LD 1, 1(5) ;  Load parameter 'n' into R1
-45 : ADD 2, 1, 0 ;  Move left operand to register 2
-46 : ADD 1, 3, 0 ;  Restore right operand from R3
+40 : ST 1, 2(5) ;  Store into current frame's return slot
+41 : LDA 7, 49(0) ;  Skip ELSE
+42 : LDC 1, 1(0) ;  Load integer literal into R1
+43 : ADD 3, 1, 0 ;  Stash right in R3
+44 : LD 1, 1(5) ;  Load parameter 'n'
+45 : ADD 2, 1, 0 ;  Move left to R2
+46 : ADD 1, 3, 0 ;  Restore right to R1
 47 : SUB 1, 2, 1 ;  R1 = left - right
-48 : ST 1, 2(5) ;  Store result into current frame's return slot
-49 : LDA 7, 52(0) ;  Skip ELSE block
-50 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-51 : ST 1, 2(5) ;  Store result into current frame's return slot
-52 : LD 1, 2(5) ;  Load return value into register 1
-53 : LD 6, 0(5) ;  Load return address for main function into register 6
-54 : LDA 7, 0(6) ;  Jump to return address of main function
+48 : ST 1, 2(5) ;  Store into current frame's return slot
+49 : LDA 7, 52(0) ;  Skip ELSE
+50 : LDC 1, 1(0) ;  Load integer literal into R1
+51 : ST 1, 2(5) ;  Store into current frame's return slot
+52 : LD 1, 2(5) ;  Load main return value
+53 : LD 6, 0(5) ;  Load return address
+54 : LDA 7, 0(6) ;  Return from main

@@ -1,647 +1,761 @@
 0 : LDC 5, 4(0) ;  Set DMEM pointer to main stack frame
-1 : ADD 4, 5, 0 ;  Set top of caller frame
-2 : LD 2, 1(0) ;  Load CLI arg 1 into register
-3 : ST 2, 1(5) ;  Store the argument into stack frame
-4 : LD 2, 2(0) ;  Load CLI arg 2 into register
-5 : ST 2, 2(5) ;  Store the argument into stack frame
-6 : LD 2, 3(0) ;  Load CLI arg 3 into register
-7 : ST 2, 3(5) ;  Store the argument into stack frame
+1 : ADD 4, 5, 0 ;  Mirror caller frame top (optional)
+2 : LD 2, 1(0) ;  Load CLI arg 1 into R2
+3 : ST 2, 1(5) ;  Store arg 1 into main frame
+4 : LD 2, 2(0) ;  Load CLI arg 2 into R2
+5 : ST 2, 2(5) ;  Store arg 2 into main frame
+6 : LD 2, 3(0) ;  Load CLI arg 3 into R2
+7 : ST 2, 3(5) ;  Store arg 3 into main frame
 8 : LDA 6, 2(7) ;  Calculate return address
-9 : ST 6, 0(5) ;  Store return address in main stack frame
-10 : LDA 7, 16(0) ;  Load address of main IMEM block - branch to function
-11 : OUT 1, 0, 0 ;  Return result
-12 : HALT 0, 0, 0 ;  Terminate program execution if no main function found.
-13 : OUT 1, 0, 0 ;  Hardcoded print function
-14 : LD 6, 0(5) ;  Load return addess from stack frame.
-15 : LDA 7, 0(6) ;  Jump to return address.
-16 : LDA 3, 5(5) ; Base of callee frame (stable)
-17 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-18 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-19 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-20 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-21 : LD 1, 3(5) ;  Load parameter 'N' into R1
-22 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-23 : LDA 6, 27(0) ; Return address
-24 : ST 6, 0(3) ; Store return in callee frame (via R3)
-25 : ADD 5, 3, 0 ; Push callee frame
-26 : LDA 7, 534(0) ; Call fareyNum
-27 : LD 1, 4(5) ;  Load function result
-28 : LDC 2, 5(0) ;  Caller frame size
-29 : SUB 5, 5, 2 ;  Pop back to caller
-30 : LDA 3, 3(5) ; Base of callee frame (stable)
-31 : LDA 6, 35(0) ; Return address
-32 : ST 6, 0(3) ; Store return addr in callee frame
-33 : ADD 5, 3, 0 ; Push new frame
-34 : LDA 7, 13(0) ; Call print
-35 : LDC 2, 3(0) ; Caller frame size
-36 : SUB 5, 5, 2 ; Pop frame
-37 : LDA 3, 5(5) ; Base of callee frame (stable)
-38 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-39 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-40 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-41 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-42 : LD 1, 3(5) ;  Load parameter 'N' into R1
-43 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-44 : LDA 6, 48(0) ; Return address
-45 : ST 6, 0(3) ; Store return in callee frame (via R3)
-46 : ADD 5, 3, 0 ; Push callee frame
-47 : LDA 7, 421(0) ; Call fareyDen
-48 : LD 1, 4(5) ;  Load function result
-49 : LDC 2, 5(0) ;  Caller frame size
-50 : SUB 5, 5, 2 ;  Pop back to caller
-51 : ST 1, 4(5) ; Store result into caller’s frame
-52 : LD 1, 4(5) ;  Load return value into register 1
-53 : LD 6, 0(5) ;  Load return address for main function into register 6
-54 : LDA 7, 0(6) ;  Jump to return address of main function
-55 : LD 1, 2(5) ;  Load parameter 'y' into R1
-56 : ADD 3, 1, 0 ;  Stash right operand in R3
-57 : LD 1, 1(5) ;  Load parameter 'x' into R1
-58 : ADD 2, 1, 0 ;  Move left operand to register 2
-59 : ADD 1, 3, 0 ;  Restore right operand from R3
-60 : SUB 1, 2, 1 ;  left - right for less-than check
-61 : JLT 1, 2(7) ;  If R1 < 0, jump to true
-62 : LDC 1, 0(0) ;  false
-63 : LDA 7, 1(7) ;  skip setting true
-64 : LDC 1, 1(0) ;  true
-65 : ADD 2, 1, 0 ;  Move left operand to register 2
-66 : LD 1, 2(5) ;  Load parameter 'y' into R1
-67 : ADD 3, 1, 0 ;  Stash right operand in R3
-68 : LD 1, 1(5) ;  Load parameter 'x' into R1
-69 : ADD 2, 1, 0 ;  Move left operand to register 2
-70 : ADD 1, 3, 0 ;  Restore right operand from R3
-71 : SUB 1, 2, 1 ;  left - right for equality check
-72 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-73 : LDC 1, 0(0) ;  false
-74 : LDA 7, 1(7) ;  skip setting true
-75 : LDC 1, 1(0) ;  true
-76 : ADD 1, 2, 1 ;  R1 = left OR right
-77 : LDC 2, 1(0) ;  Load 1 into R2
-78 : SUB 1, 2, 1 ;  Logical NOT: 1 - R1
-79 : ST 1, 3(5) ;  Store function result into stack frame
-80 : LD 6, 0(5) ;  Load return address
-81 : LDA 7, 0(6) ;  Return to caller
-82 : LDA 3, 4(5) ; Base of callee frame (stable)
-83 : LD 1, 4(5) ;  Load parameter 'yd' into R1
-84 : ADD 3, 1, 0 ;  Stash right operand in R3
-85 : LD 1, 1(5) ;  Load parameter 'x' into R1
-86 : ADD 2, 1, 0 ;  Move left operand to register 2
-87 : ADD 1, 3, 0 ;  Restore right operand from R3
-88 : MUL 1, 2, 1 ;  R1 = left * right
-89 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-90 : LD 1, 2(5) ;  Load parameter 'xd' into R1
-91 : ADD 3, 1, 0 ;  Stash right operand in R3
-92 : LD 1, 3(5) ;  Load parameter 'y' into R1
-93 : ADD 2, 1, 0 ;  Move left operand to register 2
-94 : ADD 1, 3, 0 ;  Restore right operand from R3
-95 : MUL 1, 2, 1 ;  R1 = left * right
-96 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-97 : LDA 6, 101(0) ; Return address
-98 : ST 6, 0(3) ; Store return in callee frame (via R3)
-99 : ADD 5, 3, 0 ; Push callee frame
-100 : LDA 7, 55(0) ; Call greater
-101 : LD 1, 3(5) ;  Load function result
-102 : LDC 2, 4(0) ;  Caller frame size
-103 : SUB 5, 5, 2 ;  Pop back to caller
-104 : ST 1, 5(5) ;  Store function result into stack frame
-105 : LD 6, 0(5) ;  Load return address
-106 : LDA 7, 0(6) ;  Return to caller
-107 : LD 1, 4(5) ;  Load parameter 'yd' into R1
-108 : ADD 3, 1, 0 ;  Stash right operand in R3
-109 : LD 1, 1(5) ;  Load parameter 'x' into R1
-110 : ADD 2, 1, 0 ;  Move left operand to register 2
-111 : ADD 1, 3, 0 ;  Restore right operand from R3
-112 : MUL 1, 2, 1 ;  R1 = left * right
-113 : ADD 2, 1, 0 ;  Move left operand to register 2
-114 : LD 1, 2(5) ;  Load parameter 'xd' into R1
-115 : ADD 3, 1, 0 ;  Stash right operand in R3
-116 : LD 1, 3(5) ;  Load parameter 'y' into R1
-117 : ADD 2, 1, 0 ;  Move left operand to register 2
-118 : ADD 1, 3, 0 ;  Restore right operand from R3
-119 : MUL 1, 2, 1 ;  R1 = left * right
-120 : SUB 1, 2, 1 ;  left - right for equality check
-121 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-122 : LDC 1, 0(0) ;  false
-123 : LDA 7, 1(7) ;  skip setting true
-124 : LDC 1, 1(0) ;  true
-125 : ST 1, 5(5) ;  Store function result into stack frame
-126 : LD 6, 0(5) ;  Load return address
-127 : LDA 7, 0(6) ;  Return to caller
-128 : LDA 3, 4(5) ; Base of callee frame (stable)
-129 : LD 1, 6(5) ;  Load parameter 'b' into R1
-130 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-131 : LD 1, 4(5) ;  Load parameter 'N' into R1
-132 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-133 : LDA 6, 137(0) ; Return address
-134 : ST 6, 0(3) ; Store return in callee frame (via R3)
-135 : ADD 5, 3, 0 ; Push callee frame
-136 : LDA 7, 55(0) ; Call greater
-137 : LD 1, 3(5) ;  Load function result
-138 : LDC 2, 4(0) ;  Caller frame size
-139 : SUB 5, 5, 2 ;  Pop back to caller
-140 : ADD 2, 1, 0 ;  Move left operand to register 2
-141 : LDA 3, 4(5) ; Base of callee frame (stable)
-142 : LD 1, 8(5) ;  Load parameter 'd' into R1
-143 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-144 : LD 1, 4(5) ;  Load parameter 'N' into R1
-145 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-146 : LDA 6, 150(0) ; Return address
-147 : ST 6, 0(3) ; Store return in callee frame (via R3)
-148 : ADD 5, 3, 0 ; Push callee frame
-149 : LDA 7, 55(0) ; Call greater
-150 : LD 1, 3(5) ;  Load function result
-151 : LDC 2, 4(0) ;  Caller frame size
-152 : SUB 5, 5, 2 ;  Pop back to caller
-153 : ADD 1, 2, 1 ;  R1 = left OR right
-154 : JEQ 1, 196(0) ;  If condition is false, jump to ELSE
-155 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-156 : ADD 3, 1, 0 ;  Stash right operand in R3
-157 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-158 : ADD 2, 1, 0 ;  Move left operand to register 2
-159 : ADD 1, 3, 0 ;  Restore right operand from R3
-160 : SUB 1, 2, 1 ;  left - right for equality check
-161 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-162 : LDC 1, 0(0) ;  false
-163 : LDA 7, 1(7) ;  skip setting true
-164 : LDC 1, 1(0) ;  true
-165 : JEQ 1, 168(0) ;  If condition is false, jump to ELSE
-166 : LD 1, 5(5) ;  Load parameter 'a' into R1
-167 : LDA 7, 195(0) ;  Skip ELSE block
-168 : LDC 1, 2(0) ;  Load integer-literal value into register 1
-169 : ADD 3, 1, 0 ;  Stash right operand in R3
-170 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-171 : ADD 2, 1, 0 ;  Move left operand to register 2
-172 : ADD 1, 3, 0 ;  Restore right operand from R3
-173 : SUB 1, 2, 1 ;  left - right for equality check
-174 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-175 : LDC 1, 0(0) ;  false
-176 : LDA 7, 1(7) ;  skip setting true
-177 : LDC 1, 1(0) ;  true
-178 : JEQ 1, 181(0) ;  If condition is false, jump to ELSE
-179 : LD 1, 6(5) ;  Load parameter 'b' into R1
-180 : LDA 7, 195(0) ;  Skip ELSE block
-181 : LDC 1, 3(0) ;  Load integer-literal value into register 1
-182 : ADD 3, 1, 0 ;  Stash right operand in R3
-183 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-184 : ADD 2, 1, 0 ;  Move left operand to register 2
-185 : ADD 1, 3, 0 ;  Restore right operand from R3
-186 : SUB 1, 2, 1 ;  left - right for equality check
-187 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-188 : LDC 1, 0(0) ;  false
-189 : LDA 7, 1(7) ;  skip setting true
-190 : LDC 1, 1(0) ;  true
-191 : JEQ 1, 194(0) ;  If condition is false, jump to ELSE
-192 : LD 1, 7(5) ;  Load parameter 'c' into R1
-193 : LDA 7, 195(0) ;  Skip ELSE block
-194 : LD 1, 8(5) ;  Load parameter 'd' into R1
-195 : LDA 7, 380(0) ;  Skip ELSE block
-196 : LDA 3, 6(5) ; Base of callee frame (stable)
-197 : LD 1, 2(5) ;  Load parameter 'xNum' into R1
-198 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-199 : LD 1, 3(5) ;  Load parameter 'xDen' into R1
-200 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-201 : LD 1, 7(5) ;  Load parameter 'c' into R1
-202 : ADD 3, 1, 0 ;  Stash right operand in R3
-203 : LD 1, 5(5) ;  Load parameter 'a' into R1
-204 : ADD 2, 1, 0 ;  Move left operand to register 2
-205 : ADD 1, 3, 0 ;  Restore right operand from R3
-206 : ADD 1, 2, 1 ;  R1 = left + right
-207 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-208 : LD 1, 8(5) ;  Load parameter 'd' into R1
-209 : ADD 3, 1, 0 ;  Stash right operand in R3
-210 : LD 1, 6(5) ;  Load parameter 'b' into R1
-211 : ADD 2, 1, 0 ;  Move left operand to register 2
-212 : ADD 1, 3, 0 ;  Restore right operand from R3
-213 : ADD 1, 2, 1 ;  R1 = left + right
-214 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-215 : LDA 6, 219(0) ; Return address
-216 : ST 6, 0(3) ; Store return in callee frame (via R3)
-217 : ADD 5, 3, 0 ; Push callee frame
-218 : LDA 7, 107(0) ; Call fractionEqual
-219 : LD 1, 5(5) ;  Load function result
-220 : LDC 2, 6(0) ;  Caller frame size
-221 : SUB 5, 5, 2 ;  Pop back to caller
-222 : JEQ 1, 284(0) ;  If condition is false, jump to ELSE
-223 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-224 : ADD 3, 1, 0 ;  Stash right operand in R3
-225 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-226 : ADD 2, 1, 0 ;  Move left operand to register 2
-227 : ADD 1, 3, 0 ;  Restore right operand from R3
-228 : SUB 1, 2, 1 ;  left - right for equality check
-229 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-230 : LDC 1, 0(0) ;  false
-231 : LDA 7, 1(7) ;  skip setting true
-232 : LDC 1, 1(0) ;  true
-233 : JEQ 1, 241(0) ;  If condition is false, jump to ELSE
-234 : LD 1, 7(5) ;  Load parameter 'c' into R1
-235 : ADD 3, 1, 0 ;  Stash right operand in R3
-236 : LD 1, 5(5) ;  Load parameter 'a' into R1
-237 : ADD 2, 1, 0 ;  Move left operand to register 2
-238 : ADD 1, 3, 0 ;  Restore right operand from R3
-239 : ADD 1, 2, 1 ;  R1 = left + right
-240 : LDA 7, 283(0) ;  Skip ELSE block
-241 : LDC 1, 2(0) ;  Load integer-literal value into register 1
-242 : ADD 3, 1, 0 ;  Stash right operand in R3
-243 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-244 : ADD 2, 1, 0 ;  Move left operand to register 2
-245 : ADD 1, 3, 0 ;  Restore right operand from R3
-246 : SUB 1, 2, 1 ;  left - right for equality check
-247 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-248 : LDC 1, 0(0) ;  false
-249 : LDA 7, 1(7) ;  skip setting true
-250 : LDC 1, 1(0) ;  true
-251 : JEQ 1, 259(0) ;  If condition is false, jump to ELSE
-252 : LD 1, 8(5) ;  Load parameter 'd' into R1
-253 : ADD 3, 1, 0 ;  Stash right operand in R3
-254 : LD 1, 6(5) ;  Load parameter 'b' into R1
-255 : ADD 2, 1, 0 ;  Move left operand to register 2
-256 : ADD 1, 3, 0 ;  Restore right operand from R3
-257 : ADD 1, 2, 1 ;  R1 = left + right
-258 : LDA 7, 283(0) ;  Skip ELSE block
-259 : LDC 1, 3(0) ;  Load integer-literal value into register 1
-260 : ADD 3, 1, 0 ;  Stash right operand in R3
-261 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-262 : ADD 2, 1, 0 ;  Move left operand to register 2
-263 : ADD 1, 3, 0 ;  Restore right operand from R3
-264 : SUB 1, 2, 1 ;  left - right for equality check
-265 : JEQ 1, 2(7) ;  If R1 == 0, jump to true
-266 : LDC 1, 0(0) ;  false
-267 : LDA 7, 1(7) ;  skip setting true
-268 : LDC 1, 1(0) ;  true
-269 : JEQ 1, 277(0) ;  If condition is false, jump to ELSE
-270 : LD 1, 7(5) ;  Load parameter 'c' into R1
-271 : ADD 3, 1, 0 ;  Stash right operand in R3
-272 : LD 1, 5(5) ;  Load parameter 'a' into R1
-273 : ADD 2, 1, 0 ;  Move left operand to register 2
-274 : ADD 1, 3, 0 ;  Restore right operand from R3
-275 : ADD 1, 2, 1 ;  R1 = left + right
-276 : LDA 7, 283(0) ;  Skip ELSE block
-277 : LD 1, 8(5) ;  Load parameter 'd' into R1
-278 : ADD 3, 1, 0 ;  Stash right operand in R3
-279 : LD 1, 6(5) ;  Load parameter 'b' into R1
-280 : ADD 2, 1, 0 ;  Move left operand to register 2
-281 : ADD 1, 3, 0 ;  Restore right operand from R3
-282 : ADD 1, 2, 1 ;  R1 = left + right
-283 : LDA 7, 380(0) ;  Skip ELSE block
-284 : LDA 3, 6(5) ; Base of callee frame (stable)
-285 : LD 1, 2(5) ;  Load parameter 'xNum' into R1
-286 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-287 : LD 1, 3(5) ;  Load parameter 'xDen' into R1
-288 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-289 : LD 1, 7(5) ;  Load parameter 'c' into R1
-290 : ADD 3, 1, 0 ;  Stash right operand in R3
-291 : LD 1, 5(5) ;  Load parameter 'a' into R1
-292 : ADD 2, 1, 0 ;  Move left operand to register 2
-293 : ADD 1, 3, 0 ;  Restore right operand from R3
-294 : ADD 1, 2, 1 ;  R1 = left + right
-295 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-296 : LD 1, 8(5) ;  Load parameter 'd' into R1
-297 : ADD 3, 1, 0 ;  Stash right operand in R3
-298 : LD 1, 6(5) ;  Load parameter 'b' into R1
-299 : ADD 2, 1, 0 ;  Move left operand to register 2
-300 : ADD 1, 3, 0 ;  Restore right operand from R3
-301 : ADD 1, 2, 1 ;  R1 = left + right
-302 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-303 : LDA 6, 307(0) ; Return address
-304 : ST 6, 0(3) ; Store return in callee frame (via R3)
-305 : ADD 5, 3, 0 ; Push callee frame
-306 : LDA 7, 82(0) ; Call fractionGreater
-307 : LD 1, 5(5) ;  Load function result
-308 : LDC 2, 6(0) ;  Caller frame size
-309 : SUB 5, 5, 2 ;  Pop back to caller
-310 : JEQ 1, 346(0) ;  If condition is false, jump to ELSE
-311 : LDA 3, 10(5) ; Base of callee frame (stable)
-312 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-313 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-314 : LD 1, 2(5) ;  Load parameter 'xNum' into R1
-315 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-316 : LD 1, 3(5) ;  Load parameter 'xDen' into R1
-317 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-318 : LD 1, 4(5) ;  Load parameter 'N' into R1
-319 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-320 : LD 1, 7(5) ;  Load parameter 'c' into R1
-321 : ADD 3, 1, 0 ;  Stash right operand in R3
-322 : LD 1, 5(5) ;  Load parameter 'a' into R1
-323 : ADD 2, 1, 0 ;  Move left operand to register 2
-324 : ADD 1, 3, 0 ;  Restore right operand from R3
-325 : ADD 1, 2, 1 ;  R1 = left + right
-326 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-327 : LD 1, 8(5) ;  Load parameter 'd' into R1
-328 : ADD 3, 1, 0 ;  Stash right operand in R3
-329 : LD 1, 6(5) ;  Load parameter 'b' into R1
-330 : ADD 2, 1, 0 ;  Move left operand to register 2
-331 : ADD 1, 3, 0 ;  Restore right operand from R3
-332 : ADD 1, 2, 1 ;  R1 = left + right
-333 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-334 : LD 1, 7(5) ;  Load parameter 'c' into R1
-335 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-336 : LD 1, 8(5) ;  Load parameter 'd' into R1
-337 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-338 : LDA 6, 342(0) ; Return address
-339 : ST 6, 0(3) ; Store return in callee frame (via R3)
-340 : ADD 5, 3, 0 ; Push callee frame
-341 : LDA 7, 128(0) ; Call whileLoopFor
-342 : LD 1, 9(5) ;  Load function result
-343 : LDC 2, 10(0) ;  Caller frame size
-344 : SUB 5, 5, 2 ;  Pop back to caller
-345 : LDA 7, 380(0) ;  Skip ELSE block
-346 : LDA 3, 10(5) ; Base of callee frame (stable)
-347 : LD 1, 1(5) ;  Load parameter 'selector' into R1
-348 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-349 : LD 1, 2(5) ;  Load parameter 'xNum' into R1
-350 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-351 : LD 1, 3(5) ;  Load parameter 'xDen' into R1
-352 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-353 : LD 1, 4(5) ;  Load parameter 'N' into R1
-354 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-355 : LD 1, 5(5) ;  Load parameter 'a' into R1
-356 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-357 : LD 1, 6(5) ;  Load parameter 'b' into R1
-358 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-359 : LD 1, 7(5) ;  Load parameter 'c' into R1
-360 : ADD 3, 1, 0 ;  Stash right operand in R3
-361 : LD 1, 5(5) ;  Load parameter 'a' into R1
-362 : ADD 2, 1, 0 ;  Move left operand to register 2
-363 : ADD 1, 3, 0 ;  Restore right operand from R3
-364 : ADD 1, 2, 1 ;  R1 = left + right
-365 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-366 : LD 1, 8(5) ;  Load parameter 'd' into R1
-367 : ADD 3, 1, 0 ;  Stash right operand in R3
-368 : LD 1, 6(5) ;  Load parameter 'b' into R1
-369 : ADD 2, 1, 0 ;  Move left operand to register 2
-370 : ADD 1, 3, 0 ;  Restore right operand from R3
-371 : ADD 1, 2, 1 ;  R1 = left + right
-372 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-373 : LDA 6, 377(0) ; Return address
-374 : ST 6, 0(3) ; Store return in callee frame (via R3)
-375 : ADD 5, 3, 0 ; Push callee frame
-376 : LDA 7, 128(0) ; Call whileLoopFor
-377 : LD 1, 9(5) ;  Load function result
-378 : LDC 2, 10(0) ;  Caller frame size
-379 : SUB 5, 5, 2 ;  Pop back to caller
-380 : ST 1, 9(5) ;  Store function result into stack frame
-381 : LD 6, 0(5) ;  Load return address
-382 : LDA 7, 0(6) ;  Return to caller
-383 : LDA 3, 4(5) ; Base of callee frame (stable)
-384 : LD 1, 3(5) ;  Load parameter 'b' into R1
-385 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-386 : LD 1, 1(5) ;  Load parameter 'N' into R1
-387 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-388 : LDA 6, 392(0) ; Return address
-389 : ST 6, 0(3) ; Store return in callee frame (via R3)
-390 : ADD 5, 3, 0 ; Push callee frame
-391 : LDA 7, 55(0) ; Call greater
-392 : LD 1, 3(5) ;  Load function result
-393 : LDC 2, 4(0) ;  Caller frame size
-394 : SUB 5, 5, 2 ;  Pop back to caller
-395 : JEQ 1, 398(0) ;  If condition is false, jump to ELSE
-396 : LD 1, 5(5) ;  Load parameter 'd' into R1
-397 : LDA 7, 399(0) ;  Skip ELSE block
-398 : LD 1, 3(5) ;  Load parameter 'b' into R1
-399 : ST 1, 6(5) ;  Store function result into stack frame
-400 : LD 6, 0(5) ;  Load return address
-401 : LDA 7, 0(6) ;  Return to caller
-402 : LDA 3, 4(5) ; Base of callee frame (stable)
-403 : LD 1, 3(5) ;  Load parameter 'b' into R1
-404 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-405 : LD 1, 1(5) ;  Load parameter 'N' into R1
-406 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-407 : LDA 6, 411(0) ; Return address
-408 : ST 6, 0(3) ; Store return in callee frame (via R3)
-409 : ADD 5, 3, 0 ; Push callee frame
-410 : LDA 7, 55(0) ; Call greater
-411 : LD 1, 3(5) ;  Load function result
-412 : LDC 2, 4(0) ;  Caller frame size
-413 : SUB 5, 5, 2 ;  Pop back to caller
-414 : JEQ 1, 417(0) ;  If condition is false, jump to ELSE
-415 : LD 1, 4(5) ;  Load parameter 'c' into R1
-416 : LDA 7, 418(0) ;  Skip ELSE block
-417 : LD 1, 2(5) ;  Load parameter 'a' into R1
-418 : ST 1, 6(5) ;  Store function result into stack frame
-419 : LD 6, 0(5) ;  Load return address
-420 : LDA 7, 0(6) ;  Return to caller
-421 : LDA 3, 7(5) ; Base of callee frame (stable)
-422 : LD 1, 3(5) ;  Load parameter 'N' into R1
-423 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-424 : LDA 3, 10(5) ; Base of callee frame (stable)
-425 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-426 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-427 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-428 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-429 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-430 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-431 : LD 1, 3(5) ;  Load parameter 'N' into R1
-432 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-433 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-434 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-435 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-436 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-437 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-438 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-439 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-440 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-441 : LDA 6, 445(0) ; Return address
-442 : ST 6, 0(3) ; Store return in callee frame (via R3)
-443 : ADD 5, 3, 0 ; Push callee frame
-444 : LDA 7, 128(0) ; Call whileLoopFor
-445 : LD 1, 9(5) ;  Load function result
-446 : LDC 2, 10(0) ;  Caller frame size
-447 : SUB 5, 5, 2 ;  Pop back to caller
-448 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-449 : LDA 3, 10(5) ; Base of callee frame (stable)
-450 : LDC 1, 2(0) ;  Load integer-literal value into register 1
-451 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-452 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-453 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-454 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-455 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-456 : LD 1, 3(5) ;  Load parameter 'N' into R1
-457 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-458 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-459 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-460 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-461 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-462 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-463 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-464 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-465 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-466 : LDA 6, 470(0) ; Return address
-467 : ST 6, 0(3) ; Store return in callee frame (via R3)
-468 : ADD 5, 3, 0 ; Push callee frame
-469 : LDA 7, 128(0) ; Call whileLoopFor
-470 : LD 1, 9(5) ;  Load function result
-471 : LDC 2, 10(0) ;  Caller frame size
-472 : SUB 5, 5, 2 ;  Pop back to caller
-473 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-474 : LDA 3, 10(5) ; Base of callee frame (stable)
-475 : LDC 1, 3(0) ;  Load integer-literal value into register 1
-476 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-477 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-478 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-479 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-480 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-481 : LD 1, 3(5) ;  Load parameter 'N' into R1
-482 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-483 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-484 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-485 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-486 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-487 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-488 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-489 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-490 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-491 : LDA 6, 495(0) ; Return address
-492 : ST 6, 0(3) ; Store return in callee frame (via R3)
-493 : ADD 5, 3, 0 ; Push callee frame
-494 : LDA 7, 128(0) ; Call whileLoopFor
-495 : LD 1, 9(5) ;  Load function result
-496 : LDC 2, 10(0) ;  Caller frame size
-497 : SUB 5, 5, 2 ;  Pop back to caller
-498 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-499 : LDA 3, 10(5) ; Base of callee frame (stable)
-500 : LDC 1, 4(0) ;  Load integer-literal value into register 1
-501 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-502 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-503 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-504 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-505 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-506 : LD 1, 3(5) ;  Load parameter 'N' into R1
-507 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-508 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-509 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-510 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-511 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-512 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-513 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-514 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-515 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-516 : LDA 6, 520(0) ; Return address
-517 : ST 6, 0(3) ; Store return in callee frame (via R3)
-518 : ADD 5, 3, 0 ; Push callee frame
-519 : LDA 7, 128(0) ; Call whileLoopFor
-520 : LD 1, 9(5) ;  Load function result
-521 : LDC 2, 10(0) ;  Caller frame size
-522 : SUB 5, 5, 2 ;  Pop back to caller
-523 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-524 : LDA 6, 528(0) ; Return address
-525 : ST 6, 0(3) ; Store return in callee frame (via R3)
-526 : ADD 5, 3, 0 ; Push callee frame
-527 : LDA 7, 383(0) ; Call fareySelectDen
-528 : LD 1, 6(5) ;  Load function result
-529 : LDC 2, 7(0) ;  Caller frame size
-530 : SUB 5, 5, 2 ;  Pop back to caller
-531 : ST 1, 4(5) ;  Store function result into stack frame
-532 : LD 6, 0(5) ;  Load return address
-533 : LDA 7, 0(6) ;  Return to caller
-534 : LDA 3, 7(5) ; Base of callee frame (stable)
-535 : LD 1, 3(5) ;  Load parameter 'N' into R1
-536 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-537 : LDA 3, 10(5) ; Base of callee frame (stable)
-538 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-539 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-540 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-541 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-542 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-543 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-544 : LD 1, 3(5) ;  Load parameter 'N' into R1
-545 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-546 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-547 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-548 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-549 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-550 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-551 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-552 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-553 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-554 : LDA 6, 558(0) ; Return address
-555 : ST 6, 0(3) ; Store return in callee frame (via R3)
-556 : ADD 5, 3, 0 ; Push callee frame
-557 : LDA 7, 128(0) ; Call whileLoopFor
-558 : LD 1, 9(5) ;  Load function result
-559 : LDC 2, 10(0) ;  Caller frame size
-560 : SUB 5, 5, 2 ;  Pop back to caller
-561 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-562 : LDA 3, 10(5) ; Base of callee frame (stable)
-563 : LDC 1, 2(0) ;  Load integer-literal value into register 1
-564 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-565 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-566 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-567 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-568 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-569 : LD 1, 3(5) ;  Load parameter 'N' into R1
-570 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-571 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-572 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-573 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-574 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-575 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-576 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-577 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-578 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-579 : LDA 6, 583(0) ; Return address
-580 : ST 6, 0(3) ; Store return in callee frame (via R3)
-581 : ADD 5, 3, 0 ; Push callee frame
-582 : LDA 7, 128(0) ; Call whileLoopFor
-583 : LD 1, 9(5) ;  Load function result
-584 : LDC 2, 10(0) ;  Caller frame size
-585 : SUB 5, 5, 2 ;  Pop back to caller
-586 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-587 : LDA 3, 10(5) ; Base of callee frame (stable)
-588 : LDC 1, 3(0) ;  Load integer-literal value into register 1
-589 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-590 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-591 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-592 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-593 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-594 : LD 1, 3(5) ;  Load parameter 'N' into R1
-595 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-596 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-597 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-598 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-599 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-600 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-601 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-602 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-603 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-604 : LDA 6, 608(0) ; Return address
-605 : ST 6, 0(3) ; Store return in callee frame (via R3)
-606 : ADD 5, 3, 0 ; Push callee frame
-607 : LDA 7, 128(0) ; Call whileLoopFor
-608 : LD 1, 9(5) ;  Load function result
-609 : LDC 2, 10(0) ;  Caller frame size
-610 : SUB 5, 5, 2 ;  Pop back to caller
-611 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-612 : LDA 3, 10(5) ; Base of callee frame (stable)
-613 : LDC 1, 4(0) ;  Load integer-literal value into register 1
-614 : ST 1, 1(3) ; Store argument 0 in callee (via R3)
-615 : LD 1, 1(5) ;  Load parameter 'xNum' into R1
-616 : ST 1, 2(3) ; Store argument 1 in callee (via R3)
-617 : LD 1, 2(5) ;  Load parameter 'xDen' into R1
-618 : ST 1, 3(3) ; Store argument 2 in callee (via R3)
-619 : LD 1, 3(5) ;  Load parameter 'N' into R1
-620 : ST 1, 4(3) ; Store argument 3 in callee (via R3)
-621 : LDC 1, 0(0) ;  Load integer-literal value into register 1
-622 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-623 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-624 : ST 1, 6(3) ; Store argument 5 in callee (via R3)
-625 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-626 : ST 1, 7(3) ; Store argument 6 in callee (via R3)
-627 : LDC 1, 1(0) ;  Load integer-literal value into register 1
-628 : ST 1, 8(3) ; Store argument 7 in callee (via R3)
-629 : LDA 6, 633(0) ; Return address
-630 : ST 6, 0(3) ; Store return in callee frame (via R3)
-631 : ADD 5, 3, 0 ; Push callee frame
-632 : LDA 7, 128(0) ; Call whileLoopFor
-633 : LD 1, 9(5) ;  Load function result
-634 : LDC 2, 10(0) ;  Caller frame size
-635 : SUB 5, 5, 2 ;  Pop back to caller
-636 : ST 1, 5(3) ; Store argument 4 in callee (via R3)
-637 : LDA 6, 641(0) ; Return address
-638 : ST 6, 0(3) ; Store return in callee frame (via R3)
-639 : ADD 5, 3, 0 ; Push callee frame
-640 : LDA 7, 402(0) ; Call fareySelectNum
-641 : LD 1, 6(5) ;  Load function result
-642 : LDC 2, 7(0) ;  Caller frame size
-643 : SUB 5, 5, 2 ;  Pop back to caller
-644 : ST 1, 4(5) ;  Store function result into stack frame
-645 : LD 6, 0(5) ;  Load return address
-646 : LDA 7, 0(6) ;  Return to caller
+9 : ST 6, 0(5) ;  Store return address in main frame
+10 : LDA 7, 16(0) ;  Branch to main
+11 : OUT 1, 0, 0 ;  Print main's result
+12 : HALT 0, 0, 0 ;  Terminate program
+13 : OUT 1, 0, 0 ;  print(R1)
+14 : LD 6, 0(5) ;  Load return address
+15 : LDA 7, 0(6) ;  Return
+16 : LD 1, 1(5) ;  Load parameter 'xNum'
+17 : LDA 4, 5(5) ;  [JIT] callee frame base
+18 : ST 1, 1(4) ;  Store arg 0 in callee frame
+19 : LD 1, 2(5) ;  Load parameter 'xDen'
+20 : LDA 4, 5(5) ;  [JIT] callee frame base
+21 : ST 1, 2(4) ;  Store arg 1 in callee frame
+22 : LD 1, 3(5) ;  Load parameter 'N'
+23 : LDA 4, 5(5) ;  [JIT] callee frame base
+24 : ST 1, 3(4) ;  Store arg 2 in callee frame
+25 : LDA 4, 5(5) ;  [JIT] callee frame base
+26 : LDA 6, 30(0) ;  Return address
+27 : ST 6, 0(4) ;  Store RA in callee frame
+28 : ADD 5, 4, 0 ;  Push callee frame
+29 : LDA 7, 611(0) ;  Call fareyNum
+30 : LD 1, 4(5) ;  Load callee result
+31 : LDC 2, 5(0) ;  Caller frame size
+32 : SUB 5, 5, 2 ;  Pop callee frame
+33 : LDA 4, 3(5) ;  [JIT] callee frame base
+34 : LDA 6, 38(0) ;  Return address
+35 : ST 6, 0(4) ;  Store RA in callee frame
+36 : ADD 5, 4, 0 ;  Push callee frame
+37 : LDA 7, 13(0) ;  Call print
+38 : LDC 2, 3(0) ;  Caller frame size
+39 : SUB 5, 5, 2 ;  Pop callee frame
+40 : LD 1, 1(5) ;  Load parameter 'xNum'
+41 : LDA 4, 5(5) ;  [JIT] callee frame base
+42 : ST 1, 1(4) ;  Store arg 0 in callee frame
+43 : LD 1, 2(5) ;  Load parameter 'xDen'
+44 : LDA 4, 5(5) ;  [JIT] callee frame base
+45 : ST 1, 2(4) ;  Store arg 1 in callee frame
+46 : LD 1, 3(5) ;  Load parameter 'N'
+47 : LDA 4, 5(5) ;  [JIT] callee frame base
+48 : ST 1, 3(4) ;  Store arg 2 in callee frame
+49 : LDA 4, 5(5) ;  [JIT] callee frame base
+50 : LDA 6, 54(0) ;  Return address
+51 : ST 6, 0(4) ;  Store RA in callee frame
+52 : ADD 5, 4, 0 ;  Push callee frame
+53 : LDA 7, 461(0) ;  Call fareyDen
+54 : LD 1, 4(5) ;  Load callee result
+55 : LDC 2, 5(0) ;  Caller frame size
+56 : SUB 5, 5, 2 ;  Pop callee frame
+57 : ST 1, 4(5) ;  Store result into caller frame
+58 : LD 1, 4(5) ;  Load main return value
+59 : LD 6, 0(5) ;  Load return address
+60 : LDA 7, 0(6) ;  Return from main
+61 : LD 1, 2(5) ;  Load parameter 'y'
+62 : ADD 3, 1, 0 ;  Stash right in R3
+63 : LD 1, 1(5) ;  Load parameter 'x'
+64 : ADD 2, 1, 0 ;  Move left to R2
+65 : ADD 1, 3, 0 ;  Restore right to R1
+66 : SUB 1, 2, 1 ;  left - right
+67 : JLT 1, 2(7) ;  if < 0 then true
+68 : LDC 1, 0(0) ;  false
+69 : LDA 7, 1(7) ;  skip setting true
+70 : LDC 1, 1(0) ;  true
+71 : ADD 2, 1, 0 ;  Move left to R2
+72 : LD 1, 2(5) ;  Load parameter 'y'
+73 : ADD 3, 1, 0 ;  Stash right in R3
+74 : LD 1, 1(5) ;  Load parameter 'x'
+75 : ADD 2, 1, 0 ;  Move left to R2
+76 : ADD 1, 3, 0 ;  Restore right to R1
+77 : SUB 1, 2, 1 ;  left - right
+78 : JEQ 1, 2(7) ;  if 0 then true
+79 : LDC 1, 0(0) ;  false
+80 : LDA 7, 1(7) ;  skip setting true
+81 : LDC 1, 1(0) ;  true
+82 : ADD 1, 2, 1 ;  R1 = left OR right
+83 : LDC 2, 1(0) ;  Load 1 into R2
+84 : SUB 1, 2, 1 ;  R1 = 1 - R1 (logical NOT)
+85 : ST 1, 3(5) ;  Store function result
+86 : LD 6, 0(5) ;  Load return address
+87 : LDA 7, 0(6) ;  Return to caller
+88 : LD 1, 4(5) ;  Load parameter 'yd'
+89 : ADD 3, 1, 0 ;  Stash right in R3
+90 : LD 1, 1(5) ;  Load parameter 'x'
+91 : ADD 2, 1, 0 ;  Move left to R2
+92 : ADD 1, 3, 0 ;  Restore right to R1
+93 : MUL 1, 2, 1 ;  R1 = left * right
+94 : LDA 4, 4(5) ;  [JIT] callee frame base
+95 : ST 1, 1(4) ;  Store arg 0 in callee frame
+96 : LD 1, 2(5) ;  Load parameter 'xd'
+97 : ADD 3, 1, 0 ;  Stash right in R3
+98 : LD 1, 3(5) ;  Load parameter 'y'
+99 : ADD 2, 1, 0 ;  Move left to R2
+100 : ADD 1, 3, 0 ;  Restore right to R1
+101 : MUL 1, 2, 1 ;  R1 = left * right
+102 : LDA 4, 4(5) ;  [JIT] callee frame base
+103 : ST 1, 2(4) ;  Store arg 1 in callee frame
+104 : LDA 4, 4(5) ;  [JIT] callee frame base
+105 : LDA 6, 109(0) ;  Return address
+106 : ST 6, 0(4) ;  Store RA in callee frame
+107 : ADD 5, 4, 0 ;  Push callee frame
+108 : LDA 7, 61(0) ;  Call greater
+109 : LD 1, 3(5) ;  Load callee result
+110 : LDC 2, 4(0) ;  Caller frame size
+111 : SUB 5, 5, 2 ;  Pop callee frame
+112 : ST 1, 5(5) ;  Store function result
+113 : LD 6, 0(5) ;  Load return address
+114 : LDA 7, 0(6) ;  Return to caller
+115 : LD 1, 4(5) ;  Load parameter 'yd'
+116 : ADD 3, 1, 0 ;  Stash right in R3
+117 : LD 1, 1(5) ;  Load parameter 'x'
+118 : ADD 2, 1, 0 ;  Move left to R2
+119 : ADD 1, 3, 0 ;  Restore right to R1
+120 : MUL 1, 2, 1 ;  R1 = left * right
+121 : ADD 2, 1, 0 ;  Move left to R2
+122 : LD 1, 2(5) ;  Load parameter 'xd'
+123 : ADD 3, 1, 0 ;  Stash right in R3
+124 : LD 1, 3(5) ;  Load parameter 'y'
+125 : ADD 2, 1, 0 ;  Move left to R2
+126 : ADD 1, 3, 0 ;  Restore right to R1
+127 : MUL 1, 2, 1 ;  R1 = left * right
+128 : SUB 1, 2, 1 ;  left - right
+129 : JEQ 1, 2(7) ;  if 0 then true
+130 : LDC 1, 0(0) ;  false
+131 : LDA 7, 1(7) ;  skip setting true
+132 : LDC 1, 1(0) ;  true
+133 : ST 1, 5(5) ;  Store function result
+134 : LD 6, 0(5) ;  Load return address
+135 : LDA 7, 0(6) ;  Return to caller
+136 : LD 1, 6(5) ;  Load parameter 'b'
+137 : LDA 4, 4(5) ;  [JIT] callee frame base
+138 : ST 1, 1(4) ;  Store arg 0 in callee frame
+139 : LD 1, 4(5) ;  Load parameter 'N'
+140 : LDA 4, 4(5) ;  [JIT] callee frame base
+141 : ST 1, 2(4) ;  Store arg 1 in callee frame
+142 : LDA 4, 4(5) ;  [JIT] callee frame base
+143 : LDA 6, 147(0) ;  Return address
+144 : ST 6, 0(4) ;  Store RA in callee frame
+145 : ADD 5, 4, 0 ;  Push callee frame
+146 : LDA 7, 61(0) ;  Call greater
+147 : LD 1, 3(5) ;  Load callee result
+148 : LDC 2, 4(0) ;  Caller frame size
+149 : SUB 5, 5, 2 ;  Pop callee frame
+150 : ADD 2, 1, 0 ;  Move left to R2
+151 : LD 1, 8(5) ;  Load parameter 'd'
+152 : LDA 4, 4(5) ;  [JIT] callee frame base
+153 : ST 1, 1(4) ;  Store arg 0 in callee frame
+154 : LD 1, 4(5) ;  Load parameter 'N'
+155 : LDA 4, 4(5) ;  [JIT] callee frame base
+156 : ST 1, 2(4) ;  Store arg 1 in callee frame
+157 : LDA 4, 4(5) ;  [JIT] callee frame base
+158 : LDA 6, 162(0) ;  Return address
+159 : ST 6, 0(4) ;  Store RA in callee frame
+160 : ADD 5, 4, 0 ;  Push callee frame
+161 : LDA 7, 61(0) ;  Call greater
+162 : LD 1, 3(5) ;  Load callee result
+163 : LDC 2, 4(0) ;  Caller frame size
+164 : SUB 5, 5, 2 ;  Pop callee frame
+165 : ADD 1, 2, 1 ;  R1 = left OR right
+166 : JEQ 1, 208(0) ;  If false, jump to ELSE
+167 : LDC 1, 1(0) ;  Load integer literal into R1
+168 : ADD 3, 1, 0 ;  Stash right in R3
+169 : LD 1, 1(5) ;  Load parameter 'selector'
+170 : ADD 2, 1, 0 ;  Move left to R2
+171 : ADD 1, 3, 0 ;  Restore right to R1
+172 : SUB 1, 2, 1 ;  left - right
+173 : JEQ 1, 2(7) ;  if 0 then true
+174 : LDC 1, 0(0) ;  false
+175 : LDA 7, 1(7) ;  skip setting true
+176 : LDC 1, 1(0) ;  true
+177 : JEQ 1, 180(0) ;  If false, jump to ELSE
+178 : LD 1, 5(5) ;  Load parameter 'a'
+179 : LDA 7, 207(0) ;  Skip ELSE
+180 : LDC 1, 2(0) ;  Load integer literal into R1
+181 : ADD 3, 1, 0 ;  Stash right in R3
+182 : LD 1, 1(5) ;  Load parameter 'selector'
+183 : ADD 2, 1, 0 ;  Move left to R2
+184 : ADD 1, 3, 0 ;  Restore right to R1
+185 : SUB 1, 2, 1 ;  left - right
+186 : JEQ 1, 2(7) ;  if 0 then true
+187 : LDC 1, 0(0) ;  false
+188 : LDA 7, 1(7) ;  skip setting true
+189 : LDC 1, 1(0) ;  true
+190 : JEQ 1, 193(0) ;  If false, jump to ELSE
+191 : LD 1, 6(5) ;  Load parameter 'b'
+192 : LDA 7, 207(0) ;  Skip ELSE
+193 : LDC 1, 3(0) ;  Load integer literal into R1
+194 : ADD 3, 1, 0 ;  Stash right in R3
+195 : LD 1, 1(5) ;  Load parameter 'selector'
+196 : ADD 2, 1, 0 ;  Move left to R2
+197 : ADD 1, 3, 0 ;  Restore right to R1
+198 : SUB 1, 2, 1 ;  left - right
+199 : JEQ 1, 2(7) ;  if 0 then true
+200 : LDC 1, 0(0) ;  false
+201 : LDA 7, 1(7) ;  skip setting true
+202 : LDC 1, 1(0) ;  true
+203 : JEQ 1, 206(0) ;  If false, jump to ELSE
+204 : LD 1, 7(5) ;  Load parameter 'c'
+205 : LDA 7, 207(0) ;  Skip ELSE
+206 : LD 1, 8(5) ;  Load parameter 'd'
+207 : LDA 7, 416(0) ;  Skip ELSE
+208 : LD 1, 2(5) ;  Load parameter 'xNum'
+209 : LDA 4, 6(5) ;  [JIT] callee frame base
+210 : ST 1, 1(4) ;  Store arg 0 in callee frame
+211 : LD 1, 3(5) ;  Load parameter 'xDen'
+212 : LDA 4, 6(5) ;  [JIT] callee frame base
+213 : ST 1, 2(4) ;  Store arg 1 in callee frame
+214 : LD 1, 7(5) ;  Load parameter 'c'
+215 : ADD 3, 1, 0 ;  Stash right in R3
+216 : LD 1, 5(5) ;  Load parameter 'a'
+217 : ADD 2, 1, 0 ;  Move left to R2
+218 : ADD 1, 3, 0 ;  Restore right to R1
+219 : ADD 1, 2, 1 ;  R1 = left + right
+220 : LDA 4, 6(5) ;  [JIT] callee frame base
+221 : ST 1, 3(4) ;  Store arg 2 in callee frame
+222 : LD 1, 8(5) ;  Load parameter 'd'
+223 : ADD 3, 1, 0 ;  Stash right in R3
+224 : LD 1, 6(5) ;  Load parameter 'b'
+225 : ADD 2, 1, 0 ;  Move left to R2
+226 : ADD 1, 3, 0 ;  Restore right to R1
+227 : ADD 1, 2, 1 ;  R1 = left + right
+228 : LDA 4, 6(5) ;  [JIT] callee frame base
+229 : ST 1, 4(4) ;  Store arg 3 in callee frame
+230 : LDA 4, 6(5) ;  [JIT] callee frame base
+231 : LDA 6, 235(0) ;  Return address
+232 : ST 6, 0(4) ;  Store RA in callee frame
+233 : ADD 5, 4, 0 ;  Push callee frame
+234 : LDA 7, 115(0) ;  Call fractionEqual
+235 : LD 1, 5(5) ;  Load callee result
+236 : LDC 2, 6(0) ;  Caller frame size
+237 : SUB 5, 5, 2 ;  Pop callee frame
+238 : JEQ 1, 300(0) ;  If false, jump to ELSE
+239 : LDC 1, 1(0) ;  Load integer literal into R1
+240 : ADD 3, 1, 0 ;  Stash right in R3
+241 : LD 1, 1(5) ;  Load parameter 'selector'
+242 : ADD 2, 1, 0 ;  Move left to R2
+243 : ADD 1, 3, 0 ;  Restore right to R1
+244 : SUB 1, 2, 1 ;  left - right
+245 : JEQ 1, 2(7) ;  if 0 then true
+246 : LDC 1, 0(0) ;  false
+247 : LDA 7, 1(7) ;  skip setting true
+248 : LDC 1, 1(0) ;  true
+249 : JEQ 1, 257(0) ;  If false, jump to ELSE
+250 : LD 1, 7(5) ;  Load parameter 'c'
+251 : ADD 3, 1, 0 ;  Stash right in R3
+252 : LD 1, 5(5) ;  Load parameter 'a'
+253 : ADD 2, 1, 0 ;  Move left to R2
+254 : ADD 1, 3, 0 ;  Restore right to R1
+255 : ADD 1, 2, 1 ;  R1 = left + right
+256 : LDA 7, 299(0) ;  Skip ELSE
+257 : LDC 1, 2(0) ;  Load integer literal into R1
+258 : ADD 3, 1, 0 ;  Stash right in R3
+259 : LD 1, 1(5) ;  Load parameter 'selector'
+260 : ADD 2, 1, 0 ;  Move left to R2
+261 : ADD 1, 3, 0 ;  Restore right to R1
+262 : SUB 1, 2, 1 ;  left - right
+263 : JEQ 1, 2(7) ;  if 0 then true
+264 : LDC 1, 0(0) ;  false
+265 : LDA 7, 1(7) ;  skip setting true
+266 : LDC 1, 1(0) ;  true
+267 : JEQ 1, 275(0) ;  If false, jump to ELSE
+268 : LD 1, 8(5) ;  Load parameter 'd'
+269 : ADD 3, 1, 0 ;  Stash right in R3
+270 : LD 1, 6(5) ;  Load parameter 'b'
+271 : ADD 2, 1, 0 ;  Move left to R2
+272 : ADD 1, 3, 0 ;  Restore right to R1
+273 : ADD 1, 2, 1 ;  R1 = left + right
+274 : LDA 7, 299(0) ;  Skip ELSE
+275 : LDC 1, 3(0) ;  Load integer literal into R1
+276 : ADD 3, 1, 0 ;  Stash right in R3
+277 : LD 1, 1(5) ;  Load parameter 'selector'
+278 : ADD 2, 1, 0 ;  Move left to R2
+279 : ADD 1, 3, 0 ;  Restore right to R1
+280 : SUB 1, 2, 1 ;  left - right
+281 : JEQ 1, 2(7) ;  if 0 then true
+282 : LDC 1, 0(0) ;  false
+283 : LDA 7, 1(7) ;  skip setting true
+284 : LDC 1, 1(0) ;  true
+285 : JEQ 1, 293(0) ;  If false, jump to ELSE
+286 : LD 1, 7(5) ;  Load parameter 'c'
+287 : ADD 3, 1, 0 ;  Stash right in R3
+288 : LD 1, 5(5) ;  Load parameter 'a'
+289 : ADD 2, 1, 0 ;  Move left to R2
+290 : ADD 1, 3, 0 ;  Restore right to R1
+291 : ADD 1, 2, 1 ;  R1 = left + right
+292 : LDA 7, 299(0) ;  Skip ELSE
+293 : LD 1, 8(5) ;  Load parameter 'd'
+294 : ADD 3, 1, 0 ;  Stash right in R3
+295 : LD 1, 6(5) ;  Load parameter 'b'
+296 : ADD 2, 1, 0 ;  Move left to R2
+297 : ADD 1, 3, 0 ;  Restore right to R1
+298 : ADD 1, 2, 1 ;  R1 = left + right
+299 : LDA 7, 416(0) ;  Skip ELSE
+300 : LD 1, 2(5) ;  Load parameter 'xNum'
+301 : LDA 4, 6(5) ;  [JIT] callee frame base
+302 : ST 1, 1(4) ;  Store arg 0 in callee frame
+303 : LD 1, 3(5) ;  Load parameter 'xDen'
+304 : LDA 4, 6(5) ;  [JIT] callee frame base
+305 : ST 1, 2(4) ;  Store arg 1 in callee frame
+306 : LD 1, 7(5) ;  Load parameter 'c'
+307 : ADD 3, 1, 0 ;  Stash right in R3
+308 : LD 1, 5(5) ;  Load parameter 'a'
+309 : ADD 2, 1, 0 ;  Move left to R2
+310 : ADD 1, 3, 0 ;  Restore right to R1
+311 : ADD 1, 2, 1 ;  R1 = left + right
+312 : LDA 4, 6(5) ;  [JIT] callee frame base
+313 : ST 1, 3(4) ;  Store arg 2 in callee frame
+314 : LD 1, 8(5) ;  Load parameter 'd'
+315 : ADD 3, 1, 0 ;  Stash right in R3
+316 : LD 1, 6(5) ;  Load parameter 'b'
+317 : ADD 2, 1, 0 ;  Move left to R2
+318 : ADD 1, 3, 0 ;  Restore right to R1
+319 : ADD 1, 2, 1 ;  R1 = left + right
+320 : LDA 4, 6(5) ;  [JIT] callee frame base
+321 : ST 1, 4(4) ;  Store arg 3 in callee frame
+322 : LDA 4, 6(5) ;  [JIT] callee frame base
+323 : LDA 6, 327(0) ;  Return address
+324 : ST 6, 0(4) ;  Store RA in callee frame
+325 : ADD 5, 4, 0 ;  Push callee frame
+326 : LDA 7, 88(0) ;  Call fractionGreater
+327 : LD 1, 5(5) ;  Load callee result
+328 : LDC 2, 6(0) ;  Caller frame size
+329 : SUB 5, 5, 2 ;  Pop callee frame
+330 : JEQ 1, 374(0) ;  If false, jump to ELSE
+331 : LD 1, 1(5) ;  Load parameter 'selector'
+332 : LDA 4, 10(5) ;  [JIT] callee frame base
+333 : ST 1, 1(4) ;  Store arg 0 in callee frame
+334 : LD 1, 2(5) ;  Load parameter 'xNum'
+335 : LDA 4, 10(5) ;  [JIT] callee frame base
+336 : ST 1, 2(4) ;  Store arg 1 in callee frame
+337 : LD 1, 3(5) ;  Load parameter 'xDen'
+338 : LDA 4, 10(5) ;  [JIT] callee frame base
+339 : ST 1, 3(4) ;  Store arg 2 in callee frame
+340 : LD 1, 4(5) ;  Load parameter 'N'
+341 : LDA 4, 10(5) ;  [JIT] callee frame base
+342 : ST 1, 4(4) ;  Store arg 3 in callee frame
+343 : LD 1, 7(5) ;  Load parameter 'c'
+344 : ADD 3, 1, 0 ;  Stash right in R3
+345 : LD 1, 5(5) ;  Load parameter 'a'
+346 : ADD 2, 1, 0 ;  Move left to R2
+347 : ADD 1, 3, 0 ;  Restore right to R1
+348 : ADD 1, 2, 1 ;  R1 = left + right
+349 : LDA 4, 10(5) ;  [JIT] callee frame base
+350 : ST 1, 5(4) ;  Store arg 4 in callee frame
+351 : LD 1, 8(5) ;  Load parameter 'd'
+352 : ADD 3, 1, 0 ;  Stash right in R3
+353 : LD 1, 6(5) ;  Load parameter 'b'
+354 : ADD 2, 1, 0 ;  Move left to R2
+355 : ADD 1, 3, 0 ;  Restore right to R1
+356 : ADD 1, 2, 1 ;  R1 = left + right
+357 : LDA 4, 10(5) ;  [JIT] callee frame base
+358 : ST 1, 6(4) ;  Store arg 5 in callee frame
+359 : LD 1, 7(5) ;  Load parameter 'c'
+360 : LDA 4, 10(5) ;  [JIT] callee frame base
+361 : ST 1, 7(4) ;  Store arg 6 in callee frame
+362 : LD 1, 8(5) ;  Load parameter 'd'
+363 : LDA 4, 10(5) ;  [JIT] callee frame base
+364 : ST 1, 8(4) ;  Store arg 7 in callee frame
+365 : LDA 4, 10(5) ;  [JIT] callee frame base
+366 : LDA 6, 370(0) ;  Return address
+367 : ST 6, 0(4) ;  Store RA in callee frame
+368 : ADD 5, 4, 0 ;  Push callee frame
+369 : LDA 7, 136(0) ;  Call whileLoopFor
+370 : LD 1, 9(5) ;  Load callee result
+371 : LDC 2, 10(0) ;  Caller frame size
+372 : SUB 5, 5, 2 ;  Pop callee frame
+373 : LDA 7, 416(0) ;  Skip ELSE
+374 : LD 1, 1(5) ;  Load parameter 'selector'
+375 : LDA 4, 10(5) ;  [JIT] callee frame base
+376 : ST 1, 1(4) ;  Store arg 0 in callee frame
+377 : LD 1, 2(5) ;  Load parameter 'xNum'
+378 : LDA 4, 10(5) ;  [JIT] callee frame base
+379 : ST 1, 2(4) ;  Store arg 1 in callee frame
+380 : LD 1, 3(5) ;  Load parameter 'xDen'
+381 : LDA 4, 10(5) ;  [JIT] callee frame base
+382 : ST 1, 3(4) ;  Store arg 2 in callee frame
+383 : LD 1, 4(5) ;  Load parameter 'N'
+384 : LDA 4, 10(5) ;  [JIT] callee frame base
+385 : ST 1, 4(4) ;  Store arg 3 in callee frame
+386 : LD 1, 5(5) ;  Load parameter 'a'
+387 : LDA 4, 10(5) ;  [JIT] callee frame base
+388 : ST 1, 5(4) ;  Store arg 4 in callee frame
+389 : LD 1, 6(5) ;  Load parameter 'b'
+390 : LDA 4, 10(5) ;  [JIT] callee frame base
+391 : ST 1, 6(4) ;  Store arg 5 in callee frame
+392 : LD 1, 7(5) ;  Load parameter 'c'
+393 : ADD 3, 1, 0 ;  Stash right in R3
+394 : LD 1, 5(5) ;  Load parameter 'a'
+395 : ADD 2, 1, 0 ;  Move left to R2
+396 : ADD 1, 3, 0 ;  Restore right to R1
+397 : ADD 1, 2, 1 ;  R1 = left + right
+398 : LDA 4, 10(5) ;  [JIT] callee frame base
+399 : ST 1, 7(4) ;  Store arg 6 in callee frame
+400 : LD 1, 8(5) ;  Load parameter 'd'
+401 : ADD 3, 1, 0 ;  Stash right in R3
+402 : LD 1, 6(5) ;  Load parameter 'b'
+403 : ADD 2, 1, 0 ;  Move left to R2
+404 : ADD 1, 3, 0 ;  Restore right to R1
+405 : ADD 1, 2, 1 ;  R1 = left + right
+406 : LDA 4, 10(5) ;  [JIT] callee frame base
+407 : ST 1, 8(4) ;  Store arg 7 in callee frame
+408 : LDA 4, 10(5) ;  [JIT] callee frame base
+409 : LDA 6, 413(0) ;  Return address
+410 : ST 6, 0(4) ;  Store RA in callee frame
+411 : ADD 5, 4, 0 ;  Push callee frame
+412 : LDA 7, 136(0) ;  Call whileLoopFor
+413 : LD 1, 9(5) ;  Load callee result
+414 : LDC 2, 10(0) ;  Caller frame size
+415 : SUB 5, 5, 2 ;  Pop callee frame
+416 : ST 1, 9(5) ;  Store function result
+417 : LD 6, 0(5) ;  Load return address
+418 : LDA 7, 0(6) ;  Return to caller
+419 : LD 1, 3(5) ;  Load parameter 'b'
+420 : LDA 4, 4(5) ;  [JIT] callee frame base
+421 : ST 1, 1(4) ;  Store arg 0 in callee frame
+422 : LD 1, 1(5) ;  Load parameter 'N'
+423 : LDA 4, 4(5) ;  [JIT] callee frame base
+424 : ST 1, 2(4) ;  Store arg 1 in callee frame
+425 : LDA 4, 4(5) ;  [JIT] callee frame base
+426 : LDA 6, 430(0) ;  Return address
+427 : ST 6, 0(4) ;  Store RA in callee frame
+428 : ADD 5, 4, 0 ;  Push callee frame
+429 : LDA 7, 61(0) ;  Call greater
+430 : LD 1, 3(5) ;  Load callee result
+431 : LDC 2, 4(0) ;  Caller frame size
+432 : SUB 5, 5, 2 ;  Pop callee frame
+433 : JEQ 1, 436(0) ;  If false, jump to ELSE
+434 : LD 1, 5(5) ;  Load parameter 'd'
+435 : LDA 7, 437(0) ;  Skip ELSE
+436 : LD 1, 3(5) ;  Load parameter 'b'
+437 : ST 1, 6(5) ;  Store function result
+438 : LD 6, 0(5) ;  Load return address
+439 : LDA 7, 0(6) ;  Return to caller
+440 : LD 1, 3(5) ;  Load parameter 'b'
+441 : LDA 4, 4(5) ;  [JIT] callee frame base
+442 : ST 1, 1(4) ;  Store arg 0 in callee frame
+443 : LD 1, 1(5) ;  Load parameter 'N'
+444 : LDA 4, 4(5) ;  [JIT] callee frame base
+445 : ST 1, 2(4) ;  Store arg 1 in callee frame
+446 : LDA 4, 4(5) ;  [JIT] callee frame base
+447 : LDA 6, 451(0) ;  Return address
+448 : ST 6, 0(4) ;  Store RA in callee frame
+449 : ADD 5, 4, 0 ;  Push callee frame
+450 : LDA 7, 61(0) ;  Call greater
+451 : LD 1, 3(5) ;  Load callee result
+452 : LDC 2, 4(0) ;  Caller frame size
+453 : SUB 5, 5, 2 ;  Pop callee frame
+454 : JEQ 1, 457(0) ;  If false, jump to ELSE
+455 : LD 1, 4(5) ;  Load parameter 'c'
+456 : LDA 7, 458(0) ;  Skip ELSE
+457 : LD 1, 2(5) ;  Load parameter 'a'
+458 : ST 1, 6(5) ;  Store function result
+459 : LD 6, 0(5) ;  Load return address
+460 : LDA 7, 0(6) ;  Return to caller
+461 : LD 1, 3(5) ;  Load parameter 'N'
+462 : LDA 4, 7(5) ;  [JIT] callee frame base
+463 : ST 1, 1(4) ;  Store arg 0 in callee frame
+464 : LDC 1, 1(0) ;  Load integer literal into R1
+465 : LDA 4, 10(5) ;  [JIT] callee frame base
+466 : ST 1, 1(4) ;  Store arg 0 in callee frame
+467 : LD 1, 1(5) ;  Load parameter 'xNum'
+468 : LDA 4, 10(5) ;  [JIT] callee frame base
+469 : ST 1, 2(4) ;  Store arg 1 in callee frame
+470 : LD 1, 2(5) ;  Load parameter 'xDen'
+471 : LDA 4, 10(5) ;  [JIT] callee frame base
+472 : ST 1, 3(4) ;  Store arg 2 in callee frame
+473 : LD 1, 3(5) ;  Load parameter 'N'
+474 : LDA 4, 10(5) ;  [JIT] callee frame base
+475 : ST 1, 4(4) ;  Store arg 3 in callee frame
+476 : LDC 1, 0(0) ;  Load integer literal into R1
+477 : LDA 4, 10(5) ;  [JIT] callee frame base
+478 : ST 1, 5(4) ;  Store arg 4 in callee frame
+479 : LDC 1, 1(0) ;  Load integer literal into R1
+480 : LDA 4, 10(5) ;  [JIT] callee frame base
+481 : ST 1, 6(4) ;  Store arg 5 in callee frame
+482 : LDC 1, 1(0) ;  Load integer literal into R1
+483 : LDA 4, 10(5) ;  [JIT] callee frame base
+484 : ST 1, 7(4) ;  Store arg 6 in callee frame
+485 : LDC 1, 1(0) ;  Load integer literal into R1
+486 : LDA 4, 10(5) ;  [JIT] callee frame base
+487 : ST 1, 8(4) ;  Store arg 7 in callee frame
+488 : LDA 4, 10(5) ;  [JIT] callee frame base
+489 : LDA 6, 493(0) ;  Return address
+490 : ST 6, 0(4) ;  Store RA in callee frame
+491 : ADD 5, 4, 0 ;  Push callee frame
+492 : LDA 7, 136(0) ;  Call whileLoopFor
+493 : LD 1, 9(5) ;  Load callee result
+494 : LDC 2, 10(0) ;  Caller frame size
+495 : SUB 5, 5, 2 ;  Pop callee frame
+496 : LDA 4, 7(5) ;  [JIT] callee frame base
+497 : ST 1, 2(4) ;  Store arg 1 in callee frame
+498 : LDC 1, 2(0) ;  Load integer literal into R1
+499 : LDA 4, 10(5) ;  [JIT] callee frame base
+500 : ST 1, 1(4) ;  Store arg 0 in callee frame
+501 : LD 1, 1(5) ;  Load parameter 'xNum'
+502 : LDA 4, 10(5) ;  [JIT] callee frame base
+503 : ST 1, 2(4) ;  Store arg 1 in callee frame
+504 : LD 1, 2(5) ;  Load parameter 'xDen'
+505 : LDA 4, 10(5) ;  [JIT] callee frame base
+506 : ST 1, 3(4) ;  Store arg 2 in callee frame
+507 : LD 1, 3(5) ;  Load parameter 'N'
+508 : LDA 4, 10(5) ;  [JIT] callee frame base
+509 : ST 1, 4(4) ;  Store arg 3 in callee frame
+510 : LDC 1, 0(0) ;  Load integer literal into R1
+511 : LDA 4, 10(5) ;  [JIT] callee frame base
+512 : ST 1, 5(4) ;  Store arg 4 in callee frame
+513 : LDC 1, 1(0) ;  Load integer literal into R1
+514 : LDA 4, 10(5) ;  [JIT] callee frame base
+515 : ST 1, 6(4) ;  Store arg 5 in callee frame
+516 : LDC 1, 1(0) ;  Load integer literal into R1
+517 : LDA 4, 10(5) ;  [JIT] callee frame base
+518 : ST 1, 7(4) ;  Store arg 6 in callee frame
+519 : LDC 1, 1(0) ;  Load integer literal into R1
+520 : LDA 4, 10(5) ;  [JIT] callee frame base
+521 : ST 1, 8(4) ;  Store arg 7 in callee frame
+522 : LDA 4, 10(5) ;  [JIT] callee frame base
+523 : LDA 6, 527(0) ;  Return address
+524 : ST 6, 0(4) ;  Store RA in callee frame
+525 : ADD 5, 4, 0 ;  Push callee frame
+526 : LDA 7, 136(0) ;  Call whileLoopFor
+527 : LD 1, 9(5) ;  Load callee result
+528 : LDC 2, 10(0) ;  Caller frame size
+529 : SUB 5, 5, 2 ;  Pop callee frame
+530 : LDA 4, 7(5) ;  [JIT] callee frame base
+531 : ST 1, 3(4) ;  Store arg 2 in callee frame
+532 : LDC 1, 3(0) ;  Load integer literal into R1
+533 : LDA 4, 10(5) ;  [JIT] callee frame base
+534 : ST 1, 1(4) ;  Store arg 0 in callee frame
+535 : LD 1, 1(5) ;  Load parameter 'xNum'
+536 : LDA 4, 10(5) ;  [JIT] callee frame base
+537 : ST 1, 2(4) ;  Store arg 1 in callee frame
+538 : LD 1, 2(5) ;  Load parameter 'xDen'
+539 : LDA 4, 10(5) ;  [JIT] callee frame base
+540 : ST 1, 3(4) ;  Store arg 2 in callee frame
+541 : LD 1, 3(5) ;  Load parameter 'N'
+542 : LDA 4, 10(5) ;  [JIT] callee frame base
+543 : ST 1, 4(4) ;  Store arg 3 in callee frame
+544 : LDC 1, 0(0) ;  Load integer literal into R1
+545 : LDA 4, 10(5) ;  [JIT] callee frame base
+546 : ST 1, 5(4) ;  Store arg 4 in callee frame
+547 : LDC 1, 1(0) ;  Load integer literal into R1
+548 : LDA 4, 10(5) ;  [JIT] callee frame base
+549 : ST 1, 6(4) ;  Store arg 5 in callee frame
+550 : LDC 1, 1(0) ;  Load integer literal into R1
+551 : LDA 4, 10(5) ;  [JIT] callee frame base
+552 : ST 1, 7(4) ;  Store arg 6 in callee frame
+553 : LDC 1, 1(0) ;  Load integer literal into R1
+554 : LDA 4, 10(5) ;  [JIT] callee frame base
+555 : ST 1, 8(4) ;  Store arg 7 in callee frame
+556 : LDA 4, 10(5) ;  [JIT] callee frame base
+557 : LDA 6, 561(0) ;  Return address
+558 : ST 6, 0(4) ;  Store RA in callee frame
+559 : ADD 5, 4, 0 ;  Push callee frame
+560 : LDA 7, 136(0) ;  Call whileLoopFor
+561 : LD 1, 9(5) ;  Load callee result
+562 : LDC 2, 10(0) ;  Caller frame size
+563 : SUB 5, 5, 2 ;  Pop callee frame
+564 : LDA 4, 7(5) ;  [JIT] callee frame base
+565 : ST 1, 4(4) ;  Store arg 3 in callee frame
+566 : LDC 1, 4(0) ;  Load integer literal into R1
+567 : LDA 4, 10(5) ;  [JIT] callee frame base
+568 : ST 1, 1(4) ;  Store arg 0 in callee frame
+569 : LD 1, 1(5) ;  Load parameter 'xNum'
+570 : LDA 4, 10(5) ;  [JIT] callee frame base
+571 : ST 1, 2(4) ;  Store arg 1 in callee frame
+572 : LD 1, 2(5) ;  Load parameter 'xDen'
+573 : LDA 4, 10(5) ;  [JIT] callee frame base
+574 : ST 1, 3(4) ;  Store arg 2 in callee frame
+575 : LD 1, 3(5) ;  Load parameter 'N'
+576 : LDA 4, 10(5) ;  [JIT] callee frame base
+577 : ST 1, 4(4) ;  Store arg 3 in callee frame
+578 : LDC 1, 0(0) ;  Load integer literal into R1
+579 : LDA 4, 10(5) ;  [JIT] callee frame base
+580 : ST 1, 5(4) ;  Store arg 4 in callee frame
+581 : LDC 1, 1(0) ;  Load integer literal into R1
+582 : LDA 4, 10(5) ;  [JIT] callee frame base
+583 : ST 1, 6(4) ;  Store arg 5 in callee frame
+584 : LDC 1, 1(0) ;  Load integer literal into R1
+585 : LDA 4, 10(5) ;  [JIT] callee frame base
+586 : ST 1, 7(4) ;  Store arg 6 in callee frame
+587 : LDC 1, 1(0) ;  Load integer literal into R1
+588 : LDA 4, 10(5) ;  [JIT] callee frame base
+589 : ST 1, 8(4) ;  Store arg 7 in callee frame
+590 : LDA 4, 10(5) ;  [JIT] callee frame base
+591 : LDA 6, 595(0) ;  Return address
+592 : ST 6, 0(4) ;  Store RA in callee frame
+593 : ADD 5, 4, 0 ;  Push callee frame
+594 : LDA 7, 136(0) ;  Call whileLoopFor
+595 : LD 1, 9(5) ;  Load callee result
+596 : LDC 2, 10(0) ;  Caller frame size
+597 : SUB 5, 5, 2 ;  Pop callee frame
+598 : LDA 4, 7(5) ;  [JIT] callee frame base
+599 : ST 1, 5(4) ;  Store arg 4 in callee frame
+600 : LDA 4, 7(5) ;  [JIT] callee frame base
+601 : LDA 6, 605(0) ;  Return address
+602 : ST 6, 0(4) ;  Store RA in callee frame
+603 : ADD 5, 4, 0 ;  Push callee frame
+604 : LDA 7, 419(0) ;  Call fareySelectDen
+605 : LD 1, 6(5) ;  Load callee result
+606 : LDC 2, 7(0) ;  Caller frame size
+607 : SUB 5, 5, 2 ;  Pop callee frame
+608 : ST 1, 4(5) ;  Store function result
+609 : LD 6, 0(5) ;  Load return address
+610 : LDA 7, 0(6) ;  Return to caller
+611 : LD 1, 3(5) ;  Load parameter 'N'
+612 : LDA 4, 7(5) ;  [JIT] callee frame base
+613 : ST 1, 1(4) ;  Store arg 0 in callee frame
+614 : LDC 1, 1(0) ;  Load integer literal into R1
+615 : LDA 4, 10(5) ;  [JIT] callee frame base
+616 : ST 1, 1(4) ;  Store arg 0 in callee frame
+617 : LD 1, 1(5) ;  Load parameter 'xNum'
+618 : LDA 4, 10(5) ;  [JIT] callee frame base
+619 : ST 1, 2(4) ;  Store arg 1 in callee frame
+620 : LD 1, 2(5) ;  Load parameter 'xDen'
+621 : LDA 4, 10(5) ;  [JIT] callee frame base
+622 : ST 1, 3(4) ;  Store arg 2 in callee frame
+623 : LD 1, 3(5) ;  Load parameter 'N'
+624 : LDA 4, 10(5) ;  [JIT] callee frame base
+625 : ST 1, 4(4) ;  Store arg 3 in callee frame
+626 : LDC 1, 0(0) ;  Load integer literal into R1
+627 : LDA 4, 10(5) ;  [JIT] callee frame base
+628 : ST 1, 5(4) ;  Store arg 4 in callee frame
+629 : LDC 1, 1(0) ;  Load integer literal into R1
+630 : LDA 4, 10(5) ;  [JIT] callee frame base
+631 : ST 1, 6(4) ;  Store arg 5 in callee frame
+632 : LDC 1, 1(0) ;  Load integer literal into R1
+633 : LDA 4, 10(5) ;  [JIT] callee frame base
+634 : ST 1, 7(4) ;  Store arg 6 in callee frame
+635 : LDC 1, 1(0) ;  Load integer literal into R1
+636 : LDA 4, 10(5) ;  [JIT] callee frame base
+637 : ST 1, 8(4) ;  Store arg 7 in callee frame
+638 : LDA 4, 10(5) ;  [JIT] callee frame base
+639 : LDA 6, 643(0) ;  Return address
+640 : ST 6, 0(4) ;  Store RA in callee frame
+641 : ADD 5, 4, 0 ;  Push callee frame
+642 : LDA 7, 136(0) ;  Call whileLoopFor
+643 : LD 1, 9(5) ;  Load callee result
+644 : LDC 2, 10(0) ;  Caller frame size
+645 : SUB 5, 5, 2 ;  Pop callee frame
+646 : LDA 4, 7(5) ;  [JIT] callee frame base
+647 : ST 1, 2(4) ;  Store arg 1 in callee frame
+648 : LDC 1, 2(0) ;  Load integer literal into R1
+649 : LDA 4, 10(5) ;  [JIT] callee frame base
+650 : ST 1, 1(4) ;  Store arg 0 in callee frame
+651 : LD 1, 1(5) ;  Load parameter 'xNum'
+652 : LDA 4, 10(5) ;  [JIT] callee frame base
+653 : ST 1, 2(4) ;  Store arg 1 in callee frame
+654 : LD 1, 2(5) ;  Load parameter 'xDen'
+655 : LDA 4, 10(5) ;  [JIT] callee frame base
+656 : ST 1, 3(4) ;  Store arg 2 in callee frame
+657 : LD 1, 3(5) ;  Load parameter 'N'
+658 : LDA 4, 10(5) ;  [JIT] callee frame base
+659 : ST 1, 4(4) ;  Store arg 3 in callee frame
+660 : LDC 1, 0(0) ;  Load integer literal into R1
+661 : LDA 4, 10(5) ;  [JIT] callee frame base
+662 : ST 1, 5(4) ;  Store arg 4 in callee frame
+663 : LDC 1, 1(0) ;  Load integer literal into R1
+664 : LDA 4, 10(5) ;  [JIT] callee frame base
+665 : ST 1, 6(4) ;  Store arg 5 in callee frame
+666 : LDC 1, 1(0) ;  Load integer literal into R1
+667 : LDA 4, 10(5) ;  [JIT] callee frame base
+668 : ST 1, 7(4) ;  Store arg 6 in callee frame
+669 : LDC 1, 1(0) ;  Load integer literal into R1
+670 : LDA 4, 10(5) ;  [JIT] callee frame base
+671 : ST 1, 8(4) ;  Store arg 7 in callee frame
+672 : LDA 4, 10(5) ;  [JIT] callee frame base
+673 : LDA 6, 677(0) ;  Return address
+674 : ST 6, 0(4) ;  Store RA in callee frame
+675 : ADD 5, 4, 0 ;  Push callee frame
+676 : LDA 7, 136(0) ;  Call whileLoopFor
+677 : LD 1, 9(5) ;  Load callee result
+678 : LDC 2, 10(0) ;  Caller frame size
+679 : SUB 5, 5, 2 ;  Pop callee frame
+680 : LDA 4, 7(5) ;  [JIT] callee frame base
+681 : ST 1, 3(4) ;  Store arg 2 in callee frame
+682 : LDC 1, 3(0) ;  Load integer literal into R1
+683 : LDA 4, 10(5) ;  [JIT] callee frame base
+684 : ST 1, 1(4) ;  Store arg 0 in callee frame
+685 : LD 1, 1(5) ;  Load parameter 'xNum'
+686 : LDA 4, 10(5) ;  [JIT] callee frame base
+687 : ST 1, 2(4) ;  Store arg 1 in callee frame
+688 : LD 1, 2(5) ;  Load parameter 'xDen'
+689 : LDA 4, 10(5) ;  [JIT] callee frame base
+690 : ST 1, 3(4) ;  Store arg 2 in callee frame
+691 : LD 1, 3(5) ;  Load parameter 'N'
+692 : LDA 4, 10(5) ;  [JIT] callee frame base
+693 : ST 1, 4(4) ;  Store arg 3 in callee frame
+694 : LDC 1, 0(0) ;  Load integer literal into R1
+695 : LDA 4, 10(5) ;  [JIT] callee frame base
+696 : ST 1, 5(4) ;  Store arg 4 in callee frame
+697 : LDC 1, 1(0) ;  Load integer literal into R1
+698 : LDA 4, 10(5) ;  [JIT] callee frame base
+699 : ST 1, 6(4) ;  Store arg 5 in callee frame
+700 : LDC 1, 1(0) ;  Load integer literal into R1
+701 : LDA 4, 10(5) ;  [JIT] callee frame base
+702 : ST 1, 7(4) ;  Store arg 6 in callee frame
+703 : LDC 1, 1(0) ;  Load integer literal into R1
+704 : LDA 4, 10(5) ;  [JIT] callee frame base
+705 : ST 1, 8(4) ;  Store arg 7 in callee frame
+706 : LDA 4, 10(5) ;  [JIT] callee frame base
+707 : LDA 6, 711(0) ;  Return address
+708 : ST 6, 0(4) ;  Store RA in callee frame
+709 : ADD 5, 4, 0 ;  Push callee frame
+710 : LDA 7, 136(0) ;  Call whileLoopFor
+711 : LD 1, 9(5) ;  Load callee result
+712 : LDC 2, 10(0) ;  Caller frame size
+713 : SUB 5, 5, 2 ;  Pop callee frame
+714 : LDA 4, 7(5) ;  [JIT] callee frame base
+715 : ST 1, 4(4) ;  Store arg 3 in callee frame
+716 : LDC 1, 4(0) ;  Load integer literal into R1
+717 : LDA 4, 10(5) ;  [JIT] callee frame base
+718 : ST 1, 1(4) ;  Store arg 0 in callee frame
+719 : LD 1, 1(5) ;  Load parameter 'xNum'
+720 : LDA 4, 10(5) ;  [JIT] callee frame base
+721 : ST 1, 2(4) ;  Store arg 1 in callee frame
+722 : LD 1, 2(5) ;  Load parameter 'xDen'
+723 : LDA 4, 10(5) ;  [JIT] callee frame base
+724 : ST 1, 3(4) ;  Store arg 2 in callee frame
+725 : LD 1, 3(5) ;  Load parameter 'N'
+726 : LDA 4, 10(5) ;  [JIT] callee frame base
+727 : ST 1, 4(4) ;  Store arg 3 in callee frame
+728 : LDC 1, 0(0) ;  Load integer literal into R1
+729 : LDA 4, 10(5) ;  [JIT] callee frame base
+730 : ST 1, 5(4) ;  Store arg 4 in callee frame
+731 : LDC 1, 1(0) ;  Load integer literal into R1
+732 : LDA 4, 10(5) ;  [JIT] callee frame base
+733 : ST 1, 6(4) ;  Store arg 5 in callee frame
+734 : LDC 1, 1(0) ;  Load integer literal into R1
+735 : LDA 4, 10(5) ;  [JIT] callee frame base
+736 : ST 1, 7(4) ;  Store arg 6 in callee frame
+737 : LDC 1, 1(0) ;  Load integer literal into R1
+738 : LDA 4, 10(5) ;  [JIT] callee frame base
+739 : ST 1, 8(4) ;  Store arg 7 in callee frame
+740 : LDA 4, 10(5) ;  [JIT] callee frame base
+741 : LDA 6, 745(0) ;  Return address
+742 : ST 6, 0(4) ;  Store RA in callee frame
+743 : ADD 5, 4, 0 ;  Push callee frame
+744 : LDA 7, 136(0) ;  Call whileLoopFor
+745 : LD 1, 9(5) ;  Load callee result
+746 : LDC 2, 10(0) ;  Caller frame size
+747 : SUB 5, 5, 2 ;  Pop callee frame
+748 : LDA 4, 7(5) ;  [JIT] callee frame base
+749 : ST 1, 5(4) ;  Store arg 4 in callee frame
+750 : LDA 4, 7(5) ;  [JIT] callee frame base
+751 : LDA 6, 755(0) ;  Return address
+752 : ST 6, 0(4) ;  Store RA in callee frame
+753 : ADD 5, 4, 0 ;  Push callee frame
+754 : LDA 7, 440(0) ;  Call fareySelectNum
+755 : LD 1, 6(5) ;  Load callee result
+756 : LDC 2, 7(0) ;  Caller frame size
+757 : SUB 5, 5, 2 ;  Pop callee frame
+758 : ST 1, 4(5) ;  Store function result
+759 : LD 6, 0(5) ;  Load return address
+760 : LDA 7, 0(6) ;  Return to caller
