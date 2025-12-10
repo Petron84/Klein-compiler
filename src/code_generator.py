@@ -268,7 +268,7 @@ class Generator:
                         self.instruction_rules(arg, curr_function, callee=True)
 
                         # Recompute callee base AFTER evaluation, BEFORE using R4
-                        self.write(f"LDA 4, {callee_size}(5)", "Recompute callee base from callee size")
+                        self.write(f"LDA 4, {callee_size + 1}(5)", "Recompute callee base from callee size")
                         self.write(f"ST 1, {i+1}(4)", f"Store argument {i} in callee")
 
                     # 2) Install return address — recompute base again to be safe

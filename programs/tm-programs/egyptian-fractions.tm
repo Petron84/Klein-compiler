@@ -26,10 +26,10 @@
 25 : ST 1, 3(5) ; Store result into current frame's return slot
 26 : LDA 7, 83(0) ; Skip ELSE block
 27 : LD 1, 2(5) ; Load parameter 'n' into R1
-28 : LDA 4, 6(5) ; Recompute callee base from callee size
+28 : LDA 4, 7(5) ; Recompute callee base from callee size
 29 : ST 1, 1(4) ; Store argument 0 in callee
 30 : LD 1, 1(5) ; Load parameter 'm' into R1
-31 : LDA 4, 6(5) ; Recompute callee base from callee size
+31 : LDA 4, 7(5) ; Recompute callee base from callee size
 32 : ST 1, 2(4) ; Store argument 1 in callee
 33 : LDA 4, 6(5) ; Recompute callee base from callee size
 34 : LDA 6, 38(0) ; Return address
@@ -56,10 +56,10 @@
 55 : ST 1, 3(5) ; Store result into current frame's return slot
 56 : LDA 7, 83(0) ; Skip ELSE block
 57 : LD 1, 1(5) ; Load parameter 'm' into R1
-58 : LDA 4, 6(5) ; Recompute callee base from callee size
+58 : LDA 4, 7(5) ; Recompute callee base from callee size
 59 : ST 1, 1(4) ; Store argument 0 in callee
 60 : LD 1, 2(5) ; Load parameter 'n' into R1
-61 : LDA 4, 6(5) ; Recompute callee base from callee size
+61 : LDA 4, 7(5) ; Recompute callee base from callee size
 62 : ST 1, 2(4) ; Store argument 1 in callee
 63 : LD 1, 2(5) ; Load parameter 'n' into R1
 64 : ST 1, 4(5) ; Spill left operand at depth 0
@@ -70,7 +70,7 @@
 69 : LDC 1, 1(0) ; Load integer-literal into R1
 70 : LD 2, 4(5) ; Restore left operand from depth 0
 71 : ADD 1, 2, 1 ; R1 = left + right
-72 : LDA 4, 6(5) ; Recompute callee base from callee size
+72 : LDA 4, 7(5) ; Recompute callee base from callee size
 73 : ST 1, 3(4) ; Store argument 2 in callee
 74 : LDA 4, 6(5) ; Recompute callee base from callee size
 75 : LDA 6, 79(0) ; Return address
@@ -117,14 +117,14 @@
 116 : LD 1, 2(5) ; Load parameter 'n' into R1
 117 : LD 2, 5(5) ; Restore left operand from depth 0
 118 : SUB 1, 2, 1 ; R1 = left - right
-119 : LDA 4, 5(5) ; Recompute callee base from callee size
+119 : LDA 4, 6(5) ; Recompute callee base from callee size
 120 : ST 1, 1(4) ; Store argument 0 in callee
 121 : LD 1, 2(5) ; Load parameter 'n' into R1
 122 : ST 1, 5(5) ; Spill left operand at depth 0
 123 : LD 1, 3(5) ; Load parameter 'unit' into R1
 124 : LD 2, 5(5) ; Restore left operand from depth 0
 125 : MUL 1, 2, 1 ; R1 = left * right
-126 : LDA 4, 5(5) ; Recompute callee base from callee size
+126 : LDA 4, 6(5) ; Recompute callee base from callee size
 127 : ST 1, 2(4) ; Store argument 1 in callee
 128 : LDA 4, 5(5) ; Recompute callee base from callee size
 129 : LDA 6, 133(0) ; Return address

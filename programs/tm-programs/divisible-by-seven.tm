@@ -15,13 +15,13 @@
 14 : LDC 1, 10(0) ; Load integer-literal into R1
 15 : LD 2, 3(5) ; Restore left operand from depth 0
 16 : DIV 1, 2, 1 ; R1 = left / right
-17 : LDA 4, 6(5) ; Recompute callee base from callee size
+17 : LDA 4, 7(5) ; Recompute callee base from callee size
 18 : ST 1, 1(4) ; Store argument 0 in callee
 19 : LD 1, 1(5) ; Load parameter 'n' into R1
-20 : LDA 4, 6(5) ; Recompute callee base from callee size
+20 : LDA 4, 7(5) ; Recompute callee base from callee size
 21 : ST 1, 1(4) ; Store argument 0 in callee
 22 : LDC 1, 10(0) ; Load integer-literal into R1
-23 : LDA 4, 6(5) ; Recompute callee base from callee size
+23 : LDA 4, 7(5) ; Recompute callee base from callee size
 24 : ST 1, 2(4) ; Store argument 1 in callee
 25 : LDA 4, 6(5) ; Recompute callee base from callee size
 26 : LDA 6, 30(0) ; Return address
@@ -31,7 +31,7 @@
 30 : LD 1, 3(5) ; Load callee result into R1
 31 : LDC 2, 6(0) ; Callee frame size
 32 : SUB 5, 5, 2 ; Pop callee frame
-33 : LDA 4, 6(5) ; Recompute callee base from callee size
+33 : LDA 4, 7(5) ; Recompute callee base from callee size
 34 : ST 1, 2(4) ; Store argument 1 in callee
 35 : LDA 4, 6(5) ; Recompute callee base from callee size
 36 : LDA 6, 40(0) ; Return address
@@ -124,7 +124,7 @@
 123 : LDC 1, 0(0) ; Load boolean-literal into R1
 124 : LDA 7, 136(0) ; Skip ELSE block
 125 : LD 1, 1(5) ; Load parameter 'diff' into R1
-126 : LDA 4, 4(5) ; Recompute callee base from callee size
+126 : LDA 4, 5(5) ; Recompute callee base from callee size
 127 : ST 1, 1(4) ; Store argument 0 in callee
 128 : LDA 4, 4(5) ; Recompute callee base from callee size
 129 : LDA 6, 133(0) ; Return address
@@ -146,7 +146,7 @@
 145 : MUL 1, 2, 1 ; R1 = left * right
 146 : LD 2, 4(5) ; Restore left operand from depth 0
 147 : SUB 1, 2, 1 ; R1 = left - right
-148 : LDA 4, 5(5) ; Recompute callee base from callee size
+148 : LDA 4, 6(5) ; Recompute callee base from callee size
 149 : ST 1, 1(4) ; Store argument 0 in callee
 150 : LDA 4, 5(5) ; Recompute callee base from callee size
 151 : LDA 6, 155(0) ; Return address
