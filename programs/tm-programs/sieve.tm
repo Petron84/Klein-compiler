@@ -170,7 +170,7 @@
 169 : LD 1, 1(5) ; Load parameter 'current' into R1
 170 : LDA 7, 172(0) ; Skip ELSE block
 171 : LDC 1, 0(0) ; Load integer-literal into R1
-172 : LDA 4, 5(5) ; Recompute callee base from caller size
+172 : LDA 4, 6(5) ; Recompute callee base from caller size
 173 : LDA 6, 177(0) ; Return address
 174 : ST 6, 0(4) ; Store return address in callee frame
 175 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

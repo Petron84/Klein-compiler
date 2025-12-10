@@ -101,7 +101,7 @@
 100 : LD 6, 0(5) ; Load return address
 101 : LDA 7, 0(6) ; Return to caller
 102 : LD 1, 3(5) ; Load parameter 'unit' into R1
-103 : LDA 4, 6(5) ; Recompute callee base from caller size
+103 : LDA 4, 7(5) ; Recompute callee base from caller size
 104 : LDA 6, 108(0) ; Return address
 105 : ST 6, 0(4) ; Store return address in callee frame
 106 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

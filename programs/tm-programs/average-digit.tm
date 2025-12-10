@@ -52,7 +52,7 @@
 51 : LD 1, 2(5) ; Load parameter 'n' into R1
 52 : LD 2, 4(5) ; Restore left operand from depth 0
 53 : DIV 1, 2, 1 ; R1 = left / right
-54 : LDA 4, 4(5) ; Recompute callee base from caller size
+54 : LDA 4, 5(5) ; Recompute callee base from caller size
 55 : LDA 6, 59(0) ; Return address
 56 : ST 6, 0(4) ; Store return address in callee frame
 57 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
@@ -73,7 +73,7 @@
 72 : LD 1, 3(5) ; Load callee result into R1
 73 : LDC 2, 6(0) ; Callee frame size
 74 : SUB 5, 5, 2 ; Pop callee frame
-75 : LDA 4, 4(5) ; Recompute callee base from caller size
+75 : LDA 4, 5(5) ; Recompute callee base from caller size
 76 : LDA 6, 80(0) ; Return address
 77 : ST 6, 0(4) ; Store return address in callee frame
 78 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

@@ -335,7 +335,7 @@
 334 : LD 6, 0(5) ; Load return address
 335 : LDA 7, 0(6) ; Return to caller
 336 : LD 1, 1(5) ; Load parameter 'x' into R1
-337 : LDA 4, 3(5) ; Recompute callee base from caller size
+337 : LDA 4, 4(5) ; Recompute callee base from caller size
 338 : LDA 6, 342(0) ; Return address
 339 : ST 6, 0(4) ; Store return address in callee frame
 340 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

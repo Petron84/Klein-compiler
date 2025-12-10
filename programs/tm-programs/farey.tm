@@ -31,7 +31,7 @@
 30 : LD 1, 4(5) ; Load callee result into R1
 31 : LDC 2, 5(0) ; Callee frame size
 32 : SUB 5, 5, 2 ; Pop callee frame
-33 : LDA 4, 5(5) ; Recompute callee base from caller size
+33 : LDA 4, 6(5) ; Recompute callee base from caller size
 34 : LDA 6, 38(0) ; Return address
 35 : ST 6, 0(4) ; Store return address in callee frame
 36 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

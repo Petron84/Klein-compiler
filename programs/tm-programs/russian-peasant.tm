@@ -13,7 +13,7 @@
 12 : LD 6, 0(5) ; Load return address from current frame
 13 : LDA 7, 0(6) ; Jump back to caller
 14 : LD 1, 1(5) ; Load parameter 'm' into R1
-15 : LDA 4, 4(5) ; Recompute callee base from caller size
+15 : LDA 4, 5(5) ; Recompute callee base from caller size
 16 : LDA 6, 20(0) ; Return address
 17 : ST 6, 0(4) ; Store return address in callee frame
 18 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

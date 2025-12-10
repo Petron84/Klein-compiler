@@ -136,7 +136,7 @@
 135 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
 136 : LD 2, 5(5) ; Restore left operand from depth 0
 137 : DIV 1, 2, 1 ; R1 = left / right
-138 : LDA 4, 5(5) ; Recompute callee base from caller size
+138 : LDA 4, 6(5) ; Recompute callee base from caller size
 139 : LDA 6, 143(0) ; Return address
 140 : ST 6, 0(4) ; Store return address in callee frame
 141 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
@@ -148,7 +148,7 @@
 147 : LD 1, 3(5) ; Load parameter 'commonFactor' into R1
 148 : LD 2, 5(5) ; Restore left operand from depth 0
 149 : DIV 1, 2, 1 ; R1 = left / right
-150 : LDA 4, 5(5) ; Recompute callee base from caller size
+150 : LDA 4, 6(5) ; Recompute callee base from caller size
 151 : LDA 6, 155(0) ; Return address
 152 : ST 6, 0(4) ; Store return address in callee frame
 153 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

@@ -248,7 +248,7 @@ class Generator:
 
                     # Recompute callee base AFTER evaluating the arg (R4 may have been clobbered)
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {caller_size}(5)", "Recompute callee base from caller size")
+                    self.write(f"LDA 4, {caller_size + 1}(5)", "Recompute callee base from caller size")
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
                     self.write("ST 6, 0(4)", "Store return address in callee frame")
                     self.write("ADD 5, 4, 0", "Push callee frame (R5 := callee base)")

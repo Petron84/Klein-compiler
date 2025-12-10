@@ -345,7 +345,7 @@
 344 : LD 6, 0(5) ; Load return address
 345 : LDA 7, 0(6) ; Return to caller
 346 : LD 1, 4(5) ; Load parameter 'candidate' into R1
-347 : LDA 4, 7(5) ; Recompute callee base from caller size
+347 : LDA 4, 8(5) ; Recompute callee base from caller size
 348 : LDA 6, 352(0) ; Return address
 349 : ST 6, 0(4) ; Store return address in callee frame
 350 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)

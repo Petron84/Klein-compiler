@@ -87,7 +87,7 @@
 86 : LD 6, 0(5) ; Load return address
 87 : LDA 7, 0(6) ; Return to caller
 88 : LD 1, 2(5) ; Load parameter 'current' into R1
-89 : LDA 4, 5(5) ; Recompute callee base from caller size
+89 : LDA 4, 6(5) ; Recompute callee base from caller size
 90 : LDA 6, 94(0) ; Return address
 91 : ST 6, 0(4) ; Store return address in callee frame
 92 : ADD 5, 4, 0 ; Push callee frame (R5 := callee base)
