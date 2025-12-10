@@ -11,7 +11,7 @@ function main(a:integer, b:integer, c:integer): integer
             a + b
 
 function isZero(x:integer): boolean
-    x == 0
+    x = 0
 
 function isPositive(x:integer): boolean
-    x > 0
+    0 < x
