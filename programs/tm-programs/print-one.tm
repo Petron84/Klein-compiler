@@ -9,12 +9,12 @@
 8 : LD 6, 0(5) ; Load return address from current frame
 9 : LDA 7, 0(6) ; Jump back to caller
 10 : LDC 1, 1(0) ; Load integer-literal into R1
-11 : LDA 4, 3(5) ; Callee base for built-in print
+11 : LDA 4, 2(5) ; Compute callee base = FP + caller_size
 12 : LDA 6, 16(0) ; Return address
 13 : ST 6, 0(4) ; Store return address in callee frame
 14 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 15 : LDA 7, 7(0) ; Call built-in print
-16 : LDC 2, 3(0) ; Callee frame size (print)
+16 : LDC 2, 2(0) ; Caller frame size
 17 : SUB 5, 5, 2 ; Pop back to caller
 18 : LDC 1, 1(0) ; Load integer-literal into R1
 19 : ST 1, 1(5) ; Store result into current frame's return slot
