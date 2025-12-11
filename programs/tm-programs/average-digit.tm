@@ -11,154 +11,166 @@
 10 : LD 6, 0(5) ; Load return address from current frame
 11 : LDA 7, 0(6) ; Jump back to caller
 12 : LD 1, 1(5) ; Load parameter 'n' into R1
-13 : LDA 4, 3(5) ; Compute callee base = FP + caller_size
-14 : ST 1, 1(4) ; Store argument 0 in callee param slot
-15 : LDC 1, 0(0) ; Load integer-literal into R1
-16 : LDA 4, 3(5) ; Compute callee base = FP + caller_size
-17 : ST 1, 2(4) ; Store argument 1 in callee param slot
-18 : LDC 1, 0(0) ; Load integer-literal into R1
-19 : LDA 4, 3(5) ; Compute callee base = FP + caller_size
-20 : ST 1, 3(4) ; Store argument 2 in callee param slot
-21 : LDA 4, 3(5) ; Compute callee base = FP + caller_size
-22 : LDA 6, 26(0) ; Return address
-23 : ST 6, 0(4) ; Store return in callee frame
-24 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-25 : LDA 7, 86(0) ; Call average_digit
-26 : LD 1, 4(5) ; Load callee result into R1
-27 : LDC 2, 3(0) ; Caller frame size
-28 : SUB 5, 5, 2 ; Pop callee frame back to caller
-29 : ST 1, 2(5) ; Store result into caller’s frame return slot
-30 : LD 1, 2(5) ; Load main return value into R1
-31 : LD 6, 0(5) ; Load main return address
-32 : LDA 7, 0(6) ; Return from main
-33 : LD 1, 1(5) ; Load parameter 'm' into R1
-34 : ST 1, 4(5) ; Spill left operand at depth 0
-35 : LD 1, 1(5) ; Load parameter 'm' into R1
-36 : ST 1, 5(5) ; Spill left operand at depth 1
-37 : LD 1, 2(5) ; Load parameter 'n' into R1
-38 : LD 2, 5(5) ; Restore left operand from depth 1
-39 : DIV 1, 2, 1 ; R1 = left / right
-40 : ST 1, 5(5) ; Spill left operand at depth 1
-41 : LD 1, 2(5) ; Load parameter 'n' into R1
-42 : LD 2, 5(5) ; Restore left operand from depth 1
-43 : MUL 1, 2, 1 ; R1 = left * right
-44 : LD 2, 4(5) ; Restore left operand from depth 0
-45 : SUB 1, 2, 1 ; R1 = left - right
-46 : ST 1, 3(5) ; Store function result into frame return slot
-47 : LD 6, 0(5) ; Load return address
-48 : LDA 7, 0(6) ; Return to caller
-49 : LD 1, 1(5) ; Load parameter 'sum' into R1
-50 : ST 1, 4(5) ; Spill left operand at depth 0
-51 : LD 1, 2(5) ; Load parameter 'n' into R1
-52 : LD 2, 4(5) ; Restore left operand from depth 0
-53 : DIV 1, 2, 1 ; R1 = left / right
-54 : LDA 4, 4(5) ; Compute callee base = FP + caller_size
-55 : LDA 6, 59(0) ; Return address
-56 : ST 6, 0(4) ; Store return address in callee frame
-57 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-58 : LDA 7, 9(0) ; Call built-in print
-59 : LDC 2, 4(0) ; Caller frame size
-60 : SUB 5, 5, 2 ; Pop back to caller
-61 : LD 1, 1(5) ; Load parameter 'sum' into R1
-62 : LDA 4, 4(5) ; Compute callee base = FP + caller_size
-63 : ST 1, 1(4) ; Store argument 0 in callee param slot
-64 : LD 1, 2(5) ; Load parameter 'n' into R1
-65 : LDA 4, 4(5) ; Compute callee base = FP + caller_size
-66 : ST 1, 2(4) ; Store argument 1 in callee param slot
-67 : LDA 4, 4(5) ; Compute callee base = FP + caller_size
-68 : LDA 6, 72(0) ; Return address
-69 : ST 6, 0(4) ; Store return in callee frame
-70 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-71 : LDA 7, 33(0) ; Call MOD
-72 : LD 1, 3(5) ; Load callee result into R1
-73 : LDC 2, 4(0) ; Caller frame size
-74 : SUB 5, 5, 2 ; Pop callee frame back to caller
-75 : LDA 4, 4(5) ; Compute callee base = FP + caller_size
-76 : LDA 6, 80(0) ; Return address
-77 : ST 6, 0(4) ; Store return address in callee frame
-78 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-79 : LDA 7, 9(0) ; Call built-in print
-80 : LDC 2, 4(0) ; Caller frame size
-81 : SUB 5, 5, 2 ; Pop back to caller
-82 : LD 1, 2(5) ; Load parameter 'n' into R1
-83 : ST 1, 3(5) ; Store function result into frame return slot
-84 : LD 6, 0(5) ; Load return address
-85 : LDA 7, 0(6) ; Return to caller
-86 : LD 1, 1(5) ; Load parameter 'n' into R1
-87 : ST 1, 5(5) ; Spill left operand at depth 0
-88 : LDC 1, 10(0) ; Load integer-literal into R1
-89 : LD 2, 5(5) ; Restore left operand from depth 0
-90 : SUB 1, 2, 1 ; left - right for less-than check
-91 : JLT 1, 2(7) ; If R1 < 0, jump to true
-92 : LDC 1, 0(0) ; false
-93 : LDA 7, 1(7) ; skip setting true
-94 : LDC 1, 1(0) ; true
-95 : JEQ 1, 119(0) ; If condition is false, jump to ELSE
-96 : LD 1, 2(5) ; Load parameter 'sum' into R1
-97 : ST 1, 5(5) ; Spill left operand at depth 0
-98 : LD 1, 1(5) ; Load parameter 'n' into R1
-99 : LD 2, 5(5) ; Restore left operand from depth 0
-100 : ADD 1, 2, 1 ; R1 = left + right
-101 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-102 : ST 1, 1(4) ; Store argument 0 in callee param slot
-103 : LD 1, 3(5) ; Load parameter 'i' into R1
-104 : ST 1, 5(5) ; Spill left operand at depth 0
-105 : LDC 1, 1(0) ; Load integer-literal into R1
-106 : LD 2, 5(5) ; Restore left operand from depth 0
-107 : ADD 1, 2, 1 ; R1 = left + right
-108 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-109 : ST 1, 2(4) ; Store argument 1 in callee param slot
-110 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-111 : LDA 6, 115(0) ; Return address
-112 : ST 6, 0(4) ; Store return in callee frame
-113 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-114 : LDA 7, 49(0) ; Call print_and_return
-115 : LD 1, 3(5) ; Load callee result into R1
-116 : LDC 2, 6(0) ; Caller frame size
-117 : SUB 5, 5, 2 ; Pop callee frame back to caller
-118 : LDA 7, 161(0) ; Skip ELSE block
-119 : LD 1, 1(5) ; Load parameter 'n' into R1
-120 : ST 1, 5(5) ; Spill left operand at depth 0
-121 : LDC 1, 10(0) ; Load integer-literal into R1
-122 : LD 2, 5(5) ; Restore left operand from depth 0
-123 : DIV 1, 2, 1 ; R1 = left / right
-124 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-125 : ST 1, 1(4) ; Store argument 0 in callee param slot
-126 : LD 1, 2(5) ; Load parameter 'sum' into R1
+13 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
+14 : LDC 1, 0(0) ; Load integer-literal into R1
+15 : ST 1, 4(5) ; Stage arg 1 in caller temp (P+2+i)
+16 : LDC 1, 0(0) ; Load integer-literal into R1
+17 : ST 1, 5(5) ; Stage arg 2 in caller temp (P+2+i)
+18 : LDA 4, 8(5) ; Callee base for arg copy
+19 : LD 1, 3(5) ; Load staged arg 0 from caller temp
+20 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
+21 : LD 1, 4(5) ; Load staged arg 1 from caller temp
+22 : ST 1, 2(4) ; Copy arg 1 into callee param slot 2
+23 : LD 1, 5(5) ; Load staged arg 2 from caller temp
+24 : ST 1, 3(4) ; Copy arg 2 into callee param slot 3
+25 : LDA 6, 29(0) ; Return address
+26 : ST 6, 0(4) ; Store return in callee frame
+27 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+28 : LDA 7, 91(0) ; Call average_digit
+29 : LD 1, 4(5) ; Load callee result into R1
+30 : LDC 2, 8(0) ; Callee frame size
+31 : SUB 5, 5, 2 ; Pop callee frame
+32 : ST 1, 2(5) ; Store result into caller’s frame
+33 : LD 1, 2(5) ; Load main return value into R1
+34 : LD 6, 0(5) ; Load main return address
+35 : LDA 7, 0(6) ; Return from main
+36 : LD 1, 1(5) ; Load parameter 'm' into R1
+37 : ST 1, 4(5) ; Spill left operand at depth 0
+38 : LD 1, 1(5) ; Load parameter 'm' into R1
+39 : ST 1, 5(5) ; Spill left operand at depth 1
+40 : LD 1, 2(5) ; Load parameter 'n' into R1
+41 : LD 2, 5(5) ; Restore left operand from depth 1
+42 : DIV 1, 2, 1 ; R1 = left / right
+43 : ST 1, 5(5) ; Spill left operand at depth 1
+44 : LD 1, 2(5) ; Load parameter 'n' into R1
+45 : LD 2, 5(5) ; Restore left operand from depth 1
+46 : MUL 1, 2, 1 ; R1 = left * right
+47 : LD 2, 4(5) ; Restore left operand from depth 0
+48 : SUB 1, 2, 1 ; R1 = left - right
+49 : ST 1, 3(5) ; Store function result into frame return slot
+50 : LD 6, 0(5) ; Load return address
+51 : LDA 7, 0(6) ; Return to caller
+52 : LD 1, 1(5) ; Load parameter 'sum' into R1
+53 : ST 1, 4(5) ; Spill left operand at depth 0
+54 : LD 1, 2(5) ; Load parameter 'n' into R1
+55 : LD 2, 4(5) ; Restore left operand from depth 0
+56 : DIV 1, 2, 1 ; R1 = left / right
+57 : LDA 4, 3(5) ; Callee base for built-in print
+58 : LDA 6, 62(0) ; Return address
+59 : ST 6, 0(4) ; Store return address in callee frame
+60 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+61 : LDA 7, 9(0) ; Call built-in print
+62 : LDC 2, 3(0) ; Callee frame size (print)
+63 : SUB 5, 5, 2 ; Pop back to caller
+64 : LD 1, 1(5) ; Load parameter 'sum' into R1
+65 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
+66 : LD 1, 2(5) ; Load parameter 'n' into R1
+67 : ST 1, 5(5) ; Stage arg 1 in caller temp (P+2+i)
+68 : LDA 4, 6(5) ; Callee base for arg copy
+69 : LD 1, 4(5) ; Load staged arg 0 from caller temp
+70 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
+71 : LD 1, 5(5) ; Load staged arg 1 from caller temp
+72 : ST 1, 2(4) ; Copy arg 1 into callee param slot 2
+73 : LDA 6, 77(0) ; Return address
+74 : ST 6, 0(4) ; Store return in callee frame
+75 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+76 : LDA 7, 36(0) ; Call MOD
+77 : LD 1, 3(5) ; Load callee result into R1
+78 : LDC 2, 6(0) ; Callee frame size
+79 : SUB 5, 5, 2 ; Pop callee frame
+80 : LDA 4, 3(5) ; Callee base for built-in print
+81 : LDA 6, 85(0) ; Return address
+82 : ST 6, 0(4) ; Store return address in callee frame
+83 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+84 : LDA 7, 9(0) ; Call built-in print
+85 : LDC 2, 3(0) ; Callee frame size (print)
+86 : SUB 5, 5, 2 ; Pop back to caller
+87 : LD 1, 2(5) ; Load parameter 'n' into R1
+88 : ST 1, 3(5) ; Store function result into frame return slot
+89 : LD 6, 0(5) ; Load return address
+90 : LDA 7, 0(6) ; Return to caller
+91 : LD 1, 1(5) ; Load parameter 'n' into R1
+92 : ST 1, 5(5) ; Spill left operand at depth 0
+93 : LDC 1, 10(0) ; Load integer-literal into R1
+94 : LD 2, 5(5) ; Restore left operand from depth 0
+95 : SUB 1, 2, 1 ; left - right for less-than check
+96 : JLT 1, 2(7) ; If R1 < 0, jump to true
+97 : LDC 1, 0(0) ; false
+98 : LDA 7, 1(7) ; skip setting true
+99 : LDC 1, 1(0) ; true
+100 : JEQ 1, 126(0) ; If condition is false, jump to ELSE
+101 : LD 1, 2(5) ; Load parameter 'sum' into R1
+102 : ST 1, 5(5) ; Spill left operand at depth 0
+103 : LD 1, 1(5) ; Load parameter 'n' into R1
+104 : LD 2, 5(5) ; Restore left operand from depth 0
+105 : ADD 1, 2, 1 ; R1 = left + right
+106 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
+107 : LD 1, 3(5) ; Load parameter 'i' into R1
+108 : ST 1, 5(5) ; Spill left operand at depth 0
+109 : LDC 1, 1(0) ; Load integer-literal into R1
+110 : LD 2, 5(5) ; Restore left operand from depth 0
+111 : ADD 1, 2, 1 ; R1 = left + right
+112 : ST 1, 6(5) ; Stage arg 1 in caller temp (P+2+i)
+113 : LDA 4, 6(5) ; Callee base for arg copy
+114 : LD 1, 5(5) ; Load staged arg 0 from caller temp
+115 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
+116 : LD 1, 6(5) ; Load staged arg 1 from caller temp
+117 : ST 1, 2(4) ; Copy arg 1 into callee param slot 2
+118 : LDA 6, 122(0) ; Return address
+119 : ST 6, 0(4) ; Store return in callee frame
+120 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+121 : LDA 7, 52(0) ; Call print_and_return
+122 : LD 1, 3(5) ; Load callee result into R1
+123 : LDC 2, 6(0) ; Callee frame size
+124 : SUB 5, 5, 2 ; Pop callee frame
+125 : LDA 7, 173(0) ; Skip ELSE block
+126 : LD 1, 1(5) ; Load parameter 'n' into R1
 127 : ST 1, 5(5) ; Spill left operand at depth 0
-128 : LD 1, 1(5) ; Load parameter 'n' into R1
-129 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-130 : ST 1, 1(4) ; Store argument 0 in callee param slot
-131 : LDC 1, 10(0) ; Load integer-literal into R1
-132 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-133 : ST 1, 2(4) ; Store argument 1 in callee param slot
-134 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-135 : LDA 6, 139(0) ; Return address
-136 : ST 6, 0(4) ; Store return in callee frame
-137 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-138 : LDA 7, 33(0) ; Call MOD
-139 : LD 1, 3(5) ; Load callee result into R1
-140 : LDC 2, 6(0) ; Caller frame size
-141 : SUB 5, 5, 2 ; Pop callee frame back to caller
-142 : LD 2, 5(5) ; Restore left operand from depth 0
-143 : ADD 1, 2, 1 ; R1 = left + right
-144 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-145 : ST 1, 2(4) ; Store argument 1 in callee param slot
-146 : LD 1, 3(5) ; Load parameter 'i' into R1
-147 : ST 1, 5(5) ; Spill left operand at depth 0
-148 : LDC 1, 1(0) ; Load integer-literal into R1
-149 : LD 2, 5(5) ; Restore left operand from depth 0
-150 : ADD 1, 2, 1 ; R1 = left + right
-151 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-152 : ST 1, 3(4) ; Store argument 2 in callee param slot
-153 : LDA 4, 6(5) ; Compute callee base = FP + caller_size
-154 : LDA 6, 158(0) ; Return address
-155 : ST 6, 0(4) ; Store return in callee frame
-156 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
-157 : LDA 7, 86(0) ; Call average_digit
-158 : LD 1, 4(5) ; Load callee result into R1
-159 : LDC 2, 6(0) ; Caller frame size
-160 : SUB 5, 5, 2 ; Pop callee frame back to caller
-161 : ST 1, 4(5) ; Store function result into frame return slot
-162 : LD 6, 0(5) ; Load return address
-163 : LDA 7, 0(6) ; Return to caller
+128 : LDC 1, 10(0) ; Load integer-literal into R1
+129 : LD 2, 5(5) ; Restore left operand from depth 0
+130 : DIV 1, 2, 1 ; R1 = left / right
+131 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
+132 : LD 1, 2(5) ; Load parameter 'sum' into R1
+133 : ST 1, 5(5) ; Spill left operand at depth 0
+134 : LD 1, 1(5) ; Load parameter 'n' into R1
+135 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
+136 : LDC 1, 10(0) ; Load integer-literal into R1
+137 : ST 1, 6(5) ; Stage arg 1 in caller temp (P+2+i)
+138 : LDA 4, 6(5) ; Callee base for arg copy
+139 : LD 1, 5(5) ; Load staged arg 0 from caller temp
+140 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
+141 : LD 1, 6(5) ; Load staged arg 1 from caller temp
+142 : ST 1, 2(4) ; Copy arg 1 into callee param slot 2
+143 : LDA 6, 147(0) ; Return address
+144 : ST 6, 0(4) ; Store return in callee frame
+145 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+146 : LDA 7, 36(0) ; Call MOD
+147 : LD 1, 3(5) ; Load callee result into R1
+148 : LDC 2, 6(0) ; Callee frame size
+149 : SUB 5, 5, 2 ; Pop callee frame
+150 : LD 2, 5(5) ; Restore left operand from depth 0
+151 : ADD 1, 2, 1 ; R1 = left + right
+152 : ST 1, 6(5) ; Stage arg 1 in caller temp (P+2+i)
+153 : LD 1, 3(5) ; Load parameter 'i' into R1
+154 : ST 1, 5(5) ; Spill left operand at depth 0
+155 : LDC 1, 1(0) ; Load integer-literal into R1
+156 : LD 2, 5(5) ; Restore left operand from depth 0
+157 : ADD 1, 2, 1 ; R1 = left + right
+158 : ST 1, 7(5) ; Stage arg 2 in caller temp (P+2+i)
+159 : LDA 4, 8(5) ; Callee base for arg copy
+160 : LD 1, 5(5) ; Load staged arg 0 from caller temp
+161 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
+162 : LD 1, 6(5) ; Load staged arg 1 from caller temp
+163 : ST 1, 2(4) ; Copy arg 1 into callee param slot 2
+164 : LD 1, 7(5) ; Load staged arg 2 from caller temp
+165 : ST 1, 3(4) ; Copy arg 2 into callee param slot 3
+166 : LDA 6, 170(0) ; Return address
+167 : ST 6, 0(4) ; Store return in callee frame
+168 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+169 : LDA 7, 91(0) ; Call average_digit
+170 : LD 1, 4(5) ; Load callee result into R1
+171 : LDC 2, 8(0) ; Callee frame size
+172 : SUB 5, 5, 2 ; Pop callee frame
+173 : ST 1, 4(5) ; Store function result into frame return slot
+174 : LD 6, 0(5) ; Load return address
+175 : LDA 7, 0(6) ; Return to caller
