@@ -14,7 +14,7 @@
 13 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 14 : LDC 1, 1(0) ; Load integer-literal into R1
 15 : ST 1, 4(5) ; Stage arg 1 in caller temp (P+2+i)
-16 : LDA 4, 6(5) ; Callee base for arg copy
+16 : LDA 4, 5(5) ; Callee base for arg copy
 17 : LD 1, 3(5) ; Load staged arg 0 from caller temp
 18 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 19 : LD 1, 4(5) ; Load staged arg 1 from caller temp
@@ -24,7 +24,7 @@
 23 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 24 : LDA 7, 182(0) ; Call loopToN
 25 : LD 1, 3(5) ; Load callee result into R1
-26 : LDC 2, 6(0) ; Callee frame size
+26 : LDC 2, 5(0) ; Callee frame size
 27 : SUB 5, 5, 2 ; Pop callee frame
 28 : ST 1, 2(5) ; Store result into caller’s frame
 29 : LD 1, 2(5) ; Load main return value into R1
@@ -93,12 +93,12 @@
 92 : LD 6, 0(5) ; Load return address
 93 : LDA 7, 0(6) ; Return to caller
 94 : LD 1, 2(5) ; Load parameter 'current' into R1
-95 : LDA 4, 3(5) ; Callee base for built-in print
+95 : LDA 4, 6(5) ; Callee base for built-in print
 96 : LDA 6, 100(0) ; Return address
 97 : ST 6, 0(4) ; Store return address in callee frame
 98 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 99 : LDA 7, 9(0) ; Call built-in print
-100 : LDC 2, 3(0) ; Callee frame size (print)
+100 : LDC 2, 6(0) ; Callee frame size (print)
 101 : SUB 5, 5, 2 ; Pop back to caller
 102 : LD 1, 1(5) ; Load parameter 'n' into R1
 103 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)

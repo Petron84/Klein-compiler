@@ -17,12 +17,12 @@
 16 : LD 1, 2(5) ; Load parameter 'n' into R1
 17 : LD 2, 4(5) ; Restore left operand from depth 0
 18 : DIV 1, 2, 1 ; R1 = left / right
-19 : LDA 4, 3(5) ; Callee base for built-in print
+19 : LDA 4, 6(5) ; Callee base for built-in print
 20 : LDA 6, 24(0) ; Return address
 21 : ST 6, 0(4) ; Store return address in callee frame
 22 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 23 : LDA 7, 11(0) ; Call built-in print
-24 : LDC 2, 3(0) ; Callee frame size (print)
+24 : LDC 2, 6(0) ; Callee frame size (print)
 25 : SUB 5, 5, 2 ; Pop back to caller
 26 : LD 1, 1(5) ; Load parameter 'm' into R1
 27 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)

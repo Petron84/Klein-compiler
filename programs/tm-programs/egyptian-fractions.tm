@@ -29,7 +29,7 @@
 28 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 29 : LD 1, 1(5) ; Load parameter 'm' into R1
 30 : ST 1, 5(5) ; Stage arg 1 in caller temp (P+2+i)
-31 : LDA 4, 6(5) ; Callee base for arg copy
+31 : LDA 4, 7(5) ; Callee base for arg copy
 32 : LD 1, 4(5) ; Load staged arg 0 from caller temp
 33 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 34 : LD 1, 5(5) ; Load staged arg 1 from caller temp
@@ -39,7 +39,7 @@
 38 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 39 : LDA 7, 91(0) ; Call MOD
 40 : LD 1, 3(5) ; Load callee result into R1
-41 : LDC 2, 6(0) ; Callee frame size
+41 : LDC 2, 7(0) ; Callee frame size
 42 : SUB 5, 5, 2 ; Pop callee frame
 43 : ST 1, 4(5) ; Spill left operand at depth 0
 44 : LDC 1, 0(0) ; Load integer-literal into R1
@@ -106,12 +106,12 @@
 105 : LD 6, 0(5) ; Load return address
 106 : LDA 7, 0(6) ; Return to caller
 107 : LD 1, 3(5) ; Load parameter 'unit' into R1
-108 : LDA 4, 3(5) ; Callee base for built-in print
+108 : LDA 4, 7(5) ; Callee base for built-in print
 109 : LDA 6, 113(0) ; Return address
 110 : ST 6, 0(4) ; Store return address in callee frame
 111 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 112 : LDA 7, 11(0) ; Call built-in print
-113 : LDC 2, 3(0) ; Callee frame size (print)
+113 : LDC 2, 7(0) ; Callee frame size (print)
 114 : SUB 5, 5, 2 ; Pop back to caller
 115 : LD 1, 3(5) ; Load parameter 'unit' into R1
 116 : ST 1, 5(5) ; Spill left operand at depth 0

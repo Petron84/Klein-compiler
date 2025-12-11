@@ -12,7 +12,7 @@
 11 : ST 1, 2(5) ; Stage arg 0 in caller temp (P+2+i)
 12 : LDC 1, 20(0) ; Load integer-literal into R1
 13 : ST 1, 3(5) ; Stage arg 1 in caller temp (P+2+i)
-14 : LDA 4, 6(5) ; Callee base for arg copy
+14 : LDA 4, 4(5) ; Callee base for arg copy
 15 : LD 1, 2(5) ; Load staged arg 0 from caller temp
 16 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 17 : LD 1, 3(5) ; Load staged arg 1 from caller temp
@@ -22,7 +22,7 @@
 21 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 22 : LDA 7, 30(0) ; Call sumPrimes
 23 : LD 1, 3(5) ; Load callee result into R1
-24 : LDC 2, 6(0) ; Callee frame size
+24 : LDC 2, 4(0) ; Callee frame size
 25 : SUB 5, 5, 2 ; Pop callee frame
 26 : ST 1, 1(5) ; Store result into caller’s frame
 27 : LD 1, 1(5) ; Load main return value into R1
@@ -42,7 +42,7 @@
 41 : LDA 7, 100(0) ; Skip ELSE block
 42 : LD 1, 1(5) ; Load parameter 'a' into R1
 43 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
-44 : LDA 4, 5(5) ; Callee base for arg copy
+44 : LDA 4, 6(5) ; Callee base for arg copy
 45 : LD 1, 4(5) ; Load staged arg 0 from caller temp
 46 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 47 : LDA 6, 51(0) ; Return address
@@ -50,7 +50,7 @@
 49 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 50 : LDA 7, 103(0) ; Call isPrime
 51 : LD 1, 2(5) ; Load callee result into R1
-52 : LDC 2, 5(0) ; Callee frame size
+52 : LDC 2, 6(0) ; Callee frame size
 53 : SUB 5, 5, 2 ; Pop callee frame
 54 : JEQ 1, 80(0) ; If condition is false, jump to ELSE
 55 : LD 1, 1(5) ; Load parameter 'a' into R1

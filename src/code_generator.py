@@ -299,7 +299,7 @@ class Generator:
 
                     # Prepare callee frame & call
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {callee_size}(5)", "Callee base for built-in print")
+                    self.write(f"LDA 4, {caller_size}(5)", "Callee base for built-in print")
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
                     self.write("ST 6, 0(4)", "Store return address in callee frame")
                     self.write("ADD 5, 4, 0", "Push callee frame (FP := callee base)")
@@ -307,7 +307,7 @@ class Generator:
 
                     # Return label and correct pop using callee_size
                     self.placeholders[temp_label] = self.line_counter
-                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size (print)")
+                    self.write(f"LDC 2, {caller_size}(0)", "Callee frame size (print)")
                     self.write("SUB 5, 5, 2", "Pop back to caller")
 
                 else:
@@ -331,7 +331,7 @@ class Generator:
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
 
                     # Copy args into callee frame
-                    self.write(f"LDA 4, {callee_size}(5)", "Callee base for arg copy")
+                    self.write(f"LDA 4, {caller_size}(5)", "Callee base for arg copy")
                     for i, _ in enumerate(args):
                         stage_slot = caller_params + 2 + i
                         self.write(f"LD 1, {stage_slot}(5)", f"Load staged arg {i} from caller temp")
@@ -347,7 +347,7 @@ class Generator:
                     self.placeholders[temp_label] = self.line_counter
                     return_slot = callee_params + 1
                     self.write(f"LD 1, {return_slot}(5)", "Load callee result into R1")
-                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size")
+                    self.write(f"LDC 2, {caller_size}(0)", "Callee frame size")
                     self.write("SUB 5, 5, 2", "Pop callee frame")
 
                     # 4) If producing the caller’s own value, store it

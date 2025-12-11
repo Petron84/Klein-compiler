@@ -14,7 +14,7 @@
 13 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 14 : LD 1, 1(5) ; Load parameter 'n' into R1
 15 : ST 1, 4(5) ; Stage arg 1 in caller temp (P+2+i)
-16 : LDA 4, 6(5) ; Callee base for arg copy
+16 : LDA 4, 5(5) ; Callee base for arg copy
 17 : LD 1, 3(5) ; Load staged arg 0 from caller temp
 18 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 19 : LD 1, 4(5) ; Load staged arg 1 from caller temp
@@ -24,7 +24,7 @@
 23 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 24 : LDA 7, 215(0) ; Call sieveAt
 25 : LD 1, 3(5) ; Load callee result into R1
-26 : LDC 2, 6(0) ; Callee frame size
+26 : LDC 2, 5(0) ; Callee frame size
 27 : SUB 5, 5, 2 ; Pop callee frame
 28 : ST 1, 2(5) ; Store result into caller’s frame
 29 : LD 1, 2(5) ; Load main return value into R1
@@ -150,7 +150,7 @@
 149 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 150 : LD 1, 1(5) ; Load parameter 'n' into R1
 151 : ST 1, 4(5) ; Stage arg 1 in caller temp (P+2+i)
-152 : LDA 4, 6(5) ; Callee base for arg copy
+152 : LDA 4, 5(5) ; Callee base for arg copy
 153 : LD 1, 3(5) ; Load staged arg 0 from caller temp
 154 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 155 : LD 1, 4(5) ; Load staged arg 1 from caller temp
@@ -160,7 +160,7 @@
 159 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 160 : LDA 7, 94(0) ; Call hasDivisorFrom
 161 : LD 1, 3(5) ; Load callee result into R1
-162 : LDC 2, 6(0) ; Callee frame size
+162 : LDC 2, 5(0) ; Callee frame size
 163 : SUB 5, 5, 2 ; Pop callee frame
 164 : LDC 2, 1(0) ; Load 1 into R2
 165 : SUB 1, 2, 1 ; Logical NOT: 1 - R1
@@ -169,7 +169,7 @@
 168 : LDA 7, 0(6) ; Return to caller
 169 : LD 1, 1(5) ; Load parameter 'current' into R1
 170 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
-171 : LDA 4, 5(5) ; Callee base for arg copy
+171 : LDA 4, 7(5) ; Callee base for arg copy
 172 : LD 1, 4(5) ; Load staged arg 0 from caller temp
 173 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 174 : LDA 6, 178(0) ; Return address
@@ -177,18 +177,18 @@
 176 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 177 : LDA 7, 148(0) ; Call isPrime
 178 : LD 1, 2(5) ; Load callee result into R1
-179 : LDC 2, 5(0) ; Callee frame size
+179 : LDC 2, 7(0) ; Callee frame size
 180 : SUB 5, 5, 2 ; Pop callee frame
 181 : JEQ 1, 184(0) ; If condition is false, jump to ELSE
 182 : LD 1, 1(5) ; Load parameter 'current' into R1
 183 : LDA 7, 185(0) ; Skip ELSE block
 184 : LDC 1, 0(0) ; Load integer-literal into R1
-185 : LDA 4, 3(5) ; Callee base for built-in print
+185 : LDA 4, 7(5) ; Callee base for built-in print
 186 : LDA 6, 190(0) ; Return address
 187 : ST 6, 0(4) ; Store return address in callee frame
 188 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 189 : LDA 7, 9(0) ; Call built-in print
-190 : LDC 2, 3(0) ; Callee frame size (print)
+190 : LDC 2, 7(0) ; Callee frame size (print)
 191 : SUB 5, 5, 2 ; Pop back to caller
 192 : LD 1, 1(5) ; Load parameter 'current' into R1
 193 : ST 1, 4(5) ; Spill left operand at depth 0
@@ -198,7 +198,7 @@
 197 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 198 : LD 1, 2(5) ; Load parameter 'max' into R1
 199 : ST 1, 5(5) ; Stage arg 1 in caller temp (P+2+i)
-200 : LDA 4, 6(5) ; Callee base for arg copy
+200 : LDA 4, 7(5) ; Callee base for arg copy
 201 : LD 1, 4(5) ; Load staged arg 0 from caller temp
 202 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 203 : LD 1, 5(5) ; Load staged arg 1 from caller temp
@@ -208,7 +208,7 @@
 207 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 208 : LDA 7, 215(0) ; Call sieveAt
 209 : LD 1, 3(5) ; Load callee result into R1
-210 : LDC 2, 6(0) ; Callee frame size
+210 : LDC 2, 7(0) ; Callee frame size
 211 : SUB 5, 5, 2 ; Pop callee frame
 212 : ST 1, 3(5) ; Store function result into frame return slot
 213 : LD 6, 0(5) ; Load return address
@@ -229,7 +229,7 @@
 228 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 229 : LD 1, 2(5) ; Load parameter 'max' into R1
 230 : ST 1, 5(5) ; Stage arg 1 in caller temp (P+2+i)
-231 : LDA 4, 7(5) ; Callee base for arg copy
+231 : LDA 4, 6(5) ; Callee base for arg copy
 232 : LD 1, 4(5) ; Load staged arg 0 from caller temp
 233 : ST 1, 1(4) ; Copy arg 0 into callee param slot 1
 234 : LD 1, 5(5) ; Load staged arg 1 from caller temp
@@ -239,7 +239,7 @@
 238 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 239 : LDA 7, 169(0) ; Call doSieveAt
 240 : LD 1, 3(5) ; Load callee result into R1
-241 : LDC 2, 7(0) ; Callee frame size
+241 : LDC 2, 6(0) ; Callee frame size
 242 : SUB 5, 5, 2 ; Pop callee frame
 243 : ST 1, 3(5) ; Store function result into frame return slot
 244 : LD 6, 0(5) ; Load return address
