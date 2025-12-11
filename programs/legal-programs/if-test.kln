@@ -1,9 +1,8 @@
-function main(n: integer, k: integer): integer
-	print(n)
-	if (n < k) then n else sub(n,k)
+function main(n: integer): integer
+	if n = 0 then 0 else f1(n)
 
-function sub(n: integer, k: integer): integer
-	recurse(n-1,k)
+function f1(k: integer): integer
+	f2(k-1)
 
-function recurse(n: integer, k: integer): integer
-	main(n,k)
+function f2(m: integer): integer
+	main(m-1)
