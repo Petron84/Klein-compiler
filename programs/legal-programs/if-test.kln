@@ -1,8 +1,6 @@
-function main(n: integer): integer
-	if (5 < n) then addone(n) else addtwo(n)
+function main(n: integer, k: integer): integer
+	print(n)
+	if (n < k) then main(addone(n),k) else n
 
 function addone(n: integer): integer
 	n + 1
-
-function addtwo(n: integer): integer
-	n + 2
