@@ -1,10 +1,10 @@
-function main( n : integer ) : boolean
+function main( n : integer, temp: integer) : boolean
   divisibleByParts( n / 10 , MOD(n, 10) )
 
 function divisibleByParts( left : integer, right : integer ) : boolean
   divisibleByDifference( left - right * 2, 0)
 
-function divisibleByDifference( diff : integer, temp: integer ) : boolean
+function divisibleByDifference( diff : integer, temp: integer) : boolean
   if ((diff = 7) or (diff = 0) or (diff = -7) or (diff = -14)) then
      true
   else
