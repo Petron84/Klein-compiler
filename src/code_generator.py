@@ -240,15 +240,38 @@ class Generator:
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
     def detect_bug(self, arg):
-        print(arg)
         if arg.type == "FUNCTION-CALL":
             return True
         elif arg.type == "UNARY-EXPRESSION":
             arg = arg.children[0]
-            return self.detect_bug(arg)
-        else:
-            return False
-        
+            bug = self.detect_bug(arg)
+            if bug:
+                return True
+            else:
+                return False
+
+        elif arg.type == "BINARY-EXPRESSION":
+            left = arg.children[0]
+            right = arg.children[1]
+            left_bug = self.detect_bug(left)
+            right_bug = self.detect_bug(right)
+            if left_bug or right_bug:
+                return True
+            else:
+                return False
+            
+        elif arg.type == "IF-EXPRESSION":
+            left = arg.children[0]
+            middle = arg.children[1]
+            right = arg.children[2]
+            left_bug = self.detect_bug(left)
+            middle_bug = self.detect_bug(middle)
+            right_bug = self.detect_bug(right)
+            if left_bug or middle_bug or right_bug:
+                return True
+            else:
+                return False
+            
     # -------------- Instruction Rules --------------
     def instruction_rules(self, body, curr_function, callee=False):
         exp_type = body.type
@@ -297,8 +320,7 @@ class Generator:
                         bug_found = self.detect_bug(arg)
                         if bug_found:
                             raise KleinError("Generator Error: The current version of the compiler doesn't allow function-calls as arguments to a function call.",terminate=True)
-                        print(bug_found)
-                        sys.exit()
+
                         self.instruction_rules(arg, curr_function, callee=True)
 
                         # Stage computed arg value in caller temp slot

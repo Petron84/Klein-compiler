@@ -1,5 +1,5 @@
 function main(): integer
-	bad_call(break_program(6))
+	bad_call((5 - break_program(6)))
 
 function bad_call(n: integer): integer
 	n
