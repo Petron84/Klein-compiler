@@ -38,7 +38,7 @@
 37 : LD 1, 3(5) ; Load callee result into R1
 38 : LDC 2, 4(0) ; Caller frame size
 39 : SUB 5, 5, 2 ; Pop callee frame back to caller
-40 : ST 1, 3(5) ; Store result into callerâ€™s frame return slot
+40 : ST 1, 3(5) ; Store result into caller’s frame return slot
 41 : LD 1, 3(5) ; Load main return value into R1
 42 : LD 6, 0(5) ; Load main return address
 43 : LDA 7, 0(6) ; Return from main
