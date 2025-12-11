@@ -55,7 +55,6 @@ else:
 			content = open(klein_file).read()
 			tree = Parser(content).parse()
 			table = Analyzer(tree).analyze()
-
 			if isinstance(table,dict) == False:
 				print("\nKlein Error: Code Generation Failed. Semantic Analyzer detected errors.")
 				sys.exit()

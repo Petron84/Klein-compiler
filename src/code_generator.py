@@ -1,5 +1,5 @@
 
-import sys
+from scanner import KleinError
 
 # -------------- Stack Frame Model --------------
 class StackFrame:
@@ -239,6 +239,16 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
+    def detect_bug(self, arg):
+        print(arg)
+        if arg.type == "FUNCTION-CALL":
+            return True
+        elif arg.type == "UNARY-EXPRESSION":
+            arg = arg.children[0]
+            return self.detect_bug(arg)
+        else:
+            return False
+        
     # -------------- Instruction Rules --------------
     def instruction_rules(self, body, curr_function, callee=False):
         exp_type = body.type
@@ -283,6 +293,12 @@ class Generator:
                     # 1) Evaluate ALL arguments first and stage each into a distinct caller temp slot: P+2 .. P+1+len(args)
                     for i, arg in enumerate(args):
                         # Evaluate arg i -> R1 (nested calls may occur here)
+                        
+                        bug_found = self.detect_bug(arg)
+                        if bug_found:
+                            raise KleinError("Generator Error: The current version of the compiler doesn't allow function-calls as arguments to a function call.",terminate=True)
+                        print(bug_found)
+                        sys.exit()
                         self.instruction_rules(arg, curr_function, callee=True)
 
                         # Stage computed arg value in caller temp slot
