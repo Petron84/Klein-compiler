@@ -273,7 +273,7 @@ class Generator:
 
                     # 2) Install return address — recompute base again to be safe
                     temp_label = f"!return_{self.label_id}"; self.label_id += 1
-                    self.write(f"LDA 4, {caller_size}(5)", "Recompute callee base from callee size")
+                    self.write(f"LDA 4, {caller_size}(4)", "Recompute callee base from callee size")
                     self.write(f"LDA 6, {temp_label}(0)", "Return address")
                     self.write("ST 6, 0(4)", "Store return in callee frame")
 

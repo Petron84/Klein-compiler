@@ -26,7 +26,7 @@
 25 : LD 1, 2(5) ; Load parameter 'n' into R1
 26 : LDA 4, 4(5) ; Recompute callee base from callee size
 27 : ST 1, 2(4) ; Store argument 1 in callee
-28 : LDA 4, 4(5) ; Recompute callee base from callee size
+28 : LDA 4, 4(4) ; Recompute callee base from callee size
 29 : LDA 6, 33(0) ; Return address
 30 : ST 6, 0(4) ; Store return in callee frame
 31 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -47,7 +47,7 @@
 46 : LDC 1, 0(0) ; Load integer-literal into R1
 47 : LDA 4, 4(5) ; Recompute callee base from callee size
 48 : ST 1, 3(4) ; Store argument 2 in callee
-49 : LDA 4, 4(5) ; Recompute callee base from callee size
+49 : LDA 4, 4(4) ; Recompute callee base from callee size
 50 : LDA 6, 54(0) ; Return address
 51 : ST 6, 0(4) ; Store return in callee frame
 52 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -76,7 +76,7 @@
 75 : LDC 1, 2(0) ; Load integer-literal into R1
 76 : LDA 4, 6(5) ; Recompute callee base from callee size
 77 : ST 1, 2(4) ; Store argument 1 in callee
-78 : LDA 4, 6(5) ; Recompute callee base from callee size
+78 : LDA 4, 6(4) ; Recompute callee base from callee size
 79 : LDA 6, 83(0) ; Return address
 80 : ST 6, 0(4) ; Store return in callee frame
 81 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -114,7 +114,7 @@
 113 : ADD 1, 2, 1 ; R1 = left + right
 114 : LDA 4, 6(5) ; Recompute callee base from callee size
 115 : ST 1, 3(4) ; Store argument 2 in callee
-116 : LDA 4, 6(5) ; Recompute callee base from callee size
+116 : LDA 4, 6(4) ; Recompute callee base from callee size
 117 : LDA 6, 121(0) ; Return address
 118 : ST 6, 0(4) ; Store return in callee frame
 119 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -140,7 +140,7 @@
 139 : LD 1, 3(5) ; Load parameter 'accum' into R1
 140 : LDA 4, 6(5) ; Recompute callee base from callee size
 141 : ST 1, 3(4) ; Store argument 2 in callee
-142 : LDA 4, 6(5) ; Recompute callee base from callee size
+142 : LDA 4, 6(4) ; Recompute callee base from callee size
 143 : LDA 6, 147(0) ; Return address
 144 : ST 6, 0(4) ; Store return in callee frame
 145 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)

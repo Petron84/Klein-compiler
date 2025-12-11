@@ -28,7 +28,7 @@
 27 : LDC 1, 2047483747(0) ; Load integer-literal into R1
 28 : LDA 4, 5(5) ; Recompute callee base from callee size
 29 : ST 1, 2(4) ; Store argument 1 in callee
-30 : LDA 4, 5(5) ; Recompute callee base from callee size
+30 : LDA 4, 5(4) ; Recompute callee base from callee size
 31 : LDA 6, 35(0) ; Return address
 32 : ST 6, 0(4) ; Store return in callee frame
 33 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -44,7 +44,7 @@
 43 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
 44 : LDA 4, 5(5) ; Recompute callee base from callee size
 45 : ST 1, 2(4) ; Store argument 1 in callee
-46 : LDA 4, 5(5) ; Recompute callee base from callee size
+46 : LDA 4, 5(4) ; Recompute callee base from callee size
 47 : LDA 6, 51(0) ; Return address
 48 : ST 6, 0(4) ; Store return in callee frame
 49 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -78,7 +78,7 @@
 77 : LD 1, 2(5) ; Load parameter 'b' into R1
 78 : LDA 4, 5(5) ; Recompute callee base from callee size
 79 : ST 1, 2(4) ; Store argument 1 in callee
-80 : LDA 4, 5(5) ; Recompute callee base from callee size
+80 : LDA 4, 5(4) ; Recompute callee base from callee size
 81 : LDA 6, 85(0) ; Return address
 82 : ST 6, 0(4) ; Store return in callee frame
 83 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -110,7 +110,7 @@
 109 : LD 1, 2(5) ; Load parameter 'b' into R1
 110 : LDA 4, 5(5) ; Recompute callee base from callee size
 111 : ST 1, 2(4) ; Store argument 1 in callee
-112 : LDA 4, 5(5) ; Recompute callee base from callee size
+112 : LDA 4, 5(4) ; Recompute callee base from callee size
 113 : LDA 6, 117(0) ; Return address
 114 : ST 6, 0(4) ; Store return in callee frame
 115 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -120,7 +120,7 @@
 119 : SUB 5, 5, 2 ; Pop callee frame
 120 : LDA 4, 5(5) ; Recompute callee base from callee size
 121 : ST 1, 2(4) ; Store argument 1 in callee
-122 : LDA 4, 5(5) ; Recompute callee base from callee size
+122 : LDA 4, 5(4) ; Recompute callee base from callee size
 123 : LDA 6, 127(0) ; Return address
 124 : ST 6, 0(4) ; Store return in callee frame
 125 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -171,7 +171,7 @@
 170 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
 171 : LDA 4, 4(5) ; Recompute callee base from callee size
 172 : ST 1, 2(4) ; Store argument 1 in callee
-173 : LDA 4, 4(5) ; Recompute callee base from callee size
+173 : LDA 4, 4(4) ; Recompute callee base from callee size
 174 : LDA 6, 178(0) ; Return address
 175 : ST 6, 0(4) ; Store return in callee frame
 176 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -181,7 +181,7 @@
 180 : SUB 5, 5, 2 ; Pop callee frame
 181 : LDA 4, 4(5) ; Recompute callee base from callee size
 182 : ST 1, 3(4) ; Store argument 2 in callee
-183 : LDA 4, 4(5) ; Recompute callee base from callee size
+183 : LDA 4, 4(4) ; Recompute callee base from callee size
 184 : LDA 6, 188(0) ; Return address
 185 : ST 6, 0(4) ; Store return in callee frame
 186 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)

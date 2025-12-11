@@ -13,7 +13,7 @@
 12 : LD 1, 1(5) ; Load parameter 'testArgument' into R1
 13 : LDA 4, 3(5) ; Recompute callee base from callee size
 14 : ST 1, 1(4) ; Store argument 0 in callee
-15 : LDA 4, 3(5) ; Recompute callee base from callee size
+15 : LDA 4, 3(4) ; Recompute callee base from callee size
 16 : LDA 6, 20(0) ; Return address
 17 : ST 6, 0(4) ; Store return in callee frame
 18 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -31,7 +31,7 @@
 30 : LD 1, 1(5) ; Load parameter 'testArgument' into R1
 31 : LDA 4, 3(5) ; Recompute callee base from callee size
 32 : ST 1, 1(4) ; Store argument 0 in callee
-33 : LDA 4, 3(5) ; Recompute callee base from callee size
+33 : LDA 4, 3(4) ; Recompute callee base from callee size
 34 : LDA 6, 38(0) ; Return address
 35 : ST 6, 0(4) ; Store return in callee frame
 36 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -53,7 +53,7 @@
 52 : LD 1, 1(5) ; Load parameter 'n' into R1
 53 : LDA 4, 7(5) ; Recompute callee base from callee size
 54 : ST 1, 2(4) ; Store argument 1 in callee
-55 : LDA 4, 7(5) ; Recompute callee base from callee size
+55 : LDA 4, 7(4) ; Recompute callee base from callee size
 56 : LDA 6, 60(0) ; Return address
 57 : ST 6, 0(4) ; Store return in callee frame
 58 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -71,7 +71,7 @@
 70 : LD 1, 3(5) ; Load parameter 'high' into R1
 71 : LDA 4, 7(5) ; Recompute callee base from callee size
 72 : ST 1, 3(4) ; Store argument 2 in callee
-73 : LDA 4, 7(5) ; Recompute callee base from callee size
+73 : LDA 4, 7(4) ; Recompute callee base from callee size
 74 : LDA 6, 78(0) ; Return address
 75 : ST 6, 0(4) ; Store return in callee frame
 76 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -89,7 +89,7 @@
 88 : LD 1, 4(5) ; Load parameter 'mid' into R1
 89 : LDA 4, 7(5) ; Recompute callee base from callee size
 90 : ST 1, 3(4) ; Store argument 2 in callee
-91 : LDA 4, 7(5) ; Recompute callee base from callee size
+91 : LDA 4, 7(4) ; Recompute callee base from callee size
 92 : LDA 6, 96(0) ; Return address
 93 : ST 6, 0(4) ; Store return in callee frame
 94 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -110,7 +110,7 @@
 109 : ADD 1, 2, 1 ; R1 = left + right
 110 : LDA 4, 6(5) ; Recompute callee base from callee size
 111 : ST 1, 2(4) ; Store argument 1 in callee
-112 : LDA 4, 6(5) ; Recompute callee base from callee size
+112 : LDA 4, 6(4) ; Recompute callee base from callee size
 113 : LDA 6, 117(0) ; Return address
 114 : ST 6, 0(4) ; Store return in callee frame
 115 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -127,7 +127,7 @@
 126 : LD 1, 2(5) ; Load parameter 'low' into R1
 127 : LDA 4, 6(5) ; Recompute callee base from callee size
 128 : ST 1, 2(4) ; Store argument 1 in callee
-129 : LDA 4, 6(5) ; Recompute callee base from callee size
+129 : LDA 4, 6(4) ; Recompute callee base from callee size
 130 : LDA 6, 134(0) ; Return address
 131 : ST 6, 0(4) ; Store return in callee frame
 132 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -145,7 +145,7 @@
 144 : LD 1, 3(5) ; Load parameter 'high' into R1
 145 : LDA 4, 6(5) ; Recompute callee base from callee size
 146 : ST 1, 2(4) ; Store argument 1 in callee
-147 : LDA 4, 6(5) ; Recompute callee base from callee size
+147 : LDA 4, 6(4) ; Recompute callee base from callee size
 148 : LDA 6, 152(0) ; Return address
 149 : ST 6, 0(4) ; Store return in callee frame
 150 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -159,7 +159,7 @@
 158 : SUB 1, 2, 1 ; R1 = left - right
 159 : LDA 4, 6(5) ; Recompute callee base from callee size
 160 : ST 1, 2(4) ; Store argument 1 in callee
-161 : LDA 4, 6(5) ; Recompute callee base from callee size
+161 : LDA 4, 6(4) ; Recompute callee base from callee size
 162 : LDA 6, 166(0) ; Return address
 163 : ST 6, 0(4) ; Store return in callee frame
 164 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -187,7 +187,7 @@
 186 : LD 1, 3(5) ; Load parameter 'high' into R1
 187 : LDA 4, 6(5) ; Recompute callee base from callee size
 188 : ST 1, 2(4) ; Store argument 1 in callee
-189 : LDA 4, 6(5) ; Recompute callee base from callee size
+189 : LDA 4, 6(4) ; Recompute callee base from callee size
 190 : LDA 6, 194(0) ; Return address
 191 : ST 6, 0(4) ; Store return in callee frame
 192 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -201,7 +201,7 @@
 200 : DIV 1, 2, 1 ; R1 = left / right
 201 : LDA 4, 6(5) ; Recompute callee base from callee size
 202 : ST 1, 4(4) ; Store argument 3 in callee
-203 : LDA 4, 6(5) ; Recompute callee base from callee size
+203 : LDA 4, 6(4) ; Recompute callee base from callee size
 204 : LDA 6, 208(0) ; Return address
 205 : ST 6, 0(4) ; Store return in callee frame
 206 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -221,7 +221,7 @@
 220 : LD 1, 1(5) ; Load parameter 'n' into R1
 221 : LDA 4, 3(5) ; Recompute callee base from callee size
 222 : ST 1, 3(4) ; Store argument 2 in callee
-223 : LDA 4, 3(5) ; Recompute callee base from callee size
+223 : LDA 4, 3(4) ; Recompute callee base from callee size
 224 : LDA 6, 228(0) ; Return address
 225 : ST 6, 0(4) ; Store return in callee frame
 226 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -238,7 +238,7 @@
 237 : LD 1, 1(5) ; Load parameter 'n' into R1
 238 : LDA 4, 4(5) ; Recompute callee base from callee size
 239 : ST 1, 2(4) ; Store argument 1 in callee
-240 : LDA 4, 4(5) ; Recompute callee base from callee size
+240 : LDA 4, 4(4) ; Recompute callee base from callee size
 241 : LDA 6, 245(0) ; Return address
 242 : ST 6, 0(4) ; Store return in callee frame
 243 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -256,7 +256,7 @@
 255 : LDC 1, 2(0) ; Load integer-literal into R1
 256 : LDA 4, 4(5) ; Recompute callee base from callee size
 257 : ST 1, 2(4) ; Store argument 1 in callee
-258 : LDA 4, 4(5) ; Recompute callee base from callee size
+258 : LDA 4, 4(4) ; Recompute callee base from callee size
 259 : LDA 6, 263(0) ; Return address
 260 : ST 6, 0(4) ; Store return in callee frame
 261 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -271,7 +271,7 @@
 270 : LDC 1, 2(0) ; Load integer-literal into R1
 271 : LDA 4, 4(5) ; Recompute callee base from callee size
 272 : ST 1, 2(4) ; Store argument 1 in callee
-273 : LDA 4, 4(5) ; Recompute callee base from callee size
+273 : LDA 4, 4(4) ; Recompute callee base from callee size
 274 : LDA 6, 278(0) ; Return address
 275 : ST 6, 0(4) ; Store return in callee frame
 276 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -283,7 +283,7 @@
 282 : ADD 1, 2, 1 ; R1 = left + right
 283 : LDA 4, 4(5) ; Recompute callee base from callee size
 284 : ST 1, 2(4) ; Store argument 1 in callee
-285 : LDA 4, 4(5) ; Recompute callee base from callee size
+285 : LDA 4, 4(4) ; Recompute callee base from callee size
 286 : LDA 6, 290(0) ; Return address
 287 : ST 6, 0(4) ; Store return in callee frame
 288 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -295,7 +295,7 @@
 294 : LD 1, 1(5) ; Load parameter 'n' into R1
 295 : LDA 4, 4(5) ; Recompute callee base from callee size
 296 : ST 1, 1(4) ; Store argument 0 in callee
-297 : LDA 4, 4(5) ; Recompute callee base from callee size
+297 : LDA 4, 4(4) ; Recompute callee base from callee size
 298 : LDA 6, 302(0) ; Return address
 299 : ST 6, 0(4) ; Store return in callee frame
 300 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -308,7 +308,7 @@
 307 : LD 1, 1(5) ; Load parameter 'n' into R1
 308 : LDA 4, 4(5) ; Recompute callee base from callee size
 309 : ST 1, 1(4) ; Store argument 0 in callee
-310 : LDA 4, 4(5) ; Recompute callee base from callee size
+310 : LDA 4, 4(4) ; Recompute callee base from callee size
 311 : LDA 6, 315(0) ; Return address
 312 : ST 6, 0(4) ; Store return in callee frame
 313 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -321,7 +321,7 @@
 320 : LDC 1, 2(0) ; Load integer-literal into R1
 321 : LDA 4, 4(5) ; Recompute callee base from callee size
 322 : ST 1, 2(4) ; Store argument 1 in callee
-323 : LDA 4, 4(5) ; Recompute callee base from callee size
+323 : LDA 4, 4(4) ; Recompute callee base from callee size
 324 : LDA 6, 328(0) ; Return address
 325 : ST 6, 0(4) ; Store return in callee frame
 326 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -333,7 +333,7 @@
 332 : LD 1, 1(5) ; Load parameter 'n' into R1
 333 : LDA 4, 4(5) ; Recompute callee base from callee size
 334 : ST 1, 1(4) ; Store argument 0 in callee
-335 : LDA 4, 4(5) ; Recompute callee base from callee size
+335 : LDA 4, 4(4) ; Recompute callee base from callee size
 336 : LDA 6, 340(0) ; Return address
 337 : ST 6, 0(4) ; Store return in callee frame
 338 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -346,7 +346,7 @@
 345 : LDC 1, 2(0) ; Load integer-literal into R1
 346 : LDA 4, 4(5) ; Recompute callee base from callee size
 347 : ST 1, 2(4) ; Store argument 1 in callee
-348 : LDA 4, 4(5) ; Recompute callee base from callee size
+348 : LDA 4, 4(4) ; Recompute callee base from callee size
 349 : LDA 6, 353(0) ; Return address
 350 : ST 6, 0(4) ; Store return in callee frame
 351 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -358,7 +358,7 @@
 357 : ADD 1, 2, 1 ; R1 = left + right
 358 : LDA 4, 4(5) ; Recompute callee base from callee size
 359 : ST 1, 2(4) ; Store argument 1 in callee
-360 : LDA 4, 4(5) ; Recompute callee base from callee size
+360 : LDA 4, 4(4) ; Recompute callee base from callee size
 361 : LDA 6, 365(0) ; Return address
 362 : ST 6, 0(4) ; Store return in callee frame
 363 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -393,7 +393,7 @@
 392 : SUB 1, 2, 1 ; R1 = left - right
 393 : LDA 4, 6(5) ; Recompute callee base from callee size
 394 : ST 1, 2(4) ; Store argument 1 in callee
-395 : LDA 4, 6(5) ; Recompute callee base from callee size
+395 : LDA 4, 6(4) ; Recompute callee base from callee size
 396 : LDA 6, 400(0) ; Return address
 397 : ST 6, 0(4) ; Store return in callee frame
 398 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -437,7 +437,7 @@
 436 : LD 1, 1(5) ; Load parameter 'n' into R1
 437 : LDA 4, 4(5) ; Recompute callee base from callee size
 438 : ST 1, 1(4) ; Store argument 0 in callee
-439 : LDA 4, 4(5) ; Recompute callee base from callee size
+439 : LDA 4, 4(4) ; Recompute callee base from callee size
 440 : LDA 6, 444(0) ; Return address
 441 : ST 6, 0(4) ; Store return in callee frame
 442 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -507,7 +507,7 @@
 506 : LD 1, 2(5) ; Load parameter 'q' into R1
 507 : LDA 4, 4(5) ; Recompute callee base from callee size
 508 : ST 1, 2(4) ; Store argument 1 in callee
-509 : LDA 4, 4(5) ; Recompute callee base from callee size
+509 : LDA 4, 4(4) ; Recompute callee base from callee size
 510 : LDA 6, 514(0) ; Return address
 511 : ST 6, 0(4) ; Store return in callee frame
 512 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -526,7 +526,7 @@
 525 : LD 1, 2(5) ; Load parameter 'q' into R1
 526 : LDA 4, 4(5) ; Recompute callee base from callee size
 527 : ST 1, 2(4) ; Store argument 1 in callee
-528 : LDA 4, 4(5) ; Recompute callee base from callee size
+528 : LDA 4, 4(4) ; Recompute callee base from callee size
 529 : LDA 6, 533(0) ; Return address
 530 : ST 6, 0(4) ; Store return in callee frame
 531 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -545,7 +545,7 @@
 544 : LD 1, 2(5) ; Load parameter 'q' into R1
 545 : LDA 4, 5(5) ; Recompute callee base from callee size
 546 : ST 1, 2(4) ; Store argument 1 in callee
-547 : LDA 4, 5(5) ; Recompute callee base from callee size
+547 : LDA 4, 5(4) ; Recompute callee base from callee size
 548 : LDA 6, 552(0) ; Return address
 549 : ST 6, 0(4) ; Store return in callee frame
 550 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -560,7 +560,7 @@
 559 : LD 1, 2(5) ; Load parameter 'q' into R1
 560 : LDA 4, 5(5) ; Recompute callee base from callee size
 561 : ST 1, 2(4) ; Store argument 1 in callee
-562 : LDA 4, 5(5) ; Recompute callee base from callee size
+562 : LDA 4, 5(4) ; Recompute callee base from callee size
 563 : LDA 6, 567(0) ; Return address
 564 : ST 6, 0(4) ; Store return in callee frame
 565 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
@@ -579,7 +579,7 @@
 578 : LD 1, 2(5) ; Load parameter 'q' into R1
 579 : LDA 4, 4(5) ; Recompute callee base from callee size
 580 : ST 1, 2(4) ; Store argument 1 in callee
-581 : LDA 4, 4(5) ; Recompute callee base from callee size
+581 : LDA 4, 4(4) ; Recompute callee base from callee size
 582 : LDA 6, 586(0) ; Return address
 583 : ST 6, 0(4) ; Store return in callee frame
 584 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
