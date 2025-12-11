@@ -1,5 +1,6 @@
-function main(x:integer): integer
-    mul2(x) + mul2(mul2(x))
+function main(x:integer, y:integer): integer
+    mul2(y, mul2(y,x))
 
-function mul2(k:integer): integer
+function mul2(k:integer, n:integer): integer
+    print(n)
     k * 2
