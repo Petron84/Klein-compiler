@@ -15,10 +15,10 @@
 14 : LD 1, 2(5) ; Load parameter 'y' into R1
 15 : LDA 4, 4(5) ; Recompute callee base from callee size
 16 : ST 1, 1(4) ; Store argument 0 in callee
-17 : LD 1, 2(5) ; Load parameter 'y' into R1
+17 : LD 1, 1(5) ; Load parameter 'x' into R1
 18 : LDA 4, 4(5) ; Recompute callee base from callee size
 19 : ST 1, 1(4) ; Store argument 0 in callee
-20 : LD 1, 1(5) ; Load parameter 'x' into R1
+20 : LD 1, 2(5) ; Load parameter 'y' into R1
 21 : LDA 4, 4(5) ; Recompute callee base from callee size
 22 : ST 1, 2(4) ; Store argument 1 in callee
 23 : LDA 4, 4(5) ; Recompute callee base from callee size

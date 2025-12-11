@@ -1,5 +1,5 @@
 function main(x:integer, y:integer): integer
-    mul2(y, mul2(y,x))
+    mul2(y, mul2(x,y))
 
 function mul2(k:integer, n:integer): integer
     print(n)
