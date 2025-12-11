@@ -1,4 +1,4 @@
-function main(n : integer): integer
+function main(n : integer, temp: integer, temp2: integer): integer
     average_digit(n, 0, 0)
 
 function average_digit(n : integer, sum : integer, i : integer): integer
