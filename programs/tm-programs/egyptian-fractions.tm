@@ -80,7 +80,7 @@
 79 : LD 1, 4(5) ; Load callee result into R1
 80 : LDC 2, 5(0) ; Caller frame size
 81 : SUB 5, 5, 2 ; Pop callee frame back to caller
-82 : ST 1, 3(5) ; Store result into caller’s frame return slot
+82 : ST 1, 3(5) ; Store result into callerâ€™s frame return slot
 83 : LD 1, 3(5) ; Load main return value into R1
 84 : LD 6, 0(5) ; Load main return address
 85 : LDA 7, 0(6) ; Return from main
