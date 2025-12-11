@@ -9,7 +9,7 @@ node6 [label="EXPRESSION-LIST"]
 node7 [label="FUNCTION-CALL"]
 node8 [label="IDENTIFIER\nprint"]
 node9 [label="BOOLEAN-LITERAL\ntrue"]
-node10 [label="INTEGER-LITERAL\n1"]
+node10 [label="BOOLEAN-LITERAL\ntrue"]
 node2 -> node3 [label="function"]
 node2 -> node4
 node2 -> node5
