@@ -1,9 +1,13 @@
+(* Computes the sum of all prime numbers between X and Y *)
 
 function divisible(x : integer, y : integer) : boolean
-    if ((x / y) * y) = x then
-        true
-    else
+    if y = 0 then
         false
+    else
+        if ((x / y) * y) = x then
+            true
+        else
+            false
 
 function isPrime(n : integer) : boolean
     if n < 2 then
@@ -12,10 +16,19 @@ function isPrime(n : integer) : boolean
         if n = 2 then
             true
         else
-            if divisible(n, 2) or divisible(n, 3) or divisible(n, 5) then
+            if divisible(n, 2) then
                 false
             else
-                true
+                checkOdd(n, 3)
+
+function checkOdd(n : integer, d : integer) : boolean
+    if n < (d * d) then
+        true
+    else
+        if divisible(n, d) then
+            false
+        else
+            checkOdd(n, d + 2)
 
 function sumPrimes(a : integer, b : integer) : integer
     if b < a then
