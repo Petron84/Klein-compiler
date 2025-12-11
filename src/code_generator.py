@@ -287,7 +287,7 @@ class Generator:
                     self.write(f"LD 1, {return_slot}(5)", "Load callee result into R1")
 
                     # Use callee_size to pop FP; fix the comment string
-                    self.write(f"LDC 2, {caller_size}(0)", "Callee frame size")
+                    self.write(f"LDC 2, {callee_size}(0)", "Callee frame size")
                     self.write("SUB 5, 5, 2", "Pop callee frame")
 
                     # IMPORTANT: do not touch R4 here; caller will recompute as needed

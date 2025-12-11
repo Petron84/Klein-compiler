@@ -29,7 +29,7 @@
 28 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 29 : LDA 7, 47(0) ; Call MOD
 30 : LD 1, 3(5) ; Load callee result into R1
-31 : LDC 2, 4(0) ; Callee frame size
+31 : LDC 2, 6(0) ; Callee frame size
 32 : SUB 5, 5, 2 ; Pop callee frame
 33 : LDA 4, 4(5) ; Recompute callee base from callee size
 34 : ST 1, 2(4) ; Store argument 1 in callee
@@ -39,7 +39,7 @@
 38 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 39 : LDA 7, 139(0) ; Call divisibleByParts
 40 : LD 1, 3(5) ; Load callee result into R1
-41 : LDC 2, 4(0) ; Callee frame size
+41 : LDC 2, 6(0) ; Callee frame size
 42 : SUB 5, 5, 2 ; Pop callee frame
 43 : ST 1, 2(5) ; Store result into caller’s frame
 44 : LD 1, 2(5) ; Load main return value into R1
@@ -132,7 +132,7 @@
 131 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 132 : LDA 7, 12(0) ; Call main
 133 : LD 1, 2(5) ; Load callee result into R1
-134 : LDC 2, 5(0) ; Callee frame size
+134 : LDC 2, 4(0) ; Callee frame size
 135 : SUB 5, 5, 2 ; Pop callee frame
 136 : ST 1, 2(5) ; Store function result into frame return slot
 137 : LD 6, 0(5) ; Load return address
@@ -154,7 +154,7 @@
 153 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 154 : LDA 7, 63(0) ; Call divisibleByDifference
 155 : LD 1, 2(5) ; Load callee result into R1
-156 : LDC 2, 6(0) ; Callee frame size
+156 : LDC 2, 5(0) ; Callee frame size
 157 : SUB 5, 5, 2 ; Pop callee frame
 158 : ST 1, 3(5) ; Store function result into frame return slot
 159 : LD 6, 0(5) ; Load return address

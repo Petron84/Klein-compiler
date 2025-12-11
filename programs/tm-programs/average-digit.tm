@@ -25,7 +25,7 @@
 24 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 25 : LDA 7, 86(0) ; Call average_digit
 26 : LD 1, 4(5) ; Load callee result into R1
-27 : LDC 2, 3(0) ; Callee frame size
+27 : LDC 2, 6(0) ; Callee frame size
 28 : SUB 5, 5, 2 ; Pop callee frame
 29 : ST 1, 2(5) ; Store result into caller’s frame
 30 : LD 1, 2(5) ; Load main return value into R1
@@ -71,7 +71,7 @@
 70 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 71 : LDA 7, 33(0) ; Call MOD
 72 : LD 1, 3(5) ; Load callee result into R1
-73 : LDC 2, 4(0) ; Callee frame size
+73 : LDC 2, 6(0) ; Callee frame size
 74 : SUB 5, 5, 2 ; Pop callee frame
 75 : LDA 4, 4(5) ; Recompute callee base from caller size
 76 : LDA 6, 80(0) ; Return address
@@ -114,7 +114,7 @@
 113 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 114 : LDA 7, 49(0) ; Call print_and_return
 115 : LD 1, 3(5) ; Load callee result into R1
-116 : LDC 2, 6(0) ; Callee frame size
+116 : LDC 2, 4(0) ; Callee frame size
 117 : SUB 5, 5, 2 ; Pop callee frame
 118 : LDA 7, 161(0) ; Skip ELSE block
 119 : LD 1, 1(5) ; Load parameter 'n' into R1

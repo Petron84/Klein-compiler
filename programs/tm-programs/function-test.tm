@@ -27,7 +27,7 @@
 26 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 27 : LDA 7, 45(0) ; Call mul2
 28 : LD 1, 3(5) ; Load callee result into R1
-29 : LDC 2, 4(0) ; Callee frame size
+29 : LDC 2, 5(0) ; Callee frame size
 30 : SUB 5, 5, 2 ; Pop callee frame
 31 : LDA 4, 4(5) ; Recompute callee base from callee size
 32 : ST 1, 2(4) ; Store argument 1 in callee
@@ -37,7 +37,7 @@
 36 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
 37 : LDA 7, 45(0) ; Call mul2
 38 : LD 1, 3(5) ; Load callee result into R1
-39 : LDC 2, 4(0) ; Callee frame size
+39 : LDC 2, 5(0) ; Callee frame size
 40 : SUB 5, 5, 2 ; Pop callee frame
 41 : ST 1, 3(5) ; Store result into caller’s frame
 42 : LD 1, 3(5) ; Load main return value into R1
