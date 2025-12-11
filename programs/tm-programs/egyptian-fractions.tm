@@ -24,7 +24,7 @@
 23 : JEQ 1, 27(0) ; If condition is false, jump to ELSE
 24 : LD 1, 2(5) ; Load parameter 'n' into R1
 25 : ST 1, 3(5) ; Store result into current frame's return slot
-26 : LDA 7, !temp_1(0) ; Skip ELSE block
+26 : LDA 7, 88(0) ; Skip ELSE block
 27 : LD 1, 2(5) ; Load parameter 'n' into R1
 28 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 29 : LD 1, 1(5) ; Load parameter 'm' into R1
@@ -56,7 +56,7 @@
 55 : LD 2, 4(5) ; Restore left operand from depth 0
 56 : DIV 1, 2, 1 ; R1 = left / right
 57 : ST 1, 3(5) ; Store result into current frame's return slot
-58 : LDA 7, !temp_4(0) ; Skip ELSE block
+58 : LDA 7, 88(0) ; Skip ELSE block
 59 : LD 1, 1(5) ; Load parameter 'm' into R1
 60 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 61 : LD 1, 2(5) ; Load parameter 'n' into R1

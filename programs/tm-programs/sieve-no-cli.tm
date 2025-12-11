@@ -41,7 +41,7 @@
 40 : LDC 1, 1(0) ; true
 41 : JEQ 1, 44(0) ; If condition is false, jump to ELSE
 42 : LD 1, 1(5) ; Load parameter 'num' into R1
-43 : LDA 7, !temp_2(0) ; Skip ELSE block
+43 : LDA 7, 64(0) ; Skip ELSE block
 44 : LD 1, 1(5) ; Load parameter 'num' into R1
 45 : ST 1, 4(5) ; Spill left operand at depth 0
 46 : LD 1, 2(5) ; Load parameter 'den' into R1
@@ -141,7 +141,7 @@
 140 : SUB 5, 5, 2 ; Pop callee frame
 141 : LD 2, 4(5) ; Restore left operand from depth 0
 142 : ADD 1, 2, 1 ; R1 = left OR right
-143 : LDA 7, !temp_8(0) ; Skip ELSE block
+143 : LDA 7, 145(0) ; Skip ELSE block
 144 : LDC 1, 0(0) ; Load boolean-literal into R1
 145 : ST 1, 3(5) ; Store function result into frame return slot
 146 : LD 6, 0(5) ; Load return address
@@ -181,7 +181,7 @@
 180 : SUB 5, 5, 2 ; Pop callee frame
 181 : JEQ 1, 184(0) ; If condition is false, jump to ELSE
 182 : LD 1, 1(5) ; Load parameter 'current' into R1
-183 : LDA 7, 442(0) ; Skip ELSE block
+183 : LDA 7, 185(0) ; Skip ELSE block
 184 : LDC 1, 0(0) ; Load integer-literal into R1
 185 : LDA 4, 3(5) ; Callee base for built-in print
 186 : LDA 6, 190(0) ; Return address
@@ -224,7 +224,7 @@
 223 : LDC 1, 1(0) ; true
 224 : JEQ 1, 227(0) ; If condition is false, jump to ELSE
 225 : LDC 1, 1(0) ; Load boolean-literal into R1
-226 : LDA 7, 446(0) ; Skip ELSE block
+226 : LDA 7, 243(0) ; Skip ELSE block
 227 : LD 1, 1(5) ; Load parameter 'current' into R1
 228 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 229 : LD 1, 2(5) ; Load parameter 'max' into R1

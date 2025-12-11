@@ -37,7 +37,7 @@
 36 : LDC 1, 1(0) ; true
 37 : JEQ 1, 40(0) ; If condition is false, jump to ELSE
 38 : LD 1, 1(5) ; Load parameter 'num' into R1
-39 : LDA 7, !temp_2(0) ; Skip ELSE block
+39 : LDA 7, 60(0) ; Skip ELSE block
 40 : LD 1, 1(5) ; Load parameter 'num' into R1
 41 : ST 1, 4(5) ; Spill left operand at depth 0
 42 : LD 1, 2(5) ; Load parameter 'den' into R1
@@ -137,7 +137,7 @@
 136 : SUB 5, 5, 2 ; Pop callee frame
 137 : LD 2, 4(5) ; Restore left operand from depth 0
 138 : ADD 1, 2, 1 ; R1 = left OR right
-139 : LDA 7, !temp_8(0) ; Skip ELSE block
+139 : LDA 7, 141(0) ; Skip ELSE block
 140 : LDC 1, 0(0) ; Load boolean-literal into R1
 141 : ST 1, 3(5) ; Store function result into frame return slot
 142 : LD 6, 0(5) ; Load return address
@@ -178,7 +178,7 @@
 177 : LDC 1, 1(0) ; true
 178 : JEQ 1, 181(0) ; If condition is false, jump to ELSE
 179 : LD 1, 2(5) ; Load parameter 'y' into R1
-180 : LDA 7, 401(0) ; Skip ELSE block
+180 : LDA 7, 205(0) ; Skip ELSE block
 181 : LD 1, 1(5) ; Load parameter 'x' into R1
 182 : ST 1, 4(5) ; Spill left operand at depth 0
 183 : LDC 1, 10(0) ; Load integer-literal into R1
@@ -236,7 +236,7 @@
 235 : LDC 1, 1(0) ; true
 236 : JEQ 1, 239(0) ; If condition is false, jump to ELSE
 237 : LDC 1, 1(0) ; Load integer-literal into R1
-238 : LDA 7, 405(0) ; Skip ELSE block
+238 : LDA 7, 279(0) ; Skip ELSE block
 239 : LD 1, 2(5) ; Load parameter 'power' into R1
 240 : ST 1, 5(5) ; Spill left operand at depth 0
 241 : LDC 1, 1(0) ; Load integer-literal into R1
@@ -248,7 +248,7 @@
 247 : LDC 1, 1(0) ; true
 248 : JEQ 1, 251(0) ; If condition is false, jump to ELSE
 249 : LD 1, 3(5) ; Load parameter 'total' into R1
-250 : LDA 7, 407(0) ; Skip ELSE block
+250 : LDA 7, 279(0) ; Skip ELSE block
 251 : LD 1, 1(5) ; Load parameter 'base' into R1
 252 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
 253 : LD 1, 2(5) ; Load parameter 'power' into R1
@@ -383,7 +383,7 @@
 382 : LDC 1, 1(0) ; true
 383 : JEQ 1, 386(0) ; If condition is false, jump to ELSE
 384 : LDC 1, 1(0) ; Load boolean-literal into R1
-385 : LDA 7, !temp_25(0) ; Skip ELSE block
+385 : LDA 7, 432(0) ; Skip ELSE block
 386 : LD 1, 1(5) ; Load parameter 'x' into R1
 387 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 388 : LDA 4, 5(5) ; Callee base for arg copy
@@ -477,7 +477,7 @@
 476 : LD 1, 2(5) ; Load callee result into R1
 477 : LDC 2, 3(0) ; Callee frame size
 478 : SUB 5, 5, 2 ; Pop callee frame
-479 : LDA 7, !temp_33(0) ; Skip ELSE block
+479 : LDA 7, 481(0) ; Skip ELSE block
 480 : LDC 1, 0(0) ; Load boolean-literal into R1
 481 : ST 1, 2(5) ; Store function result into frame return slot
 482 : LD 6, 0(5) ; Load return address
@@ -533,7 +533,7 @@
 532 : LD 1, 4(5) ; Load callee result into R1
 533 : LDC 2, 8(0) ; Callee frame size
 534 : SUB 5, 5, 2 ; Pop callee frame
-535 : LDA 7, !temp_38(0) ; Skip ELSE block
+535 : LDA 7, 560(0) ; Skip ELSE block
 536 : LD 1, 1(5) ; Load parameter 'top' into R1
 537 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
 538 : LD 1, 2(5) ; Load parameter 'x' into R1
@@ -558,7 +558,7 @@
 557 : LD 1, 4(5) ; Load callee result into R1
 558 : LDC 2, 8(0) ; Callee frame size
 559 : SUB 5, 5, 2 ; Pop callee frame
-560 : LDA 7, !temp_40(0) ; Skip ELSE block
+560 : LDA 7, 562(0) ; Skip ELSE block
 561 : LD 1, 3(5) ; Load parameter 'count' into R1
 562 : ST 1, 4(5) ; Store function result into frame return slot
 563 : LD 6, 0(5) ; Load return address

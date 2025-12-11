@@ -39,7 +39,7 @@
 38 : LDC 2, 7(0) ; Callee frame size
 39 : SUB 5, 5, 2 ; Pop callee frame
 40 : ST 1, 3(5) ; Store result into caller’s frame
-41 : LDA 7, !temp_2(0) ; Skip ELSE block
+41 : LDA 7, 59(0) ; Skip ELSE block
 42 : LD 1, 1(5) ; Load parameter 'publicKey' into R1
 43 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 44 : LD 1, 2(5) ; Load parameter 'privateKey' into R1
@@ -71,7 +71,7 @@
 70 : LDC 1, 1(0) ; true
 71 : JEQ 1, 74(0) ; If condition is false, jump to ELSE
 72 : LD 1, 1(5) ; Load parameter 'a' into R1
-73 : LDA 7, !temp_5(0) ; Skip ELSE block
+73 : LDA 7, 94(0) ; Skip ELSE block
 74 : LD 1, 1(5) ; Load parameter 'a' into R1
 75 : ST 1, 4(5) ; Spill left operand at depth 0
 76 : LD 1, 2(5) ; Load parameter 'b' into R1
@@ -106,7 +106,7 @@
 105 : LDC 1, 1(0) ; true
 106 : JEQ 1, 109(0) ; If condition is false, jump to ELSE
 107 : LD 1, 1(5) ; Load parameter 'a' into R1
-108 : LDA 7, !temp_8(0) ; Skip ELSE block
+108 : LDA 7, 140(0) ; Skip ELSE block
 109 : LD 1, 2(5) ; Load parameter 'b' into R1
 110 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 111 : LD 1, 1(5) ; Load parameter 'a' into R1

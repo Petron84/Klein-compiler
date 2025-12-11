@@ -41,7 +41,7 @@
 40 : LDC 1, 1(0) ; true
 41 : JEQ 1, 44(0) ; If condition is false, jump to ELSE
 42 : LD 1, 1(5) ; Load parameter 'num' into R1
-43 : LDA 7, !temp_2(0) ; Skip ELSE block
+43 : LDA 7, 64(0) ; Skip ELSE block
 44 : LD 1, 1(5) ; Load parameter 'num' into R1
 45 : ST 1, 4(5) ; Spill left operand at depth 0
 46 : LD 1, 2(5) ; Load parameter 'den' into R1
@@ -156,7 +156,7 @@
 155 : LD 1, 3(5) ; Load callee result into R1
 156 : LDC 2, 6(0) ; Callee frame size
 157 : SUB 5, 5, 2 ; Pop callee frame
-158 : LDA 7, 440(0) ; Skip ELSE block
+158 : LDA 7, 179(0) ; Skip ELSE block
 159 : LD 1, 1(5) ; Load parameter 'n' into R1
 160 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 161 : LD 1, 2(5) ; Load parameter 'current' into R1
@@ -191,7 +191,7 @@
 190 : LDC 1, 1(0) ; true
 191 : JEQ 1, 194(0) ; If condition is false, jump to ELSE
 192 : LD 1, 1(5) ; Load parameter 'n' into R1
-193 : LDA 7, 443(0) ; Skip ELSE block
+193 : LDA 7, 210(0) ; Skip ELSE block
 194 : LD 1, 1(5) ; Load parameter 'n' into R1
 195 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 196 : LD 1, 2(5) ; Load parameter 'current' into R1

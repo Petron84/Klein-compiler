@@ -51,7 +51,7 @@
 50 : LDC 1, 1(0) ; true
 51 : JEQ 1, 54(0) ; If condition is false, jump to ELSE
 52 : LD 1, 1(5) ; Load parameter 'a' into R1
-53 : LDA 7, !temp_3(0) ; Skip ELSE block
+53 : LDA 7, 74(0) ; Skip ELSE block
 54 : LD 1, 1(5) ; Load parameter 'a' into R1
 55 : ST 1, 4(5) ; Spill left operand at depth 0
 56 : LDC 1, 1(0) ; Load integer-literal into R1

@@ -185,7 +185,7 @@
 184 : LDC 1, 1(0) ; true
 185 : JEQ 1, 188(0) ; If condition is false, jump to ELSE
 186 : LD 1, 5(5) ; Load parameter 'a' into R1
-187 : LDA 7, !temp_8(0) ; Skip ELSE block
+187 : LDA 7, 213(0) ; Skip ELSE block
 188 : LD 1, 1(5) ; Load parameter 'selector' into R1
 189 : ST 1, 10(5) ; Spill left operand at depth 0
 190 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -197,7 +197,7 @@
 196 : LDC 1, 1(0) ; true
 197 : JEQ 1, 200(0) ; If condition is false, jump to ELSE
 198 : LD 1, 6(5) ; Load parameter 'b' into R1
-199 : LDA 7, !temp_10(0) ; Skip ELSE block
+199 : LDA 7, 213(0) ; Skip ELSE block
 200 : LD 1, 1(5) ; Load parameter 'selector' into R1
 201 : ST 1, 10(5) ; Spill left operand at depth 0
 202 : LDC 1, 3(0) ; Load integer-literal into R1
@@ -209,9 +209,9 @@
 208 : LDC 1, 1(0) ; true
 209 : JEQ 1, 212(0) ; If condition is false, jump to ELSE
 210 : LD 1, 7(5) ; Load parameter 'c' into R1
-211 : LDA 7, !temp_12(0) ; Skip ELSE block
+211 : LDA 7, 213(0) ; Skip ELSE block
 212 : LD 1, 8(5) ; Load parameter 'd' into R1
-213 : LDA 7, !temp_13(0) ; Skip ELSE block
+213 : LDA 7, 431(0) ; Skip ELSE block
 214 : LD 1, 2(5) ; Load parameter 'xNum' into R1
 215 : ST 1, 10(5) ; Stage arg 0 in caller temp (P+2+i)
 216 : LD 1, 3(5) ; Load parameter 'xDen' into R1
@@ -260,7 +260,7 @@
 259 : LD 1, 7(5) ; Load parameter 'c' into R1
 260 : LD 2, 10(5) ; Restore left operand from depth 0
 261 : ADD 1, 2, 1 ; R1 = left + right
-262 : LDA 7, !temp_17(0) ; Skip ELSE block
+262 : LDA 7, 300(0) ; Skip ELSE block
 263 : LD 1, 1(5) ; Load parameter 'selector' into R1
 264 : ST 1, 10(5) ; Spill left operand at depth 0
 265 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -276,7 +276,7 @@
 275 : LD 1, 8(5) ; Load parameter 'd' into R1
 276 : LD 2, 10(5) ; Restore left operand from depth 0
 277 : ADD 1, 2, 1 ; R1 = left + right
-278 : LDA 7, !temp_19(0) ; Skip ELSE block
+278 : LDA 7, 300(0) ; Skip ELSE block
 279 : LD 1, 1(5) ; Load parameter 'selector' into R1
 280 : ST 1, 10(5) ; Spill left operand at depth 0
 281 : LDC 1, 3(0) ; Load integer-literal into R1
@@ -292,13 +292,13 @@
 291 : LD 1, 7(5) ; Load parameter 'c' into R1
 292 : LD 2, 10(5) ; Restore left operand from depth 0
 293 : ADD 1, 2, 1 ; R1 = left + right
-294 : LDA 7, !temp_21(0) ; Skip ELSE block
+294 : LDA 7, 300(0) ; Skip ELSE block
 295 : LD 1, 6(5) ; Load parameter 'b' into R1
 296 : ST 1, 10(5) ; Spill left operand at depth 0
 297 : LD 1, 8(5) ; Load parameter 'd' into R1
 298 : LD 2, 10(5) ; Restore left operand from depth 0
 299 : ADD 1, 2, 1 ; R1 = left + right
-300 : LDA 7, !temp_22(0) ; Skip ELSE block
+300 : LDA 7, 431(0) ; Skip ELSE block
 301 : LD 1, 2(5) ; Load parameter 'xNum' into R1
 302 : ST 1, 10(5) ; Stage arg 0 in caller temp (P+2+i)
 303 : LD 1, 3(5) ; Load parameter 'xDen' into R1
@@ -380,7 +380,7 @@
 379 : LD 1, 9(5) ; Load callee result into R1
 380 : LDC 2, 18(0) ; Callee frame size
 381 : SUB 5, 5, 2 ; Pop callee frame
-382 : LDA 7, !temp_26(0) ; Skip ELSE block
+382 : LDA 7, 431(0) ; Skip ELSE block
 383 : LD 1, 1(5) ; Load parameter 'selector' into R1
 384 : ST 1, 10(5) ; Stage arg 0 in caller temp (P+2+i)
 385 : LD 1, 2(5) ; Load parameter 'xNum' into R1
@@ -450,7 +450,7 @@
 449 : SUB 5, 5, 2 ; Pop callee frame
 450 : JEQ 1, 453(0) ; If condition is false, jump to ELSE
 451 : LD 1, 5(5) ; Load parameter 'd' into R1
-452 : LDA 7, !temp_30(0) ; Skip ELSE block
+452 : LDA 7, 454(0) ; Skip ELSE block
 453 : LD 1, 3(5) ; Load parameter 'b' into R1
 454 : ST 1, 6(5) ; Store function result into frame return slot
 455 : LD 6, 0(5) ; Load return address
@@ -473,7 +473,7 @@
 472 : SUB 5, 5, 2 ; Pop callee frame
 473 : JEQ 1, 476(0) ; If condition is false, jump to ELSE
 474 : LD 1, 4(5) ; Load parameter 'c' into R1
-475 : LDA 7, !temp_33(0) ; Skip ELSE block
+475 : LDA 7, 477(0) ; Skip ELSE block
 476 : LD 1, 2(5) ; Load parameter 'a' into R1
 477 : ST 1, 6(5) ; Store function result into frame return slot
 478 : LD 6, 0(5) ; Load return address

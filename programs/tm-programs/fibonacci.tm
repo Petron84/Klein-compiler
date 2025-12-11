@@ -22,7 +22,7 @@
 21 : JEQ 1, 25(0) ; If condition is false, jump to ELSE
 22 : LDC 1, 0(0) ; Load integer-literal into R1
 23 : ST 1, 2(5) ; Store result into current frame's return slot
-24 : LDA 7, !temp_1(0) ; Skip ELSE block
+24 : LDA 7, 50(0) ; Skip ELSE block
 25 : LDC 1, 1(0) ; Load integer-literal into R1
 26 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 27 : LD 1, 1(5) ; Load parameter 'elementWanted' into R1
@@ -62,7 +62,7 @@
 61 : LDC 1, 1(0) ; true
 62 : JEQ 1, 65(0) ; If condition is false, jump to ELSE
 63 : LD 1, 4(5) ; Load parameter 'currentSum' into R1
-64 : LDA 7, !temp_4(0) ; Skip ELSE block
+64 : LDA 7, 97(0) ; Skip ELSE block
 65 : LD 1, 1(5) ; Load parameter 'currentElement' into R1
 66 : ST 1, 6(5) ; Spill left operand at depth 0
 67 : LDC 1, 1(0) ; Load integer-literal into R1

@@ -417,23 +417,36 @@ class Generator:
                     offset = curr_params + 1
                     self.write(f"ST 1, {offset}(5)", "Store result into current frame's return slot")
 
-            # ---------- IF ----------
+            # ---------- IF ---------- 
             case "IF-EXPRESSION":
                 self.write("----IF-BLOCK----", header=True)
                 condition_exp = exp_children[0]
                 self.instruction_rules(condition_exp, curr_function, callee=True)
 
                 temp_label_else = "!temp_" + str(self.label_id); self.label_id += 1
+                temp_label_endif = "!temp_" + str(self.label_id); self.label_id += 1
+
+                # Pre-register labels so they are always present for replacement
+                # ELSE will point here, ENDIF will be updated after ELSE block.
+                self.placeholders.setdefault(temp_label_else, -1)
+                self.placeholders.setdefault(temp_label_endif, -1)
+
+                # Branch to ELSE if condition is false
                 self.write(f"JEQ 1, {temp_label_else}(0)", "If condition is false, jump to ELSE")
 
+                # THEN block
                 self.write("----THEN-BLOCK----", header=True)
                 then_exp = exp_children[1]
                 self.instruction_rules(then_exp, curr_function, callee=callee)
 
-                temp_label_endif = "!temp_" + str(self.label_id); self.label_id += 1
+                # Jump over ELSE to ENDIF
                 self.write(f"LDA 7, {temp_label_endif}(0)", "Skip ELSE block")
 
+                # ELSE block starts here: fix ELSE label address now
                 self.write("----ELSE-BLOCK----", header=True)
                 self.placeholders[temp_label_else] = self.line_counter
                 else_exp = exp_children[2]
                 self.instruction_rules(else_exp, curr_function, callee=callee)
+
+                # ENDIF position: fix ENDIF label address now
+                self.placeholders[temp_label_endif] = self.line_counter

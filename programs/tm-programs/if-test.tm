@@ -22,7 +22,7 @@
 21 : JEQ 1, 25(0) ; If condition is false, jump to ELSE
 22 : LDC 1, 0(0) ; Load integer-literal into R1
 23 : ST 1, 2(5) ; Store result into current frame's return slot
-24 : LDA 7, !temp_1(0) ; Skip ELSE block
+24 : LDA 7, 38(0) ; Skip ELSE block
 25 : LD 1, 1(5) ; Load parameter 'n' into R1
 26 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 27 : LDA 4, 4(5) ; Callee base for arg copy
@@ -50,7 +50,7 @@
 49 : LDC 1, 1(0) ; true
 50 : JEQ 1, 53(0) ; If condition is false, jump to ELSE
 51 : LDC 1, 2(0) ; Load integer-literal into R1
-52 : LDA 7, !temp_4(0) ; Skip ELSE block
+52 : LDA 7, 69(0) ; Skip ELSE block
 53 : LD 1, 1(5) ; Load parameter 'm' into R1
 54 : ST 1, 3(5) ; Spill left operand at depth 0
 55 : LDC 1, 1(0) ; Load integer-literal into R1
@@ -81,7 +81,7 @@
 80 : LDC 1, 1(0) ; true
 81 : JEQ 1, 84(0) ; If condition is false, jump to ELSE
 82 : LDC 1, 1(0) ; Load integer-literal into R1
-83 : LDA 7, !temp_7(0) ; Skip ELSE block
+83 : LDA 7, 100(0) ; Skip ELSE block
 84 : LD 1, 1(5) ; Load parameter 'k' into R1
 85 : ST 1, 3(5) ; Spill left operand at depth 0
 86 : LDC 1, 1(0) ; Load integer-literal into R1

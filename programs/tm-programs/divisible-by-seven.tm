@@ -114,7 +114,7 @@
 113 : ADD 1, 2, 1 ; R1 = left OR right
 114 : JEQ 1, 117(0) ; If condition is false, jump to ELSE
 115 : LDC 1, 1(0) ; Load boolean-literal into R1
-116 : LDA 7, !temp_3(0) ; Skip ELSE block
+116 : LDA 7, 141(0) ; Skip ELSE block
 117 : LD 1, 1(5) ; Load parameter 'diff' into R1
 118 : ST 1, 3(5) ; Spill left operand at depth 0
 119 : LDC 1, 14(0) ; Load integer-literal into R1
@@ -126,7 +126,7 @@
 125 : LDC 1, 1(0) ; true
 126 : JEQ 1, 129(0) ; If condition is false, jump to ELSE
 127 : LDC 1, 0(0) ; Load boolean-literal into R1
-128 : LDA 7, !temp_5(0) ; Skip ELSE block
+128 : LDA 7, 141(0) ; Skip ELSE block
 129 : LD 1, 1(5) ; Load parameter 'diff' into R1
 130 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 131 : LDA 4, 5(5) ; Callee base for arg copy

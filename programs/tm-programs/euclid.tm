@@ -43,7 +43,7 @@
 42 : LDC 1, 1(0) ; true
 43 : JEQ 1, 46(0) ; If condition is false, jump to ELSE
 44 : LD 1, 1(5) ; Load parameter 'a' into R1
-45 : LDA 7, !temp_2(0) ; Skip ELSE block
+45 : LDA 7, 77(0) ; Skip ELSE block
 46 : LD 1, 2(5) ; Load parameter 'b' into R1
 47 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 48 : LD 1, 1(5) ; Load parameter 'a' into R1
@@ -89,7 +89,7 @@
 88 : LDC 1, 1(0) ; true
 89 : JEQ 1, 92(0) ; If condition is false, jump to ELSE
 90 : LD 1, 1(5) ; Load parameter 'a' into R1
-91 : LDA 7, !temp_6(0) ; Skip ELSE block
+91 : LDA 7, 112(0) ; Skip ELSE block
 92 : LD 1, 1(5) ; Load parameter 'a' into R1
 93 : ST 1, 4(5) ; Spill left operand at depth 0
 94 : LD 1, 2(5) ; Load parameter 'b' into R1

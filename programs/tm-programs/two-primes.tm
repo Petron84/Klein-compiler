@@ -35,7 +35,7 @@
 34 : LDC 2, 4(0) ; Callee frame size
 35 : SUB 5, 5, 2 ; Pop callee frame
 36 : ST 1, 3(5) ; Store result into caller’s frame
-37 : LDA 7, !temp_2(0) ; Skip ELSE block
+37 : LDA 7, 88(0) ; Skip ELSE block
 38 : LD 1, 2(5) ; Load parameter 'selector' into R1
 39 : ST 1, 4(5) ; Spill left operand at depth 0
 40 : LDC 1, 5(0) ; Load integer-literal into R1
@@ -59,7 +59,7 @@
 58 : LDC 2, 5(0) ; Callee frame size
 59 : SUB 5, 5, 2 ; Pop callee frame
 60 : ST 1, 3(5) ; Store result into caller’s frame
-61 : LDA 7, !temp_5(0) ; Skip ELSE block
+61 : LDA 7, 88(0) ; Skip ELSE block
 62 : LD 1, 2(5) ; Load parameter 'selector' into R1
 63 : ST 1, 4(5) ; Spill left operand at depth 0
 64 : LDC 1, 8(0) ; Load integer-literal into R1
@@ -83,7 +83,7 @@
 82 : LDC 2, 5(0) ; Callee frame size
 83 : SUB 5, 5, 2 ; Pop callee frame
 84 : ST 1, 3(5) ; Store result into caller’s frame
-85 : LDA 7, !temp_8(0) ; Skip ELSE block
+85 : LDA 7, 88(0) ; Skip ELSE block
 86 : LDC 1, 0(0) ; Load boolean-literal into R1
 87 : ST 1, 3(5) ; Store result into current frame's return slot
 88 : LD 1, 3(5) ; Load main return value into R1
@@ -116,7 +116,7 @@
 115 : LDC 1, 1(0) ; true
 116 : JEQ 1, 119(0) ; If condition is false, jump to ELSE
 117 : LD 1, 2(5) ; Load parameter 'nR' into R1
-118 : LDA 7, !temp_10(0) ; Skip ELSE block
+118 : LDA 7, 162(0) ; Skip ELSE block
 119 : LD 1, 1(5) ; Load parameter 'n' into R1
 120 : ST 1, 4(5) ; Spill left operand at depth 0
 121 : LDC 1, 10(0) ; Load integer-literal into R1
@@ -258,7 +258,7 @@
 257 : SUB 5, 5, 2 ; Pop callee frame
 258 : LD 2, 4(5) ; Restore left operand from depth 0
 259 : ADD 1, 2, 1 ; R1 = left OR right
-260 : LDA 7, !temp_18(0) ; Skip ELSE block
+260 : LDA 7, 262(0) ; Skip ELSE block
 261 : LDC 1, 0(0) ; Load boolean-literal into R1
 262 : ST 1, 3(5) ; Store function result into frame return slot
 263 : LD 6, 0(5) ; Load return address
@@ -342,7 +342,7 @@
 341 : LDC 1, 1(0) ; true
 342 : JEQ 1, 345(0) ; If condition is false, jump to ELSE
 343 : LDC 1, 1(0) ; Load boolean-literal into R1
-344 : LDA 7, !temp_25(0) ; Skip ELSE block
+344 : LDA 7, 361(0) ; Skip ELSE block
 345 : LD 1, 1(5) ; Load parameter 'n' into R1
 346 : ST 1, 4(5) ; Spill left operand at depth 1
 347 : LDC 1, 10(0) ; Load integer-literal into R1

@@ -86,7 +86,7 @@
 85 : LD 1, 4(5) ; Load callee result into R1
 86 : LDC 2, 9(0) ; Callee frame size
 87 : SUB 5, 5, 2 ; Pop callee frame
-88 : LDA 7, !temp_6(0) ; Skip ELSE block
+88 : LDA 7, 109(0) ; Skip ELSE block
 89 : LD 1, 1(5) ; Load parameter 'n' into R1
 90 : ST 1, 6(5) ; Stage arg 0 in caller temp (P+2+i)
 91 : LD 1, 2(5) ; Load parameter 'low' into R1
@@ -187,9 +187,9 @@
 186 : SUB 5, 5, 2 ; Pop callee frame
 187 : JEQ 1, 190(0) ; If condition is false, jump to ELSE
 188 : LD 1, 2(5) ; Load parameter 'low' into R1
-189 : LDA 7, !temp_14(0) ; Skip ELSE block
+189 : LDA 7, 191(0) ; Skip ELSE block
 190 : LD 1, 3(5) ; Load parameter 'high' into R1
-191 : LDA 7, !temp_15(0) ; Skip ELSE block
+191 : LDA 7, 235(0) ; Skip ELSE block
 192 : LD 1, 1(5) ; Load parameter 'n' into R1
 193 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
 194 : LD 1, 2(5) ; Load parameter 'low' into R1
@@ -326,7 +326,7 @@
 325 : LD 1, 3(5) ; Load callee result into R1
 326 : LDC 2, 6(0) ; Callee frame size
 327 : SUB 5, 5, 2 ; Pop callee frame
-328 : LDA 7, !temp_24(0) ; Skip ELSE block
+328 : LDA 7, 412(0) ; Skip ELSE block
 329 : LD 1, 1(5) ; Load parameter 'n' into R1
 330 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 331 : LDA 4, 3(5) ; Callee base for arg copy
@@ -424,7 +424,7 @@
 423 : LDC 1, 1(0) ; true
 424 : JEQ 1, 427(0) ; If condition is false, jump to ELSE
 425 : LDC 1, 1(0) ; Load integer-literal into R1
-426 : LDA 7, !temp_32(0) ; Skip ELSE block
+426 : LDA 7, 451(0) ; Skip ELSE block
 427 : LD 1, 1(5) ; Load parameter 'm' into R1
 428 : ST 1, 4(5) ; Spill left operand at depth 0
 429 : LD 1, 1(5) ; Load parameter 'm' into R1
@@ -479,7 +479,7 @@
 478 : LDC 1, 1(0) ; true
 479 : JEQ 1, 482(0) ; If condition is false, jump to ELSE
 480 : LD 1, 1(5) ; Load parameter 'n' into R1
-481 : LDA 7, !temp_35(0) ; Skip ELSE block
+481 : LDA 7, 494(0) ; Skip ELSE block
 482 : LD 1, 1(5) ; Load parameter 'n' into R1
 483 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 484 : LDA 4, 3(5) ; Callee base for arg copy
@@ -535,7 +535,7 @@
 534 : LD 1, 1(5) ; Load parameter 'p' into R1
 535 : JEQ 1, 538(0) ; If condition is false, jump to ELSE
 536 : LD 1, 2(5) ; Load parameter 'q' into R1
-537 : LDA 7, !temp_38(0) ; Skip ELSE block
+537 : LDA 7, 539(0) ; Skip ELSE block
 538 : LDC 1, 0(0) ; Load boolean-literal into R1
 539 : ST 1, 3(5) ; Store function result into frame return slot
 540 : LD 6, 0(5) ; Load return address

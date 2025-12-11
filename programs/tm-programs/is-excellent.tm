@@ -70,7 +70,7 @@
 69 : SUB 5, 5, 2 ; Pop callee frame
 70 : JEQ 1, 73(0) ; If condition is false, jump to ELSE
 71 : LDC 1, 0(0) ; Load boolean-literal into R1
-72 : LDA 7, !temp_5(0) ; Skip ELSE block
+72 : LDA 7, 119(0) ; Skip ELSE block
 73 : LD 1, 1(5) ; Load parameter 'n' into R1
 74 : ST 1, 4(5) ; Spill left operand at depth 0
 75 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -234,7 +234,7 @@
 233 : LDC 1, 1(0) ; true
 234 : JEQ 1, 237(0) ; If condition is false, jump to ELSE
 235 : LDC 1, 1(0) ; Load integer-literal into R1
-236 : LDA 7, !temp_15(0) ; Skip ELSE block
+236 : LDA 7, 257(0) ; Skip ELSE block
 237 : LDC 1, 1(0) ; Load integer-literal into R1
 238 : ST 1, 3(5) ; Spill left operand at depth 0
 239 : LD 1, 1(5) ; Load parameter 'n' into R1
@@ -285,7 +285,7 @@
 284 : LDC 1, 0(0) ; false
 285 : LDA 7, 1(7) ; skip setting true
 286 : LDC 1, 1(0) ; true
-287 : LDA 7, !temp_18(0) ; Skip ELSE block
+287 : LDA 7, 301(0) ; Skip ELSE block
 288 : LD 1, 1(5) ; Load parameter 'n' into R1
 289 : SUB 1, 0, 1 ; Negate value in R1
 290 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
@@ -313,7 +313,7 @@
 312 : LDC 1, 1(0) ; true
 313 : JEQ 1, 316(0) ; If condition is false, jump to ELSE
 314 : LDC 1, 1(0) ; Load integer-literal into R1
-315 : LDA 7, !temp_21(0) ; Skip ELSE block
+315 : LDA 7, 340(0) ; Skip ELSE block
 316 : LD 1, 1(5) ; Load parameter 'm' into R1
 317 : ST 1, 4(5) ; Spill left operand at depth 0
 318 : LD 1, 1(5) ; Load parameter 'm' into R1

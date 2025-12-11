@@ -74,7 +74,7 @@
 73 : LDC 1, 1(0) ; true
 74 : JEQ 1, 77(0) ; If condition is false, jump to ELSE
 75 : LD 1, 3(5) ; Load parameter 'accum' into R1
-76 : LDA 7, !temp_4(0) ; Skip ELSE block
+76 : LDA 7, 163(0) ; Skip ELSE block
 77 : LD 1, 2(5) ; Load parameter 'n' into R1
 78 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
 79 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -132,7 +132,7 @@
 131 : LD 1, 4(5) ; Load callee result into R1
 132 : LDC 2, 8(0) ; Callee frame size
 133 : SUB 5, 5, 2 ; Pop callee frame
-134 : LDA 7, !temp_8(0) ; Skip ELSE block
+134 : LDA 7, 163(0) ; Skip ELSE block
 135 : LD 1, 1(5) ; Load parameter 'm' into R1
 136 : ST 1, 5(5) ; Spill left operand at depth 0
 137 : LDC 1, 2(0) ; Load integer-literal into R1

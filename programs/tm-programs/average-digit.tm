@@ -123,7 +123,7 @@
 122 : LD 1, 3(5) ; Load callee result into R1
 123 : LDC 2, 6(0) ; Callee frame size
 124 : SUB 5, 5, 2 ; Pop callee frame
-125 : LDA 7, !temp_6(0) ; Skip ELSE block
+125 : LDA 7, 173(0) ; Skip ELSE block
 126 : LD 1, 1(5) ; Load parameter 'n' into R1
 127 : ST 1, 5(5) ; Spill left operand at depth 0
 128 : LDC 1, 10(0) ; Load integer-literal into R1

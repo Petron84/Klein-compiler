@@ -26,7 +26,7 @@
 25 : JEQ 1, 29(0) ; If condition is false, jump to ELSE
 26 : LD 1, 1(5) ; Load parameter 'a' into R1
 27 : ST 1, 4(5) ; Store result into current frame's return slot
-28 : LDA 7, !temp_1(0) ; Skip ELSE block
+28 : LDA 7, 50(0) ; Skip ELSE block
 29 : LD 1, 1(5) ; Load parameter 'a' into R1
 30 : ST 1, 5(5) ; Stage arg 0 in caller temp (P+2+i)
 31 : LD 1, 2(5) ; Load parameter 'b' into R1

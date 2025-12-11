@@ -39,7 +39,7 @@
 38 : LDC 1, 1(0) ; true
 39 : JEQ 1, 42(0) ; If condition is false, jump to ELSE
 40 : LDC 1, 0(0) ; Load integer-literal into R1
-41 : LDA 7, !temp_2(0) ; Skip ELSE block
+41 : LDA 7, 100(0) ; Skip ELSE block
 42 : LD 1, 1(5) ; Load parameter 'a' into R1
 43 : ST 1, 4(5) ; Stage arg 0 in caller temp (P+2+i)
 44 : LDA 4, 5(5) ; Callee base for arg copy
@@ -77,7 +77,7 @@
 76 : SUB 5, 5, 2 ; Pop callee frame
 77 : LD 2, 4(5) ; Restore left operand from depth 0
 78 : ADD 1, 2, 1 ; R1 = left + right
-79 : LDA 7, !temp_6(0) ; Skip ELSE block
+79 : LDA 7, 100(0) ; Skip ELSE block
 80 : LD 1, 1(5) ; Load parameter 'a' into R1
 81 : ST 1, 4(5) ; Spill left operand at depth 0
 82 : LDC 1, 1(0) ; Load integer-literal into R1
@@ -112,7 +112,7 @@
 111 : LDC 1, 1(0) ; true
 112 : JEQ 1, 115(0) ; If condition is false, jump to ELSE
 113 : LDC 1, 0(0) ; Load boolean-literal into R1
-114 : LDA 7, !temp_9(0) ; Skip ELSE block
+114 : LDA 7, 185(0) ; Skip ELSE block
 115 : LD 1, 1(5) ; Load parameter 'n' into R1
 116 : ST 1, 3(5) ; Spill left operand at depth 0
 117 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -124,7 +124,7 @@
 123 : LDC 1, 1(0) ; true
 124 : JEQ 1, 127(0) ; If condition is false, jump to ELSE
 125 : LDC 1, 1(0) ; Load boolean-literal into R1
-126 : LDA 7, 421(0) ; Skip ELSE block
+126 : LDA 7, 185(0) ; Skip ELSE block
 127 : LD 1, 1(5) ; Load parameter 'n' into R1
 128 : ST 1, 3(5) ; Stage arg 0 in caller temp (P+2+i)
 129 : LDC 1, 2(0) ; Load integer-literal into R1
@@ -181,7 +181,7 @@
 180 : ADD 1, 2, 1 ; R1 = left OR right
 181 : JEQ 1, 184(0) ; If condition is false, jump to ELSE
 182 : LDC 1, 0(0) ; Load boolean-literal into R1
-183 : LDA 7, 426(0) ; Skip ELSE block
+183 : LDA 7, 185(0) ; Skip ELSE block
 184 : LDC 1, 1(0) ; Load boolean-literal into R1
 185 : ST 1, 2(5) ; Store function result into frame return slot
 186 : LD 6, 0(5) ; Load return address
@@ -205,7 +205,7 @@
 204 : LDC 1, 1(0) ; true
 205 : JEQ 1, 208(0) ; If condition is false, jump to ELSE
 206 : LDC 1, 1(0) ; Load boolean-literal into R1
-207 : LDA 7, 428(0) ; Skip ELSE block
+207 : LDA 7, 209(0) ; Skip ELSE block
 208 : LDC 1, 0(0) ; Load boolean-literal into R1
 209 : ST 1, 3(5) ; Store function result into frame return slot
 210 : LD 6, 0(5) ; Load return address
