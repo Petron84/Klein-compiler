@@ -1,4 +1,9 @@
-(* Computes the sum of all prime numbers between X and Y *)
+(*
+Computes the sum of all prime numbers between X and Y 
+Example: Input (2,20)
+	 Compute: 2 + 3 + 5 + 7 + 11 + 13 + 17 + 19
+	 Output: 77
+*)
 
 function divisible(x : integer, y : integer) : boolean
     if y = 0 then
