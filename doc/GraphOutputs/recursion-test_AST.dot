@@ -1,0 +1,89 @@
+digraph AST {
+node0 [label="PROGRAM"]
+node1 [label="DEFINITION-LIST"]
+node2 [label="DEFINITION"]
+node3 [label="IDENTIFIER\nadd_till_n"]
+node4 [label="PARAMETER-LIST"]
+node5 [label="ID-TYPE"]
+node6 [label="IDENTIFIER\na"]
+node7 [label="TERMINAL\ninteger"]
+node8 [label="ID-TYPE"]
+node9 [label="IDENTIFIER\nb"]
+node10 [label="TERMINAL\ninteger"]
+node11 [label="TYPE\ninteger"]
+node12 [label="EXPRESSION-LIST"]
+node13 [label="FUNCTION-CALL"]
+node14 [label="IDENTIFIER\nprint"]
+node15 [label="IDENTIFIER\na"]
+node16 [label="IF-EXPRESSION"]
+node17 [label="BINARY-EXPRESSION\n="]
+node18 [label="IDENTIFIER\na"]
+node19 [label="IDENTIFIER\nb"]
+node20 [label="IDENTIFIER\na"]
+node21 [label="FUNCTION-CALL"]
+node22 [label="IDENTIFIER\nadd_till_n"]
+node23 [label="ARGUMENT-LIST"]
+node24 [label="BINARY-EXPRESSION\n+"]
+node25 [label="IDENTIFIER\na"]
+node26 [label="INTEGER-LITERAL\n1"]
+node27 [label="IDENTIFIER\nb"]
+node28 [label="DEFINITION"]
+node29 [label="IDENTIFIER\nmain"]
+node30 [label="PARAMETER-LIST"]
+node31 [label="ID-TYPE"]
+node32 [label="IDENTIFIER\na"]
+node33 [label="TERMINAL\ninteger"]
+node34 [label="ID-TYPE"]
+node35 [label="IDENTIFIER\nb"]
+node36 [label="TERMINAL\ninteger"]
+node37 [label="TYPE\ninteger"]
+node38 [label="EXPRESSION-LIST"]
+node39 [label="FUNCTION-CALL"]
+node40 [label="IDENTIFIER\nadd_till_n"]
+node41 [label="ARGUMENT-LIST"]
+node42 [label="IDENTIFIER\na"]
+node43 [label="IDENTIFIER\nb"]
+node2 -> node3 [label="function"]
+node5 -> node6 [label="id"]
+node5 -> node7 [label="type"]
+node4 -> node5
+node8 -> node9 [label="id"]
+node8 -> node10 [label="type"]
+node4 -> node8
+node2 -> node4
+node2 -> node11
+node13 -> node14 [label="function"]
+node13 -> node15 [label="arguments"]
+node12 -> node13
+node17 -> node18 [label="left"]
+node17 -> node19 [label="right"]
+node16 -> node17 [label="if"]
+node16 -> node20 [label="else"]
+node21 -> node22 [label="function"]
+node24 -> node25 [label="left"]
+node24 -> node26 [label="right"]
+node23 -> node24
+node23 -> node27
+node21 -> node23 [label="arguments"]
+node16 -> node21 [label="then"]
+node12 -> node16
+node2 -> node12 [label="body"]
+node1 -> node2
+node28 -> node29 [label="function"]
+node31 -> node32 [label="id"]
+node31 -> node33 [label="type"]
+node30 -> node31
+node34 -> node35 [label="id"]
+node34 -> node36 [label="type"]
+node30 -> node34
+node28 -> node30
+node28 -> node37
+node39 -> node40 [label="function"]
+node41 -> node42
+node41 -> node43
+node39 -> node41 [label="arguments"]
+node38 -> node39
+node28 -> node38 [label="body"]
+node1 -> node28
+node0 -> node1
+}

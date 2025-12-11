@@ -1,1 +1,2 @@
-42 then
+function main(): integer
+	if true then 42 else 42

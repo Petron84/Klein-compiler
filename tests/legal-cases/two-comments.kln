@@ -1,1 +1,3 @@
-print((*COMMENT HERE*)x(*COMMENT HERE*) + y)
+function main(): integer
+	print((*COMMENT HERE*)5(*COMMENT HERE*) + 2)
+	5 + 2

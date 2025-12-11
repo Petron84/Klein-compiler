@@ -1,1 +1,3 @@
-print(true)
+function main(): boolean
+	print(true)
+	1
