@@ -15,10 +15,10 @@
 14 : LD 1, 2(5) ; Load parameter 'y' into R1
 15 : LDA 4, 4(5) ; Recompute callee base from callee size
 16 : ST 1, 1(4) ; Store argument 0 in callee
-17 : LD 1, 1(5) ; Load parameter 'x' into R1
+17 : LD 1, 2(5) ; Load parameter 'y' into R1
 18 : LDA 4, 4(5) ; Recompute callee base from callee size
 19 : ST 1, 1(4) ; Store argument 0 in callee
-20 : LD 1, 2(5) ; Load parameter 'y' into R1
+20 : LD 1, 1(5) ; Load parameter 'x' into R1
 21 : LDA 4, 4(5) ; Recompute callee base from callee size
 22 : ST 1, 2(4) ; Store argument 1 in callee
 23 : LDA 4, 4(5) ; Recompute callee base from callee size
@@ -43,7 +43,7 @@
 42 : LD 1, 3(5) ; Load main return value into R1
 43 : LD 6, 0(5) ; Load main return address
 44 : LDA 7, 0(6) ; Return from main
-45 : LD 1, 2(5) ; Load parameter 'n' into R1
+45 : LD 1, 1(5) ; Load parameter 'k' into R1
 46 : LDA 4, 5(5) ; Recompute callee base from caller size
 47 : LDA 6, 51(0) ; Return address
 48 : ST 6, 0(4) ; Store return address in callee frame
@@ -51,7 +51,7 @@
 50 : LDA 7, 11(0) ; Call built-in print
 51 : LDC 2, 5(0) ; Caller frame size
 52 : SUB 5, 5, 2 ; Pop back to caller
-53 : LD 1, 1(5) ; Load parameter 'k' into R1
+53 : LD 1, 2(5) ; Load parameter 'n' into R1
 54 : ST 1, 4(5) ; Spill left operand at depth 0
 55 : LDC 1, 2(0) ; Load integer-literal into R1
 56 : LD 2, 4(5) ; Restore left operand from depth 0
