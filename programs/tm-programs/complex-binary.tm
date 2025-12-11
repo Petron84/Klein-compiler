@@ -9,10 +9,10 @@
 8 : LD 6, 0(5) ; Load return address from current frame
 9 : LDA 7, 0(6) ; Jump back to caller
 10 : LDC 1, 2(0) ; Load integer-literal into R1
-11 : LDA 4, 4(5) ; Recompute callee base from callee size
+11 : LDA 4, 4(4) ; Recompute callee base from callee size
 12 : ST 1, 1(4) ; Store argument 0 in callee
 13 : LDC 1, 2(0) ; Load integer-literal into R1
-14 : LDA 4, 4(5) ; Recompute callee base from callee size
+14 : LDA 4, 4(4) ; Recompute callee base from callee size
 15 : ST 1, 2(4) ; Store argument 1 in callee
 16 : LDA 4, 4(4) ; Recompute callee base from callee size
 17 : LDA 6, 21(0) ; Return address
@@ -36,10 +36,10 @@
 35 : LDC 1, 1(0) ; true
 36 : ST 1, 2(5) ; Spill left operand at depth 0
 37 : LDC 1, 5(0) ; Load integer-literal into R1
-38 : LDA 4, 4(5) ; Recompute callee base from callee size
+38 : LDA 4, 4(4) ; Recompute callee base from callee size
 39 : ST 1, 1(4) ; Store argument 0 in callee
 40 : LDC 1, 3(0) ; Load integer-literal into R1
-41 : LDA 4, 4(5) ; Recompute callee base from callee size
+41 : LDA 4, 4(4) ; Recompute callee base from callee size
 42 : ST 1, 2(4) ; Store argument 1 in callee
 43 : LDA 4, 4(4) ; Recompute callee base from callee size
 44 : LDA 6, 48(0) ; Return address
