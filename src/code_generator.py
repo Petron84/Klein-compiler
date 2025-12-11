@@ -1,4 +1,4 @@
-
+from scanner import KleinError
 import sys
 
 # ---------------- Stack Frame Model ----------------
@@ -203,6 +203,39 @@ class Generator:
             for p in sorted(self.placeholders.keys(), key=len, reverse=True):
                 self.IMEM[i] = self.IMEM[i].replace(p, str(self.placeholders[p]))
 
+    def detect_bug(self, arg):
+            if arg.type == "FUNCTION-CALL":
+                return True
+            elif arg.type == "UNARY-EXPRESSION":
+                arg = arg.children[0]
+                bug = self.detect_bug(arg)
+                if bug:
+                    return True
+                else:
+                    return False
+
+            elif arg.type == "BINARY-EXPRESSION":
+                left = arg.children[0]
+                right = arg.children[1]
+                left_bug = self.detect_bug(left)
+                right_bug = self.detect_bug(right)
+                if left_bug or right_bug:
+                    return True
+                else:
+                    return False
+                
+            elif arg.type == "IF-EXPRESSION":
+                left = arg.children[0]
+                middle = arg.children[1]
+                right = arg.children[2]
+                left_bug = self.detect_bug(left)
+                middle_bug = self.detect_bug(middle)
+                right_bug = self.detect_bug(right)
+                if left_bug or middle_bug or right_bug:
+                    return True
+                else:
+                    return False
+                
     # ---------------- Instruction Rules ----------------
     def instruction_rules(self, body, curr_function, callee=False):
         exp_type = body.type
@@ -239,6 +272,11 @@ class Generator:
                     # 1) Evaluate arguments and store into future callee frame
                     args = exp_children[1].children if len(exp_children) > 1 and exp_children[1] is not None else []
                     for i, arg in enumerate(args):
+
+                        bug_found = self.detect_bug(arg)
+                        if bug_found:
+                            raise KleinError("Generator Error: The current version of the compiler doesn't allow function-calls as arguments to a function call.",terminate=True)
+
                         # Evaluate argument i -> R1
                         self.instruction_rules(arg, curr_function, callee=True)
                         # Recompute callee base ABOVE current frame using CALLER SIZE
