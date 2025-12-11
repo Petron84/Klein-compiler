@@ -10,42 +10,57 @@
 9 : OUT 1, 0, 0 ; Hardcoded print: output R1
 10 : LD 6, 0(5) ; Load return address from current frame
 11 : LDA 7, 0(6) ; Jump back to caller
-12 : LD 1, 1(5) ; Load parameter 'n' into R1
+12 : LDC 1, 5(0) ; Load integer-literal into R1
 13 : ST 1, 3(5) ; Spill left operand at depth 0
-14 : LDC 1, 10(0) ; Load integer-literal into R1
+14 : LD 1, 1(5) ; Load parameter 'n' into R1
 15 : LD 2, 3(5) ; Restore left operand from depth 0
 16 : SUB 1, 2, 1 ; left - right for less-than check
 17 : JLT 1, 2(7) ; If R1 < 0, jump to true
 18 : LDC 1, 0(0) ; false
 19 : LDA 7, 1(7) ; skip setting true
 20 : LDC 1, 1(0) ; true
-21 : JEQ 1, 46(0) ; If condition is false, jump to ELSE
+21 : JEQ 1, 35(0) ; If condition is false, jump to ELSE
 22 : LD 1, 1(5) ; Load parameter 'n' into R1
-23 : ST 1, 3(5) ; Spill left operand at depth 0
-24 : LDC 1, 5(0) ; Load integer-literal into R1
-25 : LD 2, 3(5) ; Restore left operand from depth 0
-26 : SUB 1, 2, 1 ; left - right for less-than check
-27 : JLT 1, 2(7) ; If R1 < 0, jump to true
-28 : LDC 1, 0(0) ; false
-29 : LDA 7, 1(7) ; skip setting true
-30 : LDC 1, 1(0) ; true
-31 : JEQ 1, 39(0) ; If condition is false, jump to ELSE
-32 : LD 1, 1(5) ; Load parameter 'n' into R1
-33 : ST 1, 3(5) ; Spill left operand at depth 0
-34 : LDC 1, 2(0) ; Load integer-literal into R1
-35 : LD 2, 3(5) ; Restore left operand from depth 0
-36 : MUL 1, 2, 1 ; R1 = left * right
-37 : ST 1, 2(5) ; Store result into current frame's return slot
-38 : LDA 7, 45(0) ; Skip ELSE block
-39 : LD 1, 1(5) ; Load parameter 'n' into R1
-40 : ST 1, 3(5) ; Spill left operand at depth 0
-41 : LDC 1, 1(0) ; Load integer-literal into R1
-42 : LD 2, 3(5) ; Restore left operand from depth 0
-43 : SUB 1, 2, 1 ; R1 = left - right
-44 : ST 1, 2(5) ; Store result into current frame's return slot
-45 : LDA 7, 48(0) ; Skip ELSE block
-46 : LDC 1, 1(0) ; Load integer-literal into R1
-47 : ST 1, 2(5) ; Store result into current frame's return slot
-48 : LD 1, 2(5) ; Load main return value into R1
-49 : LD 6, 0(5) ; Load main return address
-50 : LDA 7, 0(6) ; Return from main
+23 : LDA 4, 4(5) ; Recompute callee base from callee size
+24 : ST 1, 1(4) ; Store argument 0 in callee
+25 : LDA 4, 4(5) ; Recompute callee base from callee size
+26 : LDA 6, 30(0) ; Return address
+27 : ST 6, 0(4) ; Store return in callee frame
+28 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+29 : LDA 7, 58(0) ; Call addone
+30 : LD 1, 2(5) ; Load callee result into R1
+31 : LDC 2, 4(0) ; Callee frame size
+32 : SUB 5, 5, 2 ; Pop callee frame
+33 : ST 1, 2(5) ; Store result into caller’s frame
+34 : LDA 7, 47(0) ; Skip ELSE block
+35 : LD 1, 1(5) ; Load parameter 'n' into R1
+36 : LDA 4, 4(5) ; Recompute callee base from callee size
+37 : ST 1, 1(4) ; Store argument 0 in callee
+38 : LDA 4, 4(5) ; Recompute callee base from callee size
+39 : LDA 6, 43(0) ; Return address
+40 : ST 6, 0(4) ; Store return in callee frame
+41 : ADD 5, 4, 0 ; Push callee frame (FP := callee base)
+42 : LDA 7, 50(0) ; Call addtwo
+43 : LD 1, 2(5) ; Load callee result into R1
+44 : LDC 2, 4(0) ; Callee frame size
+45 : SUB 5, 5, 2 ; Pop callee frame
+46 : ST 1, 2(5) ; Store result into caller’s frame
+47 : LD 1, 2(5) ; Load main return value into R1
+48 : LD 6, 0(5) ; Load main return address
+49 : LDA 7, 0(6) ; Return from main
+50 : LD 1, 1(5) ; Load parameter 'n' into R1
+51 : ST 1, 3(5) ; Spill left operand at depth 0
+52 : LDC 1, 2(0) ; Load integer-literal into R1
+53 : LD 2, 3(5) ; Restore left operand from depth 0
+54 : ADD 1, 2, 1 ; R1 = left + right
+55 : ST 1, 2(5) ; Store function result into frame return slot
+56 : LD 6, 0(5) ; Load return address
+57 : LDA 7, 0(6) ; Return to caller
+58 : LD 1, 1(5) ; Load parameter 'n' into R1
+59 : ST 1, 3(5) ; Spill left operand at depth 0
+60 : LDC 1, 1(0) ; Load integer-literal into R1
+61 : LD 2, 3(5) ; Restore left operand from depth 0
+62 : ADD 1, 2, 1 ; R1 = left + right
+63 : ST 1, 2(5) ; Store function result into frame return slot
+64 : LD 6, 0(5) ; Load return address
+65 : LDA 7, 0(6) ; Return to caller
